@@ -52,7 +52,7 @@ $btnPadding:  10px;
   @extend %button;
   font-size: rem($typeS);
   line-height: $btnDefault;
-  background-color: $dmActionRespond;
+  background-color: red;
   &Small {
     font-size: rem($typeXS);
     line-height: $btnSmall;

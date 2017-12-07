@@ -1,3 +1,0 @@
-# Component styles
-
-Styles for the small pieces of the site. Buttons, Alerts, Form elements etc...

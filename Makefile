@@ -14,8 +14,13 @@ design.build:
 		-w /app/design \
 		$(IMAGE) gulp build
 
+.PHONY: design.copy
+design.copy:
+	rm -rf hugo/static/{assets,css}
+	cp -r design/public/{assets,css} hugo/static
+
 .PHONY: hugo.build
-hugo.build:
+hugo.build: design.build design.copy
 	docker run -ti --rm \
 		-p 1313:1313 \
 		-v $(PWD)/hugo:/app/hugo \
@@ -23,7 +28,7 @@ hugo.build:
 		$(IMAGE) hugo -v
 
 .PHONY: hugo.watch
-hugo.watch:
+hugo.watch: design.build design.copy
 	docker run -ti --rm \
 		-p 1313:1313 \
 		-v $(PWD)/hugo:/app/hugo \

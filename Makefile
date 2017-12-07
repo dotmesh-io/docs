@@ -11,5 +11,5 @@ design.build:
 	docker run -ti --rm \
 		-v $(PWD)/design:/app/design \
 		-v /app/design/node_modules \
-	 	--entrypoint bash \
-		$(IMAGE)
+		-w /app/design \
+		$(IMAGE) gulp build

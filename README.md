@@ -1,29 +1,52 @@
 # Docs
 
-An initial setup of hugo and datamesh styles for the docs site.
-
-This is not a deployable repo - it is the scratchpad for how it will work.
+The CSS and hugo build for the datamesh docs site.
 
 ## Installing
 
+You need docker installed and this repo pulled.
 
+## Writing new content
 
+The blog posts live in `hugo/content`, add a new file to this folder.
 
+Run the following command to get a hot-reloading version of the site in your browser:
 
-To get started you need to install:
-- [gulp](https://gulpjs.com/) globally: `$ npm install -g gulp`
-- [hugo](https://github.com/gohugoio/hugo) globally (it's a golang binary)
-- run: `$ npm-install`
+```bash
+$ make hugo.watch
+```
 
-## Run Hugo website (need)
+Then you can open [http://localhost:1313](http://localhost:1313) for a preview.
 
-1. In /app run 'hugo server -v'
-2. In root run 'gulp'
+## Building static site
 
-## Running Patterns
+```bash
+$ make hugo.build
+```
 
-Pattern copies core elements from the Hugo site and generates a style guide. To do this, run the following.
+This will output the document_root to `hugo/public`
 
-1. In root, run 'gulp build'. This builds all the needed files for patterns
-2. In another tab, in root run 'gulp patterns'. This starts the pattern library server
-3. At any point, run 'gulp build' in a separate tab to update patterns to the latest version. If this errors the server, just re-start it with 'gulp patterns' 
+## Editing CSS / Design files
+
+If you change anything inside `design` - then you must stop hugo, then:
+
+```bash
+$ make design.build
+```
+
+Then you can restart hugo.
+
+## Icon generation
+
+We use [una's boilerplate](https://github.com/una/svg-icon-system-boilerplate) to generate a sprite of SVG's from individual source files. We can manipulate these with CSS and JS as required.
+
+The boilerplate hangs on [svg-sprite](https://github.com/jkphl/svg-sprite) which is really comprehensive.
+
+## Making SVG's
+
+1. Export the SVG from a graphics package as simple path or stroke data, combining as required.
+2. No text in icons please. If you do have a Glyph, outline the font.
+3. Clip the SVG to artboard so there are no borders or gaps from the edge
+4. Save icons to the source folder in `assets/icons/source`
+5. Run the gulp task `gulp build:icons` when you want to build icons. They output to the `assets/icons/renders` folder. Additionally, we pull a copy of the example page and spirte into our 'templates' folder, so we can reference the icons visually.
+

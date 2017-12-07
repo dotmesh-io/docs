@@ -1,0 +1,43 @@
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html {
+  padding: 1.5em;
+  @include sharp-text;
+  font-size: $remRoot + px;
+  @media (max-width: $vpDeviceSafe) {
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+body {
+  color: $dmText;
+  font-family: $fontDefault;
+  line-height: $lineheightRoot;
+}
+
+a {
+  color: $dmAction;
+  text-decoration: underline $dmAction;
+  @mixin link-active-styles {
+    text-decoration: underline $dmActionRespond;
+  }
+}
+
+// Overide iOS telephone styling on links
+a[href^="tel"] {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+// Strip out the browser defaults
+ul, ol {
+	padding-left: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}

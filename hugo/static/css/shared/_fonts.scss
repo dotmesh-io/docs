@@ -1,0 +1,18 @@
+// Font declarations
+// ------------------------------------------------------------------
+
+$fontBrand:     system-ui, sans-serif;
+$fontVoice:     system-ui, sans-serif;
+$fontMono:      fira-sans, monospace;
+
+// Font weights
+// ------------------------------------------------------------------
+
+$fontLight:   300;
+$fontMedium:  500;
+$fontBold:    600;
+$fontBlack:   900;
+
+// Font defaults
+// ------------------------------------------------------------------
+$fontDefault:   $fontBrand;

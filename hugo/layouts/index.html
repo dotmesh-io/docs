@@ -1,0 +1,13 @@
+{{ define "title" }}
+  {{ .Site.Title }}
+{{ end }}
+
+{{ define "main" }}
+  <h1 class="typeByline typeByline_trailer heading">{{.Title}}</h1>
+  <h2 class="typeL typeL_trailer heading">{{ .Params.sub }}</h2>
+  <div class="typebase markdown">
+    {{.Content}}
+    <h3>Button</h3>
+    {{ partial "components/button.html" (dict "role" "button" "label" "Button" "style" "button") }}
+  </div>
+{{ end }}

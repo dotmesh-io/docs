@@ -13,3 +13,24 @@ design.build:
 		-v /app/design/node_modules \
 		-w /app/design \
 		$(IMAGE) gulp build
+
+.PHONY: hugo.build
+hugo.build:
+	docker run -ti --rm \
+		-p 1313:1313 \
+		-v $(PWD)/hugo:/app/hugo \
+		-w /app/hugo \
+		$(IMAGE) hugo -v
+
+.PHONY: hugo.watch
+hugo.watch:
+	docker run -ti --rm \
+		-p 1313:1313 \
+		-v $(PWD)/hugo:/app/hugo \
+		-w /app/hugo \
+		$(IMAGE) hugo \
+			server \
+			--buildDrafts \
+			--bind=0.0.0.0 \
+			-v
+

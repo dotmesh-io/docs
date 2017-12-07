@@ -1,0 +1,179 @@
+
+// Box-shadow generator for material depth
+// ------------------------------------------------------------------
+
+// Computes a top-shadow for a card effect.
+// @param {Number} $depth - depth level
+// @return {List}
+
+@function top-shadow($depth) {
+  $primary-offset: nth(1.5 3 10 14 19, $depth) * 1px;
+  $blur: nth(1.5 3 10 14 19, $depth) * 4px;
+  $color: rgba(black, nth(.12 .16 .19 .25 .30, $depth));
+  @return 0 $primary-offset $blur $color;
+}
+
+// Computes a bottom-shadow for a card effect.
+// @param {Number} $depth - depth level
+// @return {List}
+
+@function bottom-shadow($depth) {
+  $primary-offset: nth(1.5 3 6 10 15, $depth) * 1px;
+  $blur: nth(1 3 3 5 6, $depth) * 4px;
+  $color: rgba(black, nth(.24 .23 .23 .22 .22, $depth));
+  @return 0 $primary-offset $blur $color;
+}
+
+//
+// Gives a card depth effect.
+// @param {Number} $depth - depth level (between 1 and 5)
+// @link https://www.google.com/design/spec/layout/layout-principles.html#layout-principles-dimensionality Google Design
+// @requires {function} top-shadow
+// @requires {function} bottom-shadow
+
+@mixin shadow($depth) {
+  @if $depth < 1 {
+    box-shadow: none;
+  } @else if $depth > 5 {
+    @warn "Invalid $depth `#{$depth}` for mixin `card`.";
+  } @else {
+    box-shadow: bottom-shadow($depth), top-shadow($depth);
+  }
+}
+
+
+// Sharpen type (use with care)
+// ------------------------------------------------------------------
+
+@mixin sharp-text {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	//text-rendering: optimizeLegibility;
+}
+
+
+// Consistent spacing
+// ------------------------------------------------------------------
+
+@mixin edgeBufferLeft {
+	left: $bufferSpaceS;
+	@include respond-to($vpRowBufferA) {
+		left: $bufferSpaceM;
+	}
+}
+
+@mixin edgeBufferRight {
+	right: $bufferSpaceS;
+	@include respond-to($vpRowBufferA) {
+		right: $bufferSpaceM;
+	}
+}
+
+// Standard rows
+// ------------------------------------------------------------------
+
+@mixin rowDefault {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: $containerMax;
+	min-width: auto;
+	position: relative;
+	padding-left: $bufferSpaceS;
+	padding-right: $bufferSpaceS;
+	@include respond-to($vpRowBufferA) {
+		padding-left: $bufferSpaceM;
+		padding-right: $bufferSpaceM;
+	}
+}
+
+// Helpers
+// ------------------------------------------------------------------
+
+// Oldschool clearfixing
+@mixin pie-clearfix {
+	&:after {
+		content: "";
+		display: table;
+		clear: both; *zoom: 1;
+	}
+}
+
+@mixin link-active-styles {
+	&:hover, &:focus, &:active {
+		@content;
+	}
+}
+
+// Animation
+// ------------------------------------------------------------------
+
+// HACKS - https://github.com/IanLunn/Hover/blob/master/scss/_hacks.scss
+// As is often the case, some devices/browsers need additional code to get CSS to work
+// in the most desired way. These mixins are used to quickly drop in hacks for each element
+// Find out more here: https://github.com/IanLunn/Hover/wiki/Hacks-Explained
+
+@mixin hardwareAccel() {
+	// Improve performance on mobile/tablet devices
+	// Perspective reduces blurryness of text in Chrome
+	transform: perspective(1px) translateZ(0);
+}
+
+@mixin improveAntiAlias() {
+	// Improve aliasing on mobile/tablet devices
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+
+@mixin forceBlockLevel() {
+	// Transforms need to be block-level to work
+	display: inline-block;
+	vertical-align: middle;
+}
+
+@mixin animationHacks() {
+	@include forceBlockLevel();
+	@include hardwareAccel();
+	@include improveAntiAlias();
+}
+
+// Media queries with fallbacks if needed
+// ------------------------------------------------------------------
+
+
+// Widths only
+@mixin respond-to($media-min) {
+	@media screen and (min-width: $media-min) {
+	    @content;
+	}
+}
+
+@mixin respond-to-max($media-max) {
+	@media screen and (max-width: $media-max - 1px) {
+	    @content;
+	}
+}
+
+@mixin respond-to-min-max($media-min, $media-max) {
+	 @media screen and (min-width: $media-min) and (max-width: $media-max - 1px) {
+	    @content;
+	}
+}
+
+// Widths and heights
+@mixin respond-to-both($media-w-min, $media-h-min) {
+	@media screen and (min-width: $media-w-min) and (min-height: $media-h-min) {
+	    @content;
+	}
+}
+
+// Height
+@mixin respond-to-height($media-min) {
+	@media screen and (min-height: $media-min) {
+	    @content;
+	}
+}
+
+@mixin respond-to-height-max($media-max) {
+	@media screen and (max-height: $media-max - 1px) {
+	    @content;
+	}
+}

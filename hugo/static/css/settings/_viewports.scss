@@ -1,0 +1,24 @@
+
+// Viewports. Horizontal break widths
+// ------------------------------------------------------------------
+
+$vpA: 300px;
+$vpB: 600px;
+$vpC: 800px;
+$vpD: 1020px;
+$vpE: 1200px;
+$vpF: 1400px;
+$vpMax: $vpF;
+
+// Assign viewports to tasks
+$vpTable:					$vpC;		// Table view switch
+$vpMenu:					$vpC;		// Menu for small screen switch
+$vpDeviceSafe:		800px;	// Safe width for tablet type things as they can be odd
+
+// ------------------------------------------------------------------
+
+// Buffer switch points. Add as required
+$vpRowBufferA:		$vpC;
+
+// Maximum container if using set-max width. Often used in '.row'
+$containerMax:	($vpE + $bufferSpaceMax*2);

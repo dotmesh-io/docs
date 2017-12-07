@@ -1,0 +1,10 @@
+{{ define "main" -}}
+<div class="ui-component" id="ui-{{ .Title | urlize }}">
+  <h3 class="ui-component__title">{{ .Title }}</h3>
+  <div class="ui-descriptor">{{ .Content }}</div>
+  <div class="ui-element">
+    {{- partial "components/button.html" (dict "label" .Params.label "role" .Params.role "style" .Params.style) -}}
+  </div>
+  <pre class="ui-codeblock"><code>{{- partial "components/button.html" (dict "label" .Params.label "role" .Params.role "style" .Params.style) | htmlUnescape -}}</code></pre>
+</div>
+{{ end }}

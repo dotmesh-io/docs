@@ -1,3 +1,22 @@
-baseURL = "http://example.org/"
-languageCode = "en-us"
-title = "My New Hugo Site"
+baseURL = "/"
+languageCode = "en-uk"
+title = "Datamesh Docs"
+
+
+[taxonomies]
+  tag = ""
+  group = ""
+  category = ""
+
+[menu]
+    [[menu.main]]
+    identifier = "home"
+    name       = "Home"
+    url        = "/"
+    weight     = 1
+
+    [[menu.main]]
+    identifier = "news"
+    name       = "News"
+    url        = "/news"
+    weight     = 2

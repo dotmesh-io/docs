@@ -1,0 +1,241 @@
+
+// Root base
+// ------------------------------------------------------------------
+
+%typebaseRoot {
+	line-height: $lineheightBase;
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+// Kerning
+// ------------------------------------------------------------------
+
+%kernTight 	{ letter-spacing: -0.125rem; font-kerning: normal; }
+%kernLoose 	{ letter-spacing: 0.2rem; }
+
+// Typescale
+// ------------------------------------------------------------------
+
+.typeMasthead {
+	@extend %typebaseRoot;
+	@extend %kernTight;
+	font-size: rem($typeMasthead);
+	@include leading_adjust(8);
+}
+
+.typeHeadline {
+	@extend %typebaseRoot;
+	@extend %kernTight;
+	font-size: rem($typeHeadline);
+	@include leading_adjust(8);
+}
+
+.typeByline {
+	@extend %typebaseRoot;
+	@extend %kernTight;
+	font-size: rem($typeByline);
+	@include leading_adjust(6);
+}
+
+.typeXL {
+	@extend %typebaseRoot;
+	font-size: rem($typeXL);
+	@include leading_adjust(6);
+}
+
+.typeL {
+	@extend %typebaseRoot;
+	font-size: rem($typeL);
+	@include leading_adjust(6);
+}
+
+.typeM {
+	@extend %typebaseRoot;
+	font-size: rem($typeM);
+	@include leading_adjust(6);
+}
+
+// Median
+.typeMe {
+	@extend %typebaseRoot;
+	font-size: rem($typeMe);
+	// Only tighten leading if heading
+	&.heading {
+		@include leading_adjust(4);
+	}
+}
+
+.typeS {
+	@extend %typebaseRoot;
+	font-size: rem($typeS);
+	// Only tighten leading if heading
+	&.heading {
+		@include leading_adjust(4);
+	}
+}
+
+.typeXS {
+	@extend %typebaseRoot;
+	font-size: rem($typeXS);
+	// Only tighten leading if heading
+	&.heading {
+		@include leading_adjust(2);
+	}
+}
+
+// Heading styles
+// ------------------------------------------------------------------
+
+.heading {
+	display: block;
+	font-weight: $fontBold;
+	color: $dmHeadings;
+}
+
+// Default text
+// ------------------------------------------------------------------
+
+.text {
+	@extend %typebaseRoot;
+	font-size: $typeDefault;
+}
+
+// Default lists
+// ------------------------------------------------------------------
+
+%textList {
+	li {
+		@extend .text;
+	}
+}
+
+.unordered_list {
+	list-style-type: square;
+	@extend %textList;
+	ul {
+		list-style-type: square;
+		padding-left: rem(20);
+	}
+}
+
+.ordered_list {
+	list-style-type: decimal;
+	@extend %textList;
+	ol {
+		list-style-type: decimal;
+		padding-left: rem(20);
+	}
+}
+
+.simple_list {
+	list-style-type: none;
+	@extend %textList;
+	ol,ul {
+		list-style-type: none;
+		padding-left: rem(20);
+	}
+}
+
+// Typebase (for runs of text)
+// ------------------------------------------------------------------
+
+.typebase {
+	p {
+		@extend .text;
+		margin-top: rem($typeDefault);
+		display: block;
+	}
+	li {
+		@extend .text;
+	}
+	ul,
+	ol {
+		margin-top: rem($typeDefault);
+	}
+	ul {
+		@extend .unordered_list;
+	}
+	ol {
+		@extend .ordered_list;
+	}
+	img, pre {
+		display: block;
+		margin-top: rem($typeDefault*2);
+		margin-bottom: rem($typeDefault);
+	}
+	h1, h2, h3, h4, h5, h6 {
+		@extend .heading;
+		margin-top: rem($typeDefault*2);
+	}
+	h1 {
+		@extend .typeXL;
+	}
+	h2 {
+		@extend .typeL;
+	}
+	h3,h4 {
+		@extend .typeM;
+	}
+	h5 {
+		@extend .typeS;
+		@extend %kernLoose;
+		text-transform: uppercase;
+	}
+	h6 {
+		@extend .typeXS;
+		@extend %kernLoose;
+		text-transform: uppercase;
+	}
+
+	// Remove next para or list top margin
+	h1 + p,
+	h2 + p,
+	h3 + p,
+	h4 + p,
+	h5 + p,
+	h6 + p,
+	h1 + ol,
+	h2 + ol,
+	h3 + ol,
+	h4 + ol,
+	h5 + ol,
+	h6 + ol,
+	h1 + ul,
+	h2 + ul,
+	h3 + ul,
+	h4 + ul,
+	h5 + ul,
+	h6 + ul {
+		margin-top: 0;
+	}
+
+	// Tear out the initial top margin to allow things to flush together
+	> h1:first-child,
+	> h2:first-child,
+	> h3:first-child,
+	> h4:first-child,
+	> h5:first-child,
+	> h6:first-child,
+	> img:first-child,
+	> media-video-wrapper:first-child  {
+		margin-top: 0;
+	}
+
+	// Stop empty spacing
+	br + br,
+	h1:empty,
+	h2:empty,
+	h3:empty,
+	h4:empty,
+	h5:empty,
+	h6:empty,
+	p:empty,
+	ul:empty,
+	ol:empty,
+	span:empty,
+	cite:empty,
+	div:empty {
+		display: none;
+	}
+}

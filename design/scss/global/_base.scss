@@ -1,0 +1,44 @@
+html {
+  @include sharp-text;
+  font-size: $scaleRoot + px;
+  @media (max-width: $vpDeviceSafe) {
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+body {
+  color: $dmText;
+  font-family: $fontDefault;
+  line-height: $lineheightBase;
+}
+
+a {
+  color: $dmAction;
+  text-decoration: none;
+  &:not(.button) {
+    background-image: linear-gradient(
+      to top,
+      rgba($dmAction, 0) 3%,
+      rgba($dmAction, 0.2) 3%,
+      rgba($dmAction, 0.2) 14%,
+      rgba($dmAction, 0) 14%
+    );
+  }
+  @include link-active-styles {
+    &:not(.button) {
+
+    }
+  }
+}
+
+// SVG bug work aroud whereby svg's require a height of some kind
+svg {
+	max-height: 10000px;
+}
+
+
+// Overide iOS telephone styling on links
+a[href^="tel"] {
+  color: inherit;
+  text-decoration: none;
+}

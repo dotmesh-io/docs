@@ -1,0 +1,170 @@
+{% set title = 'Cooper - element tests' %}
+{% extends 'layouts/layout.html' %}
+
+{% block content %}
+
+<div style="padding: 5rem; max-width: 750px; margin-left: auto; margin-right: auto;">
+
+  <h1 class="typeMasthead typeMasthead_trailer heading">HTML default element set</h1>
+  <h1>H1: Clean render</h1>
+  <h2>H2: Clean render</h2>
+  <h3>H3: Clean render</h3>
+  <h4>H4: Clean render</h4>
+  <h5>H5: Clean render</h5>
+  <h6>H6: Clean render</h6>
+  <p>P: Clean render: You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).</p>
+  <ul>
+    <li>Unordered: Clean render</li>
+    <li>Unordered: Clean render</li>
+    <li>Unordered: Clean render
+      <ul>
+        <li>Unordered: Clean render</li>
+        <li>Unordered: Clean render</li>
+      </ul>
+    </li>
+  </ul>
+
+  <ol>
+    <li>Ordered: Clean render</li>
+    <li>Ordered: Clean render
+      <ol>
+        <li>Unordered: Clean render</li>
+        <li>Unordered: Clean render</li>
+      </ol>
+    </li>
+  </ol>
+
+  <!-- Really ugly, but good OK for this page to seperate stuff -->
+  <div style="margin-top: 50px; margin-bottom: 48px; border-top: 2px solid #ddd;"></div>
+
+  <h1 class="typeXL heading">Test icons</h1>
+  <br/>
+  <svg class="icon icon36 icon_error_svg">
+    <use xlink:href="./assets/icons/renders/sprite.svg#error"></use>
+  </svg>
+  <svg class="icon icon36 icon_warning_svg">
+    <use xlink:href="./assets/icons/renders/sprite.svg#warning"></use>
+  </svg>
+  <svg class="icon icon36 icon_success_svg">
+    <use xlink:href="./assets/icons/renders/sprite.svg#success"></use>
+  </svg>
+
+  <!-- Really ugly, but good OK for this page to seperate stuff -->
+  <div style="margin-top: 50px; margin-bottom: 48px; border-top: 2px solid #ddd;"></div>
+
+  <h1 class="typeMasthead heading">Masthead test wrapping and rhythm</h1>
+  <h2 class="typeHeadline heading">Headline test wrapping and rhythm</h2>
+  <h3 class="typeByline heading">Byline heading test wrapping and rhythm</h3>
+  <h4 class="typeXL heading">Extra Large Heading test wrapping and rhythm</h4>
+
+  <!-- Really ugly, but good OK for this page to seperate stuff -->
+  <div style="margin-top: 50px; margin-bottom: 48px; border-top: 2px solid #ddd;"></div>
+
+  <h1 class="typeMasthead typeMasthead_trailer heading">Masthead with trailer</h1>
+  <h2 class="typeHeadline typeHeadline_trailer heading">Headline with trailer</h2>
+  <h3 class="typeByline typeByline_trailer heading"><a href="">Byline with trailer</a></h3>
+  <h4 class="typeXL typeXL_trailer heading">Extra Large with trailer</h4>
+
+  <!-- Really ugly, but good OK for this page to seperate stuff -->
+  <div style="margin-top: 50px; margin-bottom: 48px; border-top: 2px solid #ddd;"></div>
+
+  <h4 class="typeL heading">Large heading test wrapping and rhythm</h4>
+  <h5 class="typeM heading">Medium heading test wrapping and rhythm</h5>
+  <h5 class="typeMe heading">Median heading (default text size) test wrapping and rhythm</h5>
+  <h6 class="typeS heading">Small heading test wrapping and rhythm</h6>
+  <h6 class="typeXS heading">Extra Small heading test wrapping and rhythm</h6>
+
+  <!-- Really ugly, but good OK for this page to seperate stuff -->
+  <div style="margin-top: 50px; margin-bottom: 48px; border-top: 2px solid #ddd;"></div>
+
+  <h4 class="typeL typeL_trailer heading">Large heading with trailer</h4>
+  <h5 class="typeM typeM_trailer heading">Medium heading with trailer</h5>
+  <h5 class="typeMe typeMe_trailer heading">Median with trailer</h5>
+  <h6 class="typeS typeS_trailer heading">Small with trailer</h6>
+  <h6 class="typeXS typeXS_trailer heading">Extra Small with trailer</h6>
+
+  <!-- Really ugly, but good OK for this page to seperate stuff -->
+  <div style="margin-top: 50px; margin-bottom: 48px; border-top: 2px solid #ddd;"></div>
+
+  <h3 class="typeXL heading">General text tests</h3>
+  <p class="text">You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).</p>
+  <p class="text">You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).</p>
+
+  <ul class="unordered_list">
+    <li>Unordered: Clean render</li>
+    <li>Unordered: Clean render</li>
+    <li>Unordered: Clean render
+      <ul>
+        <li>Unordered: Clean render</li>
+        <li>Unordered: Clean render</li>
+      </ul>
+    </li>
+  </ul>
+
+  <ol class="ordered_list">
+    <li>Ordered: Clean render</li>
+    <li>Ordered: Clean render
+      <ol>
+        <li>Ordered: Clean render</li>
+        <li>Ordered: Clean render</li>
+      </ol>
+    </li>
+  </ol>
+
+  <ol class="simple_list">
+    <li>Simple: Clean render</li>
+    <li>Simple: Clean render
+      <ol>
+        <li>Simple: Clean render</li>
+        <li>Simple: Clean render</li>
+      </ol>
+    </li>
+  </ol>
+
+  <!-- Really ugly, but good OK for this page to seperate stuff -->
+  <div style="margin-top: 50px; margin-bottom: 48px; border-top: 2px solid #ddd;"></div>
+
+  <div class="typebase">
+      <h1>Header test typeset article style text</h1>
+      <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.</p>
+      <p><em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim in turpis pulvinar facilisis. Ut felis.</a></p>
+
+      <h2>Header Level 2</h2>
+      <ol>
+       <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+       <li>Aliquam tincidunt mauris eu risus.</li>
+      </ol>
+
+      <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
+
+      <h3>Header Level 3</h3>
+      <ul>
+       <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+       <li>Aliquam tincidunt mauris eu risus.</li>
+      </ul>
+
+      <h4>Header level 4</h4>
+      <p><em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
+
+      <h5>Header level 5</h5>
+      <p><em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
+
+      <h6>Header level 6</h6>
+      <p><em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
+
+      <pre><code>$ sudo curl -o /usr/local/bin/dm \
+  https://get.datamesh.io/$(uname -s)/dm
+$ sudo chmod +x /usr/local/bin/dm
+$ dm cluster init
+
+Installing datamesh server in a container... done.
+Configuring dm CLI to authenticate to datamesh server... done.
+
+Here is your key to add other nodes:
+https://discovery.datamesh.io/22fd02ea1e89bad78a92c35a2e268044
+You can use 'dm auth' to get this key later.$</code></pre>
+  </div>
+
+</div>
+
+{% endblock %}

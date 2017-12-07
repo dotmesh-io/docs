@@ -1,0 +1,17 @@
+// ---
+// Prefix a colour name with the initials of the project. Eg 'dm' for datamesh
+// !default flags allow us to over-ride colorss per project if we need to without changing shared colors
+// ---
+
+// Brand colours
+$dmByers: 				  #491D5D!default;
+$dmWheeler:         #21F9EE!default;
+$dmHopper:          #00FF7C!default;
+$dmEleven:          #ff0062!default;
+$dmSinclair:        #db94e0!default;
+
+// Greyscales
+$dmHarrington:      #2E1A35!default;
+$dmHenderson:       #6E6573!default;
+$dmHolland:         #E4E1E1!default;
+$dmHargrove:        #FDFDFD!default;

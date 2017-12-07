@@ -1,0 +1,118 @@
+// Button defaults
+// ------------------------------------------------------------------
+
+$btnSmall:    36px;
+$btnDefault:  40px;
+$btnLarge:    46px;
+$btnRadius:   4px;
+$btnPadding:  10px;
+
+// Button base style
+
+%button {
+  @include animationHacks;
+  cursor: pointer;
+  position: relative;
+  padding: 0 $btnPadding;
+  vertical-align: middle;
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: $btnRadius;
+  transition-property: color;
+  transition-duration: 0.5s;
+  overflow: hidden;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+  span {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+  @include link-active-styles {
+
+  }
+  &:focus {
+
+  }
+}
+
+.button {
+  &Block {
+    display: block;
+  }
+  &_thing {
+
+  }
+}
+
+// Sizes
+// ------------------------------------------------------------------
+
+.button {
+  @extend %button;
+  font-size: rem($typeS);
+  line-height: $btnDefault;
+  background-color: $dmActionRespond;
+  &Small {
+    font-size: rem($typeXS);
+    line-height: $btnSmall;
+  }
+  &Large {
+    font-size: rem($typeMe);
+    line-height: $btnLarge;
+  }
+  &Secondary {
+    background-color: $dmPrimeAccent;
+  }
+  &Disabled {
+    cursor: not-allowed;
+    filter: grayscale(100%);
+    @include link-active-styles {
+      animation-name: buttonBuzz;
+      animation-duration: 0.8s;
+      animation-timing-function: linear;
+      animation-iteration-count: 1;
+      transform-origin: center;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+
+// Aria label style
+// Allows us to have an aria unique label but shortend visual label
+// ------------------------------------------------------------------
+
+.buttonA11y {
+  position: relative;
+	overflow: hidden;
+	span {
+		left: -1000px;
+		position: absolute;
+		display: inline-block;
+	}
+	&:after {
+		 content: attr(title);
+		 display: block;
+		 color: inherit;
+     font-size: inherit;
+	}
+}
+
+// Animation
+// ------------------------------------------------------------------
+
+@keyframes buttonBuzz {
+  10% { transform: translateX(3px) rotate(2deg); }
+  20% { transform: translateX(-3px) rotate(-2deg); }
+  30% { transform: translateX(3px) rotate(2deg); }
+  40% { transform: translateX(-3px) rotate(-2deg); }
+  50% { transform: translateX(2px) rotate(1deg); }
+  60% { transform: translateX(-2px) rotate(-1deg); }
+  70% { transform: translateX(2px) rotate(1deg); }
+  80% { transform: translateX(-2px) rotate(-1deg); }
+  90% { transform: translateX(1px) rotate(0deg); }
+  100% { transform: translateX(-1px) rotate(0deg); }
+}

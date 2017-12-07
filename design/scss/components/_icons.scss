@@ -1,0 +1,39 @@
+
+// Set defaults
+// ------------------------------------------------------------------
+
+.icon {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  &Block {
+    display: block;
+  }
+}
+
+// Set sizes for icons.
+// ------------------------------------------------------------------
+
+$icon_sizes: 16, 24, 36;
+
+@each $icon in $icon_sizes {
+  .icon#{$icon} {
+    width: $icon + px;
+    height: $icon + px;
+  }
+}
+
+// Do the colour thing
+// ------------------------------------------------------------------
+
+.icon_ {
+  &warning_svg {
+    fill: $dmAlert;
+  }
+  &success_svg {
+    fill: $dmSuccess;
+  }
+  &error_svg {
+    fill: $dmError;
+  }
+}

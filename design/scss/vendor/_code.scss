@@ -1,0 +1,31 @@
+// Reset code / pre blocks to sensible defaults
+// ------------------------------------------------------
+
+pre {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  hyphens: none;
+  position: relative;
+	tab-width: 2;
+	// wrap
+	//white-space: pre-wrap;
+	// no wrap
+	overflow-x: auto;
+	&:focus,
+	&:hover {
+		width: min-content;
+	}
+}
+
+code {
+  font-family: $fontMono;
+  font-size: rem($typeS);
+  line-height: inherit;
+  pre & {
+    line-height: $lineheightBase;
+  }
+}
+
+// Add code library markup here
+// ------------------------------------------------------

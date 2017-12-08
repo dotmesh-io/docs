@@ -40,6 +40,13 @@ If you change anything inside `design` - then you must stop hugo, then:
 $ make design.build
 ```
 
+If you want the design to be hot-reloading:
+
+```bash
+$ make design.watch
+```
+
+
 Then you can restart hugo.
 
 ## Icon generation

@@ -4,14 +4,19 @@
 // ---
 
 // Brand colours
+// (Use sass' lighten/darken functions to create further shades as needed)
 $dmByers: 				  #491D5D!default;
+$dmHenderson:       #5c2d70!default;
 $dmWheeler:         #21F9EE!default;
 $dmHopper:          #00FF7C!default;
 $dmEleven:          #ff0062!default;
 $dmSinclair:        #db94e0!default;
+$dmMayfield:        #f4c7b8!default;
+
 
 // Greyscales
-$dmHarrington:      #2E1A35!default;
-$dmHenderson:       #6E6573!default;
-$dmHolland:         #E4E1E1!default;
-$dmHargrove:        #FDFDFD!default;
+// (Use sass' lighten/darken functions to create further shades as needed)
+$dmHarrington:      #2E1A35!default; // Darkest
+$dmHolland:         #948C98!default;
+$dmHawkins:         #e4e1e1!default;
+$dmHargrove:        #F8F7F7!default; // Lightest

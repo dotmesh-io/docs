@@ -630,7 +630,6 @@ a[href^="tel"] {
   content: "";
   display: table;
   clear: both;
-  *zoom: 1;
 }
 
 @supports (display: grid) {

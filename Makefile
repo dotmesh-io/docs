@@ -14,6 +14,17 @@ design.build:
 		-w /app/design \
 		$(IMAGE) gulp build
 
+.PHONY: design.watch
+design.watch:
+	docker run -ti --rm \
+	  --name docs-design \
+		-v $(PWD)/design:/app/design \
+		-v /app/design/node_modules \
+		-v /app/design/public \
+		-p 3000:3000 \
+		-w /app/design \
+		$(IMAGE) gulp serve
+
 .PHONY: design.copy
 design.copy:
 	rm -rf hugo/static/{assets,css}
@@ -22,7 +33,6 @@ design.copy:
 .PHONY: hugo.build
 hugo.build: design.build design.copy
 	docker run -ti --rm \
-		-p 1313:1313 \
 		-v $(PWD)/hugo:/app/hugo \
 		-w /app/hugo \
 		$(IMAGE) hugo -v
@@ -30,6 +40,7 @@ hugo.build: design.build design.copy
 .PHONY: hugo.watch
 hugo.watch: design.build design.copy
 	docker run -ti --rm \
+		--name docs-hugo \
 		-p 1313:1313 \
 		-v $(PWD)/hugo:/app/hugo \
 		-w /app/hugo \

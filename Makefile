@@ -14,6 +14,14 @@ design.build:
 		-w /app/design \
 		$(IMAGE) gulp build
 
+.PHONY: design.icons
+design.icons:
+	docker run -ti --rm \
+		-v $(PWD)/design:/app/design \
+		-v /app/design/node_modules \
+		-w /app/design \
+		$(IMAGE) gulp icons:build
+
 .PHONY: design.watch
 design.watch:
 	docker run -ti --rm \
@@ -49,4 +57,3 @@ hugo.watch: design.build design.copy
 			--buildDrafts \
 			--bind=0.0.0.0 \
 			-v
-

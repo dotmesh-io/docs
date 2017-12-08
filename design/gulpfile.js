@@ -125,6 +125,8 @@ var gulp            = require("gulp")
 
     // Spins up a sever to render test templates
     gulp.task("serve", ["watch-all", "browser-sync"])
+
+    // Run a build
     gulp.task("build", ["scss", "js", "assets"])
 
     // Icon Build

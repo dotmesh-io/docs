@@ -6,6 +6,12 @@ The CSS and hugo build for the datamesh docs site.
 
 You need docker installed and this repo pulled.
 
+Then you need to make the images:
+
+```bash
+$ make.images
+```
+
 ## Writing new content
 
 The blog posts live in `hugo/content`, add a new file to this folder.

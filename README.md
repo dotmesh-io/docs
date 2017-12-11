@@ -46,13 +46,11 @@ If you want the design to be hot-reloading:
 $ make design.watch
 ```
 
-
 Then you can restart hugo.
 
 ## Icon generation
 
 We use [una's boilerplate](https://github.com/una/svg-icon-system-boilerplate) to generate a sprite of SVG's from individual source files. We can manipulate these with CSS and JS as required.
-
 The boilerplate hangs on [svg-sprite](https://github.com/jkphl/svg-sprite) which is really comprehensive.
 
 ## Making SVG's
@@ -61,5 +59,8 @@ The boilerplate hangs on [svg-sprite](https://github.com/jkphl/svg-sprite) which
 2. No text in icons please. If you do have a Glyph, outline the font.
 3. Clip the SVG to artboard so there are no borders or gaps from the edge
 4. Save icons to the source folder in `assets/icons/source`
-5. Run the gulp task `gulp build:icons` when you want to build icons. They output to the `assets/icons/renders` folder. Additionally, we pull a copy of the example page and spirte into our 'templates' folder, so we can reference the icons visually.
+5. Before running the build command, you may need to stop and restart
 
+```bash
+$ make design.icons
+```

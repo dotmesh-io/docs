@@ -7,7 +7,11 @@ var gulp            = require("gulp")
     nunjucksRender  = require("gulp-nunjucks-render")
     browserSync     = require("browser-sync").create()
     plumber         = require("gulp-plumber")
-    svgSprite       = require('gulp-svg-sprite')
+    svgSprite       = require("gulp-svg-sprite")
+    // CaptureTag      = require("nunjucks-capture")
+    // env             = new nunjucks.Environment();
+    //
+    // env.addExtension('CaptureTag', new CaptureTag());
 
     // --------------------------------
 

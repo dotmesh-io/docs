@@ -1,29 +1,31 @@
 // Button defaults
 // ------------------------------------------------------------------
 
-$btnSmall:    36px;
-$btnDefault:  40px;
-$btnLarge:    46px;
-$btnRadius:   4px;
-$btnPadding:  10px;
+$btnSmall:    46px;
+$btnDefault:  54px;
+$btnLarge:    60px;
+$btnRadius:   0;
+$btnPadding:  26px;
 
 // Button base style
 
 %button {
   @include animationHacks;
   cursor: pointer;
+  font-weight: $fontMedium;
   position: relative;
   padding: 0 $btnPadding;
   vertical-align: middle;
   text-align: center;
-  color: #fff;
+  color: $dmWheeler;
   text-decoration: none;
   display: inline-block;
   border-radius: $btnRadius;
   transition-property: color;
   transition-duration: 0.5s;
   overflow: hidden;
-  text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+  //text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+  text-align: left;
   span {
     font-size: inherit;
     font-weight: inherit;
@@ -36,15 +38,6 @@ $btnPadding:  10px;
   }
 }
 
-.button {
-  &Block {
-    display: block;
-  }
-  &_thing {
-
-  }
-}
-
 // Sizes
 // ------------------------------------------------------------------
 
@@ -52,7 +45,7 @@ $btnPadding:  10px;
   @extend %button;
   font-size: rem($typeS);
   line-height: $btnDefault;
-  background-color: red;
+  background-color: $dmPrime;
   &Small {
     font-size: rem($typeXS);
     line-height: $btnSmall;
@@ -62,7 +55,8 @@ $btnPadding:  10px;
     line-height: $btnLarge;
   }
   &Secondary {
-    background-color: $dmPrimeAccent;
+    color: $dmPrime;
+    background-color: $dmWheeler;
   }
   &Disabled {
     cursor: not-allowed;

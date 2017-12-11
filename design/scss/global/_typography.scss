@@ -100,6 +100,7 @@
 	display: block;
 	font-weight: $fontBold;
 	color: $dmHeadings;
+	@include sharp-text;
 }
 
 // Default text

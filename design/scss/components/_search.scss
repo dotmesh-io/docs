@@ -8,20 +8,22 @@
   &_field {
     position: relative;
     b {
-      display: block;
+      display: none;
       position: absolute;
       left: -400px;
       top: 0;
       height: 100%;
       width: 400px;
       background-color: $dmHargrove;
+      @include respond-to($vpMenu) {
+        display: block;
+      }
     }
   }
   &_input {
     border: none;
     position: relative;
-    padding: 12px;
-    padding-left: 0;
+    padding: 12px 26px;
     background-color: $dmHargrove;
     width: 100%;
     display: block;
@@ -29,6 +31,10 @@
     font-family: $fontVoice;
     caret-color: $dmWheeler;
     color: $dmHeadings;
+    @include respond-to($vpMenu) {
+        padding: 12px;
+        padding-left: 0;
+    }
     &::placeholder {
       color: $dmHeadings;
     }

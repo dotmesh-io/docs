@@ -1,0 +1,11 @@
+// Local mixins
+
+@mixin fauxUnderline($color) {
+  background-image: linear-gradient(
+    to top,
+    rgba($color, 0) 3%,
+    rgba($color, 0.5) 3%,
+    rgba($color, 0.5) 14%,
+    rgba($color, 0) 14%
+  );
+}

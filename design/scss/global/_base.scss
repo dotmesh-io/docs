@@ -1,5 +1,5 @@
 html {
-  @include sharp-text;
+  //@include sharp-text;
   font-size: $scaleRoot + px;
   @media (max-width: $vpDeviceSafe) {
     -webkit-text-size-adjust: 100%;
@@ -16,13 +16,7 @@ a {
   color: inherit;
   text-decoration: none;
   &:not(.button) {
-    background-image: linear-gradient(
-      to top,
-      rgba($dmAction, 0) 3%,
-      rgba($dmAction, 0.5) 3%,
-      rgba($dmAction, 0.5) 14%,
-      rgba($dmAction, 0) 14%
-    );
+    @include fauxUnderline($dmAction);
   }
   &:visited:not(.button) {
     color: $dmActionVisited;
@@ -30,13 +24,7 @@ a {
   @include link-active-styles {
     &:not(.button) {
       color: $dmTertiaryAccent;
-      background-image: linear-gradient(
-        to top,
-        rgba($dmActionRespond, 0) 3%,
-        rgba($dmActionRespond, 0.5) 3%,
-        rgba($dmActionRespond, 0.5) 14%,
-        rgba($dmActionRespond, 0) 14%
-      );
+      @include fauxUnderline($dmActionRespond);
     }
   }
 }
@@ -56,4 +44,10 @@ a[href^="tel"] {
 // Reset form spacing
 form {
   margin: 0;
+}
+
+// Button reset
+button {
+  border: 0;
+  border-radius: 0;
 }

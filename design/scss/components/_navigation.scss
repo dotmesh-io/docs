@@ -1,4 +1,19 @@
 
+.navigationtoggle {
+  display: none;
+  width: 100%;
+  margin-top: $bufferSpaceS;
+  @include respond-to-max($vpMenu) {
+    display: block;
+  }
+}
+
+.navigationwrapper {
+  @include respond-to-max($vpMenu) {
+    display: none;
+  }
+}
+
 .navigation {
   position: relative;
   @include respond-to($vpMenu) {
@@ -8,14 +23,17 @@
 
   }
   &_child {
-    padding-left: $bufferSpaceM;
-    padding-right: $bufferSpaceM;
     margin-bottom: $bufferSpaceM;
+    @include respond-to($vpE) {
+      padding-right: $bufferSpaceM;
+    }
   }
   &_item {
     font-size: rem($typeXS);
     margin-top: rem($typeDefault);
-    a, a:visited {
+    position: relative;
+    a,
+    a:visited {
       color: $dmText;
     }
     &Parent {
@@ -28,18 +46,29 @@
       > a,
       > a:visited {
         color: $dmPrime;
-        background-image: linear-gradient(
-          to top,
-          rgba($dmActionRespond, 0) 3%,
-          rgba($dmActionRespond, 0.5) 3%,
-          rgba($dmActionRespond, 0.5) 14%,
-          rgba($dmActionRespond, 0) 14%
-        );
+        @include fauxUnderline($dmActionRespond);
       }
     }
-    &Child {
-      a, a:visited {
-        color: $dmText;
+    .navigation_child & {
+      padding-left: $bufferSpaceM;
+      &:before {
+        content: "";
+        display: none;
+        height: $strokeWidth;
+        width: 12px;
+        background-color: $dmPrime;
+        position: absolute;
+        top: rem($typeS/2);
+        left: 0;
+      }
+      &Current {
+        &:before {
+          display: block;
+        }
+        > a,
+        > a:visited {
+
+        }
       }
     }
   }

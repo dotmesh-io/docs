@@ -1,17 +1,37 @@
-<!DOCTYPE>
-<html>
-{% include 'layouts/partials/head.html' %}
+<!doctype html>
+<html lang="en-GB" class="">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  {% include 'layouts/partials/head.html' %}
 <body>
   <div class="docs">
     <aside class="docs_aside">
-      {% block aside %}
-      {% endblock %}
+      <div class="titlecard">
+        <svg class="icon icon36 icon_marque_small_svg">
+          <use xlink:href="./assets/icons/renders/sprite.svg#marque_small"></use>
+        </svg>
+        <span class="titlecard_version">v: 0.0.1 Alpha.</span>
+        <h1 class="typeM heading">datamesh docs.</h1>
+      </div>
+      <form class="searchbar">
+        <div class="searchbar_field">
+          <label for="searchbar_input" class="searchbar_label">Search docs</label>
+          <input class="searchbar_input" type="text" value="" id="searchbar_input" placeholder="Search docs.">
+          <b></b><!-- This isn't a mistake, it's a visual hack -->
+        </div>
+        <button class="searchbar_button" type="submit">Search</button>
+      </form>
+      <nav class="navigation">
+        <ul class="navigation_parent">
+          {% block aside %}
+          {% endblock %}
+        </ul>
+      </nav>
     </aside>
     <div class="docs_body">
-      <div class="articlecontainer">
-        {% block content %}
-        {% endblock %}
-      </div>
+      {% block content %}
+      {% endblock %}
     </div>
   </div>
 </body>

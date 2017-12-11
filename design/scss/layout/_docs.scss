@@ -17,11 +17,13 @@ $asideWidthMinor: ($asideWidth - 100px);
   &_aside {
     grid-area: aside;
     padding: $bufferSpaceS;
+    margin-bottom: $bufferSpaceM;
     @include respond-to($vpMenu) {
       float: left;
       min-height: 100vh;
       width: $asideWidthMinor;
       padding: $bufferSpaceL 0 $bufferSpaceL $bufferSpaceS;
+      margin-bottom: 0;
       @supports (display: grid) {
         width: auto;
         float: none;

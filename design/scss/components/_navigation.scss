@@ -1,0 +1,46 @@
+
+.navigation {
+  position: relative;
+  @include respond-to($vpMenu) {
+    margin-top: $bufferSpaceL;
+  }
+  &_parent {
+
+  }
+  &_child {
+    padding-left: $bufferSpaceM;
+    padding-right: $bufferSpaceM;
+    margin-bottom: $bufferSpaceM;
+  }
+  &_item {
+    font-size: rem($typeXS);
+    margin-top: rem($typeDefault);
+    a, a:visited {
+      color: $dmText;
+    }
+    &Parent {
+      font-size: rem($typeS);
+      a {
+        background-image: none;
+      }
+    }
+    &Current {
+      > a,
+      > a:visited {
+        color: $dmPrime;
+        background-image: linear-gradient(
+          to top,
+          rgba($dmActionRespond, 0) 3%,
+          rgba($dmActionRespond, 0.5) 3%,
+          rgba($dmActionRespond, 0.5) 14%,
+          rgba($dmActionRespond, 0) 14%
+        );
+      }
+    }
+    &Child {
+      a, a:visited {
+        color: $dmText;
+      }
+    }
+  }
+}

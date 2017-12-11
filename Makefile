@@ -30,7 +30,7 @@ design.watch:
 		-v /app/design/node_modules \
 		-v /app/design/public \
 		-p 3000:3000 \
-		-w /app/design \
+		-w /app/design/public \
 		$(IMAGE) gulp serve
 
 .PHONY: design.copy

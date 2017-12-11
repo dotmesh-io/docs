@@ -1,0 +1,16 @@
+
+.titlecard {
+  position: relative;
+  &_version {
+    display: block;
+    @extend .typeXS;
+  }
+  .icon {
+    fill: $dmPrime;
+    margin-bottom: $bufferSpaceS/2;
+    transform: translateX(-12px); // optical alignment
+    @include respond-to($vpMenu) {
+      margin-bottom: $bufferSpaceM;
+    }
+  }
+}

@@ -1,0 +1,51 @@
+
+.searchbar {
+  margin-top: $spaceBase;
+  &_label {
+    // TODO: This should really be on a hook to check for JS first
+    display: none;
+  }
+  &_field {
+    position: relative;
+    b {
+      display: block;
+      position: absolute;
+      left: -400px;
+      top: 0;
+      height: 100%;
+      width: 400px;
+      background-color: $dmHargrove;
+    }
+  }
+  &_input {
+    border: none;
+    position: relative;
+    padding: 12px;
+    padding-left: 0;
+    background-color: $dmHargrove;
+    width: 100%;
+    display: block;
+    font-size: rem($typeMe);
+    font-family: $fontVoice;
+    caret-color: $dmWheeler;
+    color: $dmHeadings;
+    &::placeholder {
+      color: $dmHeadings;
+    }
+    &:focus {
+      outline: none;
+      background-color: $dmPrime;
+      color: $dmWheeler;
+      &::placeholder {
+        color: $dmWheeler;
+      }
+      & + b {
+        background-color: $dmPrime
+      }
+    }
+  }
+  &_button {
+    // TODO: This should really be on a hook to check for JS first
+    display: none;
+  }
+}

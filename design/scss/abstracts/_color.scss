@@ -25,7 +25,7 @@ $shades: (
       Light:    lighten($dmEleven, 10%)
     ),
     dmWheeler: (
-      Dark:     darken($dmWheeler, 10%),
+      Dark:     darken($dmWheeler, 22%),
       Darkest:  darken($dmWheeler, 30%)
     ),
     dmHopper: (
@@ -56,11 +56,11 @@ $dmPrimeAccent: 		shade(dmByers, Light);
 $dmSecondary:       $dmEleven;
 $dmSecondaryAccent: shade(dmMayfield, Dark);
 $dmTertiary:        $dmSinclair;
-$dmTertiaryAccent:  shade(dmWheeler, Darkest);
+$dmTertiaryAccent:  shade(dmWheeler, Dark);
 
 // Actions
 $dmAction: 					$dmSecondary;
-$dmActionRespond: 	$dmTertiaryAccent;
+$dmActionRespond: 	$dmWheeler;
 $dmActionVisited:   shade(dmByers, Light);
 
 // Default text colors

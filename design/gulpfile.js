@@ -102,11 +102,11 @@ var gulp            = require("gulp")
     })
 
     // Watch more things
-    gulp.task("watch-all", ["scss", "js", "assets", "render"], function () {
+    gulp.task("watch-all", ["scss", "render", "assets", "js"], function () {
       gulp.watch("js/**/*", ["js"])
+      gulp.watch("templates/**/*", ["render"])
       gulp.watch("scss/**/*", ["scss"])
       gulp.watch("assets/**/*", ["assets"])
-      gulp.watch("templates/**/*", ["render"])
     })
 
     // Spin up server

@@ -2,9 +2,17 @@
 <html>
 {% include 'layouts/partials/head.html' %}
 <body>
-  <div class="guide_index">
-    {% block content %}
-    {% endblock %}
+  <div class="docs">
+    <aside class="docs_aside">
+      {% block aside %}
+      {% endblock %}
+    </aside>
+    <div class="docs_body">
+      <div class="articlecontainer">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
   </div>
 </body>
 {% block footer_after %}

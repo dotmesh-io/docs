@@ -12,7 +12,7 @@
 
 @function top-shadow($depth) {
   $primary-offset: nth(1.5 3 10 14 19, $depth) * 1px;
-  $blur: nth(1.5 3 10 14 19, $depth) * 4px;
+  $blur: nth(1.5 3 10 14 19, $depth) * 3px;
   $color: rgba(black, nth(.12 .16 .19 .25 .30, $depth));
   @return 0 $primary-offset $blur $color;
 }

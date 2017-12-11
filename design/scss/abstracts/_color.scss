@@ -1,36 +1,9 @@
 
 @import "shared/color"; // Need to import shared colours explicitly
 
-// Assign colours from variables in shared/color.scss
+// Opacity constants
 // ------------------------------------------------------------------
 
-
-// Roles
-$dmPrime: 					#005EA5;
-$dmPrimeAccent: 		#00823B;
-$dmSecondary:       #006435;
-$dmSecondaryAccent: #FFBF47;
-$dmTertiary:        #28A197;
-$dmTertiaryAccent:  #D53880;
-
-// Actions
-$dmAction: 					#005EA5;
-$dmActionRespond: 	#006435;
-$dmActionVisited:   #4C2C92;
-
-// Default text colors
-$dmHeadings: 				#000000;
-$dmText: 						#6F777B;
-
-// Misc. color assignments
-$dmBorder:          #DEE0E2;
-$dmDisabled: 				#F8F8F8;
-$dmScrollbar: 			#2B8CC4;
-$dmError: 					#B10E1E;
-$dmSuccess: 				#00823B;
-$dmAlert: 					#FFBF47;
-
-// Opacity
 $dmOPa: 5%;
 $dmOPb: 15%;
 $dmOPc: 30%;
@@ -39,14 +12,67 @@ $dmOPe: 75%;
 $dmOPf: 90%;
 
 // Shades
+// ------------------------------------------------------------------
+
 // usage e.g: color: shade(example, light);
 $shades: (
-    dmPrime: (
-      Light:  lighten($dmPrime, 10%),
-      Dark:   darken($dmPrime, 10%)
+    dmByers: (
+      Lightest: lighten($dmByers, 30%),
+      Light:    lighten($dmByers, 10%)
+    ),
+    dmEleven: (
+      Lightest: lighten($dmEleven, 30%),
+      Light:    lighten($dmEleven, 10%)
+    ),
+    dmWheeler: (
+      Dark:     darken($dmWheeler, 10%),
+      Darkest:  darken($dmWheeler, 30%)
+    ),
+    dmHopper: (
+      Dark:     darken($dmHopper, 10%),
+      Darkest:  darken($dmHopper, 30%)
+    ),
+    dmMayfield: (
+      Dark:     darken($dmMayfield, 10%),
+      Darkest:  darken($dmMayfield, 30%)
+    ),
+    dmHargrove: (
+      Dark:     darken($dmHargrove, 3%)
     )
 );
 
-@function palette($palette, $tone) {
+@function shade($palette, $tone) {
     @return map-get(map-get($shades, $palette), $tone);
 }
+
+
+// Assign colours from variables in shared/color.scss
+// ------------------------------------------------------------------
+
+
+// Roles
+$dmPrime: 					$dmHenderson;
+$dmPrimeAccent: 		shade(dmByers, Light);
+$dmSecondary:       $dmEleven;
+$dmSecondaryAccent: shade(dmMayfield, Dark);
+$dmTertiary:        $dmSinclair;
+$dmTertiaryAccent:  shade(dmWheeler, Darkest);
+
+// Actions
+$dmAction: 					$dmSecondary;
+$dmActionRespond: 	$dmTertiaryAccent;
+$dmActionVisited:   shade(dmByers, Light);
+
+// Default text colors
+$dmHeadings: 				$dmByers;
+$dmText: 						$dmHolland;
+
+// Misc. color assignments
+$dmBorder:          shade(dmHargrove, Dark);
+$dmDisabled: 				$dmHawkins;
+$dmScrollbar: 			$dmPrime;
+
+// Non-brand feedbacks
+$dmError: 					#B10E1E;
+$dmSuccess: 				#00823B;
+$dmAlert: 					#FFBF47;

@@ -1,34 +1,55 @@
 
+$asideWidth: 365px;
+$asideWidthMinor: ($asideWidth - 100px);
+
 .docs {
   @include pie-clearfix;
-  @supports (display: grid) {
-    display: grid;
-    grid-template-areas: "aside body";
-    grid-template-columns: 365px 1fr;
+  @include respond-to($vpMenu) {
+    @supports (display: grid) {
+      display: grid;
+      grid-template-areas: "aside body";
+      grid-template-columns: $asideWidthMinor 1fr;
+    }
+  }
+  @include respond-to($vpD) {
+    grid-template-columns: $asideWidth 1fr;
   }
   &_aside {
     grid-area: aside;
-    background-color: #eee;
-    min-height: 100vh;
-    width: 365px;
-    float: left;
-    @supports (display: grid) {
-      width: auto;
-      float: none;
+    padding: $bufferSpaceS;
+    @include respond-to($vpMenu) {
+      float: left;
+      min-height: 100vh;
+      width: $asideWidthMinor;
+      padding: $bufferSpaceL 0 $bufferSpaceL $bufferSpaceS;
+      @supports (display: grid) {
+        width: auto;
+        float: none;
+      }
     }
-    .menu {
-        padding: $spaceBase*2;
+    @include respond-to($vpD) {
+      width: $asideWidth;
+      padding-left: $bufferSpaceL;
+      @supports (display: grid) {
+        width: auto;
+      }
+    }
+    @include respond-to($vpE) {
+      padding-left: $bufferSpaceXL;
     }
   }
   &_body {
     grid-area: body;
-    padding: $spaceBase*2 $spaceBase*2 $spaceBase*2 $spaceBaseP*1.75;
-    width: calc(100% - 365px);
-    @supports (display: grid) {
-      width: auto;
+    padding: $bufferSpaceS;
+    @include respond-to($vpMenu) {
+      padding: $bufferSpaceL $bufferSpaceM $bufferSpaceM $spaceBaseP;
+      width: calc(100% - $asideWidth);
+      @supports (display: grid) {
+        width: auto;
+      }
     }
-    .typebase {
-      max-width: 665px;
+    @include respond-to($vpD) {
+      padding-left: $spaceBaseP*1.75;
     }
   }
 }

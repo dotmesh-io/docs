@@ -8,6 +8,15 @@
 	margin-top: 0;
 }
 
+.trailDot {
+	position: relative;
+	&:after {
+		color: inherit;
+		content: " .";
+		display: inline-block;
+	}
+}
+
 // Kerning
 // ------------------------------------------------------------------
 
@@ -98,7 +107,7 @@
 
 .text {
 	@extend %typebaseRoot;
-	font-size: $typeDefault;
+	font-size: rem($typeDefault);
 }
 
 // Default lists
@@ -166,7 +175,7 @@
 	}
 	h1, h2, h3, h4, h5, h6 {
 		@extend .heading;
-		margin-top: rem($typeDefault*2);
+		margin-top: rem($typeDefault*4);
 	}
 	h1 {
 		@extend .typeXL;
@@ -218,6 +227,9 @@
 	> h5:first-child,
 	> h6:first-child,
 	> img:first-child,
+	> p:first-child,
+	> ol:first-child,
+	> ul:first-child,
 	> media-video-wrapper:first-child  {
 		margin-top: 0;
 	}

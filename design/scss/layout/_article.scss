@@ -1,0 +1,25 @@
+
+.articlecontainer {
+  max-width: 665px;
+  position: relative;
+}
+
+.article {
+  position: relative;
+  &_header {
+    padding-bottom: $bufferSpaceS;
+    //border-bottom: $strokeWidth solid $dmBorder;
+    &_metatag {
+      display: block;
+      @extend .typeMe;
+    }
+  }
+  &_aside {
+
+  }
+  &_section {
+    border-top: $strokeWidth solid $dmBorder;
+    padding-top: $bufferSpaceM;
+    margin-bottom: ($bufferSpaceXL - $strokeWidth);
+  }
+}

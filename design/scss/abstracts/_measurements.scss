@@ -7,10 +7,15 @@ $spaceBaseP: 10%;
 
 
 // Buffers. Edge spacing of parent elements generally (rows etc...)
-$bufferSpaceS:	$spaceBase;
-$bufferSpaceM:	$spaceBase*2;
-$bufferSpaceL:	$spaceBase*4;
+// ------------------------------------------------------------------
 
+$bufferSpaceS:    $spaceBase;
+$bufferSpaceM:    $spaceBase*2;
+$bufferSpaceL:    $spaceBase*3;
+$bufferSpaceXL:   $spaceBase*4;
+$bufferSpaceXXL:  $spaceBase*6;
 
 // Double declare variable so we know what the largest buffer size is
-$bufferSpaceMax:	$bufferSpaceL;
+// ------------------------------------------------------------------
+
+$bufferSpaceMax:	$bufferSpaceXL;

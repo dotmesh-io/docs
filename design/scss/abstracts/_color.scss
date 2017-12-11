@@ -16,16 +16,16 @@ $dmOPf: 90%;
 
 // usage e.g: color: shade(example, light);
 $shades: (
-    dmByers: (
-      Lightest: lighten($dmByers, 30%),
-      Light:    lighten($dmByers, 10%)
+    dmHenderson: (
+      Lightest: lighten($dmHenderson, 30%),
+      Light:    lighten($dmHenderson, 10%)
     ),
     dmEleven: (
       Lightest: lighten($dmEleven, 30%),
       Light:    lighten($dmEleven, 10%)
     ),
     dmWheeler: (
-      Dark:     darken($dmWheeler, 22%),
+      Dark:     darken($dmWheeler, 17%),
       Darkest:  darken($dmWheeler, 30%)
     ),
     dmHopper: (
@@ -38,6 +38,9 @@ $shades: (
     ),
     dmHargrove: (
       Dark:     darken($dmHargrove, 3%)
+    ),
+    dmSinclair: (
+      Dark:     darken($dmSinclair, 40%)
     )
 );
 
@@ -52,16 +55,16 @@ $shades: (
 
 // Roles
 $dmPrime: 					$dmHenderson;
-$dmPrimeAccent: 		shade(dmByers, Light);
+$dmPrimeAccent: 		shade(dmHenderson, Light);
 $dmSecondary:       $dmEleven;
-$dmSecondaryAccent: shade(dmMayfield, Dark);
-$dmTertiary:        $dmSinclair;
-$dmTertiaryAccent:  shade(dmWheeler, Dark);
+$dmSecondaryAccent: shade(dmEleven, Light);
+$dmTertiary:        $dmHopper;
+$dmTertiaryAccent:  shade(dmHopper, Dark);
 
 // Actions
-$dmAction: 					$dmSecondary;
-$dmActionRespond: 	$dmWheeler;
-$dmActionVisited:   shade(dmByers, Light);
+$dmAction: 					shade(dmHenderson, Light);
+$dmActionRespond: 	shade(dmWheeler, Dark);
+$dmActionVisited:   shade(dmWheeler, Darkest);
 
 // Default text colors
 $dmHeadings: 				$dmByers;

@@ -58,7 +58,7 @@ The boilerplate hangs on [svg-sprite](https://github.com/jkphl/svg-sprite) which
 1. Export the SVG from a graphics package as simple path or stroke data, combining as required.
 2. No text in icons please. If you do have Glyphs, outline the font.
 3. Clip the SVG to artboard so there are no borders or gaps from the edge
-4. If it's colour is anything other than black, go Spinal Tap and make it black `#000000`.
+4. If its colour is anything other than black, go full Spinal Tap and make it black `#000000`.
 5. Save icons to the source folder in `assets/icons/source`
 
 ### Generating the sprite

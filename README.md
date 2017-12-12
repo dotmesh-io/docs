@@ -53,17 +53,15 @@ Then you can restart hugo.
 We use [una's boilerplate](https://github.com/una/svg-icon-system-boilerplate) to generate a sprite of SVG's from individual source files. We can manipulate these with CSS and JS as required.
 The boilerplate hangs on [svg-sprite](https://github.com/jkphl/svg-sprite) which is really comprehensive.
 
-## Making SVG's
+### Making SVG's
 
 1. Export the SVG from a graphics package as simple path or stroke data, combining as required.
-2. No text in icons please. If you do have a Glyph, outline the font.
+2. No text in icons please. If you do have Glyphs, outline the font.
 3. Clip the SVG to artboard so there are no borders or gaps from the edge
-4. Save icons to the source folder in `assets/icons/source`
+4. If it's colour is anything other than black, go Spinal Tap and make it black `#000000`.
+5. Save icons to the source folder in `assets/icons/source`
 
-## Generating the sprite
-
-1. Stop docker if running in watch mode
-2. Run:
+### Generating the sprite
 
 ```bash
 $ make design.icons

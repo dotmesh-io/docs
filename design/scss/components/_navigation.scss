@@ -3,14 +3,28 @@
   display: none;
   width: 100%;
   margin-top: $bufferSpaceS;
+  font-size: rem($typeXS);
+  border-bottom: $strokeWidth solid $dmPrime;
+  padding: $spaceBase/2 0;
+  @extend .heading;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
   @include respond-to-max($vpMenu) {
     display: block;
   }
 }
 
 .navigationwrapper {
+  transition: max-height 0.75s ease-out;
   @include respond-to-max($vpMenu) {
-    display: none;
+    max-height: 1000px;
+    overflow: hidden;
+    &Collapsed {
+      max-height: 0;
+      transition: max-height 0.5s ease-out;
+    }
   }
 }
 

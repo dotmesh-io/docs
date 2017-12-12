@@ -1,6 +1,7 @@
 
 .searchbar {
   margin-top: $spaceBase;
+  position: relative;
   &_label {
     // TODO: This should really be on a hook to check for JS first
     display: none;
@@ -23,7 +24,7 @@
   &_input {
     border: none;
     position: relative;
-    padding: 12px 26px;
+    padding: 12px 55px 12px 26px;
     background-color: $dmHargrove;
     width: 100%;
     display: block;
@@ -32,7 +33,6 @@
     caret-color: $dmWheeler;
     color: $dmHeadings;
     @include respond-to($vpMenu) {
-        padding: 12px;
         padding-left: 0;
     }
     &::placeholder {
@@ -51,7 +51,16 @@
     }
   }
   &_button {
-    // TODO: This should really be on a hook to check for JS first
-    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 24px;
+    cursor: pointer;
+    svg {
+      fill: $dmHolland;
+    }
+    &:focus {
+      outline: none;
+    }
   }
 }

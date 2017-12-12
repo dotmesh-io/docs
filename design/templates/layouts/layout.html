@@ -14,15 +14,19 @@
         <span class="titlecard_version">v: 0.0.1 Alpha.</span>
         <h1 class="typeM heading">datamesh docs.</h1>
       </div>
-      <button type="button" class="button navigationtoggle">Show menu</button>
-        <div class="navigationwrapper">
+      <button type="button" class="navigationtoggle" id="navigationtoggle">Menu</button>
+      <div class="navigationwrapper" id="navigationwrapper">
         <form class="searchbar">
           <div class="searchbar_field">
             <label for="searchbar_input" class="searchbar_label">Search docs</label>
             <input class="searchbar_input" type="text" value="" id="searchbar_input" placeholder="Search docs.">
             <b></b><!-- This isn't a mistake, it's a visual hack -->
           </div>
-          <button class="searchbar_button" type="submit">Search</button>
+          <button class="searchbar_button" type="submit">
+            <svg class="icon icon22 icon_search_svg">
+              <use xlink:href="./assets/icons/renders/sprite.svg#search"></use>
+            </svg>
+          </button>
         </form>
         <nav class="navigation">
           <ul class="navigation_parent">
@@ -38,6 +42,23 @@
     </div>
   </div>
 </body>
+
+<script>
+  // TODO move into external file
+  var mainNav = document.getElementById('navigationwrapper');
+  var navToggle = document.getElementById('navigationtoggle');
+
+  // Start by adding the class "collapse" to the mainNav
+  mainNav.classList.add('navigationwrapperCollapsed');
+
+  // Establish a function to toggle the class "collapse"
+  function mainNavToggle() {
+      mainNav.classList.toggle('navigationwrapperCollapsed');
+  }
+  // Add a click event to run the mainNavToggle function
+  navToggle.addEventListener('click', mainNavToggle);
+</script>
+
 {% block footer_after %}
 {% endblock %}
 </html>

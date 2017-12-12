@@ -14,7 +14,7 @@
 // Set sizes for icons.
 // ------------------------------------------------------------------
 
-$icon_sizes: 16, 24, 36;
+$icon_sizes: 16, 22, 24, 36;
 
 @each $icon in $icon_sizes {
   .icon#{$icon} {

@@ -1,15 +1,5 @@
-
 @import "shared/color"; // Need to import shared colours explicitly
 
-// Opacity constants
-// ------------------------------------------------------------------
-
-$dmOPa: 5%;
-$dmOPb: 15%;
-$dmOPc: 30%;
-$dmOPd: 50%;
-$dmOPe: 75%;
-$dmOPf: 90%;
 
 // Shades
 // ------------------------------------------------------------------
@@ -56,10 +46,7 @@ $shades: (
 // Roles
 $dmPrime: 					$dmHenderson;
 $dmPrimeAccent: 		shade(dmHenderson, Light);
-$dmSecondary:       $dmEleven;
-$dmSecondaryAccent: shade(dmEleven, Light);
-$dmTertiary:        $dmHopper;
-$dmTertiaryAccent:  shade(dmHopper, Dark);
+
 
 // Actions
 $dmAction: 					shade(dmHenderson, Light);

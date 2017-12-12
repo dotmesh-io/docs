@@ -22,7 +22,7 @@
 	        </svg>
 				</button>
 			</div>
-      <div class="navigationwrapper" id="navigationwrapper">
+      <div class="navigationwrapper navigationwrapperCollapsed" id="navigationwrapper">
         <form class="searchbar">
           <div class="searchbar_field">
             <label for="searchbar_input" class="searchbar_label">Search docs</label>
@@ -56,11 +56,12 @@
   var navToggle = document.getElementById('navigationtoggle');
 
   // Start by adding the class "collapse" to the mainNav
-  mainNav.classList.add('navigationwrapperCollapsed');
+  //mainNav.classList.add('navigationwrapperCollapsed');
 
   // Establish a function to toggle the class "collapse"
   function mainNavToggle() {
-      mainNav.classList.toggle('navigationwrapperCollapsed');
+  	mainNav.classList.toggle('navigationwrapperCollapsed');
+		navToggle.classList.toggle('navigationtoggleActive');
   }
   // Add a click event to run the mainNavToggle function
   navToggle.addEventListener('click', mainNavToggle);

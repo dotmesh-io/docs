@@ -18,7 +18,8 @@
       top: 0;
       height: 100%;
       width: 400px;
-      background-color: $dmPrime;
+      background-color: $dmHarrington;
+      transition: all linear 0.25s;
       @include respond-to($vpMenu) {
         display: block;
       }
@@ -28,28 +29,37 @@
     border: none;
     position: relative;
     padding: 12px 55px 12px 26px;
-    background-color: $dmPrime;
+    background-color: $dmHarrington;
     width: 100%;
     display: block;
     font-size: rem($typeMe);
     font-family: $fontVoice;
     caret-color: $dmWheeler;
     color: $dmWheeler;
+    transition: all linear 0.25s;
     @include respond-to($vpMenu) {
         padding-left: 0;
     }
     &::placeholder {
       color: $dmWheeler;
     }
+    &:hover {
+      background-color: $dmPrime;
+      transition: all linear 0.5s;
+      & + b {
+        background-color: $dmPrime;
+        transition: all linear 0.5s;
+      }
+    }
     &:focus {
       outline: none;
-      background-color: $dmPrimeAccent;
+      background-color: $dmHarrington;
       color: $dmWheeler;
       &::placeholder {
         color: $dmWheeler;
       }
       & + b {
-        background-color: $dmPrimeAccent;
+        background-color: $dmHarrington;
       }
     }
   }

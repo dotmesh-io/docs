@@ -3,11 +3,6 @@
 .navigationtrigger {
   display: none;
   position: relative;
-  .icon {
-    position: absolute;
-    top: $bufferSpaceS;
-    right: 0;
-  }
   @include respond-to-max($vpMenu) {
     display: block;
   }
@@ -20,8 +15,23 @@
   padding: $spaceBase/2 0;
   @extend .heading;
   cursor: pointer;
+  position: relative;
+  .icon {
+    position: absolute;
+    top: $bufferSpaceS;
+    right: 0;
+    transform-origin: center center;
+    transform: rotateZ(0);
+    transition: transform linear 0.125s;
+    @include animationHacks;
+  }
   &:focus {
     outline: none;
+  }
+  &Active  {
+    .icon {
+      transform: rotateZ(-180deg);
+    }
   }
 }
 
@@ -31,6 +41,7 @@
     overflow: hidden;
     transition: max-height 0.75s ease-out;
     margin-bottom: $bufferSpaceM;
+    @include animationHacks;
     &Collapsed {
       max-height: 0;
       transition: max-height 0.5s ease-out;
@@ -86,7 +97,7 @@
         width: 12px;
         background-color: $dmPrime;
         position: absolute;
-        top: rem($typeS/2);
+        top: rem($typeS/1.8);
         left: 0;
       }
       &Current {

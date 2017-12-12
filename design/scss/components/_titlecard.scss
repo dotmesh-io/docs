@@ -8,7 +8,11 @@
   .icon {
     fill: $dmPrime;
     margin-bottom: $bufferSpaceS/2;
-    transform: translateX(-12px); // optical alignment
+    left: -12px; // optical alignment
+    @extend .animated;
+    @extend .lightSpeedIn;
+    animation-duration: 0.5s;
+    @include animationHacks;
     @include respond-to($vpMenu) {
       margin-bottom: $bufferSpaceM;
     }

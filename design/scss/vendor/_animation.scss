@@ -1,0 +1,50 @@
+
+// A small scoop of https://github.com/daneden/animate.css
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+.animated.infinite {
+  animation-iteration-count: infinite;
+}
+
+// .animated.hinge {
+//   animation-duration: 2s;
+// }
+//
+// .animated.flipOutX,
+// .animated.flipOutY,
+// .animated.bounceIn,
+// .animated.bounceOut {
+//   animation-duration: .75s;
+// }
+
+
+@keyframes lightSpeedIn {
+  from {
+    transform: translate3d(-200px, 0, 0) skewX(20deg);
+    opacity: 0.4;
+  }
+
+  60% {
+    transform: skewX(10deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: skewX(-5deg);
+    opacity: 1;
+  }
+
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.lightSpeedIn {
+  animation-name: lightSpeedIn;
+  animation-timing-function: ease-out;
+}

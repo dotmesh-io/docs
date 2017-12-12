@@ -22,18 +22,3 @@ $icon_sizes: 16, 22, 24, 36;
     height: $icon + px;
   }
 }
-
-// Do the colour thing
-// ------------------------------------------------------------------
-
-.icon_ {
-  &warning_svg {
-    fill: $dmAlert;
-  }
-  &success_svg {
-    fill: $dmSuccess;
-  }
-  &error_svg {
-    fill: $dmError;
-  }
-}

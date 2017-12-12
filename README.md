@@ -59,7 +59,11 @@ The boilerplate hangs on [svg-sprite](https://github.com/jkphl/svg-sprite) which
 2. No text in icons please. If you do have a Glyph, outline the font.
 3. Clip the SVG to artboard so there are no borders or gaps from the edge
 4. Save icons to the source folder in `assets/icons/source`
-5. Before running the build command, you may need to stop and restart
+
+## Generating the sprite
+
+1. Stop docker if running in watch mode
+2. Run:
 
 ```bash
 $ make design.icons

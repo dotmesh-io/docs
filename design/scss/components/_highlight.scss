@@ -22,6 +22,24 @@
       display: block;
     }
   }
+  &Figure {
+    display: block;
+    @include highlightPull($vpGutter, $docsGutter);
+    img {
+      height: auto;
+      max-width: 100%;
+      display: block;
+    }
+    figcaption {
+      display: block;
+      h1,h2,h3,h4,h5,h6,p,li {
+        font-size: rem($typeS);
+        font-weight: $fontNormal;
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+  }
   &Video {
     height: 0;
     padding-bottom: $ratioWidescreen; /* True 16:9 */

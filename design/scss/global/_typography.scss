@@ -117,15 +117,15 @@
 %textList {
 	li {
 		@extend .text;
-		@include leading_adjust(4);
+		//@include leading_adjust(4);
 	}
 }
 
 .unordered_list {
-	list-style-type: square;
+	list-style-type: disc;
 	@extend %textList;
 	ul {
-		list-style-type: square;
+		list-style-type: disc;
 		padding-left: rem(20);
 	}
 }
@@ -157,18 +157,22 @@
 		margin-top: rem($typeDefault);
 		display: block;
 	}
-	li {
-		@extend .text;
-	}
 	ul,
 	ol {
 		margin-top: rem($typeDefault);
+		@extend %textList;
 	}
 	ul {
 		@extend .unordered_list;
 	}
 	ol {
 		@extend .ordered_list;
+	}
+	li {
+		padding-bottom: rem($typeDefault);
+		&:last-of-type {
+			padding-bottom: 0;
+		}
 	}
 	img, pre {
 		display: block;
@@ -198,7 +202,9 @@
 		@extend %kernLoose;
 		text-transform: uppercase;
 	}
-
+	strong {
+		color: $dmHarrington;
+	}
 	&Synopsis {
 		@include respond-to($vpF) {
 			> p:first-of-type {

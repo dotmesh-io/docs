@@ -6,15 +6,18 @@
 $vpA: 300px;
 $vpB: 600px;
 $vpC: 800px;
-$vpD: 1020px;
+$vpD: 1080px;
 $vpE: 1200px;
 $vpF: 1400px;
-$vpMax: $vpF;
+$vpG: 1500px;
+$vpH: 1680px;
+$vpMax: $vpH;
 
 // Assign viewports to tasks
-$vpTable:					$vpC;		// Table view switch
-$vpMenu:					$vpC;		// Menu for small screen switch
-$vpDeviceSafe:		800px;	// Safe width for tablet type things as they can be odd
+$vpTable:					$vpC;		               // Table view switch
+$vpMenu:					$vpC;		               // Menu for small screen switch
+$vpGutter:        $vpD + $docsGutter*2;    // Guttering
+$vpDeviceSafe:		800px;	               // Safe width for tablet type things as they can be odd
 
 
 // ------------------------------------------------------------------

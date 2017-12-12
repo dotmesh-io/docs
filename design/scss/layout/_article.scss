@@ -1,7 +1,12 @@
 
+$containerWidth: 665px;
+$asideWidth: 200px;
+
 .articlecontainer {
-  max-width: 665px;
   position: relative;
+  @include respond-to($vpMenu) {
+    max-width: $containerWidth;
+  }
 }
 
 .article {
@@ -15,11 +20,30 @@
     }
   }
   &_aside {
-
+    margin-bottom: ($bufferSpaceM - $strokeWidth);
+    @include respond-to($vpF) {
+      border-top-color: $dmPrime;
+      position: absolute;
+      width: $asideWidth;
+      left: 105%;
+      top: -$strokeWidth;
+      border-top: $strokeWidth solid $dmPrime;
+      padding-top: $bufferSpaceM;
+    }
+    @include respond-to($vpG) {
+      left: 115%;
+    }
+    ul {
+      @extend .simple_list;
+      strong {
+        color: $dmHeadings;
+      }
+    }
   }
   &_section {
+    position: relative;
+    margin-bottom: ($bufferSpaceXL - $strokeWidth);
     border-top: $strokeWidth solid $dmBorder;
     padding-top: $bufferSpaceM;
-    margin-bottom: ($bufferSpaceXL - $strokeWidth);
   }
 }

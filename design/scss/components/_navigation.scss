@@ -1,8 +1,20 @@
 
-.navigationtoggle {
+
+.navigationtrigger {
   display: none;
+  position: relative;
+  .icon {
+    position: absolute;
+    top: $bufferSpaceS;
+    right: 0;
+  }
+  @include respond-to-max($vpMenu) {
+    display: block;
+  }
+}
+
+.navigationtoggle {
   width: 100%;
-  margin-top: $bufferSpaceS;
   font-size: rem($typeXS);
   border-bottom: $strokeWidth solid $dmPrime;
   padding: $spaceBase/2 0;
@@ -11,16 +23,14 @@
   &:focus {
     outline: none;
   }
-  @include respond-to-max($vpMenu) {
-    display: block;
-  }
 }
 
 .navigationwrapper {
-  transition: max-height 0.75s ease-out;
   @include respond-to-max($vpMenu) {
     max-height: 1000px;
     overflow: hidden;
+    transition: max-height 0.75s ease-out;
+    margin-bottom: $bufferSpaceM;
     &Collapsed {
       max-height: 0;
       transition: max-height 0.5s ease-out;
@@ -37,7 +47,11 @@
 
   }
   &_child {
+    display: none;
     margin-bottom: $bufferSpaceM;
+    .navigation_itemCurrent & {
+      display: block;
+    }
     @include respond-to($vpE) {
       padding-right: $bufferSpaceM;
     }
@@ -78,10 +92,6 @@
       &Current {
         &:before {
           display: block;
-        }
-        > a,
-        > a:visited {
-
         }
       }
     }

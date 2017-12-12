@@ -42,6 +42,11 @@ a[href^="tel"] {
   text-decoration: none;
 }
 
+strong, b {
+  font-weight: $fontBold;
+	@include sharp-text;
+}
+
 input, textarea, select, button {
   font-family: $fontDefault;
 }

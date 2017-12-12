@@ -16,13 +16,12 @@ $asideWidthMinor: ($asideWidth - 100px);
   }
   &_aside {
     grid-area: aside;
-    padding: $bufferSpaceS;
-    margin-bottom: $bufferSpaceS;
+    padding: $bufferSpaceM;
     @include respond-to($vpMenu) {
       float: left;
       min-height: 100vh;
       width: $asideWidthMinor;
-      padding: $bufferSpaceL 0 $bufferSpaceL $bufferSpaceS;
+      padding: $bufferSpaceL 0 $bufferSpaceL $bufferSpaceM;
       margin-bottom: 0;
       @supports (display: grid) {
         width: auto;
@@ -30,28 +29,28 @@ $asideWidthMinor: ($asideWidth - 100px);
       }
     }
     @include respond-to($vpD) {
-      width: $asideWidth;
       padding-left: $bufferSpaceL;
       @supports (display: grid) {
         width: auto;
       }
     }
-    @include respond-to($vpE) {
+    @include respond-to($vpG) {
+      width: $asideWidth;
       padding-left: $bufferSpaceXL;
     }
   }
   &_body {
     grid-area: body;
-    padding: $bufferSpaceS;
+    padding: $bufferSpaceM;
     @include respond-to($vpMenu) {
       padding: $bufferSpaceL $bufferSpaceM $bufferSpaceM $spaceBaseP;
-      width: calc(100% - $asideWidth);
+      width: calc(100% - #{$asideWidth});
       @supports (display: grid) {
         width: auto;
       }
     }
-    @include respond-to($vpD) {
-      padding-left: $spaceBaseP*1.75;
+    @include respond-to($vpG) {
+      padding-left: $spaceBaseP*1.25;
     }
   }
 }

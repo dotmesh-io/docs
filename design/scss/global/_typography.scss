@@ -117,6 +117,7 @@
 %textList {
 	li {
 		@extend .text;
+		@include leading_adjust(4);
 	}
 }
 
@@ -196,6 +197,15 @@
 		@extend .typeXS;
 		@extend %kernLoose;
 		text-transform: uppercase;
+	}
+
+	&Synopsis {
+		@include respond-to($vpF) {
+			> p:first-of-type {
+				font-size: rem($typeM);
+				color: $dmHenderson;
+			}
+		}
 	}
 
 	// Remove next para or list top margin

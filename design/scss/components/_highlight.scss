@@ -1,0 +1,50 @@
+
+.highlight {
+  margin: $bufferSpaceM 0;
+  position: relative;
+  &Block {
+    padding: $bufferSpaceM;
+    background-color: $dmHargrove;
+    border-left: $strokeWidth*2 solid $dmPrimeAccent;
+    @include highlightPull($vpGutter, $docsGutter);
+    @include respond-to($vpGutter) {
+      padding-left: $docsGutter;
+    }
+    ol, ul {
+      padding-left: rem(20);
+    }
+  }
+  &Media {
+    @include highlightPull($vpGutter, $docsGutter);
+    img {
+      height: auto;
+      max-width: 100%;
+      display: block;
+    }
+  }
+  &Video {
+    height: 0;
+    padding-bottom: $ratioWidescreen; /* True 16:9 */
+    @include respond-to($vpGutter) {
+      padding-bottom: calc(#{$ratioWidescreen} + 30px); // Adjusted 16:9 to account for left pull
+    }
+    iframe {
+      position: absolute;
+    	top: 0;
+    	left: 0;
+    	width: 100%;
+    	height: 100%;
+      @include highlightPull($vpGutter, $docsGutter);
+    }
+  }
+  &_heading {
+    display: block;
+    @extend .typeM;
+    @extend .heading;
+  }
+}
+
+// If it resides in typebase, which it most likely will remove the top margin if it's first in line
+.typebase > .highlight:first-child {
+  margin-top: 0;
+}

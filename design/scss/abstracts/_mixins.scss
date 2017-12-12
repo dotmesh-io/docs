@@ -9,3 +9,10 @@
     rgba($color, 0) 14%
   );
 }
+
+@mixin highlightPull($viewport, $pull) {
+  @include respond-to($viewport) {
+    left: -$pull;
+    width: calc(100% + #{$pull});
+  }
+}

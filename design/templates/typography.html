@@ -139,17 +139,7 @@
       <h6>Header level 6</h6>
       <p><em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
 
-      <pre><code>$ sudo curl -o /usr/local/bin/dm \
-  https://get.datamesh.io/$(uname -s)/dm
-$ sudo chmod +x /usr/local/bin/dm
-$ dm cluster init
-
-Installing datamesh server in a container... done.
-Configuring dm CLI to authenticate to datamesh server... done.
-
-Here is your key to add other nodes:
-https://discovery.datamesh.io/22fd02ea1e89bad78a92c35a2e268044
-You can use 'dm auth' to get this key later.$</code></pre>
+      {% include 'layouts/content/code-cli.html' %}
   </div>
 
 </div>

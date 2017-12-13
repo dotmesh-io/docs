@@ -75,6 +75,9 @@
       color: $dmText;
     }
     a {
+      @include respond-to-max($vpMenu) {
+        display: block;
+      }
       @include link-active-styles {
         color: $dmPrime;
       }
@@ -89,7 +92,9 @@
       > a,
       > a:visited {
         color: $dmPrime;
-        @include fauxUnderline($dmActionRespond);
+        @include respond-to($vpMenu) {
+          @include fauxUnderline($dmActionRespond);
+        }
       }
     }
     .navigation_child & {

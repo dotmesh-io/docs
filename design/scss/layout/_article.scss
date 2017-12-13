@@ -33,7 +33,30 @@ $asideWidth: 200px;
     @include respond-to($vpG) {
       left: 115%;
     }
-    ul {
+    &_heading {
+      @extend .typeMe;
+      @extend .heading;
+      margin-top: rem($typeDefault*2);
+      margin-bottom: rem(5);
+      @include respond-to($vpF) {
+        margin-top: rem($typeDefault*3);
+      }
+    }
+    &_anchors {
+      @extend .simple_list;
+      li {
+        padding-bottom: rem($typeDefault/2);
+        @include leading_adjust(2);
+        font-size: rem($typeS);
+        a {
+          line-height: inherit;
+        }
+    		&:last-of-type {
+    			padding-bottom: 0;
+    		}
+      }
+    }
+    &_list {
       @extend .simple_list;
       strong {
         color: $dmHeadings;

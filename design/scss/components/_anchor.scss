@@ -12,3 +12,13 @@ a.anchor {
     background-image: none;
   }
 }
+
+a.anchor,
+a.anchor .icon {
+  width: 18px;
+  height: 18px;
+  @include respond-to($vpGutter) {
+    width: 24px;
+    height: 24px;
+  }
+}

@@ -41,7 +41,6 @@
     overflow: hidden;
     transition: max-height 0.75s ease-out;
     margin-bottom: $bufferSpaceM;
-    @include animationHacks;
     &Collapsed {
       max-height: 0;
       transition: max-height 0.5s ease-out;

@@ -16,7 +16,7 @@ $asideWidthMinor: ($asideWidth - 100px);
   }
   &_aside {
     grid-area: aside;
-    padding: $bufferSpaceM;
+    padding: $bufferSpaceS*1.5;
     @include respond-to($vpMenu) {
       float: left;
       min-height: 100vh;
@@ -41,7 +41,7 @@ $asideWidthMinor: ($asideWidth - 100px);
   }
   &_body {
     grid-area: body;
-    padding: $bufferSpaceM;
+    padding: $bufferSpaceS*1.5;
     @include respond-to($vpMenu) {
       padding: $bufferSpaceL $bufferSpaceM $bufferSpaceM $spaceBaseP;
       width: calc(100% - #{$asideWidth});

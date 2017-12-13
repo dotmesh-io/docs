@@ -15,21 +15,14 @@ body {
 a {
   color: inherit;
   text-decoration: none;
-  &:not(.button),
-  &:not(.anchor) {
-    color: $dmAction;
-    @include fauxUnderline($dmWheeler);
-  }
-  &:visited:not(.button),
-  &:visited:not(.anchor) {
+  color: $dmAction;
+  @include fauxUnderline($dmWheeler);
+  &:visited {
     color: $dmActionVisited;
   }
   @include link-active-styles {
-    &:not(.button),
-    &:not(.anchor)  {
-      color: $dmActionRespond;
-      @include fauxUnderline($dmWheeler);
-    }
+    color: $dmActionRespond;
+    @include fauxUnderline($dmWheeler);
   }
 }
 

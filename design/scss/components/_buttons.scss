@@ -5,18 +5,17 @@ $btnSmall:    46px;
 $btnDefault:  54px;
 $btnLarge:    60px;
 $btnRadius:   0;
-$btnPadding:  26px;
+$btnPadding:  22px;
 
 // Button base style
 
 %button {
-  @include animationHacks;
   cursor: pointer;
-  font-weight: $fontMedium;
+  font-weight: $fontNormal;
   position: relative;
-  padding: 0 $btnPadding;
+  padding: 0 $btnPadding*4 0 $btnPadding;
   vertical-align: middle;
-  text-align: center;
+  text-align: left;
   color: $dmWheeler;
   text-decoration: none;
   display: inline-block;
@@ -24,28 +23,37 @@ $btnPadding:  26px;
   transition-property: color;
   transition-duration: 0.5s;
   overflow: hidden;
-  //text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+  background-image: none;
+  letter-spacing: 0.1rem;
   text-align: left;
+  transition: background-color linear 0.7s;
   span {
     font-size: inherit;
     font-weight: inherit;
-  }
-  @include link-active-styles {
-
-  }
-  &:focus {
-
   }
 }
 
 // Sizes
 // ------------------------------------------------------------------
 
-.button {
+a.button,
+button.button {
   @extend %button;
-  font-size: rem($typeS);
+  font-size: rem($typeMe);
   line-height: $btnDefault;
   background-color: $dmPrime;
+  color: $dmWheeler;
+  background-image: linear-gradient($lightAngle, rgba($dmPrime, 0.6) 0%, rgba($dmPrime, 0.6) 35%, rgba($dmEleven, 0.6) 100%);
+  @include link-active-styles {
+    background-color: $dmEleven;
+  }
+  &:visited { color: $dmWheeler; }
+  &:focus   { background-color: $dmWheeler; }
+  &Secondary {
+    background-image: linear-gradient($lightAngleRefraction, rgba($dmWheeler, 0.6) 0%, rgba($dmWheeler, 0.6) 15%, rgba($dmPrime, 0.6) 100%);
+    &:visited { color: $dmWheeler; }
+    &:focus   { background-color: shade(dmHopper, Darkest); }
+  }
   &Small {
     font-size: rem($typeXS);
     line-height: $btnSmall;
@@ -53,10 +61,6 @@ $btnPadding:  26px;
   &Large {
     font-size: rem($typeMe);
     line-height: $btnLarge;
-  }
-  &Secondary {
-    color: $dmPrime;
-    background-color: $dmWheeler;
   }
   &Disabled {
     cursor: not-allowed;
@@ -95,18 +99,18 @@ $btnPadding:  26px;
 	}
 }
 
-// Animation
+// Groups
 // ------------------------------------------------------------------
 
-@keyframes buttonBuzz {
-  10% { transform: translateX(3px) rotate(2deg); }
-  20% { transform: translateX(-3px) rotate(-2deg); }
-  30% { transform: translateX(3px) rotate(2deg); }
-  40% { transform: translateX(-3px) rotate(-2deg); }
-  50% { transform: translateX(2px) rotate(1deg); }
-  60% { transform: translateX(-2px) rotate(-1deg); }
-  70% { transform: translateX(2px) rotate(1deg); }
-  80% { transform: translateX(-2px) rotate(-1deg); }
-  90% { transform: translateX(1px) rotate(0deg); }
-  100% { transform: translateX(-1px) rotate(0deg); }
+.button_wayfinders {
+  overflow: hidden;
+  margin-bottom: $bufferSpaceXL;
+  .button {
+    width: 50%;
+    float: left;
+    &:nth-child(2) {
+      text-align: right;
+      padding: 0 $btnPadding 0 $btnPadding*4;
+    }
+  }
 }

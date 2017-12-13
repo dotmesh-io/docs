@@ -10,9 +10,17 @@
   );
 }
 
-@mixin highlightPull($viewport, $pull) {
+@mixin gutterPull($viewport, $pull) {
   @include respond-to($viewport) {
     left: -$pull;
     width: calc(100% + #{$pull});
+  }
+}
+
+@mixin gutterPullPersist($viewport, $pull) {
+  left: -$pull/1.3;
+  width: calc(100% + #{$pull});
+  @include respond-to($viewport) {
+    left: -$pull;
   }
 }

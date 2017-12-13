@@ -1,0 +1,14 @@
+
+a.anchor {
+  margin-left: 6px;
+  color: $dmHolland;
+  transform: translateY(-2px);
+  position: absolute;
+  display: block;
+  background-image: none;
+  @include gutterPullPersist($vpGutter, $docsGutter);
+  @include link-active-styles {
+    color: $dmPrime;
+    background-image: none;
+  }
+}

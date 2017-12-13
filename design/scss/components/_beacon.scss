@@ -1,12 +1,17 @@
 
-.highlight {
+.beacon {
   margin: $bufferSpaceM 0;
   position: relative;
+  &_heading {
+    display: block;
+    @extend .typeM;
+    @extend .heading;
+  }
   &Block {
     padding: $bufferSpaceM;
     background-color: $dmHargrove;
     border-left: $strokeWidth*2 solid $dmPrimeAccent;
-    @include highlightPull($vpGutter, $docsGutter);
+    @include gutterPull($vpGutter, $docsGutter);
     @include respond-to($vpGutter) {
       padding-left: $docsGutter;
     }
@@ -15,7 +20,7 @@
     }
   }
   &Media {
-    @include highlightPull($vpGutter, $docsGutter);
+    @include gutterPull($vpGutter, $docsGutter);
     img {
       height: auto;
       max-width: 100%;
@@ -24,7 +29,7 @@
   }
   &Figure {
     display: block;
-    @include highlightPull($vpGutter, $docsGutter);
+    @include gutterPull($vpGutter, $docsGutter);
     img {
       height: auto;
       max-width: 100%;
@@ -52,17 +57,12 @@
     	left: 0;
     	width: 100%;
     	height: 100%;
-      @include highlightPull($vpGutter, $docsGutter);
+      @include gutterPull($vpGutter, $docsGutter);
     }
-  }
-  &_heading {
-    display: block;
-    @extend .typeM;
-    @extend .heading;
   }
 }
 
 // If it resides in typebase, which it most likely will remove the top margin if it's first in line
-.typebase > .highlight:first-child {
+.typebase > .beacon:first-child {
   margin-top: 0;
 }

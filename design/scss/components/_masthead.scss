@@ -1,0 +1,9 @@
+
+.masthead {
+  position: relative;
+  padding-bottom: $bufferSpaceS;
+  &_metatag {
+    display: block;
+    @extend .typeMe;
+  }
+}

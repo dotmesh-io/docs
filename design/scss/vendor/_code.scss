@@ -19,7 +19,14 @@ code {
   pre & {
     line-height: $lineheightBase;
   }
+  p &,
+  li & {
+    color: $dmHarrington;
+    background-color: shade(dmWheeler, Light);
+    padding: 3px 6px 0 6px;
+  }
 }
+
 
 // Pygments
 // ------------------------------------------------------

@@ -14,6 +14,11 @@ body {
   overflow-x: hidden;
 }
 
+*::selection {
+  background-color: $dmMayfield;
+  color: $dmHarrington;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -32,7 +37,6 @@ a {
 svg {
 	max-height: 11000px;
 }
-
 
 // Overide iOS telephone styling on links
 a[href^="tel"] {

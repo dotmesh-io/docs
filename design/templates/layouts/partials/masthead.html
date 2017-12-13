@@ -1,0 +1,10 @@
+<header class="masthead">
+  {% if section == 'index' %}
+  <span class="masthead_metatag">Whiskey on the docs.</span>
+  {% elif section !=='' %}
+  <span class="masthead_metatag">{{ section }}.</span>
+  {% else %}
+  <span class="masthead_metatag">datamesh docs</span>
+  {% endif %}
+  <h1 class="typeXL heading">{{ title }}.</h1>
+</header>

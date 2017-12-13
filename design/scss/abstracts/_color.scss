@@ -11,10 +11,11 @@ $shades: (
       Light:    lighten($dmHenderson, 10%)
     ),
     dmEleven: (
-      Lightest: lighten($dmEleven, 30%),
+      Lightest: lighten($dmEleven, 42%),
       Light:    lighten($dmEleven, 10%)
     ),
     dmWheeler: (
+      Light:    lighten($dmWheeler, 30%),
       Dark:     darken($dmWheeler, 17%),
       Darkest:  darken($dmWheeler, 30%)
     ),

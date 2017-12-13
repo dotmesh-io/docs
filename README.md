@@ -39,7 +39,7 @@ If you want to view the template designs, outside of Hugo, do:
 ```bash
 $ make design.watch
 ```
-Then open your browser to `http://localhost:3000` to view static templates and style items
+Then open your browser to [http://localhost:3000](http://localhost:3000) to view static templates and style items
 
 ## Editing Design files.
 

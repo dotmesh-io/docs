@@ -43,7 +43,7 @@ $asideWidthMinor: ($asideWidth - 100px);
     grid-area: body;
     padding: $bufferSpaceS*1.5;
     @include respond-to($vpMenu) {
-      padding: $bufferSpaceL $bufferSpaceM $bufferSpaceM $spaceBaseP;
+      padding: $bufferSpaceL $bufferSpaceM $bufferSpaceXXL $spaceBaseP;
       width: calc(100% - #{$asideWidth});
       @supports (display: grid) {
         width: auto;

@@ -5,7 +5,7 @@ $btnSmall:    46px;
 $btnDefault:  54px;
 $btnLarge:    60px;
 $btnRadius:   0;
-$btnPadding:  22px;
+$btnPadding:  25px;
 
 // Button base style
 
@@ -62,6 +62,23 @@ button.button {
     font-size: rem($typeMe);
     line-height: $btnLarge;
   }
+  &Waypoint {
+    font-size: rem($typeXS);
+    line-height: 1.6;
+    padding-top: $btnPadding;
+    padding-bottom: $btnPadding;
+    color: $dmHargrove;
+    &:visited { color: $dmHargrove; }
+    span {
+      color: $dmWheeler;
+      display: block;
+    }
+    @include respond-to-max($vpC) {
+      span {
+        display: none;
+      }
+    }
+  }
   &Disabled {
     cursor: not-allowed;
     filter: grayscale(100%);
@@ -105,12 +122,14 @@ button.button {
 .button_wayfinders {
   overflow: hidden;
   margin-bottom: $bufferSpaceXL;
+  display: flex;
   .button {
     width: 50%;
     float: left;
     &:nth-child(2) {
       text-align: right;
-      padding: 0 $btnPadding 0 $btnPadding*4;
+      padding-left: $btnPadding*4;
+      padding-right: $btnPadding;
     }
   }
 }

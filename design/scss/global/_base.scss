@@ -1,6 +1,7 @@
 html {
   //@include sharp-text;
   font-size: $scaleRoot + px;
+  overflow-x: hidden;
   @media (max-width: $vpDeviceSafe) {
     -webkit-text-size-adjust: 100%;
   }
@@ -10,6 +11,7 @@ body {
   color: $dmText;
   font-family: $fontDefault;
   line-height: $lineheightBase;
+  overflow-x: hidden;
 }
 
 a {

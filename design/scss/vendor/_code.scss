@@ -8,14 +8,8 @@ pre {
   hyphens: none;
   position: relative;
 	tab-width: 2;
-	// wrap
-	//white-space: pre-wrap;
-	// no wrap
-	overflow-x: auto;
-	&:focus,
-	&:hover {
-		width: min-content;
-	}
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 
 code {

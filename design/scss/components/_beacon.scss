@@ -15,8 +15,17 @@
     @include respond-to($vpGutter) {
       padding-left: $docsGutter;
     }
+    ul {
+      @extend .unordered_list;
+    }
+    ol {
+      @extend .ordered_list;
+    }
     ol, ul {
       padding-left: rem(20);
+      li {
+        @extend %listlead;
+      }
     }
   }
   &Media {

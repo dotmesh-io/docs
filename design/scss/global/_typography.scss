@@ -117,10 +117,17 @@
 %textList {
 	li {
 		@extend .text;
-		//@include leading_adjust(4);
+		@include leading_adjust(2);
 	}
 }
 
+
+%listlead {
+	padding-bottom: rem($typeDefault);
+	&:last-of-type {
+		padding-bottom: 0;
+	}
+}
 .unordered_list {
 	list-style-type: disc;
 	@extend %textList;
@@ -169,10 +176,7 @@
 		@extend .ordered_list;
 	}
 	li {
-		padding-bottom: rem($typeDefault);
-		&:last-of-type {
-			padding-bottom: 0;
-		}
+		@extend %listlead;
 	}
 	img, pre {
 		display: block;

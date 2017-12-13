@@ -42,6 +42,12 @@ $asideWidth: 200px;
         margin-top: rem($typeDefault*3);
       }
     }
+    a:visited {
+      color: $dmPrime;
+      &:hover {
+        color: $dmActionRespond;
+      }
+    }
     &_anchors {
       @extend .simple_list;
       li {

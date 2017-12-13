@@ -74,6 +74,11 @@
     a:visited {
       color: $dmText;
     }
+    a {
+      @include link-active-styles {
+        color: $dmPrime;
+      }
+    }
     &Parent {
       font-size: rem($typeS);
       a {

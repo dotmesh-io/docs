@@ -32,7 +32,16 @@ $ make hugo.build
 
 This will output the document_root to `hugo/public`
 
-## Editing CSS / Design files
+## Viewing Design Templates
+
+If you want to view the template designs, outside of Hugo, do:
+
+```bash
+$ make design.watch
+```
+Then open your browser to `http://localhost:3000` to view static templates and style items
+
+## Editing Design files.
 
 If you change anything inside `design` - then you must stop hugo, then:
 

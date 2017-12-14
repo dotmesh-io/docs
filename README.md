@@ -57,6 +57,7 @@ $ make design.watch
 
 Then you can restart hugo.
 
+
 ## Icon generation
 
 We use [una's boilerplate](https://github.com/una/svg-icon-system-boilerplate) to generate a sprite of SVG's from individual source files. We can manipulate these with CSS and JS as required.
@@ -74,4 +75,38 @@ The boilerplate hangs on [svg-sprite](https://github.com/jkphl/svg-sprite) which
 
 ```bash
 $ make design.icons
+```
+
+## Docker commands
+
+Show containers:
+
+```bash
+$ docker ps -a
+```
+
+Remove container:
+
+```bash
+$ docker rm -f docs-design
+```
+
+Get command line inside running container:
+
+```bash
+$ docker exec -ti docs-design bash
+$ cd ..
+```
+
+You should now be in the root of the design folder (i.e. `/app/design`)
+
+## Installing new node modules
+
+```bash
+$ docker exec -ti docs-design bash
+$ cd ..
+$ npm install --save async
+$ exit
+$ make images
+$ # now git commit
 ```

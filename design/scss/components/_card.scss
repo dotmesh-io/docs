@@ -9,6 +9,8 @@
     background-image: linear-gradient($lightAngle, rgba($dmPrime, 0.6) 0%, rgba($dmPrime, 0.6) 35%, rgba($dmEleven, 0.6) 100%);
     transition: background-color linear 1.2s;
     display: block;
+    overflow: hidden;
+    position: relative;
   }
   &_body {
     padding: $bufferSpaceS;

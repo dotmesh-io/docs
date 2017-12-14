@@ -1,0 +1,34 @@
+
+.mesh {
+  display: block;
+  transform-origin: top center;
+  transform: perspective(50px) rotate3d(1,0,0, 30deg);
+  position: relative;
+  z-index: 10;
+  .card_image & {
+    width: 800px;
+    height: 800px;
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    margin-left: -400px;
+  }
+  .card:nth-child(2) & {
+    transform: perspective(20px) rotate3d(1,1,0, 22deg) scale(1.2);
+    top: -20px;
+  }
+  .card:nth-child(3) & {
+    transform: perspective(30px) rotate3d(1,1,0, 2deg);
+  }
+  .card:nth-child(4) & {
+    transform: perspective(50px) rotate3d(1,0,2, 10deg);
+  }
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    path {
+      stroke: $dmWheeler;
+    }
+  }
+}

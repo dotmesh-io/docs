@@ -4,6 +4,27 @@
   border-top: $strokeWidth solid $dmBorder;
   padding-top: $bufferSpaceM;
   @include pie-clearfix;
+  @supports (display: grid) {
+    width: 100%;
+    display: grid;
+    grid-auto-rows: 1fr;
+    grid-column-gap: 3%;
+    grid-row-gap: $bufferSpaceS + 2px; // Optically looks smaller due to box-shadow.
+    @include respond-to($vpB) {
+      grid-template-columns: repeat(2, minmax(47%, 1fr)); // Gets icky with column gap. There be beasties here
+    }
+    @include respond-to($vpMenu) {
+      grid-template-columns: 1fr;
+    }
+    @include respond-to($vpMenu + 120px) {
+      grid-template-columns: repeat(2, minmax(47%, 1fr)); // Gets icky with column gap. There be beasties here
+    }
+    @include respond-to($vpF) {
+      grid-column-gap: 2%;
+      grid-template-columns: repeat(3, minmax(30%, 1fr)); // Gets icky with column gap. There be beasties here
+    }
+  }
+  // For card display for browsers that don't like css-grid
   .card {
     display: block;
     margin-bottom: $bufferSpaceS;
@@ -69,26 +90,6 @@
         width: 100%;
         margin-left: 0!important;
       }
-    }
-  }
-  @supports (display: grid) {
-    width: 100%;
-    display: grid;
-    grid-auto-rows: 1fr;
-    grid-column-gap: 3%;
-    grid-row-gap: $bufferSpaceS + 2px; // Optically looks smaller due to box-shadow.
-    @include respond-to($vpB) {
-      grid-template-columns: repeat(2, minmax(47%, 1fr)); // Gets icky with column gap. There be beasties here
-    }
-    @include respond-to($vpMenu) {
-      grid-template-columns: 1fr;
-    }
-    @include respond-to($vpMenu + 120px) {
-      grid-template-columns: repeat(2, minmax(47%, 1fr)); // Gets icky with column gap. There be beasties here
-    }
-    @include respond-to($vpF) {
-      grid-column-gap: 2%;
-      grid-template-columns: repeat(3, minmax(30%, 1fr)); // Gets icky with column gap. There be beasties here
     }
   }
 }

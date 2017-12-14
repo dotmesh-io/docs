@@ -24,6 +24,15 @@ $ make hugo.watch
 
 Then you can open [http://localhost:1313](http://localhost:1313) for a preview.
 
+## Stop container
+
+To stop the `design.watch` command:
+
+```bash
+$ make design.stop
+```
+
+
 ## Building static site
 
 ```bash

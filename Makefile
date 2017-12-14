@@ -1,5 +1,6 @@
 VERSION=v0.0.1
 IMAGE=datameshio/docs
+ADDRESS=$(ifconfig en0 | grep inet | grep broadcast | awk '{print $$2}')
 
 .PHONY: images
 images:
@@ -32,6 +33,14 @@ design.watch:
 		-p 3000:3000 \
 		-w /app/design/public \
 		$(IMAGE) gulp serve
+
+.PHONY: design.stop
+design.stop:
+	docker rm -f docs-design
+
+.PHONY: design.url
+design.url:
+	@bash scripts/geturl.sh
 
 .PHONY: design.copy
 design.copy:

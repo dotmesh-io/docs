@@ -110,3 +110,11 @@ $ exit
 $ make images
 $ # now git commit
 ```
+
+## Connecting using external devices
+
+The URL that is printed by the watch command is wrong - instead, use this command and type the url in your phone (note - the phone must be on the same WIFI as your dev machine):
+
+```bash
+$ make design.url
+```

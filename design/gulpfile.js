@@ -131,7 +131,7 @@ var gulp            = require("gulp")
     gulp.task("serve", ["watch-all", "browser-sync"])
 
     // Run a build
-    gulp.task("build", ["scss", "js", "assets"])
+    gulp.task("build", ["scss", "js", "assets", "render"])
 
     // Icon Build
     gulp.task('icons:build', ['sprite-page']);

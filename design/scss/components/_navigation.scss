@@ -51,6 +51,9 @@
 .navigation {
   position: relative;
   @include respond-to($vpMenu) {
+    margin-top: $bufferSpaceM;
+  }
+  @include respond-to($vpF) {
     margin-top: $bufferSpaceL;
   }
   &_parent {

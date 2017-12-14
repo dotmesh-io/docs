@@ -18,9 +18,14 @@
 }
 
 @mixin gutterPullPersist($viewport, $pull) {
-  left: -$pull/1.5;
+  left: -$pull/1.6;
   width: calc(100% + #{$pull});
   @include respond-to($viewport) {
     left: -$pull;
   }
+}
+
+@mixin shadowSubtle($shadow) {
+  box-shadow: 0 1px 0 rgba($shadow, 0.05),
+              0 2px 1px rgba($shadow, 0.1);
 }

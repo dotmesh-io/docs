@@ -25,6 +25,7 @@
       padding-left: rem(20);
       li {
         @extend %listlead;
+        padding-bottom: rem($typeDefault/2);
       }
     }
   }

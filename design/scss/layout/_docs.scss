@@ -11,7 +11,7 @@ $asideWidthMinor: ($asideWidth - 100px);
       grid-template-columns: $asideWidthMinor 1fr;
     }
   }
-  @include respond-to($vpD) {
+  @include respond-to($vpG) {
     grid-template-columns: $asideWidth 1fr;
   }
   &_aside {
@@ -28,12 +28,6 @@ $asideWidthMinor: ($asideWidth - 100px);
         float: none;
       }
     }
-    @include respond-to($vpD) {
-      padding-left: $bufferSpaceL;
-      @supports (display: grid) {
-        width: auto;
-      }
-    }
     @include respond-to($vpG) {
       width: $asideWidth;
       padding-left: $bufferSpaceXL;
@@ -43,11 +37,14 @@ $asideWidthMinor: ($asideWidth - 100px);
     grid-area: body;
     padding: $bufferSpaceS*1.5;
     @include respond-to($vpMenu) {
-      padding: $bufferSpaceL $bufferSpaceM $bufferSpaceXXL $spaceBaseP;
+      padding: $bufferSpaceL $bufferSpaceXL $bufferSpaceXXL $spaceBaseP*1.8;
       width: calc(100% - #{$asideWidth});
       @supports (display: grid) {
         width: auto;
       }
+    }
+    @include respond-to($vpF) {
+      padding-left: $spaceBaseP*1.15;
     }
     @include respond-to($vpG) {
       padding-left: $spaceBaseP*1.25;

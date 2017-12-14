@@ -21,7 +21,7 @@
 // ------------------------------------------------------------------
 
 %kernTight 	{ letter-spacing: -0.125rem; font-kerning: normal; }
-%kernLoose 	{ letter-spacing: 0.2rem; }
+%kernLoose 	{ letter-spacing: 0.3rem; }
 
 // Typescale
 // ------------------------------------------------------------------
@@ -216,8 +216,13 @@
 	&Synopsis {
 		@include respond-to($vpF) {
 			> p:first-of-type {
-				font-size: rem($typeM);
+				font-size: rem($typeMe + 4);
 				color: $dmHenderson;
+			}
+		}
+		@include respond-to($vpG) {
+			> p:first-of-type {
+				font-size: rem($typeM);
 			}
 		}
 	}

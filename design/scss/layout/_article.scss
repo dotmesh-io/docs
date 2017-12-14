@@ -13,7 +13,6 @@ $asideWidth: 200px;
   position: relative;
   &_header {
     padding-bottom: $bufferSpaceS;
-    //border-bottom: $strokeWidth solid $dmBorder;
     &_metatag {
       display: block;
       @extend .typeMe;

@@ -10,7 +10,7 @@
   }
   @supports (display: grid) {
     width: 100%;
-    grid-auto-rows: 1fr;
+    //grid-auto-rows: 1fr;
     grid-column-gap: 3%;
     grid-row-gap: $bufferSpaceS + 2px; // Optically looks smaller due to box-shadow.
     @include respond-to($vpB) {
@@ -28,7 +28,7 @@
       grid-template-columns: repeat(3, minmax(30%, 1fr)); // Gets icky with column gap. There be beasties here
     }
   }
-  // For card display for browsers that don't like css-grid
+  // Basic grid layout for browsers that don't support css-grid
   .card {
     display: block;
     margin-bottom: $bufferSpaceS;
@@ -46,6 +46,11 @@
       &:nth-child(odd) {
         margin-left: 0;
         clear: left;
+      }
+    }
+    @include respond-to($vpF) {
+      &Filler {
+        grid-column: span 2;
       }
     }
   }

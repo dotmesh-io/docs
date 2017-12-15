@@ -52,9 +52,12 @@ $asideWidthMinor: ($asideWidth - 100px);
       padding-left: $spaceBaseP*1.25;
       padding-right: $spaceBaseP*1.25;
     }
+    @include respond-to($vpH) {
+      padding-right: $spaceBaseP*1.5;
+    }
     @include respond-to($vpMax) {
       padding-left: $spaceBaseP;
-      padding-right: $spaceBaseP*1.25;
+      padding-right: $spaceBaseP*2
     }
   }
 }

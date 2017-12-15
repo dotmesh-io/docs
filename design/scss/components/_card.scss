@@ -8,6 +8,24 @@
     @include respond-to($vpB) {
       min-height: 200px;
     }
+    .icon {
+      display: none;
+      width: 30px;
+      height: auto;
+      fill: #fff;
+      position: absolute;
+      right: $bufferSpaceM;
+      top: 50%;
+      transform: translateY(-50%);
+      @include respond-to($vpE) {
+        display: block;
+        width: 30px;
+      }
+      @include respond-to($vpG) {
+        width: 60px;
+        right: $bufferSpaceL;
+      }
+    }
   }
   &_image {
     height: 0;
@@ -48,6 +66,10 @@
       color: #fff;
       text-align: center;
       @include respond-to($vpE) {
+        font-size: rem($typeM);
+        text-align: left;
+      }
+      @include respond-to($vpF) {
         font-size: rem($typeL);
         text-align: left;
       }

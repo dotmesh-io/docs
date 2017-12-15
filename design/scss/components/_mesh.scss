@@ -2,7 +2,7 @@
 .mesh {
   display: block;
   transform-origin: top center;
-  transform: perspective(50px) rotate3d(1,1,0, -10deg);
+  transform: perspective(60px) rotate3d(8, 0, 0, 40deg);
   position: relative;
   z-index: 10;
   @include forceBlockLevel;
@@ -24,8 +24,8 @@
     margin-left: -400px;
   }
   .card:nth-child(2) & {
-    transform-origin: top left;
-    transform: perspective(90px) rotate3d(-2, 0, 11, -40deg);
+    transform-origin: top right;
+    transform: perspective(42px) rotate3d(-2, 0, -1, -30deg);
     svg path {
       stroke: $dmSinclair;
     }
@@ -42,6 +42,27 @@
     transform: perspective(80px) rotate3d(3, 2, 1, -20deg);
     svg path {
       stroke: $dmMayfield;
+    }
+  }
+  .card:nth-child(5) & {
+    transform-origin: top right;
+    transform: perspective(40px) rotate3d(4, -1, 7, 50deg);
+    svg path {
+      stroke: $dmWheeler;
+    }
+  }
+  .card:nth-child(6) & {
+    transform-origin: top left;
+    transform: perspective(28px) rotate3d(7, 0, -1, 17deg);
+    svg path {
+      stroke: $dmEleven;
+    }
+  }
+  .card:nth-child(7) & {
+    transform-origin: top left;
+    transform: perspective(50px) rotate3d(-2, 0, 1, -60deg);
+    svg path {
+      stroke: $dmHopper;
     }
   }
   .card:hover & {

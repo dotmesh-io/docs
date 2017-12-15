@@ -1,16 +1,20 @@
 
 .deck {
-  margin-bottom: ($bufferSpaceXL - $strokeWidth);
+  display: block;
+  margin-bottom: ($bufferSpaceM - $strokeWidth);
   border-top: $strokeWidth solid $dmBorder;
   padding-top: $bufferSpaceM;
   @include pie-clearfix;
+  @include respond-to($vpMenu) {
+    margin-bottom: ($bufferSpaceXL - $strokeWidth);
+  }
   @supports (display: grid) {
     width: 100%;
-    display: grid;
     grid-auto-rows: 1fr;
     grid-column-gap: 3%;
     grid-row-gap: $bufferSpaceS + 2px; // Optically looks smaller due to box-shadow.
     @include respond-to($vpB) {
+      display: grid;
       grid-template-columns: repeat(2, minmax(47%, 1fr)); // Gets icky with column gap. There be beasties here
     }
     @include respond-to($vpMenu) {
@@ -29,12 +33,11 @@
     display: block;
     margin-bottom: $bufferSpaceS;
     @supports (display: grid) {
-      width: 100%;
-      margin-bottom: 0;
-    }
-    @supports (display: flex) {
-      display: flex;
-      flex-direction: column;
+      @include respond-to($vpB) {
+        width: 100%!important;
+        margin-left: 0!important;
+        margin-bottom: 0;
+      }
     }
     @include respond-to($vpB) {
       width: 49%;
@@ -43,52 +46,6 @@
       &:nth-child(odd) {
         margin-left: 0;
         clear: left;
-      }
-      @supports (display: grid) {
-        width: 100%;
-        margin-left: 0!important;
-      }
-    }
-    @include respond-to($vpMenu) {
-      width: 100%;
-      margin-left: 0;
-      @supports (display: grid) {
-        width: 100%;
-        margin-left: 0!important;
-      }
-    }
-    @include respond-to($vpMenu + 120px) {
-      width: 49%;
-      float: left;
-      margin-left: 2%;
-      &:nth-child(odd) {
-        margin-left: 0;
-        clear: left;
-      }
-      @supports (display: grid) {
-        width: 100%;
-        margin-left: 0!important;
-      }
-    }
-    @include respond-to($vpF) {
-      width: 32%;
-      float: left;
-      margin-left: 2%;
-      &:nth-child(odd) {
-        margin-left: 2%;
-        clear: none;
-      }
-      &:nth-child(1) {
-        margin-left: 0;
-      }
-      &:nth-child(3n+4) {
-        margin-left: 0;
-        clear: left;
-        //outline: 1px solid red;
-      }
-      @supports (display: grid) {
-        width: 100%;
-        margin-left: 0!important;
       }
     }
   }

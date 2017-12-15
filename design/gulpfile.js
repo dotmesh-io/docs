@@ -21,7 +21,10 @@ var gulp            = require("gulp")
         .pipe(plumber())
         .pipe(sassGlob())
         .pipe(sass({outputStyle : "expanded"}))
-        .pipe(autoprefixer({browsers : ["last 6 versions"]}))
+        .pipe(autoprefixer({
+          browsers : ["last 6 versions"],
+          grid: "true",
+        }))
         .pipe(gulp.dest("public/css/"))
     })
 

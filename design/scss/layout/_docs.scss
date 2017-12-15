@@ -37,17 +37,24 @@ $asideWidthMinor: ($asideWidth - 100px);
     grid-area: body;
     padding: $bufferSpaceS*1.5;
     @include respond-to($vpMenu) {
-      padding: $bufferSpaceL $bufferSpaceXL $bufferSpaceXXL $spaceBaseP*1.8;
+      padding: $bufferSpaceL $bufferSpaceXL $bufferSpaceXXL $spaceBaseP*1.5;
       width: calc(100% - #{$asideWidth});
+      float: left;
       @supports (display: grid) {
         width: auto;
+        float: none;
       }
     }
     @include respond-to($vpF) {
-      padding-left: $spaceBaseP*1.15;
+      padding-left: $spaceBaseP/1.5;
     }
     @include respond-to($vpG) {
       padding-left: $spaceBaseP*1.25;
+      padding-right: $spaceBaseP*1.25;
+    }
+    @include respond-to($vpMax) {
+      padding-left: $spaceBaseP;
+      padding-right: $spaceBaseP*1.25;
     }
   }
 }

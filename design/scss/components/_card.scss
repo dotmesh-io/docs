@@ -3,7 +3,8 @@
   position: relative;
   @include shadowSubtle($dmHarrington);
   &_image {
-    height: 220px;
+    height: 0;
+    padding-bottom: 56%;
     width: 100%;
     background-color: $dmSinclair;
     background-image: linear-gradient($lightAngle, rgba($dmPrime, 0.6) 0%, rgba($dmPrime, 0.6) 35%, rgba($dmEleven, 0.6) 100%);
@@ -29,14 +30,34 @@
       @include leading_adjust(1);
     }
   }
-  &:nth-child(2n) {
+  &:nth-child(2) {
+    .card_image {
+      background-color: $dmHenderson;
+    }
+  }
+  &:nth-child(3) {
+    .card_image {
+      background-color: $dmByers;
+    }
+  }
+  &:nth-child(4) {
+    .card_image {
+      background-color: $dmHopper;
+    }
+  }
+  &:nth-child(5) {
+    .card_image {
+      background-color: $dmWheeler;
+    }
+  }
+  &:nth-child(6) {
     .card_image {
       background-color: $dmHarrington;
     }
   }
-  &:nth-child(4n) {
+  &:nth-child(7) {
     .card_image {
-      background-color: $dmWheeler;
+      background-color: shade(dmWheeler, Darkest);
     }
   }
 }

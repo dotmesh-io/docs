@@ -214,13 +214,11 @@
 		color: $dmHarrington;
 	}
 	&Synopsis {
-		@include respond-to($vpF) {
-			> p:first-of-type {
-				font-size: rem($typeMe + 4);
-				color: $dmHenderson;
-			}
+		> p:first-of-type {
+			font-size: rem($typeMe + 4);
+			color: $dmHenderson;
 		}
-		@include respond-to($vpG) {
+		@include respond-to($vpF) {
 			> p:first-of-type {
 				font-size: rem($typeM);
 			}

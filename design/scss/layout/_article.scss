@@ -30,6 +30,9 @@ $asideWidth: 200px;
       padding-top: $bufferSpaceM;
     }
     @include respond-to($vpG) {
+      left: 110%;
+    }
+    @include respond-to($vpH) {
       left: 115%;
     }
     &_heading {

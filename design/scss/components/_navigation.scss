@@ -16,6 +16,8 @@
   @extend .heading;
   cursor: pointer;
   position: relative;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
   .icon {
     position: absolute;
     top: $bufferSpaceS;
@@ -44,6 +46,7 @@
     &Collapsed {
       max-height: 0;
       transition: max-height 0.5s ease-out;
+      margin-bottom: 0;
     }
   }
 }

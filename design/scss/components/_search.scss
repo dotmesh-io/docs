@@ -3,7 +3,7 @@
   margin-top: $bufferSpaceS;
   position: relative;
   @include respond-to-max($vpMenu) {
-    margin-bottom: $bufferSpaceM;
+    margin-bottom: $bufferSpaceS;
   }
   &_label {
     // TODO: This should really be on a hook to check for JS first
@@ -75,5 +75,55 @@
     &:focus {
       outline: none;
     }
+  }
+}
+
+.search {
+  display: block;
+  margin-bottom: ($bufferSpaceM - $strokeWidth);
+  border-top: $strokeWidth solid $dmPrime;
+  padding-top: $bufferSpaceS;
+  @include pie-clearfix;
+  @include respond-to($vpMenu) {
+    margin-bottom: ($bufferSpaceXL - $strokeWidth);
+    max-width: $containerWidth;
+  }
+  &_results {
+    list-style-type: none;
+  }
+  &_alert {
+    font-size: rem($typeMe + 4);
+    color: $dmHenderson;
+    padding-bottom: $bufferSpaceS;
+    @include respond-to($vpF) {
+      font-size: rem($typeM);
+    }
+  }
+  &_result {
+    margin-top: ($bufferSpaceM - $strokeWidth);
+    border-top: $strokeWidth solid $dmBorder;
+    padding-top: $bufferSpaceM;
+    &_meta {
+      @extend %kernLoose;
+      text-transform: uppercase;
+      display: block;
+      font-size: rem($typeXS);
+      margin-bottom: rem($typeDefault);
+      a {
+        background-image: none;
+      }
+    }
+    &_heading {
+      font-size: rem($typeL);
+      margin-bottom: rem($typeDefault);
+      @include leading_adjust(6);
+    }
+    &_excerpt {
+      font-size: rem($typeDefault);
+    }
+  }
+  &_highlight {
+    font-weight: $fontBold;
+    color: $dmHarrington;
   }
 }

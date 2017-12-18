@@ -1,0 +1,33 @@
+{% set title = 'Search results' %}
+{% set section = '' %}
+{% set setTerm = 'Kubernetes' %}
+
+{% extends 'layouts/layout.html' %}
+
+{% block aside %}
+  {% include 'layouts/partials/navigation-primary.html' %}
+{% endblock %}
+
+{% block content %}
+  {% include 'layouts/partials/masthead.html' %}
+  <div class="search">
+    <p class="search_alert">24 results for the term: <span class="search_highlight">{{ setTerm }}</span></p>
+    <ul class="search_results">
+      <li class="search_result">
+        <span class="search_result_meta"><a href="">FAQ &amp; troubleshooting</a></span>
+        <h3 class="search_result_heading"><a href=""><span class="search_highlight">Kubernetes integration</span> on a bare metal setup</a></h3>
+        <p class="search_result_excerpt">Staging, testing, CI/CD and production environments for cloud native applications.</p>
+      </li>
+      <li class="search_result">
+        <span class="search_result_meta"><a href="">Tasks</a></span>
+        <h3 class="search_result_heading"><a href="">Installing <span class="search_highlight">Kubernetes</span></a></h3>
+        <p class="search_result_excerpt">Staging, testing, CI/CD and production environments for cloud native applications.</p>
+      </li>
+      <li class="search_result">
+        <span class="search_result_meta"><a href="">Install &amp; setup</a></span>
+        <h3 class="search_result_heading"><a href="">How to get up and running with <span class="search_highlight">Kubernetes</span> &amp; datamesh locally</a></h3>
+        <p class="search_result_excerpt">Staging, testing, CI/CD and production environments for cloud native applications.</p>
+      </li>
+    </ul>
+  </div>
+{% endblock %}

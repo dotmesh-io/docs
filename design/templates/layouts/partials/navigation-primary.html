@@ -5,10 +5,10 @@
     <li class="navigation_item"><a href="">Kubernetes</a></li>
   </ul>
 </li>
-<li class="navigation_item navigation_itemParent{% if section == 'index' %}{% else %} navigation_itemCurrent{% endif %}">
+<li class="navigation_item navigation_itemParent{% if section == 'index' or section == '' %}{% else %} navigation_itemCurrent{% endif %}">
   <a href="">Concepts</a>
   <ul class="navigation_child">
-    <li class="navigation_item{% if section == 'index' or section == 'toplevel' %}{% else %} navigation_itemCurrent{% endif %}"><a href="">Architecture</a></li>
+    <li class="navigation_item{% if section == 'index' or section == 'toplevel' or section == '' %}{% else %} navigation_itemCurrent{% endif %}"><a href="">Architecture</a></li>
     <li class="navigation_item"><a href="">Snapshots</a></li>
     <li class="navigation_item"><a href="">Configuration</a></li>
     <li class="navigation_item"><a href="">Administration</a></li>

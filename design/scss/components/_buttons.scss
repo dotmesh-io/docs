@@ -79,20 +79,20 @@ button.button {
       }
     }
   }
-  &Disabled {
-    cursor: not-allowed;
-    filter: grayscale(100%);
-    @include link-active-styles {
-      animation-name: buttonBuzz;
-      animation-duration: 0.8s;
-      animation-timing-function: linear;
-      animation-iteration-count: 1;
-      transform-origin: center;
-    }
-    &:focus {
-      outline: none;
-    }
-  }
+  // &Disabled {
+  //   cursor: not-allowed;
+  //   filter: grayscale(100%);
+  //   @include link-active-styles {
+  //     animation-name: buttonBuzz;
+  //     animation-duration: 0.8s;
+  //     animation-timing-function: linear;
+  //     animation-iteration-count: 1;
+  //     transform-origin: center;
+  //   }
+  //   &:focus {
+  //     outline: none;
+  //   }
+  // }
 }
 
 

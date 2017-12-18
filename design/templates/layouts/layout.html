@@ -22,19 +22,19 @@
 	        </svg>
 				</button>
 			</div>
+			<form class="searchbar">
+				<div class="searchbar_field">
+					<label for="searchbar_input" class="searchbar_label">Search docs</label>
+					<input class="searchbar_input" type="text" value="{% if setTerm == '' %}{% else %}{{ setTerm }}{% endif %}" id="searchbar_input" placeholder="Search docs.">
+					<b></b><!-- This isn't a mistake, it's a visual hack -->
+				</div>
+				<button class="searchbar_button" type="submit">
+					<svg class="icon icon22 icon_search_svg">
+						<use xlink:href="./assets/icons/renders/sprite.svg#search"></use>
+					</svg>
+				</button>
+			</form>
       <div class="navigationwrapper navigationwrapperCollapsed" id="navigationwrapper">
-        <form class="searchbar">
-          <div class="searchbar_field">
-            <label for="searchbar_input" class="searchbar_label">Search docs</label>
-            <input class="searchbar_input" type="text" value="" id="searchbar_input" placeholder="Search docs.">
-            <b></b><!-- This isn't a mistake, it's a visual hack -->
-          </div>
-          <button class="searchbar_button" type="submit">
-            <svg class="icon icon22 icon_search_svg">
-              <use xlink:href="./assets/icons/renders/sprite.svg#search"></use>
-            </svg>
-          </button>
-        </form>
         <nav class="navigation">
           <ul class="navigation_parent">
             {% block aside %}

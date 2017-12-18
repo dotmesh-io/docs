@@ -7,10 +7,9 @@
     background-color: $dmByers;
     @include respond-to($vpB) {
       height: 200px;
-    }
-    @supports (display: grid) {
-      min-height: 200px;
-      height: auto;
+      @supports (display: grid) {
+        height: auto;
+      }
     }
     .icon {
       display: none;

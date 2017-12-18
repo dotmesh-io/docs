@@ -279,3 +279,8 @@
 		display: none;
 	}
 }
+
+
+.typebaseSynopsis + .typebase {
+	margin-top: rem($typeDefault*2);
+}

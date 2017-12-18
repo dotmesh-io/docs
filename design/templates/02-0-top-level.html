@@ -31,20 +31,24 @@
           <h5 class="article_aside_heading">Quick links</h5>
           <ul class="article_aside_anchors">
             <li><a href="#anchorpoint-name">Managing your Cluster.</a></li>
-            <li><a href="#anchorpoint-name3">Persistent Volumes.</a></li>
+            <li><a href="#anchorpoint-name2">In this section.</a></li>
           </ul>
         </aside>
         <div class="typebase typebaseSynopsis">
           <p>Datamesh (dm) is a flexible, clusterable data fabric that enables data portability in development.</p>
         </div>
-      </div>
-      <!-- Main article section -->
-      <div class="article_section">
         <div class="typebase">
           {% include 'layouts/content/article-toplevel.html' %}
         </div>
       </div>
-      <h5 class="typeM heading">In this section</h5>
+      <h5 id="anchorpoint-name" class="typeM heading">
+        <a class="anchor" href="#anchorpoint-name2">
+          <svg class="icon icon_link_svg">
+            <use xlink:href="./assets/icons/renders/sprite.svg#link"></use>
+          </svg>
+        </a>
+        In this section.
+      </h5>
       <div class="deck deckMinor">
         {% for item in deckIndex %}
           {% include 'layouts/partials/card.html' %}

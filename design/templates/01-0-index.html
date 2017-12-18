@@ -9,98 +9,21 @@
 
 {% block content %}
   {% include 'layouts/partials/masthead.html' %}
+
+  {% set deckIndex = [
+    { "heading" : "Install &amp; setup.", "excerpt" : "Staging, testing, CI/CD and production environments for cloud native applications." },
+    { "heading" : "Concepts.", "excerpt" : "Staging, testing, CI/CD and production environments for cloud native applications." },
+    { "heading" : "Tasks.", "excerpt" : "Staging, testing, CI/CD and production environments for cloud native applications." },
+    { "heading" : "Command references.", "excerpt" : "Staging, testing, CI/CD and production environments for cloud native applications." },
+    { "heading" : "Release notes.", "excerpt" : "Staging, testing, CI/CD and production environments for cloud native applications." },
+    { "heading" : "FAQ &amp; troubleshooting.", "excerpt" : "Staging, testing, CI/CD and production environments for cloud native applications." },
+    { "heading" : "Glossary.", "excerpt" : "Staging, testing, CI/CD and production environments for cloud native applications." }
+  ]%}
+
   <div class="deck">
-    <a href="" class="card">
-      <div class="card_image">
-        <div class="mesh">
-          {% include 'layouts/svg/mesh.html' %}
-        </div>
-      </div>
-      <div class="card_body">
-        <h3 class="card_heading">Install &amp; setup.</h3>
-        <div class="card_synopsis">
-          <p>Staging, testing, CI/CD and production environments for cloud native applications.</p>
-        </div>
-      </div>
-    </a>
-    <a href="" class="card">
-      <div class="card_image">
-        <div class="mesh">
-          {% include 'layouts/svg/mesh.html' %}
-        </div>
-      </div>
-      <div class="card_body">
-        <h3 class="card_heading">Concepts.</h3>
-        <div class="card_synopsis">
-          <p>Datamesh (dm) is a flexible, clusterable data fabric that enables data portability in development.</p>
-        </div>
-      </div>
-    </a>
-    <a href="" class="card">
-      <div class="card_image">
-        <div class="mesh">
-          {% include 'layouts/svg/mesh.html' %}
-        </div>
-      </div>
-      <div class="card_body">
-        <h3 class="card_heading">Tasks.</h3>
-        <div class="card_synopsis">
-          <p>Clusterable data fabric that enables data portability in development, staging, testing.</p>
-        </div>
-      </div>
-    </a>
-    <a href="" class="card">
-      <div class="card_image">
-        <div class="mesh">
-          {% include 'layouts/svg/mesh.html' %}
-        </div>
-      </div>
-      <div class="card_body">
-        <h3 class="card_heading">Command references.</h3>
-        <div class="card_synopsis">
-          <p>Staging, testing, CI/CD and production environments for cloud native applications.</p>
-        </div>
-      </div>
-    </a>
-    <a href="" class="card">
-      <div class="card_image">
-        <div class="mesh">
-          {% include 'layouts/svg/mesh.html' %}
-        </div>
-      </div>
-      <div class="card_body">
-        <h3 class="card_heading">Release notes</h3>
-        <div class="card_synopsis">
-          <p>Datamesh (dm) is a flexible, clusterable data fabric that enables data portability in development.</p>
-        </div>
-      </div>
-    </a>
-    <a href="" class="card">
-      <div class="card_image">
-        <div class="mesh">
-          {% include 'layouts/svg/mesh.html' %}
-        </div>
-      </div>
-      <div class="card_body">
-        <h3 class="card_heading">FAQ &amp; troubleshooting.</h3>
-        <div class="card_synopsis">
-          <p>Clusterable data fabric that enables data portability in development, staging, testing.</p>
-        </div>
-      </div>
-    </a>
-    <a href="" class="card">
-      <div class="card_image">
-        <div class="mesh">
-          {% include 'layouts/svg/mesh.html' %}
-        </div>
-      </div>
-      <div class="card_body">
-        <h3 class="card_heading">Glossary.</h3>
-        <div class="card_synopsis">
-          <p>Staging, testing, CI/CD and production environments for cloud native applications.</p>
-        </div>
-      </div>
-    </a>
+    {% for item in deckIndex %}
+      {% include 'layouts/partials/card.html' %}
+    {% endfor %}
     <a href="" class="card cardFiller">
       <div class="card_body">
         <h3 class="card_heading">Let's get started.</h3>

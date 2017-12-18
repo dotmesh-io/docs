@@ -6,7 +6,11 @@
     transition: background-color linear 1.2s;
     background-color: $dmByers;
     @include respond-to($vpB) {
+      height: 200px;
+    }
+    @supports (display: grid) {
       min-height: 200px;
+      height: auto;
     }
     .icon {
       display: none;

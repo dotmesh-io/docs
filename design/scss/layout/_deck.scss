@@ -28,6 +28,12 @@
       grid-template-columns: repeat(3, minmax(30%, 1fr)); // Gets icky with column gap. There be beasties here
     }
   }
+  &Minor {
+    @include respond-to($vpF) {
+      grid-column-gap: 3%;
+      grid-template-columns: repeat(2, minmax(47%, 1fr)); // Gets icky with column gap. There be beasties here
+    }
+  }
   // Basic grid layout for browsers that don't support css-grid
   .card {
     display: block;
@@ -48,9 +54,17 @@
         clear: left;
       }
     }
+    @include respond-to-min-max($vpMenu, $vpMenu + 120px) {
+      width: 100%;
+      display: block;
+      margin-left: 0;
+      clear: left;
+    }
     @include respond-to($vpF) {
       &Filler {
-        grid-column: span 2;
+        @supports (display: grid) {
+          grid-column: span 2;
+        }
       }
     }
   }

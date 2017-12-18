@@ -1,0 +1,13 @@
+<a href="" class="card">
+  <div class="card_image">
+    <div class="mesh">
+      {% include 'layouts/svg/mesh.html' %}
+    </div>
+  </div>
+  <div class="card_body">
+    <h3 class="card_heading">{{ item.heading | safe }}</h3>
+    <div class="card_synopsis">
+      <p>{{ item.excerpt | safe }}</p>
+    </div>
+  </div>
+</a>

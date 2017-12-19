@@ -1,0 +1,24 @@
+
+.alert {
+  position: relative;
+  padding: $bufferSpaceS;
+  margin: $bufferSpaceM 0;
+  p {
+    font-size: rem($typeS);
+  }
+  &Important {
+    color: $dmEleven;
+    background-color: shade(dmEleven, Lightest);
+    outline: 1px solid $dmEleven;
+  }
+  &Notice {
+    color: shade(dmMayfield, Darkest);
+    background-color: shade(dmMayfield, Light);
+    outline: 1px solid shade(dmMayfield, Dark);
+  }
+  &Success {
+    color: shade(dmSuccess, Dark);
+    background-color: shade(dmSuccess, Light);
+    outline: 1px solid shade(dmSuccess, Dark);
+  }
+}

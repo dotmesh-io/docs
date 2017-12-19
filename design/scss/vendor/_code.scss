@@ -23,6 +23,7 @@ code {
   li & {
     color: $dmHarrington;
     background-color: shade(dmWheeler, Light);
+    outline: 1px solid $dmWheeler;
     padding: 3px 6px 0 6px;
   }
 }

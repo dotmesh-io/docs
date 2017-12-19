@@ -51,7 +51,7 @@
     &_anchors {
       @extend .simple_list;
       li {
-        padding-bottom: rem($typeDefault/2);
+        padding-bottom: rem($typeS/2);
         @include leading_adjust(2);
         font-size: rem($typeS);
         a {
@@ -66,6 +66,10 @@
       @extend .simple_list;
       strong {
         color: $dmHeadings;
+      }
+      li {
+        @include leading_adjust(2);
+        font-size: rem($typeS);
       }
     }
   }

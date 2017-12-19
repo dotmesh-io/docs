@@ -117,6 +117,13 @@
       font-size: rem($typeL);
       margin-bottom: rem($typeDefault);
       @include leading_adjust(6);
+      a {
+        background-image: none;
+        color: $dmAction;
+        @include link-active-styles {
+          color: $dmActionRespond;
+        }
+      }
     }
     &_excerpt {
       font-size: rem($typeDefault);
@@ -125,5 +132,9 @@
   &_highlight {
     font-weight: $fontBold;
     color: $dmHarrington;
+    background-color: shade(dmHopper, Light);
+    outline: 1px solid $dmHopper;
+    padding-right: 6px;
+    padding-left: 6px;
   }
 }

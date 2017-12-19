@@ -1,6 +1,14 @@
 @import "shared/color"; // Need to import shared colours explicitly
 
 
+// Non-brand feedbacks
+// ------------------------------------------------------------------
+
+$dmError: 					#B10E1E;
+$dmSuccess: 				#00823B;
+$dmAlert: 					#FFBF47;
+
+
 // Shades
 // ------------------------------------------------------------------
 
@@ -11,7 +19,7 @@ $shades: (
       Light:    lighten($dmHenderson, 10%)
     ),
     dmEleven: (
-      Lightest: lighten($dmEleven, 42%),
+      Lightest: lighten($dmEleven, 48%),
       Light:    lighten($dmEleven, 10%)
     ),
     dmWheeler: (
@@ -20,10 +28,12 @@ $shades: (
       Darkest:  darken($dmWheeler, 30%)
     ),
     dmHopper: (
+      Light:    lighten($dmHopper, 43%),
       Dark:     darken($dmHopper, 10%),
       Darkest:  darken($dmHopper, 30%)
     ),
     dmMayfield: (
+      Light:    lighten($dmMayfield, 13%),
       Dark:     darken($dmMayfield, 10%),
       Darkest:  darken($dmMayfield, 30%)
     ),
@@ -32,6 +42,10 @@ $shades: (
     ),
     dmSinclair: (
       Dark:     darken($dmSinclair, 40%)
+    ),
+    dmSuccess: (
+      Light:    lighten($dmSuccess, 65%),
+      Dark:     darken($dmSuccess, 20%),
     )
 );
 
@@ -48,7 +62,6 @@ $shades: (
 $dmPrime: 					$dmHenderson;
 $dmPrimeAccent: 		shade(dmHenderson, Light);
 
-
 // Actions
 $dmAction: 					shade(dmHenderson, Light);
 $dmActionRespond: 	shade(dmWheeler, Dark);
@@ -62,8 +75,3 @@ $dmText: 						$dmHolland;
 $dmBorder:          shade(dmHargrove, Dark);
 $dmDisabled: 				$dmHawkins;
 $dmScrollbar: 			$dmPrime;
-
-// Non-brand feedbacks
-$dmError: 					#B10E1E;
-$dmSuccess: 				#00823B;
-$dmAlert: 					#FFBF47;

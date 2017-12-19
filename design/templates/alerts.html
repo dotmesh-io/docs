@@ -1,0 +1,10 @@
+{% set title = 'Alerts' %}
+{% extends 'layouts/guide.html' %}
+{% from 'layouts/macros/alert.html' import alert %}
+
+{% block content %}
+<h1 class="guide_h1">{{ title }}</h1>
+{{ alert("alertImportant", "If an api key is displayed in the previous snippet it is your ADMIN API Key. To maintain security, never use your ADMIN API Key on your frontend or share it with anyone. In your frontend, use the SEARCH ONLY API Key or any other key that has search only rights.") }}
+{{ alert("alertSuccess", "If an api key is displayed in the previous snippet it is your ADMIN API Key. To maintain security, never use your ADMIN API Key on your frontend or share it with anyone. In your frontend, use the SEARCH ONLY API Key or any other key that has search only rights.") }}
+{{ alert("alertNotice", "If an api key is displayed in the previous snippet it is your ADMIN API Key. To maintain security, never use your ADMIN API Key on your frontend or share it with anyone. In your frontend, use the SEARCH ONLY API Key or any other key that has search only rights.") }}
+{% endblock %}

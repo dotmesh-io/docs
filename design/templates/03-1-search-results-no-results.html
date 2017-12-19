@@ -1,0 +1,18 @@
+{% set title = 'Search results' %}
+{% set section = '' %}
+{% set setTerm = 'Kubernetes' %}
+
+{% extends 'layouts/layout.html' %}
+{% from 'layouts/macros/alert.html' import alert %}
+
+{% block aside %}
+  {% include 'layouts/partials/navigation-primary.html' %}
+{% endblock %}
+
+{% block content %}
+  {% include 'layouts/partials/masthead.html' %}
+  <div class="search">
+    <p class="search_alert">0 results for the term: <span class="search_highlight">{{ setTerm }}</span></p>
+    {{ alert("alertNotice", "We couldn't find any results. If you believe this to be incorrect <a href=''>let us know</a> and we'll look into improving this feature.") }}
+  </div>
+{% endblock %}

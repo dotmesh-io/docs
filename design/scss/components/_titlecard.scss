@@ -1,6 +1,9 @@
 
 .titlecard {
   position: relative;
+  a {
+    background-image: none;
+  }
   &_version {
     display: block;
     @extend .typeXS;

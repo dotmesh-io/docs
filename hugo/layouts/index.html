@@ -1,8 +1,5 @@
-{{ define "title" }}
-  {{ .Site.Title }}
-{{ end }}
+{{ define "title" }}{{ htmlUnescape .Site.Title }}{{ end }}
 
 {{ define "main" }}
-  {{.Title}}
-  {{.Content}}
+  Home page template
 {{ end }}

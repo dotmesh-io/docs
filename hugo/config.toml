@@ -1,6 +1,7 @@
 baseURL = "/"
 languageCode = "en-gb"
 title = "datamesh docs"
+sectionPagesMenu = "main"
 
 [params]
   version = "0.0.1 Alpha"
@@ -12,13 +13,43 @@ title = "datamesh docs"
 
 [menu]
     [[menu.main]]
-    identifier = "home"
-    name       = "Home"
-    url        = "/"
+    identifier = "install-setup"
+    name       = "Install &amp; setup."
+    url        = "/install-setup"
     weight     = 1
 
     [[menu.main]]
-    identifier = "news"
-    name       = "News"
-    url        = "/news"
+    identifier = "concepts"
+    name       = "Concepts."
+    url        = "/concepts"
     weight     = 2
+
+    [[menu.main]]
+    identifier = "tasks"
+    name       = "Tasks."
+    url        = "/tasks"
+    weight     = 3
+
+    [[menu.main]]
+    identifier = "command-references"
+    name       = "Command references."
+    url        = "/command-references"
+    weight     = 4
+
+    [[menu.main]]
+    identifier = "release-notes"
+    name       = "Release notes."
+    url        = "/release-notes"
+    weight     = 5
+
+    [[menu.main]]
+    identifier = "faq-troubleshooting"
+    name       = "FAQ &amp; troubleshooting."
+    url        = "/faq-troubleshooting"
+    weight     = 6
+    
+    [[menu.main]]
+    identifier = "glossary"
+    name       = "Glossary."
+    url        = "/glossary"
+    weight     = 7

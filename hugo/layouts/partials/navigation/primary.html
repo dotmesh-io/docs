@@ -1,10 +1,15 @@
 {{ $currentPage := . }}
-<nav>
-  <ul class="">
-    {{ range .Site.Menus.main }}
-      <li class="{{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }} active{{ end }}">
-        <a href="{{.URL}}">{{ .Name }}</a>
-      </li>
-    {{ end }}
-  </ul>
-</nav>
+{{ range .Site.Menus.main }}
+
+{{ if .HasChildren }}
+<li class="navigation_item navigation_itemParent{{if $currentPage.HasMenuCurrent "main" . }} navigation_itemCurrent{{end}}">
+  <a href="" class="">{{- htmlUnescape .Name }}</a>
+    <ul class="navigation_child">
+      {{ range .Children }}
+        <li class="navigation_item{{if $currentPage.IsMenuCurrent "main" . }} navigation_itemCurrent{{ end }}"><a href="{{.URL}}">{{- htmlUnescape .Name }}</a></li>
+      {{ end }}
+    </ul>
+{{ else }}
+  <li class="navigation_item navigation_itemParent{{if $currentPage.HasMenuCurrent "main" . }} navigation_itemCurrent{{end}}"><a href="{{.URL}}">{{- htmlUnescape .Name }}</a>{{ end }}
+</li>
+{{ end }}

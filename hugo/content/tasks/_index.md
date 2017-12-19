@@ -1,6 +1,5 @@
 +++
 draft = false
-lastmod = ""
 title = "Tasks"
 synopsis = ""
 knowledgelevel = ""

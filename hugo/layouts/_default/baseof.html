@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/assets/favicons/manifest.json">
-    <link rel="mask-icon" href="/assets/favicons/safari-pinned-tab.svg" color="#5c2d70">
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}css/style.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ .Site.BaseURL }}assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ .Site.BaseURL }}assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ .Site.BaseURL }}assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="{{ .Site.BaseURL }}assets/favicons/manifest.json">
+    <link rel="mask-icon" href="{{ .Site.BaseURL }}assets/favicons/safari-pinned-tab.svg" color="#5c2d70">
     <meta name="theme-color" content="#21F9EE">
     <title>{{ block "title" . }}{{ end }}.</title>
   </head>
@@ -19,7 +19,7 @@
         <div class="titlecard">
           <a href="/" rel="home">
             <svg class="icon icon36 icon_marque_small_svg">
-              <use xlink:href="/assets/icons/renders/sprite.svg#marque_small"></use>
+              <use xlink:href="{{ .Site.BaseURL }}assets/icons/renders/sprite.svg#marque_small"></use>
             </svg>
           </a>
           <span class="titlecard_version">v: {{ $.Site.Params.version }}.</span>
@@ -29,7 +29,7 @@
   	      <button type="button" class="navigationtoggle" id="navigationtoggle">
   					Menu
   					<svg class="icon icon16 icon_arrow_toggle_svg">
-  	          <use xlink:href="/assets/icons/renders/sprite.svg#arrow_toggle"></use>
+  	          <use xlink:href="{{ .Site.BaseURL }}assets/icons/renders/sprite.svg#arrow_toggle"></use>
   	        </svg>
   				</button>
   			</div>
@@ -41,7 +41,7 @@
   				</div>
   				<button class="searchbar_button" type="submit">
   					<svg class="icon icon22 icon_search_svg">
-  						<use xlink:href="/assets/icons/renders/sprite.svg#search"></use>
+  						<use xlink:href="{{ .Site.BaseURL }}assets/icons/renders/sprite.svg#search"></use>
   					</svg>
   				</button>
   			</form>

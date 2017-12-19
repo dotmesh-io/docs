@@ -1,6 +1,5 @@
 +++
 draft = false
-lastmod = ""
 title = "Glossary"
 synopsis = ""
 knowledgelevel = ""

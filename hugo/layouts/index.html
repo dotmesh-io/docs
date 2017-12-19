@@ -1,5 +1,6 @@
-{{ define "title" }}{{ htmlUnescape .Site.Title }}{{ end }}
+{{ define "title" }}{{ .Site.Title | safeHTML }}{{ end }}
 
 {{ define "main" }}
-  Home page template
+  {{ partial "components/masthead.html" . }}
+  {{ .Content }}
 {{ end }}

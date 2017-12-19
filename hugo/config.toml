@@ -12,43 +12,43 @@ sectionPagesMenu = "main"
   category = ""
 
 [menu]
-    [[menu.main]]
+    [menu.main]
     identifier = "install-setup"
     name       = "Install &amp; setup."
     url        = "/install-setup"
     weight     = 1
 
-    [[menu.main]]
+    [menu.main]
     identifier = "concepts"
     name       = "Concepts."
     url        = "/concepts"
     weight     = 2
 
-    [[menu.main]]
+    [menu.main]
     identifier = "tasks"
     name       = "Tasks."
     url        = "/tasks"
     weight     = 3
 
-    [[menu.main]]
+    [menu.main]
     identifier = "command-references"
     name       = "Command references."
     url        = "/command-references"
     weight     = 4
 
-    [[menu.main]]
+    [menu.main]
     identifier = "release-notes"
     name       = "Release notes."
     url        = "/release-notes"
     weight     = 5
 
-    [[menu.main]]
+    [menu.main]
     identifier = "faq-troubleshooting"
     name       = "FAQ &amp; troubleshooting."
     url        = "/faq-troubleshooting"
     weight     = 6
-    
-    [[menu.main]]
+
+    [menu.main]
     identifier = "glossary"
     name       = "Glossary."
     url        = "/glossary"

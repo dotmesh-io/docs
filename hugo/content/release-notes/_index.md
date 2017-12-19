@@ -1,6 +1,5 @@
 +++
 draft = false
-lastmod = ""
 title = "Release notes"
 synopsis = ""
 knowledgelevel = ""

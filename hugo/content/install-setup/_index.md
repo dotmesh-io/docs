@@ -1,6 +1,5 @@
 +++
 draft = false
-lastmod = ""
 title = "Install &amp; setup"
 synopsis = ""
 knowledgelevel = ""

@@ -3,13 +3,13 @@
 
 {{ if .HasChildren }}
 <li class="navigation_item navigation_itemParent{{if $currentPage.HasMenuCurrent "main" . }} navigation_itemCurrent{{end}}">
-  <a href="{{.URL}}" class="">{{- .Name | safeHTML }}</a>
+  <a href="{{.URL}}" class="">{{- .Name | safeHTML }}.</a>
     <ul class="navigation_child">
       {{ range .Children }}
-        <li class="navigation_item{{if $currentPage.IsMenuCurrent "main" . }} navigation_itemCurrent{{ end }}"><a href="{{.URL}}">{{- .Name | safeHTML }}</a></li>
+        <li class="navigation_item{{if $currentPage.IsMenuCurrent "main" . }} navigation_itemCurrent{{ end }}"><a href="{{.URL}}">{{- .Name | safeHTML }}.</a></li>
       {{ end }}
     </ul>
 {{ else }}
-  <li class="navigation_item navigation_itemParent{{if $currentPage.HasMenuCurrent "main" . }} navigation_itemCurrent{{end}}"><a href="{{.URL}}">{{- .Name | safeHTML }}</a>{{ end }}
+  <li class="navigation_item navigation_itemParent{{if $currentPage.HasMenuCurrent "main" . }} navigation_itemCurrent{{end}}"><a href="{{.URL}}">{{- .Name | safeHTML }}.</a>{{ end }}
 </li>
 {{ end }}

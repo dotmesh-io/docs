@@ -5,6 +5,6 @@ synopsis = ""
 knowledgelevel = ""
 date = {{ .Date }}
 [menu]
-[menu.main]
-parent = ""
+  [menu.main]
+    parent = ""
 +++

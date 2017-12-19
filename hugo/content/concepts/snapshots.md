@@ -1,6 +1,6 @@
 +++
 draft = false
-title = "Architecture"
+title = "Snapshots"
 synopsis = "Synopsis"
 knowledgelevel = ""
 date = 2017-12-19T15:44:24Z

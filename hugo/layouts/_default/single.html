@@ -1,7 +1,40 @@
 {{ define "title" }}{{ .Title | safeHTML }}. {{ .Site.Title }}{{ end }}
 
 {{ define "main" }}
-  {{ partial "components/masthead.html" . }}
-  {{ .Content }}
-  Single
+<div class="articlecontainer">
+  <article class="article">
+    {{ partial "components/masthead.html" . }}
+    <div class="article_body">
+      <!-- Intro section -->
+      <div class="article_section">
+        <aside class="article_aside">
+          <ul class="article_aside_list">
+            <li><strong>Time:</strong> ~{{ .Page.ReadingTime }}mins.</li>
+            <li><strong>Level:</strong> Advanced.</li>
+            <li><strong>Updated:</strong> {{ .Page.Lastmod.Format "02 Jan 06"}}.</li>
+          </ul>
+          <h5 class="article_aside_heading">Quick links</h5>
+          <ul class="article_aside_anchors">
+            <li><a href="#anchorpoint-name">Managing your Cluster.</a></li>
+            <li><a href="#anchorpoint-name2">Private Container Registries.</a></li>
+            <li><a href="#anchorpoint-name3">Persistent Volumes.</a></li>
+          </ul>
+        </aside>
+        <div class="typebase typebaseSynopsis">
+          <p>{{ .Params.Synopsis }}</p>
+        </div>
+      </div>
+      <!-- Main article section -->
+      <div class="article_section">
+        <div class="typebase">
+          {{ .Content }}
+        </div>
+      </div>
+    </div>
+  </article>
+  <div class="button_wayfinders">
+    <a href="" class="button buttonWaypoint buttonSecondary">Previous. <span>Architecture</span></a>
+    <a href="" class="button buttonWaypoint">Next. <span>Configuration</span></a>
+  </div>
+</div>
 {{ end }}

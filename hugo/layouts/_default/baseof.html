@@ -1,18 +1,76 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en-GB" class="">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="/css/style.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="./assets/favicons/manifest.json">
+    <link rel="mask-icon" href="./assets/favicons/safari-pinned-tab.svg" color="#5c2d70">
+    <meta name="theme-color" content="#21F9EE">
     <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
   </head>
   <body>
-    {{ block "header" . }}
-      {{ partial "layout/header.html" . }}
-    {{ end }}
-    {{ block "main" . }}
-    {{ end }}
-    {{ block "footer" . }}
-      {{ partial "layout/footer.html" . }}
-    {{ end }}
+    <div class="docs">
+      <aside class="docs_aside">
+        <div class="titlecard">
+          <svg class="icon icon36 icon_marque_small_svg">
+            <use xlink:href="./assets/icons/renders/sprite.svg#marque_small"></use>
+          </svg>
+          <span class="titlecard_version">v: {{ $.Site.Params.version }}.</span>
+          <h1 class="typeM heading">{{ .Site.Title }}.</h1>
+        </div>
+  			<div class="navigationtrigger">
+  	      <button type="button" class="navigationtoggle" id="navigationtoggle">
+  					Menu
+  					<svg class="icon icon16 icon_arrow_toggle_svg">
+  	          <use xlink:href="./assets/icons/renders/sprite.svg#arrow_toggle"></use>
+  	        </svg>
+  				</button>
+  			</div>
+  			<form class="searchbar">
+  				<div class="searchbar_field">
+  					<label for="searchbar_input" class="searchbar_label">Search docs</label>
+  					<input class="searchbar_input" type="text" value="" id="searchbar_input" placeholder="Search docs.">
+  					<b></b><!-- This isn't a mistake, it's a visual hack -->
+  				</div>
+  				<button class="searchbar_button" type="submit">
+  					<svg class="icon icon22 icon_search_svg">
+  						<use xlink:href="./assets/icons/renders/sprite.svg#search"></use>
+  					</svg>
+  				</button>
+  			</form>
+        <div class="navigationwrapper navigationwrapperCollapsed" id="navigationwrapper">
+          <nav class="navigation">
+            <ul class="navigation_parent">
+              {{ partial "navigation/flat.html" . }}
+            </ul>
+          </nav>
+        </div>
+      </aside>
+      <div class="docs_body">
+        {{ block "main" . }}
+        {{ end }}
+      </div>
+    </div>
   </body>
+  <script>
+    // TODO move into external file
+    var mainNav = document.getElementById('navigationwrapper');
+    var navToggle = document.getElementById('navigationtoggle');
+
+    // Start by adding the class "collapse" to the mainNav
+    //mainNav.classList.add('navigationwrapperCollapsed');
+
+    // Establish a function to toggle the class "collapse"
+    function mainNavToggle() {
+    	mainNav.classList.toggle('navigationwrapperCollapsed');
+  		navToggle.classList.toggle('navigationtoggleActive');
+    }
+    // Add a click event to run the mainNavToggle function
+    navToggle.addEventListener('click', mainNavToggle);
+  </script>
 </html>

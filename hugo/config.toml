@@ -1,7 +1,9 @@
 baseURL = "/"
-languageCode = "en-uk"
-title = "Datamesh Docs"
+languageCode = "en-gb"
+title = "datamesh docs"
 
+[params]
+  version = "0.0.1 Alpha"
 
 [taxonomies]
   tag = ""

@@ -1,5 +1,8 @@
 +++
-title: "{{ replace .TranslationBaseName "-" " " | title }}"
-date: {{ .Date }}
 draft: false
+lastmod: ""
+title: "{{ replace .TranslationBaseName "-" " " | title }}"
+pagesynopsis: ""
+knowledgelevel: ""
+date: {{ .Date }}
 +++

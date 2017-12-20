@@ -1,0 +1,17 @@
+<a href="{{ .Permalink }}" class="card">
+  <div class="card_image">
+    <div class="mesh">
+      {{ partial "svg/mesh.html" . }}
+    </div>
+  </div>
+  <div class="card_body">
+    <h3 class="card_heading">{{ .Title | safeHTML }}</h3>
+    <div class="card_synopsis">
+      {{ if .Params.synopsis }}
+        <p>{{ .Params.synopsis }}</p>
+      {{ else }}
+        <p style="color: red;">Please add a synopsis</p>
+      {{ end }}
+    </div>
+  </div>
+</a>

@@ -15,41 +15,48 @@ sectionPagesMenu = "main"
     [[menu.main]]
     identifier = "install-setup"
     name       = "Install &amp; setup"
-    url        = "/install-setup"
+    url        = "/install-setup/"
+    synopsis   = "synopsis"
     weight     = 1
 
     [[menu.main]]
     identifier = "concepts"
     name       = "Concepts"
-    url        = "/concepts"
+    url        = "/concepts/"
+    synopsis   = "synopsis"
     weight     = 2
 
     [[menu.main]]
     identifier = "tasks"
     name       = "Tasks"
-    url        = "/tasks"
+    url        = "/tasks/"
+    synopsis   = "synopsis"
     weight     = 3
 
     [[menu.main]]
     identifier = "command-references"
     name       = "Command references"
-    url        = "/command-references"
+    url        = "/command-references/"
+    synopsis   = "synopsis"
     weight     = 4
 
     [[menu.main]]
     identifier = "release-notes"
     name       = "Release notes"
-    url        = "/release-notes"
+    url        = "/release-notes/"
+    synopsis   = "synopsis"
     weight     = 5
 
     [[menu.main]]
     identifier = "faq-troubleshooting"
     name       = "FAQ &amp; troubleshooting"
-    url        = "/faq-troubleshooting"
+    url        = "/faq-troubleshooting/"
+    synopsis   = "synopsis"
     weight     = 6
 
     [[menu.main]]
     identifier = "glossary"
     name       = "Glossary"
-    url        = "/glossary"
+    url        = "/glossary/"
+    synopsis   = "synopsis"
     weight     = 7

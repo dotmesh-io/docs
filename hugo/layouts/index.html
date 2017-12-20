@@ -2,7 +2,35 @@
 
 {{ define "main" }}
   {{ partial "components/masthead.html" . }}
-  {{ .Content }}
+  <div class="deck">
+    {{ range .Page.Sections.ByParam "order" }}
+      <a href="{{ .Permalink }}" class="card">
+        <div class="card_image">
+          <div class="mesh">
+            {{ partial "svg/mesh.html" . }}
+          </div>
+        </div>
+        <div class="card_body">
+          <h3 class="card_heading">{{ .Title | safeHTML }}</h3>
+          <div class="card_synopsis">
+            {{ if .Params.synopsis }}
+              <p>{{ .Params.synopsis }}</p>
+            {{ else }}
+              <p style="color: red;">Please add a synopsis</p>
+            {{ end }}
+          </div>
+        </div>
+      </a>
+    {{ end }}
+    <a href="" class="card cardFiller">
+      <div class="card_body">
+        <h3 class="card_heading">Let's get started.</h3>
+        <svg class="icon icon_arrow_direction_svg">
+          <use xlink:href="{{ .Site.BaseURL }}assets/icons/renders/sprite.svg#arrow_direction"></use>
+        </svg>
+      </div>
+    </a>
+  </div>
 {{ end }}
 
 

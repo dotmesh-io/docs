@@ -1,0 +1,6 @@
+{{ if and (gt .WordCount 400 ) }}
+<h5 class="article_aside_heading">Quick links</h5>
+<div class="article_aside_anchors">
+  {{ .TableOfContents }}
+</div>
+{{ end }}

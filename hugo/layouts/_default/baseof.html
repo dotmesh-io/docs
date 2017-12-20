@@ -75,6 +75,40 @@
     // Add a click event to run the mainNavToggle function
     navToggle.addEventListener('click', mainNavToggle);
   </script>
-  {{ block "footeradditions" . }}
-  {{ end }}
+  
+{{ block "footeradditions" . }}
+  <script>
+
+    // Straight up nab from Hugo docs website. Doth of the cap
+    var anchorForId = function anchorForId(id) {
+      var anchor = document.createElement("a");
+      anchor.className = "anchor";
+      anchor.href = "#" + id;
+      anchor.innerHTML = '<svg class="icon icon_link_svg"><use xlink:href="/assets/icons/renders/sprite.svg#link"></use></svg>';
+      return anchor;
+    };
+
+    var linkifyAnchors = function linkifyAnchors(level, containingElement) {
+      var headers = containingElement.getElementsByTagName("h" + level);
+      for (var h = 0; h < headers.length; h++) {
+        var header = headers[h];
+        if (typeof header.id !== "undefined" && header.id !== "") {
+          header.prepend(anchorForId(header.id));
+        }
+      }
+    };
+
+    document.onreadystatechange = function () {
+      if (this.readyState === "complete") {
+        var contentBlock = document.getElementsByClassName("typebaseArticle")[0];
+        if (!contentBlock) {
+          return;
+        }
+        for (var level = 2; level <= 4; level++) {
+          linkifyAnchors(level, contentBlock);
+        }
+      }
+    };
+  </script>
+{{ end }}
 </html>

@@ -1,0 +1,31 @@
+<article class="article">
+  {{ partial "components/masthead.html" . }}
+  <div class="article_body">
+    <!-- Intro section -->
+    <div class="article_section">
+      <aside class="article_aside">
+        {{ partial "components/meta.html" . }}
+        {{ partial "components/contents.html" . }}
+      </aside>
+      <div class="typebase typebaseSynopsis">
+        {{ if .Params.synopsis }}
+        <p>{{ .Params.synopsis }}</p>
+        {{ else }}
+        <p style="color: red;">Please add a synopsis to this page</p>
+        {{ end }}
+      </div>
+    {{ if eq (.CurrentSection.Title) (.Title) }}
+      <div class="typebase typebaseArticle">
+        {{ .Content }}
+      </div>
+    </div>
+    {{ else }}
+    </div>
+    <div class="article_section">
+      <div class="typebase typebaseArticle">
+        {{ .Content }}
+      </div>
+    </div>
+    {{ end }}
+  </div>
+</article>

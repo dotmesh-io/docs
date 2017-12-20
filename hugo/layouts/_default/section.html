@@ -2,12 +2,15 @@
 
 {{ define "main" }}
 <div class="articlecontainer">
-  <article class="article">
-    {{ partial "components/masthead.html" . }}
-    {{ .Content }}
+  {{ partial "layout/article.html" . }}
+  {{ if .Data.Pages }}
+  <h5 class="typeM heading">In this section.</h5>
+  <div class="deck deckMinor">
     {{ range .Data.Pages }}
-      {{ .Render "summary"}}
+      {{ .Render "summary" }}
     {{ end }}
-  </article>
+  </div>
+  {{ else }}
+  {{ end }}
 </div>
 {{ end }}

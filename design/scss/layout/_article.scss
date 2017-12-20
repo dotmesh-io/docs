@@ -25,7 +25,7 @@
       left: 105%;
       top: -$strokeWidth;
       border-top: $strokeWidth solid $dmPrime;
-      padding-top: $bufferSpaceM;
+      padding-top: $bufferSpaceM + 7px; // Optical alignment
     }
     @include respond-to($vpG) {
       left: 110%;

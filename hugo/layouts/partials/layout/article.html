@@ -18,13 +18,12 @@
       <div class="typebase typebaseArticle">
         {{ .Content }}
       </div>
-    </div>
     {{ else }}
-    </div>
       <div class="typebase typebaseArticle">
         {{ .Content }}
         {{ partial "components/related.html" . }}
       </div>
     {{ end }}
+    </div>
   </div>
 </article>

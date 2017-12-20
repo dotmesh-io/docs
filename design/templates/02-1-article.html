@@ -25,31 +25,32 @@
             <!-- Hugo spit -->
             <nav id="TableOfContents">
               <ul>
-              <li>
-              <ul>
-              <li><a href="#heading-two">Heading two</a>
-              <ul>
-              <li><a href="#heading-three">Heading three</a>
-              <ul>
-              <li><a href="#heading-four">Heading four</a>
-              <ul>
-              <li><a href="#heading-five">Heading five</a></li>
-              </ul></li>
-              </ul></li>
-              </ul></li>
-              </ul></li>
+                <li>
+                  <ul>
+                    <li><a href="#heading-two">Heading two</a>
+                      <ul>
+                        <li><a href="#heading-three">Heading three</a>
+                          <ul>
+                            <li><a href="#heading-four">Heading four</a>
+                              <ul>
+                                <li><a href="#heading-five">Heading five</a></li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                  </li>
+                </ul>
+              </li>
               </ul>
-              </nav>
+            </nav>
           </div>
         </aside>
         <div class="typebase typebaseSynopsis">
           <p>Datamesh (dm) is a flexible, clusterable data fabric that enables data portability in development.</p>
-          {% include 'layouts/shortcodes/beacon-block.html' %}
         </div>
-      </div>
-      <!-- Main article section -->
-      <div class="article_section">
-        <div class="typebase">
+        <div class="typebase typebaseArticle">
+          {% include 'layouts/shortcodes/beacon-block.html' %}
           {% include 'layouts/content/article-kitchen-sink.html' %}
           {% include 'layouts/shortcodes/beacon-block-related.html' %}
         </div>

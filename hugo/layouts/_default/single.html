@@ -10,15 +10,13 @@
         <aside class="article_aside">
           <ul class="article_aside_list">
             <li><strong>Time:</strong> ~{{ .Page.ReadingTime }}mins.</li>
-            <li><strong>Level:</strong> Advanced.</li>
-            <li><strong>Updated:</strong> {{ .Page.Lastmod.Format "02 Jan 06"}}.</li>
+            <li><strong>Level:</strong> {{ .Params.knowledgelevel }}.</li>
+            <li><strong>Updated:</strong> {{ .Page.Date.Format "02 Jan 06"}}.</li>
           </ul>
           <h5 class="article_aside_heading">Quick links</h5>
-          <ul class="article_aside_anchors">
-            <li><a href="#anchorpoint-name">Managing your Cluster.</a></li>
-            <li><a href="#anchorpoint-name2">Private Container Registries.</a></li>
-            <li><a href="#anchorpoint-name3">Persistent Volumes.</a></li>
-          </ul>
+          <div class="article_aside_anchors">
+            {{ .TableOfContents }}
+          </div>
         </aside>
         <div class="typebase typebaseSynopsis">
           <p>{{ .Params.Synopsis }}</p>
@@ -26,7 +24,7 @@
       </div>
       <!-- Main article section -->
       <div class="article_section">
-        <div class="typebase">
+        <div class="typebase typebaseArticle">
           {{ .Content }}
         </div>
       </div>
@@ -37,4 +35,40 @@
     <a href="" class="button buttonWaypoint">Next. <span>Configuration</span></a>
   </div>
 </div>
+{{ end }}
+
+{{ define "footeradditions" }}
+<script>
+
+  // Straight up nab from Hugo docs website. Doth of the cap
+  var anchorForId = function anchorForId(id) {
+    var anchor = document.createElement("a");
+    anchor.className = "anchor";
+    anchor.href = "#" + id;
+    anchor.innerHTML = '<svg class="icon icon_link_svg"><use xlink:href="/assets/icons/renders/sprite.svg#link"></use></svg>';
+    return anchor;
+  };
+
+  var linkifyAnchors = function linkifyAnchors(level, containingElement) {
+    var headers = containingElement.getElementsByTagName("h" + level);
+    for (var h = 0; h < headers.length; h++) {
+      var header = headers[h];
+      if (typeof header.id !== "undefined" && header.id !== "") {
+        header.prepend(anchorForId(header.id));
+      }
+    }
+  };
+
+  document.onreadystatechange = function () {
+    if (this.readyState === "complete") {
+      var contentBlock = document.getElementsByClassName("typebaseArticle")[0];
+      if (!contentBlock) {
+        return;
+      }
+      for (var level = 2; level <= 4; level++) {
+        linkifyAnchors(level, contentBlock);
+      }
+    }
+  };
+</script>
 {{ end }}

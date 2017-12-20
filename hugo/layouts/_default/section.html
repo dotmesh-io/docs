@@ -5,6 +5,9 @@
   <article class="article">
     {{ partial "components/masthead.html" . }}
     {{ .Content }}
+    {{ range .Data.Pages }}
+      {{ .Render "summary"}}
+    {{ end }}
   </article>
 </div>
 {{ end }}

@@ -49,17 +49,18 @@
       }
     }
     &_anchors {
-      @extend .simple_list;
+      ul {
+        list-style-type: none;
+        ul {
+          margin-top: rem($typeS/2);
+        }
+      }
       li {
-        padding-bottom: rem($typeS/2);
-        @include leading_adjust(2);
         font-size: rem($typeS);
+        @include leading_adjust(2);
         a {
           line-height: inherit;
         }
-    		&:last-of-type {
-    			padding-bottom: 0;
-    		}
       }
     }
     &_list {

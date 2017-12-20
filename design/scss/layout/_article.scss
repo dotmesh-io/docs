@@ -51,8 +51,13 @@
     &_anchors {
       ul {
         list-style-type: none;
+        // I'm not proud of this but it sorts out Hugo's mess of lack of depth options
+        // As I think we should only allow quick links on headings at level two, sack off the rest boi!
         ul {
           margin-top: rem($typeS/2);
+          ul {
+            display: none;
+          }
         }
       }
       li {

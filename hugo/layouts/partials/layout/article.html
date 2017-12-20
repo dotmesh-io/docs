@@ -24,6 +24,7 @@
     <div class="article_section">
       <div class="typebase typebaseArticle">
         {{ .Content }}
+        {{ partial "components/related.html" . }}
       </div>
     </div>
     {{ end }}

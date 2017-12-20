@@ -1,4 +1,4 @@
 <div class="button_wayfinders">
-  <a href="" class="button buttonWaypoint buttonSecondary">Previous. <span>Architecture</span></a>
-  <a href="" class="button buttonWaypoint">Next. <span>Configuration</span></a>
+  <a href="{{ .Prev.Permalink }}" class="button buttonWaypoint buttonSecondary">Previous. <span>{{ .Prev.Title | safeHTML }}</span></a>
+  <a href="{{ .Next.Permalink }}" class="button buttonWaypoint">Next. <span>{{ .Next.Title | safeHTML }}</span></a>
 </div>

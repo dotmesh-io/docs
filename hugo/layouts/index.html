@@ -6,7 +6,7 @@
     {{ range .Page.Sections.ByParam "order" }}
       {{ partial "components/card.html" . }}
     {{ end }}
-    <a href="" class="card cardFiller">
+    <a href="/install-setup/" class="card cardFiller">
       <div class="card_body">
         <h3 class="card_heading">Let's get started.</h3>
         <svg class="icon icon_arrow_direction_svg">
@@ -16,7 +16,6 @@
     </a>
   </div>
 {{ end }}
-
 
 {{ define "footeradditions" }}
 {{ end }}

@@ -3,6 +3,18 @@ languageCode = "en-GB"
 title = "datamesh docs"
 sectionPagesMenu = "main"
 
+# Highlighting config (Pygments)
+pygmentsCodeFences = true
+
+pygmentsOptions = ""
+# Use the Chroma stylesheet
+pygmentsUseClasses = true
+pygmentsUseClassic = false
+pygmentsCodefencesGuessSyntax = true
+
+# See https://help.farbox.com/pygments.html
+pygmentsStyle = "monokai"
+
 [params]
   version = "0.0.1 Alpha"
 

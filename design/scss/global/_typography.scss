@@ -178,13 +178,19 @@
 	li {
 		@extend %listlead;
 	}
-	img, pre {
+	img, .highlight {
 		display: block;
 		margin-top: rem($typeDefault*2);
 		margin-bottom: rem($typeDefault);
 	}
-	pre {
-		margin-bottom: rem($typeDefault*4);
+	.highlight {
+		margin-bottom: rem($typeDefault*3);
+		.highlight {
+			margin-bottom: 0;
+		}
+	}
+	> .highlight {
+		@include gutterPull($vpGutter, $docsGutter);
 	}
 	h1, h2, h3, h4, h5, h6 {
 		@extend .heading;
@@ -283,4 +289,8 @@
 
 .typebaseSynopsis + .typebase {
 	margin-top: rem($typeDefault*2);
+}
+
+.typebaseArticle {
+  margin-bottom: ($bufferSpaceXL - $strokeWidth);
 }

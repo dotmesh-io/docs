@@ -36,14 +36,18 @@ $asideWidthMinor: ($asideWidth - 100px);
   &_body {
     grid-area: body;
     padding: $bufferSpaceS*1.5;
+    overflow: hidden;
     @include respond-to($vpMenu) {
-      padding: $bufferSpaceL $bufferSpaceXL $bufferSpaceXXL $spaceBaseP*1.5;
+      padding: $bufferSpaceL $bufferSpaceM $bufferSpaceXXL $spaceBaseP*1.5;
       width: calc(100% - #{$asideWidthMinor});
       float: left;
       @supports (display: grid) {
         width: auto;
         float: none;
       }
+    }
+    @include respond-to($vpE) {
+      padding-right: $bufferSpaceXL;
     }
     @include respond-to($vpF) {
       padding-left: $spaceBaseP/1.5;

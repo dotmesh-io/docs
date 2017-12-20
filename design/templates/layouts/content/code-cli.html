@@ -1,11 +1,30 @@
-<pre><code>$ sudo curl -o /usr/local/bin/dm \
-https://get.datamesh.io/$(uname -s)/dm
-$ sudo chmod +x /usr/local/bin/dm
-$ dm cluster init
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
 
-Installing datamesh server in a container... done.
-Configuring dm CLI to authenticate to datamesh server... done.
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">"fmt"</span>
+	<span class="s">"os"</span>
+	<span class="s">"github.com/lukemarsden/datamesh/cmd/dm/pkg/commands"</span>
+	<span class="s">"github.com/opentracing/opentracing-go"</span>
+	<span class="nx">zipkin</span> <span class="s">"github.com/openzipkin/zipkin-go-opentracing"</span>
+<span class="p">)</span>
 
-Here is your key to add other nodes:
-https://discovery.datamesh.io/22fd02ea1e89bad78a92c35a2e268044
-You can use 'dm auth' to get this key later.$</code></pre>
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">// Set up enough opentracing infrastructure that spans will be injected into outgoing HTTP requests, even if we're not going to push spans into
+</span><span class="c1"></span>	<span class="c1">// zipkin ourselves
+</span><span class="c1"></span>	<span class="nx">collector</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">zipkin</span><span class="p">.</span><span class="nx">NopCollector</span><span class="p">{}</span>
+	<span class="nx">tracer</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">zipkin</span><span class="p">.</span><span class="nx">NewTracer</span><span class="p">(</span>
+		<span class="nx">zipkin</span><span class="p">.</span><span class="nx">NewRecorder</span><span class="p">(</span><span class="nx">collector</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="s">"127.0.0.1:0"</span><span class="p">,</span> <span class="s">"datamesh-cli"</span><span class="p">),</span>
+		<span class="nx">zipkin</span><span class="p">.</span><span class="nx">ClientServerSameSpan</span><span class="p">(</span><span class="kc">true</span><span class="p">),</span>
+		<span class="nx">zipkin</span><span class="p">.</span><span class="nx">TraceID128Bit</span><span class="p">(</span><span class="kc">true</span><span class="p">),</span>
+	<span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+		<span class="nx">os</span><span class="p">.</span><span class="nx">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">opentracing</span><span class="p">.</span><span class="nx">InitGlobalTracer</span><span class="p">(</span><span class="nx">tracer</span><span class="p">)</span>
+
+	<span class="c1">// Execute the command
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">commands</span><span class="p">.</span><span class="nx">MainCmd</span><span class="p">.</span><span class="nx">Execute</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">os</span><span class="p">.</span><span class="nx">Exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span></code></pre></div>

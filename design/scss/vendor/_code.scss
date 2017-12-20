@@ -9,7 +9,7 @@ pre {
   position: relative;
 	tab-width: 2;
   white-space: pre-wrap;
-  word-break: break-all;
+  // word-break: break-all;
 }
 
 code {
@@ -28,13 +28,30 @@ code {
   }
 }
 
+.highlight {
+  position: relative;
+  tab-width: 2;
+  code {
+    overflow-x: scroll;
+  }
+  pre.chroma {
+    background-color: $dmEleven;
+    background-image: linear-gradient($lightAngleRefraction, rgba($dmHarrington, 0.95) 0%, rgba($dmHarrington, 0.95) 35%, rgba($dmByers, 0.95) 100%);
+    padding: $bufferSpaceS;
+    color: $dmHargrove;
+    white-space: pre;
+    overflow-x: auto;
+    overflow-y: hidden;
+    //overflow: scroll;
+    position: relative;
+  }
+}
+
 
 // Pygments
 // ------------------------------------------------------
 
 .highlight {
-  background: #272822;
-  color: #f8f8f2;
   .hll  { background-color: #49483e }
   .c    { color: #75715e } // Comment */
   .err  { color: #960050; background-color: #1e0010 } // Error */

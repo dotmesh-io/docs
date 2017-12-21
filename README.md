@@ -109,8 +109,8 @@ First, stop Hugo from watching (Cmd + c), then:
 $ make hugo.build
 ```
 
-This will output the design assets document_root to `hugo/public`
-Hugo can now reference the up-to-date assets.
+This will output the design assets and css to `hugo/static` and then build the hugo site to `hugo/public`
+Hugo can now reference the up-to-date assets from `static` and we have a fresh version of the static site at `hugo/public`
 
 Start Hugo watching again
 
@@ -118,7 +118,7 @@ Start Hugo watching again
 $ make hugo.watch
 ```
 
-You should see changes reflected in Hugo
+You should see changes reflected in Hugo at [http://localhost:1313](http://localhost:1313)
 
 # Docker commands
 

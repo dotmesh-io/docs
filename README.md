@@ -17,7 +17,7 @@ All documentation is to be written in Hugo, using the predefined architypes and 
 See the [Wiki page](https://github.com/datamesh-io/docs/wiki) for full details on how to write documentation in a consistent manner
 
 
-## Writing new content
+## Writing content
 
 The document pages live in `hugo/content`. See the [Wiki page](https://github.com/datamesh-io/docs/wiki) for formatting and markdown help.
 

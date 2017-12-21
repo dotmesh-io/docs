@@ -19,7 +19,7 @@ See the [Wiki page](https://github.com/datamesh-io/docs/wiki) for full details o
 
 ## Writing new content
 
-The document pages live in `hugo/content`.
+The document pages live in `hugo/content`. See the [Wiki page](https://github.com/datamesh-io/docs/wiki) for formatting and markdown help.
 
 Run the following command to get a hot-reloading version of the site in your browser:
 

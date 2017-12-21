@@ -1,0 +1,17 @@
+{{ define "title" }}Error 404. {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+<div class="articlecontainer">
+  <article class="article">
+    <header class="masthead">
+      <span class="masthead_metatag">404.</span>
+      <h1 class="typeXL heading">Sorry folks, the page ain't here anymore.</h1>
+    </header>
+    <div class="article_body">
+      <div class="article_section">
+        <img src="{{ .Site.BaseURL }}assets/img/404.gif" class="full_width">
+      </div>
+    </div>
+  </article>
+</div>
+{{ end }}

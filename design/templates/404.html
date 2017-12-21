@@ -1,0 +1,22 @@
+{% set title = "Sorry folks, the page ain't here anymore" %}
+{% set section = '404' %}
+
+{% extends 'layouts/layout.html' %}
+
+{% block aside %}
+  {% include 'layouts/partials/navigation-primary.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="articlecontainer">
+  <article class="article">
+    {% include 'layouts/partials/masthead.html' %}
+    <div class="article_body">
+      <!-- Intro section -->
+      <div class="article_section">
+        <img src="./assets/img/404.gif" class="full_width">
+      </div>
+    </div>
+  </article>
+</div>
+{% endblock %}

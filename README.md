@@ -12,9 +12,14 @@ Then you need to make the images:
 $ make.images
 ```
 
+# Writing docs
+All documentation is to be written in Hugo, using the predefined architypes and structure.
+See the [Wiki page](https://github.com/datamesh-io/docs/wiki) for full details on how to write documentation in a consistent manner
+
+
 ## Writing new content
 
-The blog posts live in `hugo/content`, add a new file to this folder.
+The document pages live in `hugo/content`.
 
 Run the following command to get a hot-reloading version of the site in your browser:
 
@@ -24,22 +29,12 @@ $ make hugo.watch
 
 Then you can open [http://localhost:1313](http://localhost:1313) for a preview.
 
-## Stop container
 
-To stop the `design.watch` command:
+# Design
+The design for the docs is built static, and then all relevant assets (CSS,JS etc...) are pulled across to hugo during the `hugo build` command.
+This allows us to design, test and add new features, as well as fix design related bugs, outside of Hugo.
+Any changes that affect things visually (HTML, CSS, JS etc...) should be first made in design before being pulled across into Hugo.
 
-```bash
-$ make design.stop
-```
-
-
-## Building static site
-
-```bash
-$ make hugo.build
-```
-
-This will output the document_root to `hugo/public`
 
 ## Viewing Design Templates
 
@@ -50,25 +45,26 @@ $ make design.watch
 ```
 Then open your browser to [http://localhost:3000](http://localhost:3000) to view static templates and style items
 
-## Editing Design files.
 
-If you change anything inside `design` - then you must stop hugo, then:
+## Building a static site
+
+To build a static version (for example, to push to surge.sh for testing or review), run:
 
 ```bash
 $ make design.build
 ```
 
-If you want the design to be hot-reloading:
+This outputs the site to `design/public`
+
+## Stopping the container
+
+To stop the `design.watch` command:
 
 ```bash
-$ make design.watch
+$ make design.stop
 ```
 
-Then you can restart hugo.
-
-
 ## Icon generation
-
 We use [una's boilerplate](https://github.com/una/svg-icon-system-boilerplate) to generate a sprite of SVG's from individual source files. We can manipulate these with CSS and JS as required.
 The boilerplate hangs on [svg-sprite](https://github.com/jkphl/svg-sprite) which is really comprehensive.
 
@@ -86,7 +82,38 @@ The boilerplate hangs on [svg-sprite](https://github.com/jkphl/svg-sprite) which
 $ make design.icons
 ```
 
-## Docker commands
+# Working between Design and Hugo
+Sometimes you might need to work with both design and Hugo running. This workflow requires a few extra steps.
+The below assumes you currently have both design and Hugo in watch mode.
+
+_Note:_ HTML changes will need to be ported manually as Hugo has it's own template system. CSS and external JS will update auto-magically
+
+## Editing Design files.
+Work within the design folder, making changes and previewing at [http://localhost:3000](http://localhost:3000) as described above
+
+## Editing Hugo files
+Work within the hugo folder, making changes and previewing at [http://localhost:1313](http://localhost:1313)
+
+## Moving design assets into Hugo
+
+First, stop Hugo from watching (Cmd + c), then:
+
+```bash
+$ make hugo.build
+```
+
+This will output the design assets document_root to `hugo/public`
+Hugo can now reference the up-to-date assets.
+
+Start Hugo watching again
+
+```bash
+$ make hugo.watch
+```
+
+You should see changes reflected in Hugo
+
+# Docker commands
 
 Show containers:
 

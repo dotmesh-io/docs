@@ -29,6 +29,12 @@ $ make hugo.watch
 
 Then you can open [http://localhost:1313](http://localhost:1313) for a preview.
 
+## Asset management
+
+** Really important **
+If you need to add images etc... within Hugo, be sure to add them to the `static/hugo` folder.
+All other folders here will be over-written when the design updates (see below).
+
 
 # Design
 The design for the docs is built static, and then all relevant assets (CSS,JS etc...) are pulled across to hugo during the `hugo build` command.

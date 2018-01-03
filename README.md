@@ -9,7 +9,7 @@ You need docker installed and this repo pulled.
 Then you need to make the images:
 
 ```bash
-$ make.images
+$ make images
 ```
 
 # Writing docs

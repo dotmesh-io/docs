@@ -1,6 +1,6 @@
 +++
 draft = false
-title = "datamesh docs"
+title = "dotmesh docs"
 date = 2017-12-19T15:09:22Z
 +++
 

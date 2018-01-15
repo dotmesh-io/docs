@@ -1,7 +1,7 @@
 +++
 draft = false
 title = "Administration"
-synopsis = "Datamesh (dm) is a flexible, clusterable data fabric that enables data portability in development."
+synopsis = "Dotmesh (dm) is a flexible, clusterable data fabric that enables data portability in development."
 knowledgelevel = ""
 date = 2017-12-20T11:17:29Z
 [menu]
@@ -46,7 +46,7 @@ package main
 import (
 	"fmt"
 	"os"
-	"github.com/lukemarsden/datamesh/cmd/dm/pkg/commands"
+	"github.com/lukemarsden/dotmesh/cmd/dm/pkg/commands"
 	"github.com/opentracing/opentracing-go"
 	zipkin "github.com/openzipkin/zipkin-go-opentracing"
 )
@@ -56,7 +56,7 @@ func main() {
 	// zipkin ourselves
 	collector := &zipkin.NopCollector{}
 	tracer, err := zipkin.NewTracer(
-		zipkin.NewRecorder(collector, false, "127.0.0.1:0", "datamesh-cli"),
+		zipkin.NewRecorder(collector, false, "127.0.0.1:0", "dotmesh-cli"),
 		zipkin.ClientServerSameSpan(true),
 		zipkin.TraceID128Bit(true),
 	)

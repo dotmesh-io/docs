@@ -1,5 +1,5 @@
 VERSION=v0.0.1
-IMAGE=datameshio/docs
+IMAGE=dotmeshio/docs
 ADDRESS=$(ifconfig en0 | grep inet | grep broadcast | awk '{print $$2}')
 
 .PHONY: images

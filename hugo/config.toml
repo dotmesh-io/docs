@@ -1,6 +1,6 @@
 baseURL = "/"
 languageCode = "en-GB"
-title = "datamesh docs"
+title = "dotmesh docs"
 sectionPagesMenu = "main"
 
 # Highlighting config (Pygments)

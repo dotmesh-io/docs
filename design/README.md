@@ -1,3 +1,3 @@
-# datamesh design layer
+# dotmesh design layer
 
 ![Excellent](https://media.giphy.com/media/vMnuZGHJfFSTe/giphy.gif "Excellent")

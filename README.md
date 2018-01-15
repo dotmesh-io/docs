@@ -1,6 +1,6 @@
 # Docs
 
-The CSS and hugo build for the datamesh docs site.
+The CSS and hugo build for the dotmesh docs site.
 
 ## Installing
 
@@ -14,12 +14,12 @@ $ make images
 
 # Writing docs
 All documentation is to be written in Hugo, using the predefined architypes and structure.
-See the [Wiki page](https://github.com/datamesh-io/docs/wiki) for full details on how to write documentation in a consistent manner
+See the [Wiki page](https://github.com/dotmesh-io/docs/wiki) for full details on how to write documentation in a consistent manner
 
 
 ## Writing content
 
-The document pages live in `hugo/content`. See the [Wiki page](https://github.com/datamesh-io/docs/wiki) for formatting and markdown help.
+The document pages live in `hugo/content`. See the [Wiki page](https://github.com/dotmesh-io/docs/wiki) for formatting and markdown help.
 
 Run the following command to get a hot-reloading version of the site in your browser:
 

@@ -1,5 +1,5 @@
 FROM ubuntu:16.04
-MAINTAINER kai@datamesh.io
+MAINTAINER kai@dotmesh.io
 
 # versions
 ENV HUGO_VERSION=0.31.1

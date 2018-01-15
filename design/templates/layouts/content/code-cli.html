@@ -3,7 +3,7 @@
 <span class="kn">import</span> <span class="p">(</span>
 	<span class="s">"fmt"</span>
 	<span class="s">"os"</span>
-	<span class="s">"github.com/lukemarsden/datamesh/cmd/dm/pkg/commands"</span>
+	<span class="s">"github.com/lukemarsden/dotmesh/cmd/dm/pkg/commands"</span>
 	<span class="s">"github.com/opentracing/opentracing-go"</span>
 	<span class="nx">zipkin</span> <span class="s">"github.com/openzipkin/zipkin-go-opentracing"</span>
 <span class="p">)</span>
@@ -13,7 +13,7 @@
 </span><span class="c1"></span>	<span class="c1">// zipkin ourselves
 </span><span class="c1"></span>	<span class="nx">collector</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">zipkin</span><span class="p">.</span><span class="nx">NopCollector</span><span class="p">{}</span>
 	<span class="nx">tracer</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">zipkin</span><span class="p">.</span><span class="nx">NewTracer</span><span class="p">(</span>
-		<span class="nx">zipkin</span><span class="p">.</span><span class="nx">NewRecorder</span><span class="p">(</span><span class="nx">collector</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="s">"127.0.0.1:0"</span><span class="p">,</span> <span class="s">"datamesh-cli"</span><span class="p">),</span>
+		<span class="nx">zipkin</span><span class="p">.</span><span class="nx">NewRecorder</span><span class="p">(</span><span class="nx">collector</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="s">"127.0.0.1:0"</span><span class="p">,</span> <span class="s">"dotmesh-cli"</span><span class="p">),</span>
 		<span class="nx">zipkin</span><span class="p">.</span><span class="nx">ClientServerSameSpan</span><span class="p">(</span><span class="kc">true</span><span class="p">),</span>
 		<span class="nx">zipkin</span><span class="p">.</span><span class="nx">TraceID128Bit</span><span class="p">(</span><span class="kc">true</span><span class="p">),</span>
 	<span class="p">)</span>

@@ -1,5 +1,5 @@
 {
-  "name": "datamesh-docs-design",
+  "name": "dotmesh-docs-design",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "datamesh",
+  "author": "dotmesh",
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.18.13",

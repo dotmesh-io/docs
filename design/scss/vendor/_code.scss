@@ -28,22 +28,35 @@ code {
   }
 }
 
+%termStyle {
+  background-color: $dmEleven;
+  background-image: linear-gradient($lightAngleRefraction, rgba($dmHarrington, 0.95) 0%, rgba($dmHarrington, 0.95) 35%, rgba($dmByers, 0.95) 100%);
+  padding: $bufferSpaceS;
+  color: $dmHargrove;
+  white-space: pre;
+  overflow-x: auto;
+  overflow-y: hidden;
+  //overflow: scroll;
+  position: relative;
+}
+
 .highlight {
   position: relative;
   tab-width: 2;
   code {
     overflow-x: scroll;
+    tab-width: 2;
   }
   pre.chroma {
-    background-color: $dmEleven;
-    background-image: linear-gradient($lightAngleRefraction, rgba($dmHarrington, 0.95) 0%, rgba($dmHarrington, 0.95) 35%, rgba($dmByers, 0.95) 100%);
-    padding: $bufferSpaceS;
-    color: $dmHargrove;
-    white-space: pre;
-    overflow-x: auto;
-    overflow-y: hidden;
-    //overflow: scroll;
-    position: relative;
+    @extend %termStyle;
+  }
+  pre.chromaManual {
+    @extend %termStyle;
+    line-height: $lineheightBase;
+    font-family: $fontMono;
+    font-size: rem($typeS);
+    overflow-x: scroll;
+    tab-width: 2;
   }
 }
 
@@ -121,4 +134,16 @@ code {
   .vi   { color: #f8f8f2 } // Name.Variable.Instance */
   .vm   { color: #f8f8f2 } // Name.Variable.Magic */
   .il   { color: #ae81ff } // Literal.Number.Integer.Long */
+  pre.chromaManual {
+    em {
+      background-color: $dmSinclair;
+      color: $dmByers;
+      outline: 2px solid $dmSinclair;
+      padding-top: 2px;
+    }
+    kbd {
+      @extend .gs;
+      @extend .k;
+    }
+  }
 }

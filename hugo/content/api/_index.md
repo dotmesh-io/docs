@@ -7,7 +7,7 @@ date = 2018-01-17T12:04:35Z
 order = "3"
 +++
 
-## Introduction
+## Introduction.
 
 Internally, Dotmesh runs as a server on every node in a Dotmesh
 cluster. Any interaction with Dotmesh, such as using the `dm`
@@ -22,7 +22,7 @@ from a dot, which will cause that mount to happen on the node that
 receives the API call. You need to ensure that you choose the most
 appropriate node to mount the volume on!
 
-## Basics
+## Basics.
 
 Every node in a Dotmesh cluster exposes the Dotmesh API on port 6969;
 in a Kubernetes cluster, this is made accessible as a ClusterIP
@@ -90,15 +90,25 @@ The response will come back in the JSON-RPC v2 response format:
 }
 ```
 
-## API reference
+## API reference.
 
-### Information
+The dotmesh API contains a whole load of different methods, so let's
+look at them in related groups. We'll start with the simplest!
 
-#### DotmeshRPC.Ping
+### Information.
 
-Check that the Dotmesh server is alive.
+Informational API methods just return some information about the
+Dotmesh server. They're not all that exciting or useful for most
+people, but they're a good place to start getting to grips with the
+API because of their simplicity.
 
-##### Request
+#### DotmeshRPC.Ping.
+
+Use this to check that the Dotmesh server is alive. It doesn't do
+anything - it just returns the same response, to confirm that, yes,
+the server is running.
+
+##### Request.
 ```json
 {
   "jsonrpc": "2.0",
@@ -108,7 +118,7 @@ Check that the Dotmesh server is alive.
 }
 ```
 
-##### Response
+##### Response.
 ```json
 {
   "jsonrpc": "2.0",
@@ -117,11 +127,14 @@ Check that the Dotmesh server is alive.
 }
 ```
 
-#### DotmeshRPC.CurrentUser
+#### DotmeshRPC.CurrentUser.
 
-Returns the details of the user making the request
+This returns the details of the user making the request. When used on
+your own cluster, it'll just return the details of the admin user,
+which isn't very interesting; but when used on the Hub, it will return
+some more interesting details.
 
-##### Request
+##### Request.
 ```json
 {
   "jsonrpc": "2.0",
@@ -131,7 +144,7 @@ Returns the details of the user making the request
 }
 ```
 
-##### Response
+##### Response.
 ```json
 {
   "jsonrpc": "2.0",
@@ -147,11 +160,14 @@ Returns the details of the user making the request
 }
 ```
 
-#### DotmeshRPC.Config
+#### DotmeshRPC.Config.
 
-Returns selected configuration from the Dotmesh cluster.
+This method returns selected configuration from the Dotmesh
+cluster. (FIXME: I really have no idea how to justify this to
+third-party developers. From what it returns, it looks like it's used
+as part of the stripe integration?)
 
-##### Request
+##### Request.
 ```json
 {
   "jsonrpc": "2.0",
@@ -161,7 +177,7 @@ Returns selected configuration from the Dotmesh cluster.
 }
 ```
 
-##### Response
+##### Response.
 ```json
 {
   "jsonrpc": "2.0",
@@ -173,11 +189,13 @@ Returns selected configuration from the Dotmesh cluster.
 }
 ```
 
-#### DotmeshRPC.Version
+#### DotmeshRPC.Version.
 
-Returns the version of the Dotmesh server.
+This method returns the version of the Dotmesh server. It's handy for
+checking if the server you're talking to supports some new feature you
+want, or to record the version number for informational purposes.
 
-##### Request
+##### Request.
 ```json
 {
   "jsonrpc": "2.0",
@@ -187,7 +205,7 @@ Returns the version of the Dotmesh server.
 }
 ```
 
-##### Response
+##### Response.
 ```json
 {
   "jsonrpc": "2.0",
@@ -200,7 +218,7 @@ Returns the version of the Dotmesh server.
 }
 ```
 
-### User Account Control
+### User Account Control.
 
 TODO:
 
@@ -208,7 +226,7 @@ func (d *DotmeshRPC) GetApiKey(
 func (d *DotmeshRPC) ResetApiKey(
 func (d *DotmeshRPC) AddCollaborator(
 
-### Volume Management
+### Volume Management.
 
 TODO:
 
@@ -229,7 +247,7 @@ func (d *DotmeshRPC) AllVolumesAndClones(
 func (d *DotmeshRPC) DeleteVolume(
 
 
-### Transfers
+### Transfers.
 
 TODO:
 
@@ -242,7 +260,7 @@ func (d *DotmeshRPC) DeducePathToTopLevelFilesystem(
 func (d *DotmeshRPC) PredictSize(
 
 
-### Procurement
+### Procurement.
 
 TODO: 
 
@@ -251,7 +269,7 @@ func (d *DotmeshRPC) Procure(
 func (d *DotmeshRPC) SwitchContainers(
 
 
-### ALARIC'S WORK IN PROGRESS NOTES
+### ALARIC'S WORK IN PROGRESS NOTES.
 
 How to test RPCs from the command line to get sample results:
 

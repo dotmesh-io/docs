@@ -23,52 +23,48 @@ pygmentsStyle = "monokai"
   group = ""
   category = ""
 
+# NB: This menu is _only_ for the left hand side menu. The homepage elements
+# are generated from the */_index.md file front matter.
+
 [menu]
     [[menu.main]]
     identifier = "install-setup"
-    name       = "Install &amp; setup"
+    name       = "Install &amp; Setup"
     url        = "/install-setup/"
-    synopsis   = "Trying &amp; Installing on Docker, Kubernetes, GitLab, Jenkins &amp; Supported OSs"
     weight     = 1
 
     [[menu.main]]
     identifier = "concepts"
     name       = "Concepts"
     url        = "/concepts/"
-    synopsis   = "What is a datadot? &amp; The architecture of dotmesh"
     weight     = 2
 
     [[menu.main]]
     identifier = "tasks"
     name       = "Tasks"
     url        = "/tasks/"
-    synopsis   = "Using with Docker or Kubernetes, Configuration, Administration &amp; Troubleshooting"
     weight     = 3
     
     [[menu.main]]
     identifier = "tutorials"
     name       = "Tutorials"
     url        = "/tutorials/"
-    synopsis   = "Detailed workflow walkthroughs"
     weight     = 4
 
     [[menu.main]]
-    identifier = "References"
+    identifier = "references"
     name       = "References"
     url        = "/references/"
-    synopsis   = "CLI, API, YAML references &amp; release notes"
     weight     = 5
 
     [[menu.main]]
     identifier = "faq"
     name       = "FAQ"
     url        = "/faq/"
-    synopsis   = "Frequently asked questions"
     weight     = 6
 
     [[menu.main]]
     identifier = "glossary"
     name       = "Glossary"
     url        = "/glossary/"
-    synopsis   = "The names of things"
     weight     = 7

@@ -1,10 +1,10 @@
 +++
 draft = false
-title = "Release notes"
-synopsis = ""
+title = "Tutorials"
+synopsis = "Detailed Workflow Walkthroughs."
 knowledgelevel = ""
 date = 2017-12-19T15:02:07Z
-order = "5"
+order = "4"
 +++
 
 See the [GitHub releases page for dotmesh](https://github.com/dotmesh-io/dotmesh/releases) for details on the open source releases.

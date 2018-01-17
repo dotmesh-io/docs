@@ -4,4 +4,4 @@ title = "dotmesh docs"
 date = 2017-12-19T15:09:22Z
 +++
 
-I am home content
+Capture, organize and share application states using a git-like CLI.

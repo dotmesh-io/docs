@@ -1,7 +1,7 @@
 +++
 draft = false
 title = "Concepts"
-synopsis = "Dotmesh (dm) is a flexible, clusterable data fabric that enables data portability in development."
+synopsis = "What is a Datadot? Dotmesh Architecture."
 knowledgelevel = ""
 date = 2017-12-19T15:02:07Z
 order = "2"

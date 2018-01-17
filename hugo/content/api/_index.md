@@ -7,8 +7,6 @@ date = 2018-01-17T12:04:35Z
 order = "3"
 +++
 
-## Introduction.
-
 Internally, Dotmesh runs as a server on every node in a Dotmesh
 cluster. Any interaction with Dotmesh, such as using the `dm`
 command-line tool, or running containers using Dotmesh volumes from
@@ -32,15 +30,15 @@ methods](https://kubernetes.io/docs/concepts/services-networking/service/#discov
 
 All API methods are invoked by making a POST to `http://SERVERNAME:6969/rpc`, with Basic HTTP authentication. To talk to your local cluster, you'll need the `admin` user and the corresponding API key. If you created your cluster from the command line with `dm cluster init`, these can be found in the `$HOME/.dotmesh/config` file:
 
-<pre>
-$ cat ~/.dotmesh/config | jq .Remotes.local.ApiKey
-<em>"VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD"</em>
-</pre>
+<div class="highlight"><pre class="chromaManual">
+$ <kbd>cat ~/.dotmesh/config | jq .Remotes.local.ApiKey</kbd>
+"<em>VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD</em>"
+</pre></div>
 
 If your cluster was created purely through Kubernetes, the admin API key can be found in the `dotmesh-api-key.txt` key in the `dotmesh` secret, in the `dotmesh` namespace:
 
-<pre>
-$ kubectl examine secret dotmesh -n dotmesh -o yaml
+<div class="highlight"><pre class="chromaManual">
+$ <kbd>kubectl examine secret dotmesh -n dotmesh -o yaml</kbd>
 apiVersion: v1
 data:
   dotmesh-admin-password.txt: Y29ycmVjdGhvcnNlYmF0dGVyeXN0YXBsZQo=
@@ -54,9 +52,9 @@ metadata:
   selfLink: /api/v1/namespaces/dotmesh/secrets/dotmesh
   uid: 88c31d8b-fb97-11e7-b1fe-0242cd52be10
 type: Opaque
-$ echo VlZLR1lDQzNHNEs1RzJRTTNHTElWVEVDVlNCV1dKWkQK | base64 -d
+$ <kbd>echo VlZLR1lDQzNHNEs1RzJRTTNHTElWVEVDVlNCV1dKWkQK | base64 -d</kbd>
 <em>VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD</em>
-</pre>
+</pre></div>
 
 It's also possible to authenticate to the API by submitting a user's
 password instead of their API key. The password is intended for use

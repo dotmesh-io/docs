@@ -16,7 +16,7 @@ pygmentsCodefencesGuessSyntax = true
 pygmentsStyle = "monokai"
 
 [params]
-  version = "0.0.1 Alpha"
+  version = "0.1"
 
 [taxonomies]
   tag = ""
@@ -28,47 +28,47 @@ pygmentsStyle = "monokai"
     identifier = "install-setup"
     name       = "Install &amp; setup"
     url        = "/install-setup/"
-    synopsis   = "synopsis"
+    synopsis   = "Trying &amp; Installing on Docker, Kubernetes, GitLab, Jenkins &amp; Supported OSs"
     weight     = 1
 
     [[menu.main]]
     identifier = "concepts"
     name       = "Concepts"
     url        = "/concepts/"
-    synopsis   = "synopsis"
+    synopsis   = "What is a datadot? &amp; The architecture of dotmesh"
     weight     = 2
 
     [[menu.main]]
     identifier = "tasks"
     name       = "Tasks"
     url        = "/tasks/"
-    synopsis   = "synopsis"
+    synopsis   = "Using with Docker or Kubernetes, Configuration, Administration &amp; Troubleshooting"
     weight     = 3
-
+    
     [[menu.main]]
-    identifier = "command-references"
-    name       = "Command references"
-    url        = "/command-references/"
-    synopsis   = "synopsis"
+    identifier = "tutorials"
+    name       = "Tutorials"
+    url        = "/tutorials/"
+    synopsis   = "Detailed workflow walkthroughs"
     weight     = 4
 
     [[menu.main]]
-    identifier = "release-notes"
-    name       = "Release notes"
-    url        = "/release-notes/"
-    synopsis   = "synopsis"
+    identifier = "References"
+    name       = "References"
+    url        = "/references/"
+    synopsis   = "CLI, API, YAML references &amp; release notes"
     weight     = 5
 
     [[menu.main]]
-    identifier = "faq-troubleshooting"
-    name       = "FAQ &amp; troubleshooting"
-    url        = "/faq-troubleshooting/"
-    synopsis   = "synopsis"
+    identifier = "faq"
+    name       = "FAQ"
+    url        = "/faq/"
+    synopsis   = "Frequently asked questions"
     weight     = 6
 
     [[menu.main]]
     identifier = "glossary"
     name       = "Glossary"
     url        = "/glossary/"
-    synopsis   = "synopsis"
+    synopsis   = "The names of things"
     weight     = 7

@@ -14,9 +14,16 @@
         <p style="color: red;">Please add a synopsis to this page</p>
         {{ end }}
       </div>
+    {{ if eq (.CurrentSection.Title) (.Title) }}
       <div class="typebase typebaseArticle">
         {{ .Content }}
       </div>
+    {{ else }}
+      <div class="typebase typebaseArticle">
+        {{ .Content }}
+        <!-- related here -->
+      </div>
+    {{ end }}
     </div>
   </div>
 </article>

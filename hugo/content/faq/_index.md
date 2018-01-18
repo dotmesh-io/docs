@@ -30,3 +30,9 @@ XXX not sure if we should keep this next one, Alaric WDYT?
   In `dm`, branches are concrete filesystems.
   This means that in `git` you could change what the `master` branch points to.
   But in `dm`, the `master` branch is always the _root_ of the `dm` filesystem tree, and the `dm` filesystem tree structure is relatively fixed once created. (XXX This is probably more confusing than it needs to be, we don't want to make dotmesh seem "hard").
+
+## What is DotOps?
+
+DotOps describes the new workflows that are enabled by using Dotmesh in your software development lifecycle, such as sharing dots with colleagues to debug problem states, or pushing dots from CI when a test fails.
+
+DotOps is complementary with [GitOps](https://www.weave.works/blog/gitops-operations-by-pull-request).

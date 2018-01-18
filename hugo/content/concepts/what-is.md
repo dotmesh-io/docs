@@ -1,7 +1,7 @@
 +++
 draft = false
-title = "What is a Datadot?"
-synopsis = ""
+title = "What is a Datadot"
+synopsis = "What is a Datadot and how does it relate?"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
 order = "1"
@@ -10,4 +10,9 @@ order = "1"
     parent = "concepts"
 +++
 
-Please add content
+## Datadot
+
+A Datadot is a way to organise, capture and share a collection of states that relate to an application.
+
+
+

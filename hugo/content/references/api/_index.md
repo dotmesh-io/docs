@@ -4,7 +4,7 @@ title = "API Reference"
 synopsis = "Take control of Dotmesh"
 knowledgelevel = ""
 date = 2018-01-17T12:04:35Z
-order = "3"
+order = "2"
 +++
 
 Internally, Dotmesh runs as a server on every node in a Dotmesh cluster.
@@ -136,33 +136,6 @@ When used on your own cluster, it'll just return the details of the admin user, 
 }
 ```
 
-#### DotmeshRPC.Config.
-
-This method returns selected configuration from the Dotmesh cluster.
-(FIXME: I really have no idea how to justify this to third-party developers. From what it returns, it looks like it's used as part of the stripe integration?)
-
-##### Request.
-```json
-{
-  "jsonrpc": "2.0",
-  "method": "DotmeshRPC.Config",
-  "params": {},
-  "id": 6129484611666146000
-}
-```
-
-##### Response.
-```json
-{
-  "jsonrpc": "2.0",
-  "result": {
-    "Plans": null,
-    "StripePublicKey": ""
-  },
-  "id": 6129484611666146000
-}
-```
-
 #### DotmeshRPC.Version.
 
 This method returns the version of the Dotmesh server.
@@ -193,25 +166,432 @@ It's handy for checking if the server you're talking to supports some new featur
 
 ### User Account Control.
 
+By using these API methods on the Dotmesh Hub, you can administer the user's account and add other users' accounts as collaborators to your dots.
+
+#### DotmeshRPC.GetApiKey.
+
+This method returns the user's API key. You can invoke it using the
+API key or the user's password, but if you already know the API key,
+there's not much point in using it to call this method to find it out
+again; it's only really useful as a way to get the user's API key
+given their password.
+
+It is intended that passwords are never stored, only API keys. If
+you're writing an interactive app that lets the user login, it's
+recommended that you ask them for their username and password, then
+use those to call this API method. If it succeeds, you can then store
+the API key to use thereafter, and discard their password.
+
+##### Request.
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.GetApiKey",
+  "params": {},
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "ApiKey": "VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD"
+  },
+  "id": 6129484611666146000
+}
+```
+#### DotmeshRPC.ResetApiKey.
+
+Calling this method causes the user to be assigned a new, random API
+key. This means that any attempt to use the previous API key will
+fail; the new one returned by this method must be used in future.
+
+This should be invoked if the user is worried their API key has been
+compromised, or as part of a precautionary API key refresh, perhaps on
+a regular schedule.
+
+In order to limit the damage caused by a compromised API key, this
+method can't be called using the API key - you need to use the
+password!
+
+##### Request.
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.ResetApiKey",
+  "params": {},
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "ApiKey": "6SHK3KRVSHZJMHZMJ52GFYBQHGSDYTT46BPITJ2IXRUJCR4CH4MA===="
+  },
+  "id": 6129484611666146000
+}
+```
+
+#### DotmeshRPC.AddCollaborator.
+
+This API method on the Dotmesh Hub adds another user as a collaborator
+onto a dot you own (the calling user *must* be the owner of the dot,
+not a collaborator). To call it, you need the ID of the master
+filesystem of the Dot, not its name; see [the `Lookup`
+method](#dotmeshrpc-lookup) for a way to convert a name into an ID.
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.AddCollaborator",
+  "params": {
+    "Volume": "b225158d-a2ac-4738-6d31-9a7dc511aab5",
+    "Collaborator": "alice"
+  },
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": true,
+  "id": 6129484611666146000
+}
+```
+
+### Dot Management.
+
+These API methods are used for managing dots. They are useful on both
+a local cluster and the Dotmesh Hub.
+
+When using these methods on a local cluster, the Namespace will always be `admin`.
+
+When using these methods on the Hub, the Namespace will be the name of
+the user that owns the Dot. Usually, that will be the same username as
+the user calling the API methods, but it's possible to perform some
+operations on a Dot you don't own if you've been [added as a
+Collaborator](#dotmeshrpc-addcollaborator).
+
+#### DotmeshRPC.Lookup.
+
+This API method simply takes a dot name, and optionally also a clone
+name, and converts it to a filesystem ID. If no clone name is given,
+it returns the master filesystem ID of the dot, which is the ID of the
+dot itself; however, if a clone name is given, you just get the
+filesystem ID of the clone, which is different to the master
+filesystem ID.
+
+##### Request.
+
+On a local cluster, let's look up master filesystem ID of the `test` dot.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.Lookup",
+  "params": {
+    "Namespace": "admin",
+    "TopLevelFilesystemName": "test",
+    "CloneName": ""
+  },
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": "b225158d-a2ac-4738-6d31-9a7dc511aab5",
+  "id": 6129484611666146000
+}
+```
+
+#### DotmeshRPC.Exists.
+
+Although perhaps seemingly redundant given the [`Lookup`
+method](#dotmeshrpc-lookup), this method simply checks if a given dot
+(and, optionally, a specific clone of a dot) exists. If it does, it
+returns the filesystem ID, just like `Lookup`; however, if it doesn't
+exist, it just returns an empty string rather than an error. This
+makes it handy for cases where non-existance of the dot/clone isn't an
+error, to save you from having to convert an error back into a valid
+value.
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.Exists",
+  "params": {
+    "Namespace": "admin",
+    "TopLevelFilesystemName": "non-existant-name",
+    "CloneName": ""
+  },
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": "",
+  "id": 6129484611666146000
+}
+```
+
+#### DotmeshRPC.Get.
+
+This method takes a filesystem ID and returns information about that
+filesystem. We'll go through everything returned in the Response
+section below.
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.Get",
+  "params": "b225158d-a2ac-4738-6d31-9a7dc511aab5",
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "Id": "b225158d-a2ac-4738-6d31-9a7dc511aab5",
+    "Name": {
+      "Namespace": "admin",
+      "Name": "test"
+    },
+    "Clone": "",
+    "Master": "504954d09db78174",
+    "SizeBytes": 19456,
+    "DirtyBytes": 19456,
+    "CommitCount": 0,
+    "ServerStatuses": {
+      "504954d09db78174": "active: waiting, 0 snaps (v740)"
+    }
+  },
+  "id": 6129484611666146000
+}
+```
+
+The result has the following keys:
+
+<dl>
+
+<dt>`Id`.</dt>
+<dd>This is just the filesystem ID, exactly as you provided in the request.</dd>
+
+<dt>`Name`.</dt>
+<dd>This is the namespace and name of the Dot containing this filesystem.</dd>
+
+<dt>`Clone`.</dt>
+<dd>If this is the master filesystem of the Dot, then `Clone` is an empty string. However, if we're dealing with a clone, `Clone` will be its name.</dd>
+
+<dt>`Master`.</dt>
+<dd>This is the ID of the node that's currently holding the live copy of this filesystem. Only that node may directly mount the filesystem into a container.</dd>
+
+<dt>`SizeBytes`.</dt>
+<dd>The size of the filesystem, in bytes.</dd>
+
+<dt>`DirtyBytes`.</dt>
+<dd>How much data has changed since the last commit (or creation) of this filesystem, in bytes.</dd>
+
+<dt>`CommitCount`.</dt>
+<dd>How many commits have happened on this filesystem since its creation.</dd>
+
+<dt>`ServerStatuses`.</dt>
+<dd>A map from the IDs of the nodes that have replicas of this filesystem, with a string summarising the status of the filesystem on that node for each.</dd>
+</dl>
+
+
+#### DotmeshRPC.List.
+
+This method returns a list of available Dots. For each, it also
+returns the ID of the currently selected filesystem for that Dot, and
+the result of calling the [`Get` method](#dotmeshrpc-get) on it.
+
+If you want the details of the master filesystem for each Dot, you're
+going to need to spot the Dots that have a non-empty string for their
+`Clone` key and call the [`Lookup` method](#dotmeshrpc-lookup) on the
+name without a `Clone` to get the master filesystem ID, then call the
+[`Get` method](#dotmeshrpc-get) to find the details.
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.List",
+  "params": {},
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "admin": {
+      "test": {
+        "Id": "b225158d-a2ac-4738-6d31-9a7dc511aab5",
+        "Name": {
+          "Namespace": "admin",
+          "Name": "test"
+        },
+        "Clone": "",
+        "Master": "504954d09db78174",
+        "SizeBytes": 19456,
+        "DirtyBytes": 19456,
+        "CommitCount": 0,
+        "ServerStatuses": {
+          "504954d09db78174": "active: waiting, 0 snaps (v740)"
+        }
+      }
+    }
+  },
+  "id": 6129484611666146000
+}
+```
+
+The result is a JSON object with a key per namespace - which will just
+be `admin` for a local cluster. Within that key is an object with a
+key per Dot, the contents of which is as per the result of the [`Get`
+method](#dotmeshrpc-get).
+
+#### DotmeshRPC.Create.
+
+This method creates a new Dot, containing an empty filesystem.
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.Create",
+  "params": {
+    "Namespace": "admin",
+    "Name": "telescopes"
+  },
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": true,
+  "id": 6129484611666146000
+}
+```
+
+The master filesystem ID isn't returned, so you'll need to call the
+[`Lookup` method](#dotmeshrpc-lookup) if you need it.
+
+#### DotmeshRPC.ContainersById.
+
+This method returns a list of containers that are currently using the
+specified filesystem (given the filesystem's ID).
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.ContainersById",
+  "params": "b225158d-a2ac-4738-6d31-9a7dc511aab5",
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": [
+    {
+      "Name": "/peaceful_hugle",
+      "Id": "0306fc9d26684869b366ef3772f8d23bc7e19023f0e32e7f48d52b54dadf0a6f"
+    }
+  ],
+  "id": 6129484611666146000
+}
+```
+
+The `Name` and `Id` are as provided by Docker:
+
+<div class="highlight"><pre class="chromaManual">
+$ <kbd>docker ps --format '{{.ID}}  {{.Names}}'</kbd>
+<em>0306fc9d2668</em>  <em>peaceful_hugle</em>
+</pre></div>
+
+#### DotmeshRPC.Containers.
+
+This method performs exactly the same function as the
+[`ContainersById` method](#dotmeshrpc-containersbyid), except that it
+accepts a namespace/name/clone triple and effectively calls the
+[`Lookup` method](#dotmeshrpc-lookup) for you to obtain the filesystem
+ID.
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.Containers",
+  "params": {
+    "Namespace": "admin",
+    "TopLevelFilesystemName": "test",
+    "CloneName": ""
+  },
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": [
+    {
+      "Name": "/peaceful_hugle",
+      "Id": "0306fc9d26684869b366ef3772f8d23bc7e19023f0e32e7f48d52b54dadf0a6f"
+    }
+  ],
+  "id": 6129484611666146000
+}
+```
+
 TODO:
 
-func (d *DotmeshRPC) GetApiKey(
-func (d *DotmeshRPC) ResetApiKey(
-func (d *DotmeshRPC) AddCollaborator(
-
-### Volume Management.
-
-TODO:
-
-func (d *DotmeshRPC) Exists(
-func (d *DotmeshRPC) Get(
-func (d *DotmeshRPC) List(
-func (d *DotmeshRPC) Create(
-func (d *DotmeshRPC) Containers(
-func (d *DotmeshRPC) ContainersById(
-func (d *DotmeshRPC) Lookup(
-func (d *DotmeshRPC) Snapshots(
 func (d *DotmeshRPC) SnapshotsById(
+func (d *DotmeshRPC) Snapshots(
 func (d *DotmeshRPC) Snapshot(
 func (d *DotmeshRPC) Rollback(
 func (d *DotmeshRPC) Clones(r *http.Request, filesystemName *VolumeName, result *[]string) error {
@@ -253,3 +633,30 @@ curl --user admin:VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD -H "Content-Type: application
 func (d *DotmeshRPC) SubmitPayment(
 func (d *DotmeshRPC) SetDebugFlag(
 
+
+#### DotmeshRPC.Config.
+
+This method returns selected configuration from the Dotmesh cluster.
+(FIXME: I really have no idea how to justify this to third-party developers. From what it returns, it looks like it's used as part of the stripe integration?)
+
+##### Request.
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.Config",
+  "params": {},
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "Plans": null,
+    "StripePublicKey": ""
+  },
+  "id": 6129484611666146000
+}
+```

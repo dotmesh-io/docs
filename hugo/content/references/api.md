@@ -1037,6 +1037,97 @@ the dot.
 }
 ```
 
+### Attachment.
+
+The attachment API methods relate to the attaching of volumes to
+containers. Actually attaching a volume to a container can only be
+done through the specialised Docker and Kubernetes integrations,
+rather than this API; these API functions are *related* to attachment
+rather than actually *doing* attachment.
+
+#### DotmeshRPC.Procure.
+
+This API method creates a Dot if required, makes sure the node
+handling the API call is the master by migrating the Dot if necessary,
+and returns the host path where the given Subdot of the Dot's current
+branch (or a specific branch, if requested) is mounted.
+
+The default Subdot is called `__default__`; use that for the
+`Subvolume` parameter unless the user specifies otherwise. Sending the
+empty string as `Subvolume` will cause the root of the `Dot` to be
+mounted, which is conventionally what should happen if the user
+specifies `__root__` as the Subdot name.
+
+Normally, this API method will return a host path to the currently selected filesystem of the Dot, as selected by the [`SwitchContainers` method](#dotmeshrpc-switchcontainers); if that method has never been invoked, then this will be the master filesystem. However, any filesystem may be selected by specifying a `Name` of the form `NAME@CLONE`, eg `test@testing_v1`; the clone name `master` may be used to request the master filesystem of the Dot.
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.Procure",
+  "params": {
+    "Volume": {
+      "Namespace": "admin",
+      "Name": "test@testing_v1"
+    },
+    "Subvolume": "__default__"
+  },
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": "/var/dotmesh/admin/test@testing_v1/__default__",
+  "id": 6129484611666146000
+}
+```
+
+#### DotmeshRPC.SwitchContainers.
+
+This API method changes the default clone for the given Dot. This
+means that future calls to Procure, or attachments via the Docker or
+Kubernetes integrations, that *do not* specify an explicit clone name
+with the `NAME@CLONE` syntax, will henceforth use the specified clone
+rather than the original default of `master`.
+
+In addition, any existing Docker containers using the default will be
+stopped and re-started to use the new default when this API method is
+called.
+
+##### Request.
+
+The `CurrentCloneName` parameter is reserved for future use. Please
+leave it blank for now.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.SwitchContainers",
+  "params": {
+    "Namespace": "admin",
+    "TopLevelFilesystemName": "test",
+    "CurrentCloneName": "",
+    "NewCloneName": "testing_v2"
+  },
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": true,
+  "id": 6129484611666146000
+}
+```
+
 ### Transfers.
 
 TODO:
@@ -1049,14 +1140,6 @@ func (d *DotmeshRPC) Transfer(
 func (d *DotmeshRPC) DeducePathToTopLevelFilesystem(
 func (d *DotmeshRPC) PredictSize(
 
-
-### Procurement.
-
-TODO:
-
-
-func (d *DotmeshRPC) Procure(
-func (d *DotmeshRPC) SwitchContainers(
 
 
 ### ALARIC'S WORK IN PROGRESS NOTES.

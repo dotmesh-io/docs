@@ -69,15 +69,15 @@ hugo.watch: design.build design.copy
 
 .PHONY: release.build
 release.build:
-	echo "Running the hugo build"
+	@echo "Running the hugo build"
 	docker run \
 		--name docs-release-builder-$(VERSION) \
 		-w /app/hugo \
 		$(BUILDER_IMAGE) hugo -v
-	echo "Copy built folder"
+	@echo "Copy built folder"
 	docker cp docs-release-builder-$(VERSION):/app/hugo/public ./hugo/public
-	echo "Build nginx image"
+	@echo "Build nginx image"
 	docker build -t $(IMAGE):$(VERSION) -f Dockerfile.nginx .
 	docker tag $(IMAGE):$(VERSION) $(IMAGE):latest
-	echo "Remove built folder"
+	@echo "Remove built folder"
 	rm -rf ./hugo/public

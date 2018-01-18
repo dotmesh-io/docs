@@ -10,31 +10,59 @@ order = "2"
     parent = "references"
 +++
 
-Internally, Dotmesh runs as a server on every node in a Dotmesh cluster.
-Any interaction with Dotmesh, such as using the `dm` command-line tool, or running containers using Dotmesh volumes from Docker or Kubernetes, involves making API calls to the Dotmesh server on the affected node.
+# Overview
+The dotmesh API is the fundamental way of interacting with dotmesh, the service.
 
-Most operations can be performed on any node in the cluster, and will automatically be routed to the node that is currently controlling any affected dot.
-The only exceptions are API calls that mount a volume from a dot, which will cause that mount to happen on the node that receives the API call.
-You need to ensure that you choose the most appropriate node to mount the volume on!
+Before attempting to use the API, we recommend understanding the [dotmesh architecture](FIXME).
 
-## Terminology.
+Any time you interact with any part of dotmesh - whether a local deployment or the dotmesh hub - you are using the API. Our Web UI for dotmesh hub, the `dm` command-line interface, any interaction between a local deployment and the hub, all use the same, publicly-exposed dotmesh API.
 
-FIXME: This is the terminology as currently used here, to sort of
-coincide with how the API names things, although that's terribly
-variable.
+This document describes the API in its entirety. With this API, you not only can understand how to interact with dotmesh, but you can write your own clients and connect your own services. In fact, we **encourage** you to do so and would be happy to publish it, if you want.
 
-We have Dots in Namespaces. Each Dot has a Master Filesystem, and
-possibly Clones, which are another kind of Filesystem. Filesystems
-have Commits.
+## API Target
+When using the dotmesh API, you need a server endpoint with which you will communicate. You have two choices:
 
-We need to bring this into line with the glossary, and update the
-API's method/param names to match!
+* dotmesh local: If you are running dotmesh locally, then you can make API calls to your local dotmesh implementation. Only dotmesh cluster commands will work here; dotmush hub commands will be rejected.
+* dotmesh hub: You can make all hub commands to the dotmesh hub, and most, but not all, cluster commands.
 
-## Basics.
+Each API call is prefaced with a section indicating if it applies to dotmesh hub, dotmesh local or both.
 
-Every node in a Dotmesh cluster exposes the Dotmesh API on port 6969; in a Kubernetes cluster, this is made accessible as a ClusterIP service called "dotmesh" in the "dotmesh" namespace by default, which can be accessed through [the standard Kubernetes service discovery methods](https://kubernetes.io/docs/concepts/services-networking/service/#discovering-services).
+### Local
+As described in the [architecture documentation](FIXME), dotmesh is installed as software running on one or many server nodes. For example, in kubernetes, it will be deployed as a `DaemonSet` running on every node in your cluster.
 
-All API methods are invoked by making a POST to `http://SERVERNAME:6969/rpc`, with Basic HTTP authentication. To talk to your local cluster, you'll need the `admin` user and the corresponding API key.
+There are two types of local API calls: cluster and node.
+
+* Cluster: The overwhelming majority of API calls are cluster-level calls. They operate on any or every node of the cluster. Once any one node processes the call, it will ensure that all of the nodes in the cluster are aware of the new state, if any.  Thus, in general, an API command, including those performed by the `dm` CLI, may be sent to any one node. It then will be routed to all of the other nodes as needed, and the entire cluster of nodes will be aware.
+* Node: A subset of calls are node-specific, e.g. mounting a volume from a dot. Since a mount happens on a particular node, the API call needs to be sent to the server running on the actual node on which the volume is to be mounted. These calls rarely are made by clients. Instead, they are called by drivers for specific implementations, for example a Kubernetes `kubelet`, which calls the dotmesh driver to mount a specific volume from a specific dot on a specific node, which the `kubelet` already is aware.
+
+Each dotmesh instance exposes the dotmesh API on port 6969.
+
+In a Kubernetes cluster, you can access the dotmesh `Service` from any `Pod` in the Kubernetes cluster. The service name is `dotmesh` in the `dotmesh` namespace by default, which can be accessed through [the standard Kubernetes service discovery methods](https://kubernetes.io/docs/concepts/services-networking/service/#discovering-services). Thus it will be available at `dotmesh.dotmesh:6969`.
+
+### Hub
+The dotmesh hub API is available at https://hub.dotmesh.io . Note that the Hub API is available over https, rather than http, and is exposed at port 443.
+
+## Protocol
+The dotmesh API is a json-rpc protocol over http.
+
+All API methods are invoked by making a POST to the target endpoint, e.g. http://dotmesh.dotmesh:6969 or https://hub.dotmesh.io at the path `/rpc`, with Basic HTTP authentication.
+
+
+### Authentication
+API calls _always_ require authentication. The credentials you use depend on which API target you are talking to.
+
+#### Hub
+If you are communicating with the dotmesh hub, you can use the API or Web UI to retrieve your credentials. These will consist of a username and API token.
+
+It's possible to authenticate to the API by submitting a user's password instead of their API key.
+The password is intended for use when users log into administrative interfaces and supply their username and password through a login screen, rather than being stored; API keys are intended to be stored, and can be easily revoked by the user, so most uses of the API should use an API key instead.
+The one exception is API methods to manage the user account, which are explicitly prohibited from use with just an API key, so that a lost API key is not able to permanently compromise an account. These will be discussed below.
+
+#### Local
+If you are communicating with a local cluster you will have a single username `admin` and a single available API key. You can retrieve the key in a number of ways, depending on how you created your dotmesh cluster.
+
+
+##### CLI
 If you created your cluster from the command line with `dm cluster init`, these can be found in the `$HOME/.dotmesh/config` file:
 
 <div class="highlight"><pre class="chromaManual">
@@ -42,6 +70,7 @@ $ <kbd>cat ~/.dotmesh/config | jq .Remotes.local.ApiKey</kbd>
 "<em>VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD</em>"
 </pre></div>
 
+#### Kubernetes
 If your cluster was created purely through Kubernetes, the admin API key can be found in the `dotmesh-api-key.txt` key in the `dotmesh` secret, in the `dotmesh` namespace:
 
 <div class="highlight"><pre class="chromaManual">
@@ -63,10 +92,7 @@ $ <kbd>echo VlZLR1lDQzNHNEs1RzJRTTNHTElWVEVDVlNCV1dKWkQK | base64 -d</kbd>
 <em>VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD</em>
 </pre></div>
 
-It's also possible to authenticate to the API by submitting a user's password instead of their API key.
-The password is intended for use when users log into administrative interfaces and supply their username and password through a login screen, rather than being stored; API keys are intended to be stored, and can be easily revoked by the user, so most uses of the API should use an API key instead.
-The one exception is API methods to manage the user account, which are explicitly prohibited from use with just an API key, so that a lost API key is not able to permanently compromise an account. These will be discussed below.
-
+### Format
 Requests must be sent with a `Content-Type` of `application/json`, and comply with the [JSON-RPC v2 specifiation](http://www.jsonrpc.org/specification), like so:
 
 ```json
@@ -90,17 +116,27 @@ The response will come back in the JSON-RPC v2 response format:
 
 ## API reference.
 
-The dotmesh API contains a whole load of different methods, so let's look at them in related groups. We'll start with the simplest!
+The dotmesh API encompasses many different methods. This section organizes them into related groups.
 
-### Information.
+* System Information
+* User Account Management
+* Dot Management
+* Volume Attachment
+* Dot Transfers
 
-Informational API methods just return some information about the Dotmesh server.
+### Information
+Informational API methods return information about the dotmesh cluster, its users, and individual instances.
 They're not all that exciting or useful for most people, but they're a good place to start getting to grips with the API because of their simplicity.
 
 #### DotmeshRPC.Ping.
 
 Use this to check that the Dotmesh server is alive.
 It doesn't do anything - it just returns the same response, to confirm that, yes, the server is running.
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 ```json
@@ -125,6 +161,11 @@ It doesn't do anything - it just returns the same response, to confirm that, yes
 
 This returns the details of the user making the request.
 When used on your own cluster, it'll just return the details of the admin user, which isn't very interesting; but when used on the Hub, it will return some more interesting details.
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 ```json
@@ -157,6 +198,11 @@ When used on your own cluster, it'll just return the details of the admin user, 
 This method returns the version of the Dotmesh server.
 It's handy for checking if the server you're talking to supports some new feature you want, or to record the version number for informational purposes.
 
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
+
 ##### Request.
 ```json
 {
@@ -180,11 +226,11 @@ It's handy for checking if the server you're talking to supports some new featur
 }
 ```
 
-### User Account Control.
+### User Account Management
 
-By using these API methods on the Dotmesh Hub, you can administer the user's account and add other users' accounts as collaborators to your dots.
+These API methods on the Dotmesh Hub administer the user's account and add other users' accounts as collaborators to your dots.
 
-#### DotmeshRPC.GetApiKey.
+#### DotmeshRPC.GetApiKey
 
 This method returns the user's API key. You can invoke it using the
 API key or the user's password, but if you already know the API key,
@@ -197,6 +243,11 @@ you're writing an interactive app that lets the user login, it's
 recommended that you ask them for their username and password, then
 use those to call this API method. If it succeeds, you can then store
 the API key to use thereafter, and discard their password.
+
+[FIXME: These need formatting]
+Availability:
+* Local: NO
+* Hub: YES
 
 ##### Request.
 ```json
@@ -232,6 +283,11 @@ In order to limit the damage caused by a compromised API key, this
 method can't be called using the API key - you need to use the
 password!
 
+[FIXME: These need formatting]
+Availability:
+* Local: NO
+* Hub: YES
+
 ##### Request.
 ```json
 {
@@ -261,6 +317,11 @@ not a collaborator). To call it, you need the ID of the master
 filesystem of the Dot, not its name; see [the `Lookup`
 method](#dotmeshrpc-lookup) for a way to convert a name into an ID.
 
+[FIXME: These need formatting]
+Availability:
+* Local: NO
+* Hub: YES
+
 ##### Request.
 
 ```json
@@ -287,16 +348,20 @@ method](#dotmeshrpc-lookup) for a way to convert a name into an ID.
 
 ### Dot Management.
 
-These API methods are used for managing dots. They are useful on both
-a local cluster and the Dotmesh Hub.
+These API methods are used for managing dots, available both on a local cluster and the Dotmesh Hub.
 
-When using these methods on a local cluster, the Namespace will always be `admin`.
+When using these methods on a local cluster, the Namespace always will be `admin`.
 
 When using these methods on the Hub, the Namespace will be the name of
 the user that owns the Dot. Usually, that will be the same username as
 the user calling the API methods, but it's possible to perform some
 operations on a Dot you don't own if you've been [added as a
-Collaborator](#dotmeshrpc-addcollaborator).
+Collaborator](#dotmeshrpc-addcollaborator), or with Organizations.
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
 
 #### DotmeshRPC.Lookup.
 
@@ -306,6 +371,13 @@ it returns the master filesystem ID of the dot, which is the ID of the
 dot itself; however, if a clone name is given, you just get the
 filesystem ID of the clone, which is different to the master
 filesystem ID.
+
+[FIXME: I don't get what a "filesystem ID" is. I get a dot, and that it can have a name (luke/foo) which translates to a UUID, but what is a "filesystem ID"? Using "filesystem" makes it seem like it conflicts with dot concepts? And what is a "clone"? Isn't that just another dot?]
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -336,14 +408,18 @@ On a local cluster, let's look up master filesystem ID of the `test` dot.
 
 #### DotmeshRPC.Exists.
 
-Although perhaps seemingly redundant given the [`Lookup`
-method](#dotmeshrpc-lookup), this method simply checks if a given dot
-(and, optionally, a specific clone of a dot) exists. If it does, it
-returns the filesystem ID, just like `Lookup`; however, if it doesn't
-exist, it just returns an empty string rather than an error. This
-makes it handy for cases where non-existance of the dot/clone isn't an
-error, to save you from having to convert an error back into a valid
-value.
+Checks if a given dot (and, optionally, a specific clone of a dot) exists. If it does, it
+returns the filesystem ID; if it doesn't
+exist, it just returns an empty string.
+
+This is functionally equivalent to `Lookup`, except that the non-existent case is handled
+by returning an empty string rather than an error, as `Lookup` would.
+This is just a convenience method, to save you from having to convert an error back into a valid value.
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -375,6 +451,11 @@ value.
 This method takes a filesystem ID and returns information about that
 filesystem. We'll go through everything returned in the Response
 section below.
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -442,15 +523,25 @@ The result has the following keys:
 
 #### DotmeshRPC.List.
 
-This method returns a list of available Dots. For each, it also
+This method returns a list of Dots. For each, it also
 returns the ID of the currently selected filesystem for that Dot, and
 the result of calling the [`Get` method](#dotmeshrpc-get) on it.
+
+The list of dots returned will include _only_ those dots for whom the querying user has access:
+
+* Hub: The ones in your namespace and those for which you have been added as a collaborator.
+* Local: All dots
 
 If you want the details of the master filesystem for each Dot, you're
 going to need to spot the Dots that have a non-empty string for their
 `Clone` key and call the [`Lookup` method](#dotmeshrpc-lookup) on the
 name without a `Clone` to get the master filesystem ID, then call the
 [`Get` method](#dotmeshrpc-get) to find the details.
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -500,6 +591,17 @@ method](#dotmeshrpc-get).
 
 This API method returns a list of all the Dots and their clones, along
 with lots of useful information.
+
+The list of dots returned will include _only_ those dots for whom the querying user has access:
+
+* Hub: The ones in your namespace and those for which you have been added as a collaborator.
+* Local: All dots
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
+
 
 ##### Request.
 
@@ -679,7 +781,13 @@ Each Dot's information is given as a JSON object with the following keys:
 
 #### DotmeshRPC.Create.
 
-This method creates a new Dot, containing an empty filesystem.
+This method creates a new Dot, containing an empty filesystem. The dot will be created in the namespace
+provided in the request. If you do *not* have creation rights in that namespace, the response will be an error.
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -705,13 +813,17 @@ This method creates a new Dot, containing an empty filesystem.
 }
 ```
 
-The master filesystem ID isn't returned, so you'll need to call the
-[`Lookup` method](#dotmeshrpc-lookup) if you need it.
+[FIXME: Does not yet return filesystem ID, but will.]
 
 #### DotmeshRPC.ContainersById.
 
 This method returns a list of containers that are currently using the
-specified filesystem (given the filesystem's ID).
+specified filesystem, given the filesystem's ID.
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -748,11 +860,16 @@ $ <kbd>docker ps --format '{{.ID}}  {{.Names}}'</kbd>
 
 #### DotmeshRPC.Containers.
 
-This method performs exactly the same function as the
-[`ContainersById` method](#dotmeshrpc-containersbyid), except that it
-accepts a namespace/name/clone triple and effectively calls the
-[`Lookup` method](#dotmeshrpc-lookup) for you to obtain the filesystem
-ID.
+This method returns a list of containers that are currently using the
+specified filesystem, given a namespace/name/clone tuple. it is
+functionally equivalent to
+[`ContainersById` method](#dotmeshrpc-containersbyid), useful if you do not have the filesystem I,
+saving you the `Lookup`.
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -787,6 +904,11 @@ ID.
 #### DotmeshRPC.SnapshotsById.
 
 This API method returns a list of snapshots for a given filesystem, by ID.
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -824,11 +946,13 @@ timestamp in UTC nanoseconds since the UNIX epoch.
 
 #### DotmeshRPC.Snapshots.
 
-This method performs exactly the same function as the
-[`SnapshotsById` method](#dotmeshrpc-snapshotsbyid), except that it
-accepts a namespace/name/clone triple and effectively calls the
-[`Lookup` method](#dotmeshrpc-lookup) for you to obtain the filesystem
-ID.
+This API method returns a list of snapshots for a given filesystem, by namespace/name/clone tuple.
+It is a convenience method, useful when you do not have the filesystem ID.
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -870,6 +994,11 @@ accepting a filesystem ID, it requires a namespace, dot name, and
 optional clone name; it looks up the filesystem for you. You also need
 to provide a commit message.
 
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
+
 ##### Request.
 
 ```json
@@ -899,11 +1028,16 @@ to provide a commit message.
 #### DotmeshRPC.Rollback.
 
 This API method reverts the current state of a filesystem back to a
-previous snapshot. Rather than accepting a filesystem ID, it requires
-a namespace, dot name, and optional clone name; it looks up the
+previous snapshot. Rather than accepting a filesystem ID, this call accepts
+`namespace`, `dot_name` and optional `clone name` parameters, and looks up the
 filesystem for you. You also need to provide the ID of the snapshot to
 roll back to, as returned by the [`Snapshots`
 method](#dotmeshrpc-snapshots).
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -934,6 +1068,11 @@ method](#dotmeshrpc-snapshots).
 #### DotmeshRPC.Clones.
 
 This API method returns a list of clones of a given Dot, given the namespace and name of the Dot.
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -970,11 +1109,16 @@ an empty `Clone` name, as well as the clones listed by this method.
 
 #### DotmeshRPC.Clone.
 
-This API method creates a new clone for a givne Dot, starting with an
+This API method creates a new clone for a given Dot, starting with an
 existing commit of an existing clone. If you want to create a new
 clone from the master filesystem of the Dot, you need to specify
 `master` as the `SourceBranch` parameter; otherwise, you must specify
 the name of the clone.
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -1013,6 +1157,11 @@ This API method deletes a dot. There's no undo, so please don't call
 it unless you mean it. You need to provide the namespace and name of
 the dot.
 
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: YES
+
 ##### Request.
 
 ```json
@@ -1037,17 +1186,17 @@ the dot.
 }
 ```
 
-### Attachment.
+### Attachment
 
 The attachment API methods relate to the attaching of volumes to
 containers. Actually attaching a volume to a container can only be
-done through the specialised Docker and Kubernetes integrations,
+done through the specific platform integrations, e.g. Docker and Kubernetes,
 rather than this API; these API functions are *related* to attachment
-rather than actually *doing* attachment.
+rather than actually *performing* attachment.
 
 #### DotmeshRPC.Procure.
 
-This API method creates a Dot if required, makes sure the node
+This API method creates a Dot if required, ensures the node
 handling the API call is the master by migrating the Dot if necessary,
 and returns the host path where the given Subdot of the Dot's current
 branch (or a specific branch, if requested) is mounted.
@@ -1059,6 +1208,11 @@ mounted, which is conventionally what should happen if the user
 specifies `__root__` as the Subdot name.
 
 Normally, this API method will return a host path to the currently selected filesystem of the Dot, as selected by the [`SwitchContainers` method](#dotmeshrpc-switchcontainers); if that method has never been invoked, then this will be the master filesystem. However, any filesystem may be selected by specifying a `Name` of the form `NAME@CLONE`, eg `test@testing_v1`; the clone name `master` may be used to request the master filesystem of the Dot.
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: NO
 
 ##### Request.
 
@@ -1093,11 +1247,17 @@ This API method changes the default clone for the given Dot. This
 means that future calls to Procure, or attachments via the Docker or
 Kubernetes integrations, that *do not* specify an explicit clone name
 with the `NAME@CLONE` syntax, will henceforth use the specified clone
-rather than the original default of `master`.
+rather than the original default of `master`. [FIXME: Should an API **ever** have a default clone?
+Convenience defaults work for CLIs and UIs, but should APIs not **always** be explicit?]
 
 In addition, any existing Docker containers using the default will be
 stopped and re-started to use the new default when this API method is
-called.
+called. [FIXME: Do we want this? Should we be interacting destructively with containers this way?]
+
+[FIXME: These need formatting]
+Availability:
+* Local: YES
+* Hub: NO
 
 ##### Request.
 

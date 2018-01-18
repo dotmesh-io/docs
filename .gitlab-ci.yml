@@ -9,8 +9,6 @@ build_image:
     before_script:
         - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
         - echo $PWD
-        - ls -la design/public
-        - ls -la hugo/public
         #- sudo rm -rf design/public
         #- sudo rm -rf hugo/public
     script:

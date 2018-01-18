@@ -47,15 +47,12 @@ design.copy:
 	rm -rf hugo/static/{assets,css}
 	cp -r design/public/{assets,css} hugo/static
 
-.PHONY: hugo.compile
-hugo.compile:
+.PHONY: hugo.build
+hugo.build: design.build design.copy
 	docker run --rm \
 		-v $(PWD)/hugo:/app/hugo \
 		-w /app/hugo \
 		$(BUILDER_IMAGE) hugo -v
-
-.PHONY: hugo.build
-hugo.build: design.build design.copy hugo.compile
 
 .PHONY: hugo.watch
 hugo.watch: design.build design.copy
@@ -71,6 +68,16 @@ hugo.watch: design.build design.copy
 			-v
 
 .PHONY: release.build
-release.build: hugo.compile
+release.build:
+	echo "Running the hugo build"
+	docker run \
+		--name docs-release-builder-$(VERSION) \
+		-w /app/hugo \
+		$(BUILDER_IMAGE) hugo -v
+	echo "Copy built folder"
+	docker cp docs-release-builder-$(VERSION):/app/hugo/public ./hugo/public
+	echo "Build nginx image"
 	docker build -t $(IMAGE):$(VERSION) -f Dockerfile.nginx .
 	docker tag $(IMAGE):$(VERSION) $(IMAGE):latest
+	echo "Remove built folder"
+	rm -rf ./hugo/public

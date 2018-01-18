@@ -17,13 +17,14 @@
 
 set -e
 
-export DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export BASE_DIR="$SCRIPT_DIR/.."
 export GCLOUD_IMAGE=${GCLOUD_IMAGE:="dotmesh/gcloud"}
 
 docker build -t ${GCLOUD_IMAGE} -f "$DIR/../Dockerfile.gcloud" "$DIR/.."
 docker run --rm ${DOCKER_ARGS} \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v ${DIR}:/app \
+  -v ${BASE_DIR}:/app \
   -e DOCKER_API_VERSION \
   -e DOCKER_REGISTRY \
   -e GCLOUD_PROJECT_ID \
@@ -32,4 +33,4 @@ docker run --rm ${DOCKER_ARGS} \
   -e GCLOUD_SERVICE_KEY \
   -e NAMESPACE \
   -e HOSTNAME \
-  ${GCLOUD_IMAGE} bash -c "bash /app/scripts/gcloud_auth_wrapper.sh $@"
+  ${GCLOUD_IMAGE} bash /app/scripts/gcloud_auth_wrapper.sh "$@"

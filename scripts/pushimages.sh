@@ -7,5 +7,4 @@ set -e
 
 export DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-bash /ciscripts/ci.sh connect
 kubectl get no

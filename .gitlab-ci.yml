@@ -1,9 +1,9 @@
 variables:
   DOCKER_API_VERSION: "1.23"
   DOCKER_REGISTRY: gcr.io
-  GCP_PROJECT_ID: dotmesh-production
-  GCP_ZONE: europe-west2-a
-  GCP_CLUSTER_ID: production-cluster
+  GCLOUD_PROJECT_ID: dotmesh-production
+  GCLOUD_ZONE: europe-west2-a
+  GCLOUD_CLUSTER_ID: production-cluster
 
 stages:
     - build
@@ -18,5 +18,5 @@ images:
     script:
         - make images
         - make release.build
-        - bash scripts/gcloud.sh docker ps -a
-        - bash scripts/gcloud.sh bash /app/pushimages.sh
+        - bash scripts/gcloud_docker.sh docker ps -a
+        #- bash scripts/gcloud_docker.sh bash /app/pushimages.sh

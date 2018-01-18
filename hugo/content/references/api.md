@@ -17,6 +17,19 @@ Most operations can be performed on any node in the cluster, and will automatica
 The only exceptions are API calls that mount a volume from a dot, which will cause that mount to happen on the node that receives the API call.
 You need to ensure that you choose the most appropriate node to mount the volume on!
 
+## Terminology.
+
+FIXME: This is the terminology as currently used here, to sort of
+coincide with how the API names things, although that's terribly
+variable.
+
+We have Dots in Namespaces. Each Dot has a Master Filesystem, and
+possibly Clones, which are another kind of Filesystem. Filesystems
+have Commits.
+
+We need to bring this into line with the glossary, and update the
+API's method/param names to match!
+
 ## Basics.
 
 Every node in a Dotmesh cluster exposes the Dotmesh API on port 6969; in a Kubernetes cluster, this is made accessible as a ClusterIP service called "dotmesh" in the "dotmesh" namespace by default, which can be accessed through [the standard Kubernetes service discovery methods](https://kubernetes.io/docs/concepts/services-networking/service/#discovering-services).
@@ -483,6 +496,187 @@ be `admin` for a local cluster. Within that key is an object with a
 key per Dot, the contents of which is as per the result of the [`Get`
 method](#dotmeshrpc-get).
 
+#### DotmeshRPC.AllVolumesAndClones.
+
+This API method returns a list of all the Dots and their clones, along
+with lots of useful information.
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.AllVolumesAndClones",
+  "params": {},
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "Volumes": [
+      {
+        "TopLevelVolume": {
+          "Id": "1b950a95-cfc7-4ffc-40e3-e7ac5b2461d0",
+          "Name": {
+            "Namespace": "admin",
+            "Name": "telescopes"
+          },
+          "Clone": "",
+          "Master": "504954d09db78174",
+          "SizeBytes": 19456,
+          "DirtyBytes": 19456,
+          "CommitCount": 0,
+          "ServerStatuses": {
+            "504954d09db78174": "active: waiting, 0 snaps (v880)"
+          }
+        },
+        "CloneVolumes": null,
+        "Owner": {
+          "Id": "00000000-0000-0000-0000-000000000000",
+          "Name": "admin",
+          "Email": "",
+          "EmailHash": "d41d8cd98f00b204e9800998ecf8427e",
+          "CustomerId": "",
+          "CurrentPlan": ""
+        },
+        "Collaborators": []
+      },
+      {
+        "TopLevelVolume": {
+          "Id": "b225158d-a2ac-4738-6d31-9a7dc511aab5",
+          "Name": {
+            "Namespace": "admin",
+            "Name": "test"
+          },
+          "Clone": "",
+          "Master": "504954d09db78174",
+          "SizeBytes": 20480,
+          "DirtyBytes": 0,
+          "CommitCount": 1,
+          "ServerStatuses": {
+            "504954d09db78174": "active: waiting, 1 snaps (v1200)"
+          }
+        },
+        "CloneVolumes": [
+          {
+            "Id": "e1a9c58a-d80e-40c9-6474-e502cf6e79fa",
+            "Name": {
+              "Namespace": "admin",
+              "Name": "test"
+            },
+            "Clone": "potatoes",
+            "Master": "504954d09db78174",
+            "SizeBytes": 1024,
+            "DirtyBytes": 19456,
+            "CommitCount": 0,
+            "ServerStatuses": {
+              "504954d09db78174": "active: waiting, 0 snaps (v850)"
+            }
+          },
+          {
+            "Id": "e495d3a3-9602-4049-49c1-81630815799e",
+            "Name": {
+              "Namespace": "admin",
+              "Name": "test"
+            },
+            "Clone": "testing_v2",
+            "Master": "504954d09db78174",
+            "SizeBytes": 1024,
+            "DirtyBytes": 19456,
+            "CommitCount": 0,
+            "ServerStatuses": {
+              "504954d09db78174": "active: waiting, 0 snaps (v1205)"
+            }
+          }
+        ],
+        "Owner": {
+          "Id": "00000000-0000-0000-0000-000000000000",
+          "Name": "admin",
+          "Email": "",
+          "EmailHash": "d41d8cd98f00b204e9800998ecf8427e",
+          "CustomerId": "",
+          "CurrentPlan": ""
+        },
+        "Collaborators": [
+          {
+            "Id": "00000000-0000-0000-0000-000000000000",
+            "Name": "admin",
+            "Email": "",
+            "EmailHash": "d41d8cd98f00b204e9800998ecf8427e",
+            "CustomerId": "",
+            "CurrentPlan": ""
+          },
+          {
+            "Id": "00000000-0000-0000-0000-000000000000",
+            "Name": "admin",
+            "Email": "",
+            "EmailHash": "d41d8cd98f00b204e9800998ecf8427e",
+            "CustomerId": "",
+            "CurrentPlan": ""
+          }
+        ]
+      }
+    ],
+    "Servers": [
+      {
+        "Id": "504954d09db78174",
+        "Addresses": [
+          "192.168.1.34",
+          "10.192.0.1",
+          "172.18.0.1"
+        ]
+      }
+    ]
+  },
+  "id": 6129484611666146000
+}
+```
+
+Let's break down the keys in the result.
+
+<dl>
+
+<dt><code>Volumes</code>.</dt>
+
+<dd>An array of the Dots in this cluster. Each is represented as a
+JSON object, as described below.</dd>
+
+<dt><code>Servers</code>.</dt>
+
+<dd>An array of the servers in this cluster. Each is represented as a
+JSON object, with an `Id` key containing the server ID and an
+`Addresses` key containing a list of the IP addresses of that
+server.</dd>
+
+</dl>
+
+Each Dot's information is given as a JSON object with the following keys:
+
+<dl>
+
+<dt><code>TopLevelVolume</code>.</dt>
+
+<dd>This JSON object contains the details of the master filesystem of the Dot, as returned by the [`Get` method](#dotmeshrpc-get).</dd>
+
+<dt><code>CloneVolumes</code>.</dt>
+
+<dd>This is an array of JSON objects, one for each clone filesystem of the Dot, in the same format.</dd>
+
+<dt><code>Owner</code>.</dt>
+
+<dd>This is a JSON object, containing the details of the user that owns the Dot, as returned by the [`CurrentUser` method](#dotmeshrpc-currentuser).</dd>
+
+<dt><code>Collaborators</code>.</dt>
+
+<dd>This is an array of JSON objects, each containing the details of a collaborator assigned to this Dot with the [`AddCollaborator` method](#dotmeshrpc-addcollaborator), in the same format.</dd>
+
+</dl>
+
 #### DotmeshRPC.Create.
 
 This method creates a new Dot, containing an empty filesystem.
@@ -774,13 +968,74 @@ with the `Namespace` and `Name` of the Dot. Don't forget that every
 Dot also has a master filesystem ID, obtained by calling `Lookup` with
 an empty `Clone` name, as well as the clones listed by this method.
 
+#### DotmeshRPC.Clone.
 
-TODO:
+This API method creates a new clone for a givne Dot, starting with an
+existing commit of an existing clone. If you want to create a new
+clone from the master filesystem of the Dot, you need to specify
+`master` as the `SourceBranch` parameter; otherwise, you must specify
+the name of the clone.
 
-func (d *DotmeshRPC) Clone(
-func (d *DotmeshRPC) AllVolumesAndClones(
-func (d *DotmeshRPC) DeleteVolume(
+##### Request.
 
+In this example, we create a clone called `testing_v2` from one of the
+snapshots on the master filesystem we saw in the result from our
+example call to the [`Snapshots` method](#dotmeshrpc-snapshots).
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.Clone",
+  "params": {
+    "Namespace": "admin",
+    "Volume": "test",
+    "SourceBranch": "master",
+    "NewBranchName": "testing_v2",
+    "SourceSnapshotId": "880fb2c4-24db-4d16-5fc4-974d17525450"
+  },
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": true,
+  "id": 6129484611666146000
+}
+```
+
+#### DotmeshRPC.DeleteVolume.
+
+This API method deletes a dot. There's no undo, so please don't call
+it unless you mean it. You need to provide the namespace and name of
+the dot.
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.DeleteVolume",
+  "params": {
+    "Namespace": "admin",
+    "Name": "unwanted_things"
+  },
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": true,
+  "id": 6129484611666146000
+}
+```
 
 ### Transfers.
 

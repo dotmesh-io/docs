@@ -32,4 +32,5 @@ docker run --rm ${DOCKER_ARGS} \
   -e GCLOUD_SERVICE_KEY \
   -e NAMESPACE \
   -e HOSTNAME \
+  -e VERSION \
   ${GCLOUD_IMAGE} bash /app/scripts/gcloud_auth_wrapper.sh "$@"

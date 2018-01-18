@@ -18,8 +18,9 @@
 set -e
 
 export DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-export GCLOUD_IMAGE=${GCLOUD_IMAGE:="binocarlos/cibase:v6"}
+export GCLOUD_IMAGE=${GCLOUD_IMAGE:="dotmesh/gcloud"}
 
+docker build -t ${GCLOUD_IMAGE} -f "$DIR/Dockerfile.gcloud" "$DIR"
 docker run --rm ${DOCKER_ARGS} \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v ${DIR}:/app \
@@ -31,4 +32,4 @@ docker run --rm ${DOCKER_ARGS} \
   -e GCLOUD_SERVICE_KEY \
   -e NAMESPACE \
   -e HOSTNAME \
-  ${GCLOUD_IMAGE} "bash /app/gcloud_auth_wrapper.sh $@"
+  ${GCLOUD_IMAGE} "bash /app/scripts/gcloud_auth_wrapper.sh $@"

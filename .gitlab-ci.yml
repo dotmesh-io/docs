@@ -12,7 +12,7 @@ build_image:
         #- sudo rm -rf design/public
         #- sudo rm -rf hugo/public
     script:
-        - ls -la design/public
-        - ls -la hugo/public
+        - ls -la design
+        - ls -la hugo
     #    - make images
     #    - make release.build

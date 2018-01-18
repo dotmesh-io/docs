@@ -47,12 +47,15 @@ design.copy:
 	rm -rf hugo/static/{assets,css}
 	cp -r design/public/{assets,css} hugo/static
 
-.PHONY: hugo.build
-hugo.build: design.build design.copy
+.PHONY: hugo.compile
+hugo.compile:
 	docker run --rm \
 		-v $(PWD)/hugo:/app/hugo \
 		-w /app/hugo \
 		$(BUILDER_IMAGE) hugo -v
+
+.PHONY: hugo.build
+hugo.build: design.build design.copy hugo.compile
 
 .PHONY: hugo.watch
 hugo.watch: design.build design.copy
@@ -68,6 +71,6 @@ hugo.watch: design.build design.copy
 			-v
 
 .PHONY: release.build
-release.build: hugo.build
+release.build: hugo.compile
 	docker build -t $(IMAGE):$(VERSION) -f Dockerfile.nginx .
 	docker tag $(IMAGE):$(VERSION) $(IMAGE):latest

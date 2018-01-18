@@ -5,8 +5,8 @@ build_image:
     stage: build
     before_script:
         - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
-        - sudo rm -f design/public
-        - sudo rm -f hugo/public
+        - sudo rm -rf design/public
+        - sudo rm -rf hugo/public
     tags:
         - ubuntu
         - fast

@@ -9,7 +9,7 @@ images:
 
 .PHONY: design.build
 design.build:
-	docker run -ti --rm \
+	docker run --rm \
 		-v $(PWD)/design:/app/design \
 		-v /app/design/node_modules \
 		-w /app/design \
@@ -49,7 +49,7 @@ design.copy:
 
 .PHONY: hugo.build
 hugo.build: design.build design.copy
-	docker run -ti --rm \
+	docker run --rm \
 		-v $(PWD)/hugo:/app/hugo \
 		-w /app/hugo \
 		$(BUILDER_IMAGE) hugo -v

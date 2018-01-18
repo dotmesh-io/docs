@@ -34,8 +34,19 @@ API's method/param names to match!
 
 Every node in a Dotmesh cluster exposes the Dotmesh API on port 6969; in a Kubernetes cluster, this is made accessible as a ClusterIP service called "dotmesh" in the "dotmesh" namespace by default, which can be accessed through [the standard Kubernetes service discovery methods](https://kubernetes.io/docs/concepts/services-networking/service/#discovering-services).
 
-All API methods are invoked by making a POST to `http://SERVERNAME:6969/rpc`, with Basic HTTP authentication. To talk to your local cluster, you'll need the `admin` user and the corresponding API key.
-If you created your cluster from the command line with `dm cluster init`, these can be found in the `$HOME/.dotmesh/config` file:
+Our API uses [JSON-RPC](http://www.jsonrpc.org) v2 over HTTP when
+talking to a local cluster, or HTTPS for talking to the Hub. But don't
+worry if you're not familiar with JSON-RPC - we'll explain everything
+with examples below.
+
+### Connecting to your Dotmesh cluster.
+
+All API methods are invoked by making a POST to
+`http://SERVERNAME:6969/rpc`, with Basic HTTP authentication. To talk
+to your local cluster, you'll need the `admin` user and the
+corresponding API key.  If you created your cluster from the command
+line with `dm cluster init`, these can be found in the
+`$HOME/.dotmesh/config` file:
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>cat ~/.dotmesh/config | jq .Remotes.local.ApiKey</kbd>
@@ -88,9 +99,48 @@ The response will come back in the JSON-RPC v2 response format:
 }
 ```
 
+FIXME: Example of an error.
+
+### Connecting to the Hub.
+
+FIXME: Talk about using the API against the Hub.
+
+FIXME: Talk about where to get your API key.
+
+FIXME: Largely point out that it's the same as with a local cluster, but different methods make sense, and it's always https://hub.dotmesh.io:6969/rpc
+
 ## API reference.
 
 The dotmesh API contains a whole load of different methods, so let's look at them in related groups. We'll start with the simplest!
+
+ * Information
+   * [DotmeshRPC.Ping](#dotmeshrpc-ping)
+   * [DotmeshRPC.CurrentUser](#dotmeshrpc-currentuser)
+   * [DotmeshRPC.Version](#dotmeshrpc-version)
+ * User Account Control
+   * [DotmeshRPC.GetApiKey](#dotmeshrpc-getapikey)
+   * [DotmeshRPC.ResetApiKey](#dotmeshrpc-resetapikey)
+   * [DotmeshRPC.AddCollaborator](#dotmeshrpc-addcollaborator)
+ * Dot Management
+   * [DotmeshRPC.Lookup](#dotmeshrpc-lookup)
+   * [DotmeshRPC.Exists](#dotmeshrpc-exists)
+   * [DotmeshRPC.Get](#dotmeshrpc-get)
+   * [DotmeshRPC.List](#dotmeshrpc-list)
+   * [DotmeshRPC.AllVolumesAndClones](#dotmeshrpc-allvolumesandclones)
+   * [DotmeshRPC.Create](#dotmeshrpc-create)
+   * [DotmeshRPC.ContainersById](#dotmeshrpc-containersbyid)
+   * [DotmeshRPC.Containers](#dotmeshrpc-containers)
+   * [DotmeshRPC.SnapshotsById](#dotmeshrpc-snapshotsbyid)
+   * [DotmeshRPC.Snapshots](#dotmeshrpc-snapshots)
+   * [DotmeshRPC.Snapshot](#dotmeshrpc-snapshot)
+   * [DotmeshRPC.Rollback](#dotmeshrpc-rollback)
+   * [DotmeshRPC.Clones](#dotmeshrpc-clones)
+   * [DotmeshRPC.Clone](#dotmeshrpc-clone)
+   * [DotmeshRPC.DeleteVolume](#dotmeshrpc-deletevolume)
+ * Attachment
+   * [DotmeshRPC.Procure](#dotmeshrpc-procure)
+   * [DotmeshRPC.SwitchContainers](#dotmeshrpc-switchcontainers)
+ * Transfers
 
 ### Information.
 

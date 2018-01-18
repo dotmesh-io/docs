@@ -21,9 +21,9 @@ code {
   }
   p &,
   li & {
-    color: $dmHarrington;
-    background-color: shade(dmWheeler, Light);
-    outline: 1px solid $dmWheeler;
+    color: $dmEleven;
+    background-color: $dmHargrove;
+    outline: 1px solid shade(dmHargrove, Dark);
     padding: 3px 6px 0 6px;
   }
 }

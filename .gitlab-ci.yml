@@ -6,19 +6,24 @@ variables:
   GCLOUD_CLUSTER_ID: production-cluster
 
 stages:
-    - build
+  - build
 
 images:
-    stage: build
-    tags:
-        - ubuntu
-        - fast
-    before_script:
-        - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
-        - bash scripts/build_gcloud_docker.sh
-    script:
-        - make images
-        - make release.build
-        - bash scripts/gcloud_docker.sh kubectl get no
-        - bash scripts/gcloud_docker.sh gcloud container clusters list
-        #- bash scripts/gcloud_docker.sh bash /app/pushimages.sh
+  stage: build
+  tags:
+    - ubuntu
+    - fast
+  before_script:
+    # use the git sha as the version tag
+    - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
+    # we will move this infra into config at some point and have
+    # this as a pullable Docker image that is shared amoungst repos
+    # until then - we need to build the gcloud docker image on the runner
+    - bash scripts/build_gcloud_docker.sh
+  script:
+    # make the builder-image that can produce the hugo build
+    - make images
+    # build the content and burn the deployable nginx image
+    - make release.build
+    # push the image to GCR
+    - bash scripts/gcloud_docker.sh bash /app/pushimages.sh

@@ -1,10 +1,14 @@
 #!/bin/bash -e
 
-# run a docker container that has gcloud installed alongside the docker binary
-# this enables us to push images to GCR and manifests to GKE
+# push the locally built production image to GCR using the variables defined
+# in .gitlab-ci.yaml
 
 set -e
 
 export DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-kubectl get no
+LOCAL_IMAGE="dotmeshio/docs:$VERSION"
+GCR_IMAGE="$DOCKER_REGISTRY/$GCP_PROJECT_ID/docs:$VERSION"
+
+docker tag "$LOCAL_IMAGE" "$GCR_IMAGE"
+gcloud docker -- push "$GCR_IMAGE"

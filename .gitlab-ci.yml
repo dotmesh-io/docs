@@ -26,4 +26,4 @@ images:
     # build the content and burn the deployable nginx image
     - make release.build
     # push the image to GCR
-    - bash scripts/gcloud_docker.sh bash /app/pushimages.sh
+    - bash scripts/gcloud_docker.sh bash /app/scripts/pushimages.sh

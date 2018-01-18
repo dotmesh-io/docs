@@ -1209,53 +1209,143 @@ leave it blank for now.
 
 ### Transfers.
 
-TODO:
+The transfer methods allow you to initiate pulls and pushes between Dotmesh clusters, including the Dotmesh Hub.
 
+#### DotmeshRPC.Transfer.
 
-func (d *DotmeshRPC) RegisterFilesystem(
-func (d *DotmeshRPC) GetTransfer(
-func (d *DotmeshRPC) RegisterTransfer(
-func (d *DotmeshRPC) Transfer(
-func (d *DotmeshRPC) DeducePathToTopLevelFilesystem(
-func (d *DotmeshRPC) PredictSize(
-
-
-
-### ALARIC'S WORK IN PROGRESS NOTES.
-
-How to test RPCs from the command line to get sample results:
-
-```bash
-curl --user admin:VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD -H "Content-Type: application/json" http://localhost:6969/rpc --data-binary '{"jsonrpc":"2.0","method":"DotmeshRPC.CurrentUser","params":{},"id": 6129484611666146000}' | jq .
-```
-
-func (d *DotmeshRPC) SubmitPayment(
-func (d *DotmeshRPC) SetDebugFlag(
-
-
-#### DotmeshRPC.Config.
-
-This method returns selected configuration from the Dotmesh cluster.
-(FIXME: I really have no idea how to justify this to third-party developers. From what it returns, it looks like it's used as part of the stripe integration?)
+This API method initiates a transfer - which can be a pull or a push -
+with another cluster. To invoke it, you need to provide a hostname of
+a node in the remote cluster, plus a username and an API key for that cluster.
 
 ##### Request.
+
 ```json
 {
   "jsonrpc": "2.0",
-  "method": "DotmeshRPC.Config",
-  "params": {},
-  "id": 6129484611666146000
+  "method": "DotmeshRPC.Transfer",
+  "params": {
+    "Peer": "10.192.0.2",
+    "User": "admin",
+    "ApiKey": "MYRJNBIKDMT7OCAZYEHM2YITDS4TK3EY",
+    "Direction": "push",
+    "LocalNamespace": "admin",
+    "LocalFilesystemName": "volume_1",
+    "LocalCloneName": "",
+    "RemoteNamespace": "admin",
+    "RemoteFilesystemName": "volume_1",
+    "RemoteCloneName": "",
+    "TargetSnapshot": ""
+  },
+  "id": 5577006791947779000
+}
+```
+
+The request has many parameters. Let's look at them in more detail.
+
+<dl>
+
+<dt><code>Peer</code>.</dt>
+<dt><code>User</code>.</dt>
+<dt><code>ApiKey</code>.</dt>
+
+<dd>These are the details to connect to the remote cluster. `Peer` is
+the hostname of a node in the remote cluster; for the Dotmesh Hub,
+provide `secure:hub.datamesh.io`. FIXME: Make sure that's right when
+we do the secure connectivity!</dd>
+
+<dt><code>Direction</code>.</dt>
+
+<dd>This should either be `"push"` or `"pull"`. You may not be
+surprised to find out that `"push"` causes the cluster you send the
+API request to to transfer a filesystem to the remote cluster, and that
+`"pull"` causes it to request a filesystem from the remote cluster.</dd>
+
+<dt><code>LocalNamespace</code>.</dt>
+<dt><code>LocalFilesystemName</code>.</dt>
+<dt><code>LocalCloneName</code>.</dt>
+
+<dd>These identify the filesystem on the local cluster - which may be
+the source or target, depending on the `Direction`!</dd>
+
+<dt><code>RmoteNamespace</code>.</dt>
+<dt><code>RemoteFilesystemName</code>.</dt>
+<dt><code>RemoteCloneName</code>.</dt>
+
+<dd>These identify the filesystem on the remote cluster - which also may be
+the source or target, depending on the `Direction`!</dd>
+
+<dt><code>TargetSnapshot</code>.</dt>
+
+<dd>This is reserved for future use. Leave it as an empty string for now.</dd>
+
+</dl>
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": "b655e1f4-ae90-422b-78ac-b1090c7391bb",
+  "id": 5577006791947779000
+}
+```
+
+The result is a transfer ID, which you can then poll with the
+[`GetTransfer` method](#dotmeshrpc-gettransfer). Speaking of which...
+
+#### DotmeshRPC.GetTransfer.
+
+This API method checks the status of a transfer initiated with the
+[`Transfer` method](#dotmeshrpc-transfer). To call it, you need the
+transfer ID returned by `Transfer`.
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.GetTransfer",
+  "params": "b655e1f4-ae90-422b-78ac-b1090c7391bb",
+  "id": 8674665223082154000
 }
 ```
 
 ##### Response.
+
 ```json
 {
   "jsonrpc": "2.0",
   "result": {
-    "Plans": null,
-    "StripePublicKey": ""
+    "TransferRequestId": "b655e1f4-ae90-422b-78ac-b1090c7391bb",
+    "Peer": "10.192.0.2",
+    "User": "admin",
+    "ApiKey": "MYRJNBIKDMT7OCAZYEHM2YITDS4TK3EY",
+    "Direction": "push",
+    "LocalNamespace": "admin",
+    "LocalFilesystemName": "volume_1",
+    "LocalCloneName": "",
+    "RemoteNamespace": "admin",
+    "RemoteFilesystemName": "volume_1",
+    "RemoteCloneName": "",
+    "FilesystemId": "3d55917d-a742-4afa-57ec-207fd589da3c",
+    "InitiatorNodeId": "cc35b6b4c2edbd4d",
+    "PeerNodeId": "",
+    "StartingSnapshot": "START",
+    "TargetSnapshot": "b0af7015-9a01-497e-6249-8cf973fb3bd2",
+    "Index": 1,
+    "Total": 1,
+    "Status": "finished",
+    "NanosecondsElapsed": 37419551,
+    "Size": 9728,
+    "Sent": 44939,
+    "Message": ""
   },
-  "id": 6129484611666146000
+  "id": 8674665223082154000
 }
 ```
+
+We won't explain all of them in detail, as they may change in
+future. As you can see, many of them are copies of the original
+transfer request parameters. The one important thing you need to know
+is that when the `Status` key becomes `finished`, it's done!
+

@@ -3,13 +3,15 @@ stages:
 
 build_image:
     stage: build
-    before_script:
-        - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
-        - sudo rm -rf design/public
-        - sudo rm -rf hugo/public
     tags:
         - ubuntu
         - fast
-    script:
-        - make images
-        - make release.build
+    before_script:
+        - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
+        - ls -la design/public
+        - ls -la hugo/public
+        #- sudo rm -rf design/public
+        #- sudo rm -rf hugo/public
+    #script:
+    #    - make images
+    #    - make release.build

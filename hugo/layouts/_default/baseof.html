@@ -23,7 +23,7 @@
             </svg>
           </a>
           <span class="titlecard_version">v: {{ $.Site.Params.version }}.</span>
-          <h1 class="typeM heading">{{ .Site.Title }}.</h1>
+          <h1 class="typeM heading"><a href="{{ .Site.BaseURL }}" role="home">{{ .Site.Title }}.</a></h1>
         </div>
   			<div class="navigationtrigger">
   	      <button type="button" class="navigationtoggle" id="navigationtoggle">
@@ -75,7 +75,7 @@
     // Add a click event to run the mainNavToggle function
     navToggle.addEventListener('click', mainNavToggle);
   </script>
-  
+
 {{ block "footeradditions" . }}
   <script>
 

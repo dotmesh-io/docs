@@ -1,0 +1,17 @@
+<div class="highlight"><pre class="chromaManual">$ <kbd>kubectl examine secret dotmesh -n dotmesh -o yaml</kbd>
+apiVersion: v1
+data:
+  dotmesh-admin-password.txt: Y29ycmVjdGhvcnNlYmF0dGVyeXN0YXBsZQo=
+  dotmesh-api-key.txt: <em>VlZLR1lDQzNHNEs1RzJRTTNHTElWVEVDVlNCV1dKWkQK</em>
+kind: Secret
+metadata:
+  creationTimestamp: 2018-01-17T15:03:11Z
+  name: dotmesh
+  namespace: dotmesh
+  resourceVersion: "418"
+  selfLink: /api/v1/namespaces/dotmesh/secrets/dotmesh
+  uid: 88c31d8b-fb97-11e7-b1fe-0242cd52be10
+type: Opaque
+$ <kbd>echo VlZLR1lDQzNHNEs1RzJRTTNHTElWVEVDVlNCV1dKWkQK | base64 -d</kbd>
+<em>VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD</em>
+</pre></div>

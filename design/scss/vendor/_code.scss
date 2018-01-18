@@ -20,7 +20,8 @@ code {
     line-height: $lineheightBase;
   }
   p &,
-  li & {
+  li &,
+  dl & {
     color: $dmEleven;
     background-color: $dmHargrove;
     outline: 1px solid shade(dmHargrove, Dark);

@@ -128,6 +128,7 @@
 		padding-bottom: 0;
 	}
 }
+
 .unordered_list {
 	list-style-type: disc;
 	@extend %textList;
@@ -155,6 +156,31 @@
 	}
 }
 
+.description_list {
+	overflow: hidden;
+	margin-left: 0;
+	margin-right: 0;
+	dt,dd {
+		@extend .text;
+		@include leading_adjust(2);
+		margin-left: 0;
+		margin-right: 0;
+	}
+	dt {
+		display: block;
+	}
+	dd {
+		display: block;
+		margin-left: rem(18);
+		+ dt {
+			margin-top: rem(18);
+		}
+	}
+	code {
+		display: inline;
+	}
+}
+
 // Typebase (for runs of text)
 // ------------------------------------------------------------------
 
@@ -168,6 +194,10 @@
 	ol {
 		margin-top: rem($typeDefault);
 		@extend %textList;
+	}
+	dl {
+		margin: rem($typeDefault*1.5) 0;
+		@extend .description_list;
 	}
 	ul {
 		@extend .unordered_list;

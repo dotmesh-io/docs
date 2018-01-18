@@ -12,8 +12,9 @@
 #
 # this enables us to push images to GCR and manifests to GKE
 #
-#
 # example usage: bash scripts/gcloud_docker.sh bash /app/pushimages.sh 
+#
+# NOTE: this should end up in a shared repo where each deplouyable repo can pull an image to use
 
 set -e
 

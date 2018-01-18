@@ -8,7 +8,7 @@ set -e
 export DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 LOCAL_IMAGE="dotmeshio/docs:$VERSION"
-GCR_IMAGE="$DOCKER_REGISTRY/$GCP_PROJECT_ID/docs:$VERSION"
+GCR_IMAGE="$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/docs:$VERSION"
 
 docker tag "$LOCAL_IMAGE" "$GCR_IMAGE"
 gcloud docker -- push "$GCR_IMAGE"

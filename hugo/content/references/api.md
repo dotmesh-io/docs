@@ -402,28 +402,28 @@ The result has the following keys:
 
 <dl>
 
-<dt>`Id`.</dt>
+<dt><code>Id</code>.</dt>
 <dd>This is just the filesystem ID, exactly as you provided in the request.</dd>
 
-<dt>`Name`.</dt>
+<dt><code>Name</code>.</dt>
 <dd>This is the namespace and name of the Dot containing this filesystem.</dd>
 
-<dt>`Clone`.</dt>
+<dt><code>Clone</code>.</dt>
 <dd>If this is the master filesystem of the Dot, then `Clone` is an empty string. However, if we're dealing with a clone, `Clone` will be its name.</dd>
 
-<dt>`Master`.</dt>
+<dt><code>Master</code>.</dt>
 <dd>This is the ID of the node that's currently holding the live copy of this filesystem. Only that node may directly mount the filesystem into a container.</dd>
 
-<dt>`SizeBytes`.</dt>
+<dt><code>SizeBytes</code>.</dt>
 <dd>The size of the filesystem, in bytes.</dd>
 
-<dt>`DirtyBytes`.</dt>
+<dt><code>DirtyBytes</code>.</dt>
 <dd>How much data has changed since the last commit (or creation) of this filesystem, in bytes.</dd>
 
-<dt>`CommitCount`.</dt>
+<dt><code>CommitCount</code>.</dt>
 <dd>How many commits have happened on this filesystem since its creation.</dd>
 
-<dt>`ServerStatuses`.</dt>
+<dt><code>ServerStatuses</code>.</dt>
 <dd>A map from the IDs of the nodes that have replicas of this filesystem, with a string summarising the status of the filesystem on that node for each.</dd>
 </dl>
 

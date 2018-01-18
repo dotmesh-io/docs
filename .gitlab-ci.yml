@@ -18,5 +18,5 @@ images:
     script:
         - make images
         - make release.build
-        - bash scripts/gcloud_docker.sh docker ps -a
+        - bash scripts/gcloud_docker.sh
         #- bash scripts/gcloud_docker.sh bash /app/pushimages.sh

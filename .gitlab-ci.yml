@@ -34,9 +34,26 @@ deploy_staging:
   tags:
     - ubuntu
     - fast
+  variables:
+    NAMESPACE: docs-stage
+    HOSTNAME: dotmesh-docs-stage.wk1.co
   before_script:    
     - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
     - bash scripts/build_gcloud_docker.sh
   script:
-    - bash scripts/gcloud_docker.sh kubectl get ns
+    - bash scripts/gcloud_docker.sh bash /app/scripts/deploy.sh
+
+deploy_production:
+  stage: deploy_production
+  tags:
+    - ubuntu
+    - fast
+  variables:
+    NAMESPACE: docs
+    HOSTNAME: dotmesh-docs.wk1.co
+  before_script:    
+    - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
+    - bash scripts/build_gcloud_docker.sh
+  script:
+    - bash scripts/gcloud_docker.sh bash /app/scripts/deploy.sh
 

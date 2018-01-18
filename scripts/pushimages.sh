@@ -12,3 +12,5 @@ GCR_IMAGE="$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/docs:$VERSION"
 
 docker tag "$LOCAL_IMAGE" "$GCR_IMAGE"
 gcloud docker -- push "$GCR_IMAGE"
+
+echo "image pushed: $GCR_IMAGE"

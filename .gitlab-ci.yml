@@ -15,6 +15,7 @@ images:
         - fast
     before_script:
         - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
+        - bash scripts/build_gcloud_docker.sh
     script:
         - make images
         - make release.build

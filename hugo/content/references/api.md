@@ -10,39 +10,61 @@ weight = "2"
     parent = "references"
 +++
 
-Internally, Dotmesh runs as a server on every node in a Dotmesh cluster.
-Any interaction with Dotmesh, such as using the `dm` command-line tool, or running containers using Dotmesh volumes from Docker or Kubernetes, involves making API calls to the Dotmesh server on the affected node.
+# Overview
+The dotmesh API is the fundamental way of interacting with dotmesh, the service.
 
-Most operations can be performed on any node in the cluster, and will automatically be routed to the node that is currently controlling any affected dot.
-The only exceptions are API calls that mount a volume from a dot, which will cause that mount to happen on the node that receives the API call.
-You need to ensure that you choose the most appropriate node to mount the volume on!
+Before attempting to use the API, we recommend understanding the [dotmesh architecture](../concepts/architecture).
 
-## Basics.
+Any time you interact with any part of dotmesh - whether a local deployment or the dotmesh hub - you are using the API. Our Web UI for dotmesh hub, the `dm` command-line interface, any interaction between a local deployment and the hub, all use the same, publicly-exposed dotmesh API.
 
-Every node in a Dotmesh cluster exposes the Dotmesh API on port 32607; in a Kubernetes cluster, this is made accessible as a ClusterIP service called "dotmesh" in the "dotmesh" namespace by default, which can be accessed through [the standard Kubernetes service discovery methods](https://kubernetes.io/docs/concepts/services-networking/service/#discovering-services).
+This document describes the API in its entirety. With this API, you not only can understand how to interact with dotmesh, but you can write your own clients and connect your own services. In fact, we **encourage** you to do so and would be happy to publish it, if you want.
 
-Our API uses [JSON-RPC](http://www.jsonrpc.org) v2 over HTTP when
+### Local
+As described in the [architecture documentation](../concepts/architecture), dotmesh is installed as software running on one or many server nodes. For example, in kubernetes, it will be deployed as a `DaemonSet` running on every node in your cluster.
+
+### Hub
+The dotmesh hub API is available at https://hub.dotmesh.io/rpc . Note that the Hub API is available over https and is exposed at port 443.
+
+### Local
+Every node in a Dotmesh cluster exposes the Dotmesh API on the host at port `32607` and the path `/rpc`. For example, if you have dotmesh running on host `myhost.example.com`, then the endpoint for services will be `http://myhost.example.com:32607/rpc`
+
+If you are accessing dotmesh from a `Pod` in a Kubernetes cluster in which dotmesh is installed, you can access it easily from within a Kubernetes cluster via a standard ClusterIP service called "dotmesh" in the "dotmesh" namespace, which can be accessed through [the standard Kubernetes service discovery methods](https://kubernetes.io/docs/concepts/services-networking/service/#discovering-services). In most cases, it should be accessible from inside the cluster at `http://dotmesh.dotmesh:32607/rpc`
+
+There are two types of local API calls: cluster and node.
+
+* Cluster: The majority of API calls are cluster-level calls. They operate on any or every node of the cluster. Once any one node processes the call, it will ensure that all of the nodes in the cluster are aware of the new state, if any.  Thus, in general, an API command, including those performed by the `dm` CLI, may be sent to any one node. It then will be routed to all of the other nodes as needed, and the entire cluster of nodes will be aware.
+* Node: A subset of calls are node-specific, e.g. mounting a volume from a dot. Since a mount happens on a particular node, the API call needs to be sent to the server running on the actual node on which the volume is to be mounted. These calls rarely are made by clients. Instead, they are called by drivers for specific implementations, for example a Kubernetes `kubelet`, which calls the dotmesh driver to mount a specific volume from a specific dot on a specific node, which the `kubelet` already is aware.
+
+Each API call is prefaced with a section indicating if it applies to dotmesh hub, dotmesh local or both.
+
+## Protocol
+The dotmesh API uses [JSON-RPC](http://www.jsonrpc.org) v2 over HTTP when
 talking to a local cluster, or HTTPS for talking to the Hub. But don't
 worry if you're not familiar with JSON-RPC - we'll explain everything
 with examples below.
 
-### Connecting to your Dotmesh cluster.
+### Authentication
+API calls _always_ require authentication. The credentials you use depend on which API target you are talking to.
 
-All API methods are invoked by making a POST to
-`http://SERVERNAME:32607/rpc`, with Basic HTTP authentication. To talk
-to your local cluster, you'll need the `admin` user and the
-corresponding API key.  If you created your cluster from the command
-line with `dm cluster init`, these can be found in the
-`$HOME/.dotmesh/config` file:
+#### Hub
+If you are communicating with the dotmesh hub, you can use the API or Web UI to retrieve your credentials. These will consist of a username and API token.
+
+While it _is_ possible to authenticate to the API by submitting a user's password instead of their API key, we **strongly** recommend against it; future implementations may remove this ability entirely. The password is intended for use when users log into administrative interfaces and supply their username and password through a login screen, rather than being stored; API keys are intended to be stored, and can be easily revoked by the user. Use the API key instead.
+
+The **sole** exception to theh above rule is API methods to manage the user account, which are explicitly prohibited from use with just an API key, so that a lost API key is not able to permanently compromise an account. These will be discussed below.
+
+#### Local
+If you are communicating with a local cluster you will have a single username `admin` and a single available API key. You can retrieve the key in a number of ways, depending on how you created your dotmesh cluster.
+
+##### CLI
+If you created your cluster from the command line with `dm cluster init`, these can be found in the `$HOME/.dotmesh/config` file:
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>cat ~/.dotmesh/config | jq -r .Remotes.local.ApiKey</kbd>
 <em>VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD</em>
 </pre></div>
 
-If your cluster was created purely through Kubernetes, the admin API
-key can be found in the `dotmesh-api-key.txt` key in the `dotmesh`
-secret, in the `dotmesh` namespace:
+If your cluster was created purely through Kubernetes, the admin API key can be found in the `dotmesh-api-key.txt` key in the `dotmesh` secret, in the `dotmesh` namespace:
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>kubectl examine secret dotmesh -n dotmesh -o yaml</kbd>
@@ -157,7 +179,7 @@ be called out as such in the documentation for those API methods.
 
 ## API reference.
 
-The dotmesh API contains a whole load of different methods, so let's look at them in related groups. We'll start with the simplest!
+The dotmesh API encompasses many different methods. This section organizes them into related groups.
 
  * Information
    * [DotmeshRPC.Ping](#dotmeshrpc-ping)
@@ -192,13 +214,17 @@ The dotmesh API contains a whole load of different methods, so let's look at the
 
 ### Information.
 
-Informational API methods just return some information about the Dotmesh server.
+Informational API methods return information about the dotmesh cluster, its users, and individual instances.
 They're not all that exciting or useful for most people, but they're a good place to start getting to grips with the API because of their simplicity.
 
 #### DotmeshRPC.Ping.
 
 Use this to check that the Dotmesh server is alive.
 It doesn't do anything - it just returns the same response, to confirm that, yes, the server is running.
+
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 ```json
@@ -223,6 +249,10 @@ It doesn't do anything - it just returns the same response, to confirm that, yes
 
 This returns the details of the user making the request.
 When used on your own cluster, it'll just return the details of the admin user, which isn't very interesting; but when used on the Hub, it will return some more interesting details.
+
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 ```json
@@ -255,6 +285,10 @@ When used on your own cluster, it'll just return the details of the admin user, 
 This method returns the version of the Dotmesh server.
 It's handy for checking if the server you're talking to supports some new feature you want, or to record the version number for informational purposes.
 
+Availability:
+* Local: YES
+* Hub: YES
+
 ##### Request.
 ```json
 {
@@ -278,11 +312,11 @@ It's handy for checking if the server you're talking to supports some new featur
 }
 ```
 
-### User Account Control.
+### User Account Management
 
-By using these API methods on the Dotmesh Hub, you can administer the user's account and add other users' accounts as collaborators to your dots.
+These API methods on the Dotmesh Hub administer the user's account and add other users' accounts as collaborators to your dots.
 
-#### DotmeshRPC.GetApiKey.
+#### DotmeshRPC.GetApiKey
 
 This method returns the user's API key. You can invoke it using the
 API key or the user's password, but if you already know the API key,
@@ -295,6 +329,10 @@ you're writing an interactive app that lets the user login, it's
 recommended that you ask them for their username and password, then
 use those to call this API method. If it succeeds, you can then store
 the API key to use thereafter, and discard their password.
+
+Availability:
+* Local: NO
+* Hub: YES
 
 ##### Request.
 ```json
@@ -330,6 +368,10 @@ In order to limit the damage caused by a compromised API key, this
 method can't be called using the API key - you need to use the
 password!
 
+Availability:
+* Local: NO
+* Hub: YES
+
 ##### Request.
 ```json
 {
@@ -359,6 +401,10 @@ not a collaborator). To call it, you need the ID of the master branch
 of the Dot, not its name; see [the `Lookup`
 method](#dotmeshrpc-lookup) for a way to convert a name into an ID.
 
+Availability:
+* Local: NO
+* Hub: YES
+
 ##### Request.
 
 ```json
@@ -385,22 +431,29 @@ method](#dotmeshrpc-lookup) for a way to convert a name into an ID.
 
 ### Dot Management.
 
-These API methods are used for managing dots. They are useful on both
-a local cluster and the Dotmesh Hub.
+These API methods are used for managing dots, available both on a local cluster and the Dotmesh Hub.
 
-When using these methods on a local cluster, the Namespace will always be `admin`.
+When using these methods on a local cluster, the Namespace always will be `admin`.
 
 When using these methods on the Hub, the Namespace will be the name of
 the user that owns the Dot. Usually, that will be the same username as
 the user calling the API methods, but it's possible to perform some
 operations on a Dot you don't own if you've been [added as a
-Collaborator](#dotmeshrpc-addcollaborator).
+Collaborator](#dotmeshrpc-addcollaborator), or with Organizations.
+
+Availability:
+* Local: YES
+* Hub: YES
 
 #### DotmeshRPC.Lookup.
 
 This API method simply takes a dot name, and optionally also a branch
 name, and converts it to a branch ID. If no branch name is given, it
 returns the master branch ID of the dot.
+
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -431,14 +484,17 @@ On a local cluster, let's look up master branch ID of the `test` dot.
 
 #### DotmeshRPC.Exists.
 
-Although perhaps seemingly redundant given the [`Lookup`
-method](#dotmeshrpc-lookup), this method simply checks if a given dot
-(and, optionally, a specific branch of a dot) exists. If it does, it
-returns the branch ID, just like `Lookup`; however, if it doesn't
-exist, it just returns an empty string rather than an error. This
-makes it handy for cases where non-existance of the dot/branch isn't an
-error, to save you from having to convert an error back into a valid
-value.
+Checks if a given dot (and, optionally, a specific branch of a dot) exists. If it does, it
+returns the branch ID; if it doesn't
+exist, it just returns an empty string.
+
+This is functionally equivalent to `Lookup`, except that the non-existent case is handled
+by returning an empty string rather than an error, as `Lookup` would.
+This is just a convenience method, to save you from having to convert an error back into a valid value.
+
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -470,6 +526,10 @@ value.
 This method takes a branch ID and returns information about that
 branch. We'll go through everything returned in the Response
 section below.
+
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -537,15 +597,24 @@ The result has the following keys:
 
 #### DotmeshRPC.List.
 
-This method returns a list of available Dots. For each, it also
+This method returns a list of Dots. For each, it also
 returns the ID of the currently selected branch for that Dot, and
 the result of calling the [`Get` method](#dotmeshrpc-get) on it.
+
+The list of dots returned will include _only_ those dots for whom the querying user has access:
+
+* Hub: The ones in your namespace and those for which you have been added as a collaborator.
+* Local: All dots
 
 If you want the details of the master branch for each Dot, you're
 going to need to spot the Dots that have a non-empty string for their
 `Branch` key and call the [`Lookup` method](#dotmeshrpc-lookup) on the
 name without a `Branch` to get the master branch ID, then call the
 [`Get` method](#dotmeshrpc-get) to find the details.
+
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -595,6 +664,16 @@ method](#dotmeshrpc-get).
 
 This API method returns a list of all the Dots and their branches, along
 with lots of useful information.
+
+The list of dots returned will include _only_ those dots for whom the querying user has access:
+
+* Hub: The ones in your namespace and those for which you have been added as a collaborator.
+* Local: All dots
+
+Availability:
+* Local: YES
+* Hub: YES
+
 
 ##### Request.
 
@@ -774,7 +853,12 @@ Each Dot's information is given as a JSON object with the following keys:
 
 #### DotmeshRPC.Create.
 
-This method creates a new Dot, containing an empty master branch.
+This method creates a new Dot, containing an empty master branch. The dot will be created in the namespace
+provided in the request. If you do *not* have creation rights in that namespace, the response will be an error.
+
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -806,7 +890,11 @@ The master branch ID isn't returned, so you'll need to call the
 #### DotmeshRPC.ContainersById.
 
 This method returns a list of containers that are currently using the
-specified branch (given the branch's ID).
+specified branch, given the branch's ID.
+
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -843,11 +931,15 @@ $ <kbd>docker ps --format '{{.ID}}  {{.Names}}'</kbd>
 
 #### DotmeshRPC.Containers.
 
-This method performs exactly the same function as the
-[`ContainersById` method](#dotmeshrpc-containersbyid), except that it
-accepts a namespace/name/branch triple and effectively calls the
-[`Lookup` method](#dotmeshrpc-lookup) for you to obtain the branch
-ID.
+This method returns a list of containers that are currently using the
+specified branch, given a namespace/name/branch tuple. it is
+functionally equivalent to
+[`ContainersById` method](#dotmeshrpc-containersbyid), useful if you do not have the branch ID,
+saving you the `Lookup`.
+
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -882,6 +974,10 @@ ID.
 #### DotmeshRPC.CommitsById.
 
 This API method returns a list of commits for a given branch, by ID.
+
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -919,11 +1015,12 @@ timestamp in UTC nanoseconds since the UNIX epoch.
 
 #### DotmeshRPC.Commits.
 
-This method performs exactly the same function as the
-[`CommitsById` method](#dotmeshrpc-commitsbyid), except that it
-accepts a namespace/name/branch triple and effectively calls the
-[`Lookup` method](#dotmeshrpc-lookup) for you to obtain the branch
-ID.
+This API method returns a list of commits for a given branch, by namespace/name/branch tuple.
+It is a convenience method, functionally equivalent to [`CommitsById`](#dotmeshrpc-commitsbyid), but useful when you do not have the branch ID.
+
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -968,6 +1065,10 @@ to provide a commit message.
 
 You can optionally provide arbitrary key-value metadata.
 
+Availability:
+* Local: YES
+* Hub: YES
+
 The result value is the commit ID (as returned by `DotmeshRPC.Commits`, for
 example).
 
@@ -1004,11 +1105,15 @@ example).
 #### DotmeshRPC.Rollback.
 
 This API method reverts the current state of a branch back to a
-previous commit. Rather than accepting a branch ID, it requires
-a namespace, dot name, and optional branch name; it looks up the
+previous commit. Rather than accepting a branch ID, this call accepts
+`namespace`, `dot_name` and optional `branch name` parameters, and looks up the
 branch for you. You also need to provide the ID of the commit to
 roll back to, as returned by the [`Commits`
 method](#dotmeshrpc-commits).
+
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -1039,6 +1144,10 @@ method](#dotmeshrpc-commits).
 #### DotmeshRPC.Branches.
 
 This API method returns a list of branches of a given Dot, given the namespace and name of the Dot.
+
+Availability:
+* Local: YES
+* Hub: YES
 
 ##### Request.
 
@@ -1081,6 +1190,10 @@ branch from the master branch of the Dot, you need to specify
 `master` as the `SourceBranch` parameter; otherwise, you must specify
 the name of the branch.
 
+Availability:
+* Local: YES
+* Hub: YES
+
 ##### Request.
 
 In this example, we create a branch called `testing_v2` from one of the
@@ -1118,6 +1231,10 @@ This API method deletes a dot. There's no undo, so please don't call
 it unless you mean it. You need to provide the namespace and name of
 the dot.
 
+Availability:
+* Local: YES
+* Hub: YES
+
 ##### Request.
 
 ```json
@@ -1142,11 +1259,11 @@ the dot.
 }
 ```
 
-### Attachment.
+### Attachment
 
 The attachment API methods relate to the attaching of volumes to
 containers. Actually attaching a volume to a container can only be
-done through the specialised Docker and Kubernetes integrations,
+done through the specific platform integrations, e.g. Docker and Kubernetes,
 rather than this API; these API functions are *related* to attachment
 rather than actually *performing* attachment.
 
@@ -1156,7 +1273,7 @@ Dot.
 
 #### DotmeshRPC.Procure.
 
-This API method creates a Dot if required, makes sure the node
+This API method creates a Dot if required, ensures the node
 handling the API call is the master by migrating the Dot if necessary,
 and returns the host path where the given Subdot of the Dot's current
 branch (or a specific branch, if requested) is mounted.
@@ -1168,6 +1285,10 @@ mounted, which is conventionally what should happen if the user
 specifies `__root__` as the Subdot name.
 
 Normally, this API method will return a host path to the currently selected branch of the Dot, as selected by the [`SwitchContainers` method](#dotmeshrpc-switchcontainers); if that method has never been invoked, then this will be the master branch. However, any branch may be selected by specifying a `Name` of the form `NAME@BRANCH`, eg `test@testing_v1`; the branch name `master` may be used to request the master branch of the Dot.
+
+Availability:
+* Local: YES
+* Hub: NO
 
 ##### Request.
 
@@ -1204,7 +1325,11 @@ rather than the original default of `master`.
 
 In addition, any existing Docker containers using the default will be
 stopped and re-started to use the new default when this API method is
-called.
+called. 
+
+Availability:
+* Local: YES
+* Hub: NO
 
 ##### Request.
 
@@ -1371,4 +1496,3 @@ We won't explain all of them in detail, as they may change in
 future. As you can see, many of them are copies of the original
 transfer request parameters. The one important thing you need to know
 is that when the `Status` key becomes `finished`, it's done!
-

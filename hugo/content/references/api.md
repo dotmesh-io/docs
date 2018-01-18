@@ -618,7 +618,7 @@ func (d *DotmeshRPC) PredictSize(
 
 ### Procurement.
 
-TODO: 
+TODO:
 
 
 func (d *DotmeshRPC) Procure(

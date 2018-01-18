@@ -7,28 +7,19 @@ date = 2018-01-17T12:04:35Z
 order = "3"
 +++
 
-Internally, Dotmesh runs as a server on every node in a Dotmesh
-cluster. Any interaction with Dotmesh, such as using the `dm`
-command-line tool, or running containers using Dotmesh volumes from
-Docker or Kubernetes, involves making API calls to the Dotmesh server
-on the affected node.
+Internally, Dotmesh runs as a server on every node in a Dotmesh cluster.
+Any interaction with Dotmesh, such as using the `dm` command-line tool, or running containers using Dotmesh volumes from Docker or Kubernetes, involves making API calls to the Dotmesh server on the affected node.
 
-Most operations can be performed on any node in the cluster, and will
-automatically be routed to the node that is currently controlling any
-affected dot. The only exceptions are API calls that mount a volume
-from a dot, which will cause that mount to happen on the node that
-receives the API call. You need to ensure that you choose the most
-appropriate node to mount the volume on!
+Most operations can be performed on any node in the cluster, and will automatically be routed to the node that is currently controlling any affected dot.
+The only exceptions are API calls that mount a volume from a dot, which will cause that mount to happen on the node that receives the API call.
+You need to ensure that you choose the most appropriate node to mount the volume on!
 
 ## Basics.
 
-Every node in a Dotmesh cluster exposes the Dotmesh API on port 6969;
-in a Kubernetes cluster, this is made accessible as a ClusterIP
-service called "dotmesh" in the "dotmesh" namespace by default, which
-can be accessed through [the standard Kubernetes service discovery
-methods](https://kubernetes.io/docs/concepts/services-networking/service/#discovering-services).
+Every node in a Dotmesh cluster exposes the Dotmesh API on port 6969; in a Kubernetes cluster, this is made accessible as a ClusterIP service called "dotmesh" in the "dotmesh" namespace by default, which can be accessed through [the standard Kubernetes service discovery methods](https://kubernetes.io/docs/concepts/services-networking/service/#discovering-services).
 
-All API methods are invoked by making a POST to `http://SERVERNAME:6969/rpc`, with Basic HTTP authentication. To talk to your local cluster, you'll need the `admin` user and the corresponding API key. If you created your cluster from the command line with `dm cluster init`, these can be found in the `$HOME/.dotmesh/config` file:
+All API methods are invoked by making a POST to `http://SERVERNAME:6969/rpc`, with Basic HTTP authentication. To talk to your local cluster, you'll need the `admin` user and the corresponding API key.
+If you created your cluster from the command line with `dm cluster init`, these can be found in the `$HOME/.dotmesh/config` file:
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>cat ~/.dotmesh/config | jq .Remotes.local.ApiKey</kbd>
@@ -56,16 +47,9 @@ $ <kbd>echo VlZLR1lDQzNHNEs1RzJRTTNHTElWVEVDVlNCV1dKWkQK | base64 -d</kbd>
 <em>VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD</em>
 </pre></div>
 
-It's also possible to authenticate to the API by submitting a user's
-password instead of their API key. The password is intended for use
-when users log into administrative interfaces and supply their
-username and password through a login screen, rather than being
-stored; API keys are intended to be stored, and can be easily revoked
-by the user, so most uses of the API should use an API key
-instead. The one exception is API methods to manage the user account,
-which are explicitly prohibited from use with just an API key, so that
-a lost API key is not able to permanently compromise an account. These
-will be discussed below.
+It's also possible to authenticate to the API by submitting a user's password instead of their API key.
+The password is intended for use when users log into administrative interfaces and supply their username and password through a login screen, rather than being stored; API keys are intended to be stored, and can be easily revoked by the user, so most uses of the API should use an API key instead.
+The one exception is API methods to manage the user account, which are explicitly prohibited from use with just an API key, so that a lost API key is not able to permanently compromise an account. These will be discussed below.
 
 Requests must be sent with a `Content-Type` of `application/json`, and comply with the [JSON-RPC v2 specifiation](http://www.jsonrpc.org/specification), like so:
 
@@ -90,21 +74,17 @@ The response will come back in the JSON-RPC v2 response format:
 
 ## API reference.
 
-The dotmesh API contains a whole load of different methods, so let's
-look at them in related groups. We'll start with the simplest!
+The dotmesh API contains a whole load of different methods, so let's look at them in related groups. We'll start with the simplest!
 
 ### Information.
 
-Informational API methods just return some information about the
-Dotmesh server. They're not all that exciting or useful for most
-people, but they're a good place to start getting to grips with the
-API because of their simplicity.
+Informational API methods just return some information about the Dotmesh server.
+They're not all that exciting or useful for most people, but they're a good place to start getting to grips with the API because of their simplicity.
 
 #### DotmeshRPC.Ping.
 
-Use this to check that the Dotmesh server is alive. It doesn't do
-anything - it just returns the same response, to confirm that, yes,
-the server is running.
+Use this to check that the Dotmesh server is alive.
+It doesn't do anything - it just returns the same response, to confirm that, yes, the server is running.
 
 ##### Request.
 ```json
@@ -127,10 +107,8 @@ the server is running.
 
 #### DotmeshRPC.CurrentUser.
 
-This returns the details of the user making the request. When used on
-your own cluster, it'll just return the details of the admin user,
-which isn't very interesting; but when used on the Hub, it will return
-some more interesting details.
+This returns the details of the user making the request.
+When used on your own cluster, it'll just return the details of the admin user, which isn't very interesting; but when used on the Hub, it will return some more interesting details.
 
 ##### Request.
 ```json
@@ -160,10 +138,8 @@ some more interesting details.
 
 #### DotmeshRPC.Config.
 
-This method returns selected configuration from the Dotmesh
-cluster. (FIXME: I really have no idea how to justify this to
-third-party developers. From what it returns, it looks like it's used
-as part of the stripe integration?)
+This method returns selected configuration from the Dotmesh cluster.
+(FIXME: I really have no idea how to justify this to third-party developers. From what it returns, it looks like it's used as part of the stripe integration?)
 
 ##### Request.
 ```json
@@ -189,9 +165,8 @@ as part of the stripe integration?)
 
 #### DotmeshRPC.Version.
 
-This method returns the version of the Dotmesh server. It's handy for
-checking if the server you're talking to supports some new feature you
-want, or to record the version number for informational purposes.
+This method returns the version of the Dotmesh server.
+It's handy for checking if the server you're talking to supports some new feature you want, or to record the version number for informational purposes.
 
 ##### Request.
 ```json

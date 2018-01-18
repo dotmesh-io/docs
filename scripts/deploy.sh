@@ -7,7 +7,14 @@ set -e
 
 IMAGE="$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/docs:$VERSION"
 
-cat /app/deploy/00-namespace.yaml | envsubst
-cat /app/deploy/ingress.yaml | envsubst
-cat /app/deploy/service.yaml | envsubst
-cat /app/deploy/deployment.yaml | envsubst
+function deploy-manifest() {
+  local filename="$1"
+  echo "running manifest: $filename"
+  cat "/app/$filename" | envsubst
+  cat "/app/$filename" | envsubst | kubectl apply -f
+}
+
+deploy-manifest deploy/00-namespace.yaml
+deploy-manifest deploy/ingress.yaml
+deploy-manifest deploy/service.yaml
+deploy-manifest deploy/deployment.yaml

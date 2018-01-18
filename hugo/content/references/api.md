@@ -34,15 +34,28 @@ API's method/param names to match!
 
 Every node in a Dotmesh cluster exposes the Dotmesh API on port 6969; in a Kubernetes cluster, this is made accessible as a ClusterIP service called "dotmesh" in the "dotmesh" namespace by default, which can be accessed through [the standard Kubernetes service discovery methods](https://kubernetes.io/docs/concepts/services-networking/service/#discovering-services).
 
-All API methods are invoked by making a POST to `http://SERVERNAME:6969/rpc`, with Basic HTTP authentication. To talk to your local cluster, you'll need the `admin` user and the corresponding API key.
-If you created your cluster from the command line with `dm cluster init`, these can be found in the `$HOME/.dotmesh/config` file:
+Our API uses [JSON-RPC](http://www.jsonrpc.org) v2 over HTTP when
+talking to a local cluster, or HTTPS for talking to the Hub. But don't
+worry if you're not familiar with JSON-RPC - we'll explain everything
+with examples below.
+
+### Connecting to your Dotmesh cluster.
+
+All API methods are invoked by making a POST to
+`http://SERVERNAME:6969/rpc`, with Basic HTTP authentication. To talk
+to your local cluster, you'll need the `admin` user and the
+corresponding API key.  If you created your cluster from the command
+line with `dm cluster init`, these can be found in the
+`$HOME/.dotmesh/config` file:
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>cat ~/.dotmesh/config | jq .Remotes.local.ApiKey</kbd>
 "<em>VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD</em>"
 </pre></div>
 
-If your cluster was created purely through Kubernetes, the admin API key can be found in the `dotmesh-api-key.txt` key in the `dotmesh` secret, in the `dotmesh` namespace:
+If your cluster was created purely through Kubernetes, the admin API
+key can be found in the `dotmesh-api-key.txt` key in the `dotmesh`
+secret, in the `dotmesh` namespace:
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>kubectl examine secret dotmesh -n dotmesh -o yaml</kbd>
@@ -62,10 +75,6 @@ type: Opaque
 $ <kbd>echo VlZLR1lDQzNHNEs1RzJRTTNHTElWVEVDVlNCV1dKWkQK | base64 -d</kbd>
 <em>VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD</em>
 </pre></div>
-
-It's also possible to authenticate to the API by submitting a user's password instead of their API key.
-The password is intended for use when users log into administrative interfaces and supply their username and password through a login screen, rather than being stored; API keys are intended to be stored, and can be easily revoked by the user, so most uses of the API should use an API key instead.
-The one exception is API methods to manage the user account, which are explicitly prohibited from use with just an API key, so that a lost API key is not able to permanently compromise an account. These will be discussed below.
 
 Requests must be sent with a `Content-Type` of `application/json`, and comply with the [JSON-RPC v2 specifiation](http://www.jsonrpc.org/specification), like so:
 
@@ -88,9 +97,79 @@ The response will come back in the JSON-RPC v2 response format:
 }
 ```
 
+If there is a problem with your request, you will receive a standard JSON-RPC v2 error, like this:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "error": {
+    "code": -32000,
+    "message": "rpc: can't find method \"DotmeshRPC.AllYourBaseAreBelongToUs\"",
+    "data": null
+  },
+  "id": 6129484611666146000
+}
+```
+
+### Connecting to the Hub.
+
+The same API that you use to control your local Dotmesh cluster is
+used to talk to the Dotmesh Hub. However, some API methods are only
+useful with the Hub, and some are only useful with a local cluster.
+
+When connecting to the Hub, you'll need to know the user's Hub
+username and their API key. They can get their API key by browsing to
+the (FIXME: Where is the page to get your API key?) page.
+
+The URL to send the JSON-RPC POSTs to is `https://hub.dotmesh.io:6969/rpc`.
+
+It's also possible to authenticate to the API by submitting a user's
+password instead of their API key.
+
+The password is intended for use when users log into administrative
+interfaces and supply their username and password through a login
+screen, rather than being stored; API keys are intended to be stored,
+and can be easily revoked by the user, so most uses of the API should
+use an API key instead. See the description of the [`GetApiKey`
+method](#dotmeshrpc-getapikey) for information on this use case.
+
+The one exception is API methods to manage the user account, which are
+explicitly prohibited from use with just an API key, so that a lost
+API key is not able to permanently compromise an account. These will
+be called out as such in the documentation for those API methods.
+
 ## API reference.
 
 The dotmesh API contains a whole load of different methods, so let's look at them in related groups. We'll start with the simplest!
+
+ * Information
+   * [DotmeshRPC.Ping](#dotmeshrpc-ping)
+   * [DotmeshRPC.CurrentUser](#dotmeshrpc-currentuser)
+   * [DotmeshRPC.Version](#dotmeshrpc-version)
+ * User Account Control
+   * [DotmeshRPC.GetApiKey](#dotmeshrpc-getapikey)
+   * [DotmeshRPC.ResetApiKey](#dotmeshrpc-resetapikey)
+   * [DotmeshRPC.AddCollaborator](#dotmeshrpc-addcollaborator)
+ * Dot Management
+   * [DotmeshRPC.Lookup](#dotmeshrpc-lookup)
+   * [DotmeshRPC.Exists](#dotmeshrpc-exists)
+   * [DotmeshRPC.Get](#dotmeshrpc-get)
+   * [DotmeshRPC.List](#dotmeshrpc-list)
+   * [DotmeshRPC.AllVolumesAndClones](#dotmeshrpc-allvolumesandclones)
+   * [DotmeshRPC.Create](#dotmeshrpc-create)
+   * [DotmeshRPC.ContainersById](#dotmeshrpc-containersbyid)
+   * [DotmeshRPC.Containers](#dotmeshrpc-containers)
+   * [DotmeshRPC.SnapshotsById](#dotmeshrpc-snapshotsbyid)
+   * [DotmeshRPC.Snapshots](#dotmeshrpc-snapshots)
+   * [DotmeshRPC.Snapshot](#dotmeshrpc-snapshot)
+   * [DotmeshRPC.Rollback](#dotmeshrpc-rollback)
+   * [DotmeshRPC.Clones](#dotmeshrpc-clones)
+   * [DotmeshRPC.Clone](#dotmeshrpc-clone)
+   * [DotmeshRPC.DeleteVolume](#dotmeshrpc-deletevolume)
+ * Attachment
+   * [DotmeshRPC.Procure](#dotmeshrpc-procure)
+   * [DotmeshRPC.SwitchContainers](#dotmeshrpc-switchcontainers)
+ * Transfers
 
 ### Information.
 

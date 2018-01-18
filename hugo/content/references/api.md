@@ -53,7 +53,9 @@ $ <kbd>cat ~/.dotmesh/config | jq .Remotes.local.ApiKey</kbd>
 "<em>VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD</em>"
 </pre></div>
 
-If your cluster was created purely through Kubernetes, the admin API key can be found in the `dotmesh-api-key.txt` key in the `dotmesh` secret, in the `dotmesh` namespace:
+If your cluster was created purely through Kubernetes, the admin API
+key can be found in the `dotmesh-api-key.txt` key in the `dotmesh`
+secret, in the `dotmesh` namespace:
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>kubectl examine secret dotmesh -n dotmesh -o yaml</kbd>
@@ -73,10 +75,6 @@ type: Opaque
 $ <kbd>echo VlZLR1lDQzNHNEs1RzJRTTNHTElWVEVDVlNCV1dKWkQK | base64 -d</kbd>
 <em>VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD</em>
 </pre></div>
-
-It's also possible to authenticate to the API by submitting a user's password instead of their API key.
-The password is intended for use when users log into administrative interfaces and supply their username and password through a login screen, rather than being stored; API keys are intended to be stored, and can be easily revoked by the user, so most uses of the API should use an API key instead.
-The one exception is API methods to manage the user account, which are explicitly prohibited from use with just an API key, so that a lost API key is not able to permanently compromise an account. These will be discussed below.
 
 Requests must be sent with a `Content-Type` of `application/json`, and comply with the [JSON-RPC v2 specifiation](http://www.jsonrpc.org/specification), like so:
 
@@ -99,15 +97,46 @@ The response will come back in the JSON-RPC v2 response format:
 }
 ```
 
-FIXME: Example of an error.
+If there is a problem with your request, you will receive a standard JSON-RPC v2 error, like this:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "error": {
+    "code": -32000,
+    "message": "rpc: can't find method \"DotmeshRPC.AllYourBaseAreBelongToUs\"",
+    "data": null
+  },
+  "id": 6129484611666146000
+}
+```
 
 ### Connecting to the Hub.
 
-FIXME: Talk about using the API against the Hub.
+The same API that you use to control your local Dotmesh cluster is
+used to talk to the Dotmesh Hub. However, some API methods are only
+useful with the Hub, and some are only useful with a local cluster.
 
-FIXME: Talk about where to get your API key.
+When connecting to the Hub, you'll need to know the user's Hub
+username and their API key. They can get their API key by browsing to
+the (FIXME: Where is the page to get your API key?) page.
 
-FIXME: Largely point out that it's the same as with a local cluster, but different methods make sense, and it's always https://hub.dotmesh.io:6969/rpc
+The URL to send the JSON-RPC POSTs to is `https://hub.dotmesh.io:6969/rpc`.
+
+It's also possible to authenticate to the API by submitting a user's
+password instead of their API key.
+
+The password is intended for use when users log into administrative
+interfaces and supply their username and password through a login
+screen, rather than being stored; API keys are intended to be stored,
+and can be easily revoked by the user, so most uses of the API should
+use an API key instead. See the description of the [`GetApiKey`
+method](#dotmeshrpc-getapikey) for information on this use case.
+
+The one exception is API methods to manage the user account, which are
+explicitly prohibited from use with just an API key, so that a lost
+API key is not able to permanently compromise an account. These will
+be called out as such in the documentation for those API methods.
 
 ## API reference.
 

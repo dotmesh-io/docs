@@ -19,4 +19,5 @@ images:
         - make images
         - make release.build
         - bash scripts/gcloud_docker.sh kubectl get no
+        - bash scripts/gcloud_docker.sh gcloud container clusters list
         #- bash scripts/gcloud_docker.sh bash /app/pushimages.sh

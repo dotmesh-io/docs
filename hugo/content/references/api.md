@@ -5,6 +5,9 @@ synopsis = "Take control of Dotmesh"
 knowledgelevel = ""
 date = 2018-01-17T12:04:35Z
 order = "2"
+[menu]
+  [menu.main]
+    parent = "references"
 +++
 
 Internally, Dotmesh runs as a server on every node in a Dotmesh cluster.

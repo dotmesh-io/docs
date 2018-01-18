@@ -427,7 +427,6 @@ The result has the following keys:
 <dd>A map from the IDs of the nodes that have replicas of this filesystem, with a string summarising the status of the filesystem on that node for each.</dd>
 </dl>
 
-
 #### DotmeshRPC.List.
 
 This method returns a list of available Dots. For each, it also
@@ -591,13 +590,193 @@ ID.
 }
 ```
 
+#### DotmeshRPC.SnapshotsById.
+
+This API method returns a list of snapshots for a given filesystem, by ID.
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.SnapshotsById",
+  "params": "b225158d-a2ac-4738-6d31-9a7dc511aab5",
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": [
+    {
+      "Id": "880fb2c4-24db-4d16-5fc4-974d17525450",
+      "Metadata": {
+        "author": "admin",
+        "message": "A well-written commit message",
+        "timestamp": "1516272712508219206"
+      }
+    }
+  ],
+  "id": 6129484611666146000
+}
+```
+
+As you can see, each commit has its own ID, as well as metadata
+including the username of the author, the message they supplied, and a
+timestamp in UTC nanoseconds since the UNIX epoch.
+
+#### DotmeshRPC.Snapshots.
+
+This method performs exactly the same function as the
+[`SnapshotsById` method](#dotmeshrpc-snapshotsbyid), except that it
+accepts a namespace/name/clone triple and effectively calls the
+[`Lookup` method](#dotmeshrpc-lookup) for you to obtain the filesystem
+ID.
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.Snapshots",
+  "params": {
+    "Namespace": "admin",
+    "TopLevelFilesystemName": "test",
+    "CloneName": ""
+  },
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": [
+    {
+      "Id": "880fb2c4-24db-4d16-5fc4-974d17525450",
+      "Metadata": {
+        "author": "admin",
+        "message": "A well-written commit message",
+        "timestamp": "1516272712508219206"
+      }
+    }
+  ],
+  "id": 6129484611666146000
+}
+```
+#### DotmeshRPC.Snapshot.
+
+This API method triggers a commit on a given filesystem. Rather than
+accepting a filesystem ID, it requires a namespace, dot name, and
+optional clone name; it looks up the filesystem for you. You also need
+to provide a commit message.
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.Snapshot",
+  "params": {
+    "Namespace": "admin",
+    "TopLevelFilesystemName": "test",
+    "CloneName": "",
+    "Message": "A thoughtfully-written and clear commit message"
+  },
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": true,
+  "id": 6129484611666146000
+}
+```
+
+#### DotmeshRPC.Rollback.
+
+This API method reverts the current state of a filesystem back to a
+previous snapshot. Rather than accepting a filesystem ID, it requires
+a namespace, dot name, and optional clone name; it looks up the
+filesystem for you. You also need to provide the ID of the snapshot to
+roll back to, as returned by the [`Snapshots`
+method](#dotmeshrpc-snapshots).
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.Rollback",
+  "params": {
+    "Namespace": "admin",
+    "TopLevelFilesystemName": "test",
+    "CloneName": "",
+    "SnapshotId": "880fb2c4-24db-4d16-5fc4-974d17525450"
+  },
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": true,
+  "id": 6129484611666146000
+}
+```
+
+#### DotmeshRPC.Clones.
+
+This API method returns a list of clones of a given Dot, given the namespace and name of the Dot.
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.Clones",
+  "params": {
+    "Namespace": "admin",
+    "Name": "test"
+  },
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": [
+    "testing_v1",
+    "testing_v2"
+  ],
+  "id": 6129484611666146000
+}
+```
+
+The clone names can be converted into filesystem IDs by passing them
+as the `Clone` parameter to the [`Lookup` method](#dotmeshrpc-lookup),
+with the `Namespace` and `Name` of the Dot. Don't forget that every
+Dot also has a master filesystem ID, obtained by calling `Lookup` with
+an empty `Clone` name, as well as the clones listed by this method.
+
+
 TODO:
 
-func (d *DotmeshRPC) SnapshotsById(
-func (d *DotmeshRPC) Snapshots(
-func (d *DotmeshRPC) Snapshot(
-func (d *DotmeshRPC) Rollback(
-func (d *DotmeshRPC) Clones(r *http.Request, filesystemName *VolumeName, result *[]string) error {
 func (d *DotmeshRPC) Clone(
 func (d *DotmeshRPC) AllVolumesAndClones(
 func (d *DotmeshRPC) DeleteVolume(

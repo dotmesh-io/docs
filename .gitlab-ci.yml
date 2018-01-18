@@ -8,11 +8,6 @@ build_image:
         - fast
     before_script:
         - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
-        - echo $PWD
-        #- sudo rm -rf design/public
-        #- sudo rm -rf hugo/public
     script:
-        - ls -la design
-        - ls -la hugo
-    #    - make images
-    #    - make release.build
+        - make images
+        - make release.build

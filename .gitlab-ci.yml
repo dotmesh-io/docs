@@ -12,6 +12,8 @@ build_image:
         - ls -la hugo/public
         #- sudo rm -rf design/public
         #- sudo rm -rf hugo/public
-    #script:
+    script:
+        - ls -la design/public
+        - ls -la hugo/public
     #    - make images
     #    - make release.build

@@ -17,4 +17,6 @@ docker run --rm ${DOCKER_ARGS} \
   -e GCP_ZONE \
   -e GCP_CLUSTER_ID \
   -e GCLOUD_SERVICE_KEY \
+  -e NAMESPACE \
+  -e HOSTNAME \
   ${GCLOUD_IMAGE} "$@"

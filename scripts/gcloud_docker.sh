@@ -20,7 +20,7 @@ set -e
 export DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export GCLOUD_IMAGE=${GCLOUD_IMAGE:="dotmesh/gcloud"}
 
-docker build -t ${GCLOUD_IMAGE} -f "$DIR/Dockerfile.gcloud" "$DIR"
+docker build -t ${GCLOUD_IMAGE} -f "$DIR/../Dockerfile.gcloud" "$DIR/.."
 docker run --rm ${DOCKER_ARGS} \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v ${DIR}:/app \

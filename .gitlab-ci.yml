@@ -1,0 +1,13 @@
+stages:
+    - build
+
+build_image:
+    stage: build
+    before_script:
+        - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
+    tags:
+        - ubuntu
+        - fast
+    script:
+        - make images
+        - make release.build

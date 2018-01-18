@@ -1,11 +1,11 @@
-VERSION=v0.0.1
+VERSION?=v0.0.1
+BUILDER_IMAGE=dotmeshio/docs-builder
 IMAGE=dotmeshio/docs
-ADDRESS=$(ifconfig en0 | grep inet | grep broadcast | awk '{print $$2}')
 
 .PHONY: images
 images:
-	docker build -t $(IMAGE):$(VERSION) .
-	docker tag $(IMAGE):$(VERSION) $(IMAGE):latest
+	docker build -t $(BUILDER_IMAGE):$(VERSION) .
+	docker tag $(BUILDER_IMAGE):$(VERSION) $(BUILDER_IMAGE):latest
 
 .PHONY: design.build
 design.build:
@@ -13,7 +13,7 @@ design.build:
 		-v $(PWD)/design:/app/design \
 		-v /app/design/node_modules \
 		-w /app/design \
-		$(IMAGE) gulp build
+		$(BUILDER_IMAGE) gulp build
 
 .PHONY: design.icons
 design.icons:
@@ -21,7 +21,7 @@ design.icons:
 		-v $(PWD)/design:/app/design \
 		-v /app/design/node_modules \
 		-w /app/design \
-		$(IMAGE) gulp icons:build
+		$(BUILDER_IMAGE) gulp icons:build
 
 .PHONY: design.watch
 design.watch:
@@ -32,7 +32,7 @@ design.watch:
 		-v /app/design/public \
 		-p 3000:3000 \
 		-w /app/design/public \
-		$(IMAGE) gulp serve
+		$(BUILDER_IMAGE) gulp serve
 
 .PHONY: design.stop
 design.stop:
@@ -52,7 +52,7 @@ hugo.build: design.build design.copy
 	docker run -ti --rm \
 		-v $(PWD)/hugo:/app/hugo \
 		-w /app/hugo \
-		$(IMAGE) hugo -v
+		$(BUILDER_IMAGE) hugo -v
 
 .PHONY: hugo.watch
 hugo.watch: design.build design.copy
@@ -61,8 +61,13 @@ hugo.watch: design.build design.copy
 		-p 1313:1313 \
 		-v $(PWD)/hugo:/app/hugo \
 		-w /app/hugo \
-		$(IMAGE) hugo \
+		$(BUILDER_IMAGE) hugo \
 			server \
 			--buildDrafts \
 			--bind=0.0.0.0 \
 			-v
+
+.PHONY: release.build
+release.build: hugo.build
+	docker build -t $(IMAGE):$(VERSION) -f Dockerfile.nginx .
+	docker tag $(IMAGE):$(VERSION) $(IMAGE):latest

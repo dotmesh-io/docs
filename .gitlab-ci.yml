@@ -38,7 +38,7 @@ deploy_staging:
   before_script:    
     - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
     - export NAMESPACE=docs-stage
-    - export HOSTNAME=dotmesh-docs-stage.wk1.co
+    - export HOSTNAME=stage.docs.dotmesh.io
     - bash scripts/build_gcloud_docker.sh
   script:
     - bash scripts/gcloud_docker.sh bash /app/scripts/deploy.sh
@@ -52,7 +52,7 @@ deploy_production:
   before_script:    
     - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
     - export NAMESPACE=docs
-    - export HOSTNAME=dotmesh-docs.wk1.co
+    - export HOSTNAME=docs.dotmesh.io
     - bash scripts/build_gcloud_docker.sh
   script:
     - bash scripts/gcloud_docker.sh bash /app/scripts/deploy.sh

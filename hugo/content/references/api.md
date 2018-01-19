@@ -170,6 +170,8 @@ The dotmesh API contains a whole load of different methods, so let's look at the
    * [DotmeshRPC.Procure](#dotmeshrpc-procure)
    * [DotmeshRPC.SwitchContainers](#dotmeshrpc-switchcontainers)
  * Transfers
+    * [DotmeshRPC.Transfer](#dotmeshrpc-transfer)
+    * [DotmeshRPC.GetTransfer](#dotmeshrpc-gettransfer)
 
 ### Information.
 

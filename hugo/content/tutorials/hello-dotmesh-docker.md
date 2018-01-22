@@ -10,5 +10,9 @@ order = "1"
     parent = "tutorials"
 +++
 
+## Installing Dotmesh
 
+* First, [Install Dotmesh](/install-setup/docker/).
+  Requires Ubuntu or Mac, if you don't have these platforms then [Try the hosted demo](TODO link to Katacoda).
 
+##

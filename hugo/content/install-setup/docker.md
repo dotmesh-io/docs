@@ -44,7 +44,7 @@ Verify that the `dm` client can talk to the `dotmesh-server`:
 dm list
 ```
 
-If the installation fails, please [report an issue](https://github.com/dotmesh-io/dotmesh).
+If the installation fails, please [report an issue](https://github.com/dotmesh-io/dotmesh). (TODO: `dm diagnostics`?)
 Thanks!
 
 ## What's next?
@@ -53,13 +53,13 @@ Now that you've got `dm` installed on Docker, the Docker integration will work a
 
 Take it for a spin with the [Basic Docker demo](/tutorials/basic-docker/) (TODO: ensure link works).
 
-## Clustering
+## See also
+
+* [Clustering Dotmesh](TODO, start with content below)
 
 If you want your [Datadots](/concepts/what-is/) to be available automatically across multiple machines, you can join more nodes to the one-node cluster you just created using [`dm cluster join`](/references/cli/#join) (TODO: ensure link works).
 
 You can also deploy [Dotmesh on Kubernetes](TODO) with a DaemonSet so that it automatically gets installed on all the machines in your cluster.
-
-## See also
 
 * [Supported Docker versions](TODO)
 * [Supported Linux Distributions](TODO)

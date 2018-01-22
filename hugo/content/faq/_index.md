@@ -36,3 +36,14 @@ XXX not sure if we should keep this next one, Alaric WDYT?
 DotOps describes the new workflows that are enabled by using Dotmesh in your software development lifecycle, such as sharing dots with colleagues to debug problem states, or pushing dots from CI when a test fails.
 
 DotOps is complementary with [GitOps](https://www.weave.works/blog/gitops-operations-by-pull-request).
+
+## What do you encrypt?
+
+We encrypt your password (but not your API keys) in the Dothub using [scrypt](https://godoc.org/golang.org/x/crypto/scrypt).
+We encrypt data pushed to and pulled from the Dothub using TLS. (TODO: ensure this is true.)
+
+Currently, we do not encrypt pushes and pulls between OSS clusters. (TODO: link to issue for this.)
+
+We do not currently encrypt your volumes on disk.
+
+Please [open an issue](https://github.com/dotmesh-io/dotmesh/issues/new) or give us feedback on Slack if you're interested in these features!

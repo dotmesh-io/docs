@@ -1,7 +1,7 @@
 +++
 draft = false
 title = "Concepts"
-synopsis = "What is a Datadot? Dotmesh Architecture."
+synopsis = "What is Dotmesh for? What is a Datadot? Dotmesh Architecture."
 knowledgelevel = ""
 date = 2017-12-19T15:02:07Z
 order = "2"

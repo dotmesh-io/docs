@@ -1,7 +1,7 @@
 +++
 draft = false
 title = "Tutorials"
-synopsis = "Detailed Workflow Walkthroughs."
+synopsis = "Example Workflow Walkthroughs."
 knowledgelevel = ""
 date = 2017-12-19T15:02:07Z
 order = "4"

@@ -17,19 +17,6 @@ Most operations can be performed on any node in the cluster, and will automatica
 The only exceptions are API calls that mount a volume from a dot, which will cause that mount to happen on the node that receives the API call.
 You need to ensure that you choose the most appropriate node to mount the volume on!
 
-## Terminology.
-
-FIXME: This is the terminology as currently used here, to sort of
-coincide with how the API names things, although that's terribly
-variable.
-
-We have Dots in Namespaces. Each Dot has a Master Filesystem, and
-possibly Clones, which are another kind of Filesystem. Filesystems
-have Commits.
-
-We need to bring this into line with the glossary, and update the
-API's method/param names to match!
-
 ## Basics.
 
 Every node in a Dotmesh cluster exposes the Dotmesh API on port 6969; in a Kubernetes cluster, this is made accessible as a ClusterIP service called "dotmesh" in the "dotmesh" namespace by default, which can be accessed through [the standard Kubernetes service discovery methods](https://kubernetes.io/docs/concepts/services-networking/service/#discovering-services).
@@ -155,7 +142,7 @@ The dotmesh API contains a whole load of different methods, so let's look at the
    * [DotmeshRPC.Exists](#dotmeshrpc-exists)
    * [DotmeshRPC.Get](#dotmeshrpc-get)
    * [DotmeshRPC.List](#dotmeshrpc-list)
-   * [DotmeshRPC.AllVolumesAndClones](#dotmeshrpc-allvolumesandclones)
+   * [DotmeshRPC.AllDotsAndBranches](#dotmeshrpc-alldotsandbranches)
    * [DotmeshRPC.Create](#dotmeshrpc-create)
    * [DotmeshRPC.ContainersById](#dotmeshrpc-containersbyid)
    * [DotmeshRPC.Containers](#dotmeshrpc-containers)
@@ -163,9 +150,9 @@ The dotmesh API contains a whole load of different methods, so let's look at the
    * [DotmeshRPC.Snapshots](#dotmeshrpc-snapshots)
    * [DotmeshRPC.Snapshot](#dotmeshrpc-snapshot)
    * [DotmeshRPC.Rollback](#dotmeshrpc-rollback)
-   * [DotmeshRPC.Clones](#dotmeshrpc-clones)
-   * [DotmeshRPC.Clone](#dotmeshrpc-clone)
-   * [DotmeshRPC.DeleteVolume](#dotmeshrpc-deletevolume)
+   * [DotmeshRPC.Branches](#dotmeshrpc-branchs)
+   * [DotmeshRPC.Branch](#dotmeshrpc-branch)
+   * [DotmeshRPC.Delete](#dotmeshrpc-delete)
  * Attachment
    * [DotmeshRPC.Procure](#dotmeshrpc-procure)
    * [DotmeshRPC.SwitchContainers](#dotmeshrpc-switchcontainers)
@@ -338,8 +325,8 @@ password!
 
 This API method on the Dotmesh Hub adds another user as a collaborator
 onto a dot you own (the calling user *must* be the owner of the dot,
-not a collaborator). To call it, you need the ID of the master
-filesystem of the Dot, not its name; see [the `Lookup`
+not a collaborator). To call it, you need the ID of the master branch
+of the Dot, not its name; see [the `Lookup`
 method](#dotmeshrpc-lookup) for a way to convert a name into an ID.
 
 ##### Request.
@@ -349,7 +336,7 @@ method](#dotmeshrpc-lookup) for a way to convert a name into an ID.
   "jsonrpc": "2.0",
   "method": "DotmeshRPC.AddCollaborator",
   "params": {
-    "Volume": "b225158d-a2ac-4738-6d31-9a7dc511aab5",
+    "MasterBranchID": "b225158d-a2ac-4738-6d31-9a7dc511aab5",
     "Collaborator": "alice"
   },
   "id": 6129484611666146000
@@ -381,16 +368,13 @@ Collaborator](#dotmeshrpc-addcollaborator).
 
 #### DotmeshRPC.Lookup.
 
-This API method simply takes a dot name, and optionally also a clone
-name, and converts it to a filesystem ID. If no clone name is given,
-it returns the master filesystem ID of the dot, which is the ID of the
-dot itself; however, if a clone name is given, you just get the
-filesystem ID of the clone, which is different to the master
-filesystem ID.
+This API method simply takes a dot name, and optionally also a branch
+name, and converts it to a branch ID. If no branch name is given, it
+returns the master branch ID of the dot.
 
 ##### Request.
 
-On a local cluster, let's look up master filesystem ID of the `test` dot.
+On a local cluster, let's look up master branch ID of the `test` dot.
 
 ```json
 {
@@ -398,8 +382,8 @@ On a local cluster, let's look up master filesystem ID of the `test` dot.
   "method": "DotmeshRPC.Lookup",
   "params": {
     "Namespace": "admin",
-    "TopLevelFilesystemName": "test",
-    "CloneName": ""
+    "Name": "test",
+    "Branch": ""
   },
   "id": 6129484611666146000
 }
@@ -419,10 +403,10 @@ On a local cluster, let's look up master filesystem ID of the `test` dot.
 
 Although perhaps seemingly redundant given the [`Lookup`
 method](#dotmeshrpc-lookup), this method simply checks if a given dot
-(and, optionally, a specific clone of a dot) exists. If it does, it
-returns the filesystem ID, just like `Lookup`; however, if it doesn't
+(and, optionally, a specific branch of a dot) exists. If it does, it
+returns the branch ID, just like `Lookup`; however, if it doesn't
 exist, it just returns an empty string rather than an error. This
-makes it handy for cases where non-existance of the dot/clone isn't an
+makes it handy for cases where non-existance of the dot/branch isn't an
 error, to save you from having to convert an error back into a valid
 value.
 
@@ -434,8 +418,8 @@ value.
   "method": "DotmeshRPC.Exists",
   "params": {
     "Namespace": "admin",
-    "TopLevelFilesystemName": "non-existant-name",
-    "CloneName": ""
+    "Name": "non-existant-name",
+    "Branch": ""
   },
   "id": 6129484611666146000
 }
@@ -453,8 +437,8 @@ value.
 
 #### DotmeshRPC.Get.
 
-This method takes a filesystem ID and returns information about that
-filesystem. We'll go through everything returned in the Response
+This method takes a branch ID and returns information about that
+branch. We'll go through everything returned in the Response
 section below.
 
 ##### Request.
@@ -479,7 +463,7 @@ section below.
       "Namespace": "admin",
       "Name": "test"
     },
-    "Clone": "",
+    "Branch": "",
     "Master": "504954d09db78174",
     "SizeBytes": 19456,
     "DirtyBytes": 19456,
@@ -497,40 +481,40 @@ The result has the following keys:
 <dl>
 
 <dt><code>Id</code>.</dt>
-<dd>This is just the filesystem ID, exactly as you provided in the request.</dd>
+<dd>This is just the branch ID, exactly as you provided in the request.</dd>
 
 <dt><code>Name</code>.</dt>
-<dd>This is the namespace and name of the Dot containing this filesystem.</dd>
+<dd>This is the namespace and name of the Dot containing this branch.</dd>
 
-<dt><code>Clone</code>.</dt>
-<dd>If this is the master filesystem of the Dot, then `Clone` is an empty string. However, if we're dealing with a clone, `Clone` will be its name.</dd>
+<dt><code>Branch</code>.</dt>
+<dd>If this is the master branch of the Dot, then `Branch` is an empty string. However, if we're dealing with a non-master branch, `Branch` will be its name.</dd>
 
 <dt><code>Master</code>.</dt>
-<dd>This is the ID of the node that's currently holding the live copy of this filesystem. Only that node may directly mount the filesystem into a container.</dd>
+<dd>This is the ID of the node that's currently holding the live copy of this branch. Only that node may directly mount the branch into a container.</dd>
 
 <dt><code>SizeBytes</code>.</dt>
-<dd>The size of the filesystem, in bytes.</dd>
+<dd>The size of the branch, in bytes.</dd>
 
 <dt><code>DirtyBytes</code>.</dt>
-<dd>How much data has changed since the last commit (or creation) of this filesystem, in bytes.</dd>
+<dd>How much data has changed since the last commit (or creation) of this branch, in bytes.</dd>
 
 <dt><code>CommitCount</code>.</dt>
-<dd>How many commits have happened on this filesystem since its creation.</dd>
+<dd>How many commits have happened on this branch since its creation.</dd>
 
 <dt><code>ServerStatuses</code>.</dt>
-<dd>A map from the IDs of the nodes that have replicas of this filesystem, with a string summarising the status of the filesystem on that node for each.</dd>
+<dd>A map from the IDs of the nodes that have replicas of this branch, with a string summarising the status of the branch on that node for each.</dd>
 </dl>
 
 #### DotmeshRPC.List.
 
 This method returns a list of available Dots. For each, it also
-returns the ID of the currently selected filesystem for that Dot, and
+returns the ID of the currently selected branch for that Dot, and
 the result of calling the [`Get` method](#dotmeshrpc-get) on it.
 
-If you want the details of the master filesystem for each Dot, you're
+If you want the details of the master branch for each Dot, you're
 going to need to spot the Dots that have a non-empty string for their
-`Clone` key and call the [`Lookup` method](#dotmeshrpc-lookup) on the
-name without a `Clone` to get the master filesystem ID, then call the
+`Branch` key and call the [`Lookup` method](#dotmeshrpc-lookup) on the
+name without a `Branch` to get the master branch ID, then call the
 [`Get` method](#dotmeshrpc-get) to find the details.
 
 ##### Request.
@@ -557,7 +541,7 @@ name without a `Clone` to get the master filesystem ID, then call the
           "Namespace": "admin",
           "Name": "test"
         },
-        "Clone": "",
+        "Branch": "",
         "Master": "504954d09db78174",
         "SizeBytes": 19456,
         "DirtyBytes": 19456,
@@ -577,9 +561,9 @@ be `admin` for a local cluster. Within that key is an object with a
 key per Dot, the contents of which is as per the result of the [`Get`
 method](#dotmeshrpc-get).
 
-#### DotmeshRPC.AllVolumesAndClones.
+#### DotmeshRPC.AllDotsAndBranches.
 
-This API method returns a list of all the Dots and their clones, along
+This API method returns a list of all the Dots and their branches, along
 with lots of useful information.
 
 ##### Request.
@@ -587,7 +571,7 @@ with lots of useful information.
 ```json
 {
   "jsonrpc": "2.0",
-  "method": "DotmeshRPC.AllVolumesAndClones",
+  "method": "DotmeshRPC.AllDotsAndBranches",
   "params": {},
   "id": 6129484611666146000
 }
@@ -599,15 +583,15 @@ with lots of useful information.
 {
   "jsonrpc": "2.0",
   "result": {
-    "Volumes": [
+    "Dots": [
       {
-        "TopLevelVolume": {
+        "MasterBranch": {
           "Id": "1b950a95-cfc7-4ffc-40e3-e7ac5b2461d0",
           "Name": {
             "Namespace": "admin",
             "Name": "telescopes"
           },
-          "Clone": "",
+          "Branch": "",
           "Master": "504954d09db78174",
           "SizeBytes": 19456,
           "DirtyBytes": 19456,
@@ -616,7 +600,7 @@ with lots of useful information.
             "504954d09db78174": "active: waiting, 0 snaps (v880)"
           }
         },
-        "CloneVolumes": null,
+        "OtherBranches": null,
         "Owner": {
           "Id": "00000000-0000-0000-0000-000000000000",
           "Name": "admin",
@@ -628,13 +612,13 @@ with lots of useful information.
         "Collaborators": []
       },
       {
-        "TopLevelVolume": {
+        "MasterBranch": {
           "Id": "b225158d-a2ac-4738-6d31-9a7dc511aab5",
           "Name": {
             "Namespace": "admin",
             "Name": "test"
           },
-          "Clone": "",
+          "Branch": "",
           "Master": "504954d09db78174",
           "SizeBytes": 20480,
           "DirtyBytes": 0,
@@ -643,14 +627,14 @@ with lots of useful information.
             "504954d09db78174": "active: waiting, 1 snaps (v1200)"
           }
         },
-        "CloneVolumes": [
+        "OtherBranches": [
           {
             "Id": "e1a9c58a-d80e-40c9-6474-e502cf6e79fa",
             "Name": {
               "Namespace": "admin",
               "Name": "test"
             },
-            "Clone": "potatoes",
+            "Branch": "potatoes",
             "Master": "504954d09db78174",
             "SizeBytes": 1024,
             "DirtyBytes": 19456,
@@ -665,7 +649,7 @@ with lots of useful information.
               "Namespace": "admin",
               "Name": "test"
             },
-            "Clone": "testing_v2",
+            "Branch": "testing_v2",
             "Master": "504954d09db78174",
             "SizeBytes": 1024,
             "DirtyBytes": 19456,
@@ -740,13 +724,13 @@ Each Dot's information is given as a JSON object with the following keys:
 
 <dl>
 
-<dt><code>TopLevelVolume</code>.</dt>
+<dt><code>MasterBranch</code>.</dt>
 
-<dd>This JSON object contains the details of the master filesystem of the Dot, as returned by the [`Get` method](#dotmeshrpc-get).</dd>
+<dd>This JSON object contains the details of the master branch of the Dot, as returned by the [`Get` method](#dotmeshrpc-get).</dd>
 
-<dt><code>CloneVolumes</code>.</dt>
+<dt><code>OtherBranches</code>.</dt>
 
-<dd>This is an array of JSON objects, one for each clone filesystem of the Dot, in the same format.</dd>
+<dd>This is an array of JSON objects, one for each non-master branch of the Dot, in the same format.</dd>
 
 <dt><code>Owner</code>.</dt>
 
@@ -760,7 +744,7 @@ Each Dot's information is given as a JSON object with the following keys:
 
 #### DotmeshRPC.Create.
 
-This method creates a new Dot, containing an empty filesystem.
+This method creates a new Dot, containing an empty master branch.
 
 ##### Request.
 
@@ -786,13 +770,13 @@ This method creates a new Dot, containing an empty filesystem.
 }
 ```
 
-The master filesystem ID isn't returned, so you'll need to call the
+The master branch ID isn't returned, so you'll need to call the
 [`Lookup` method](#dotmeshrpc-lookup) if you need it.
 
 #### DotmeshRPC.ContainersById.
 
 This method returns a list of containers that are currently using the
-specified filesystem (given the filesystem's ID).
+specified branch (given the branch's ID).
 
 ##### Request.
 
@@ -831,8 +815,8 @@ $ <kbd>docker ps --format '{{.ID}}  {{.Names}}'</kbd>
 
 This method performs exactly the same function as the
 [`ContainersById` method](#dotmeshrpc-containersbyid), except that it
-accepts a namespace/name/clone triple and effectively calls the
-[`Lookup` method](#dotmeshrpc-lookup) for you to obtain the filesystem
+accepts a namespace/name/branch triple and effectively calls the
+[`Lookup` method](#dotmeshrpc-lookup) for you to obtain the branch
 ID.
 
 ##### Request.
@@ -843,8 +827,8 @@ ID.
   "method": "DotmeshRPC.Containers",
   "params": {
     "Namespace": "admin",
-    "TopLevelFilesystemName": "test",
-    "CloneName": ""
+    "Name": "test",
+    "Branch": ""
   },
   "id": 6129484611666146000
 }
@@ -865,16 +849,16 @@ ID.
 }
 ```
 
-#### DotmeshRPC.SnapshotsById.
+#### DotmeshRPC.CommitsById.
 
-This API method returns a list of snapshots for a given filesystem, by ID.
+This API method returns a list of commits for a given branch, by ID.
 
 ##### Request.
 
 ```json
 {
   "jsonrpc": "2.0",
-  "method": "DotmeshRPC.SnapshotsById",
+  "method": "DotmeshRPC.CommitsById",
   "params": "b225158d-a2ac-4738-6d31-9a7dc511aab5",
   "id": 6129484611666146000
 }
@@ -903,12 +887,12 @@ As you can see, each commit has its own ID, as well as metadata
 including the username of the author, the message they supplied, and a
 timestamp in UTC nanoseconds since the UNIX epoch.
 
-#### DotmeshRPC.Snapshots.
+#### DotmeshRPC.Commits.
 
 This method performs exactly the same function as the
-[`SnapshotsById` method](#dotmeshrpc-snapshotsbyid), except that it
-accepts a namespace/name/clone triple and effectively calls the
-[`Lookup` method](#dotmeshrpc-lookup) for you to obtain the filesystem
+[`CommitsById` method](#dotmeshrpc-commitsbyid), except that it
+accepts a namespace/name/branch triple and effectively calls the
+[`Lookup` method](#dotmeshrpc-lookup) for you to obtain the branch
 ID.
 
 ##### Request.
@@ -916,11 +900,11 @@ ID.
 ```json
 {
   "jsonrpc": "2.0",
-  "method": "DotmeshRPC.Snapshots",
+  "method": "DotmeshRPC.Commits",
   "params": {
     "Namespace": "admin",
-    "TopLevelFilesystemName": "test",
-    "CloneName": ""
+    "Name": "test",
+    "Branch": ""
   },
   "id": 6129484611666146000
 }
@@ -944,11 +928,11 @@ ID.
   "id": 6129484611666146000
 }
 ```
-#### DotmeshRPC.Snapshot.
+#### DotmeshRPC.Commit.
 
-This API method triggers a commit on a given filesystem. Rather than
-accepting a filesystem ID, it requires a namespace, dot name, and
-optional clone name; it looks up the filesystem for you. You also need
+This API method triggers a commit on a given branch. Rather than
+accepting a branch ID, it requires a namespace, dot name, and
+optional branch name; it looks up the branch for you. You also need
 to provide a commit message.
 
 ##### Request.
@@ -956,11 +940,11 @@ to provide a commit message.
 ```json
 {
   "jsonrpc": "2.0",
-  "method": "DotmeshRPC.Snapshot",
+  "method": "DotmeshRPC.Commit",
   "params": {
     "Namespace": "admin",
-    "TopLevelFilesystemName": "test",
-    "CloneName": "",
+    "Name": "test",
+    "Branch": "",
     "Message": "A thoughtfully-written and clear commit message"
   },
   "id": 6129484611666146000
@@ -979,12 +963,12 @@ to provide a commit message.
 
 #### DotmeshRPC.Rollback.
 
-This API method reverts the current state of a filesystem back to a
-previous snapshot. Rather than accepting a filesystem ID, it requires
-a namespace, dot name, and optional clone name; it looks up the
-filesystem for you. You also need to provide the ID of the snapshot to
-roll back to, as returned by the [`Snapshots`
-method](#dotmeshrpc-snapshots).
+This API method reverts the current state of a branch back to a
+previous commit. Rather than accepting a branch ID, it requires
+a namespace, dot name, and optional branch name; it looks up the
+branch for you. You also need to provide the ID of the commit to
+roll back to, as returned by the [`Commits`
+method](#dotmeshrpc-commits).
 
 ##### Request.
 
@@ -994,8 +978,8 @@ method](#dotmeshrpc-snapshots).
   "method": "DotmeshRPC.Rollback",
   "params": {
     "Namespace": "admin",
-    "TopLevelFilesystemName": "test",
-    "CloneName": "",
+    "Name": "test",
+    "Branch": "",
     "SnapshotId": "880fb2c4-24db-4d16-5fc4-974d17525450"
   },
   "id": 6129484611666146000
@@ -1012,16 +996,16 @@ method](#dotmeshrpc-snapshots).
 }
 ```
 
-#### DotmeshRPC.Clones.
+#### DotmeshRPC.Branches.
 
-This API method returns a list of clones of a given Dot, given the namespace and name of the Dot.
+This API method returns a list of branches of a given Dot, given the namespace and name of the Dot.
 
 ##### Request.
 
 ```json
 {
   "jsonrpc": "2.0",
-  "method": "DotmeshRPC.Clones",
+  "method": "DotmeshRPC.Branches",
   "params": {
     "Namespace": "admin",
     "Name": "test"
@@ -1043,36 +1027,36 @@ This API method returns a list of clones of a given Dot, given the namespace and
 }
 ```
 
-The clone names can be converted into filesystem IDs by passing them
-as the `Clone` parameter to the [`Lookup` method](#dotmeshrpc-lookup),
+The branch names can be converted into branch IDs by passing them
+as the `Branch` parameter to the [`Lookup` method](#dotmeshrpc-lookup),
 with the `Namespace` and `Name` of the Dot. Don't forget that every
-Dot also has a master filesystem ID, obtained by calling `Lookup` with
-an empty `Clone` name, as well as the clones listed by this method.
+Dot also has a master branch ID, obtained by calling `Lookup` with
+an empty `Branch` name, as well as the branches listed by this method.
 
-#### DotmeshRPC.Clone.
+#### DotmeshRPC.Branch.
 
-This API method creates a new clone for a givne Dot, starting with an
-existing commit of an existing clone. If you want to create a new
-clone from the master filesystem of the Dot, you need to specify
+This API method creates a new branch for a given Dot, starting with an
+existing commit of an existing branch. If you want to create a new
+branch from the master branch of the Dot, you need to specify
 `master` as the `SourceBranch` parameter; otherwise, you must specify
-the name of the clone.
+the name of the branch.
 
 ##### Request.
 
-In this example, we create a clone called `testing_v2` from one of the
-snapshots on the master filesystem we saw in the result from our
-example call to the [`Snapshots` method](#dotmeshrpc-snapshots).
+In this example, we create a branch called `testing_v2` from one of the
+snapshots on the master branch we saw in the result from our
+example call to the [`Commits` method](#dotmeshrpc-commits).
 
 ```json
 {
   "jsonrpc": "2.0",
-  "method": "DotmeshRPC.Clone",
+  "method": "DotmeshRPC.Branch",
   "params": {
     "Namespace": "admin",
-    "Volume": "test",
+    "Name": "test",
     "SourceBranch": "master",
     "NewBranchName": "testing_v2",
-    "SourceSnapshotId": "880fb2c4-24db-4d16-5fc4-974d17525450"
+    "SourceCommitId": "880fb2c4-24db-4d16-5fc4-974d17525450"
   },
   "id": 6129484611666146000
 }
@@ -1088,7 +1072,7 @@ example call to the [`Snapshots` method](#dotmeshrpc-snapshots).
 }
 ```
 
-#### DotmeshRPC.DeleteVolume.
+#### DotmeshRPC.Delete.
 
 This API method deletes a dot. There's no undo, so please don't call
 it unless you mean it. You need to provide the namespace and name of
@@ -1099,7 +1083,7 @@ the dot.
 ```json
 {
   "jsonrpc": "2.0",
-  "method": "DotmeshRPC.DeleteVolume",
+  "method": "DotmeshRPC.Delete",
   "params": {
     "Namespace": "admin",
     "Name": "unwanted_things"
@@ -1124,7 +1108,11 @@ The attachment API methods relate to the attaching of volumes to
 containers. Actually attaching a volume to a container can only be
 done through the specialised Docker and Kubernetes integrations,
 rather than this API; these API functions are *related* to attachment
-rather than actually *doing* attachment.
+rather than actually *performing* attachment.
+
+A "volume" is an actual filesystem made available to a container; it
+consists of a particular Subdot of a particular Branch of a particular
+Dot.
 
 #### DotmeshRPC.Procure.
 
@@ -1134,12 +1122,12 @@ and returns the host path where the given Subdot of the Dot's current
 branch (or a specific branch, if requested) is mounted.
 
 The default Subdot is called `__default__`; use that for the
-`Subvolume` parameter unless the user specifies otherwise. Sending the
-empty string as `Subvolume` will cause the root of the `Dot` to be
+`Subdot` parameter unless the user specifies otherwise. Sending the
+empty string as `Subdot` will cause the root of the Dot to be
 mounted, which is conventionally what should happen if the user
 specifies `__root__` as the Subdot name.
 
-Normally, this API method will return a host path to the currently selected filesystem of the Dot, as selected by the [`SwitchContainers` method](#dotmeshrpc-switchcontainers); if that method has never been invoked, then this will be the master filesystem. However, any filesystem may be selected by specifying a `Name` of the form `NAME@CLONE`, eg `test@testing_v1`; the clone name `master` may be used to request the master filesystem of the Dot.
+Normally, this API method will return a host path to the currently selected branch of the Dot, as selected by the [`SwitchContainers` method](#dotmeshrpc-switchcontainers); if that method has never been invoked, then this will be the master branch. However, any branch may be selected by specifying a `Name` of the form `NAME@BRANCH`, eg `test@testing_v1`; the branch name `master` may be used to request the master branch of the Dot.
 
 ##### Request.
 
@@ -1148,11 +1136,9 @@ Normally, this API method will return a host path to the currently selected file
   "jsonrpc": "2.0",
   "method": "DotmeshRPC.Procure",
   "params": {
-    "Volume": {
-      "Namespace": "admin",
-      "Name": "test@testing_v1"
-    },
-    "Subvolume": "__default__"
+    "Namespace": "admin",
+    "Name": "test@testing_v1"
+    "Subdot": "__default__"
   },
   "id": 6129484611666146000
 }
@@ -1170,10 +1156,10 @@ Normally, this API method will return a host path to the currently selected file
 
 #### DotmeshRPC.SwitchContainers.
 
-This API method changes the default clone for the given Dot. This
+This API method changes the default branch for the given Dot. This
 means that future calls to Procure, or attachments via the Docker or
-Kubernetes integrations, that *do not* specify an explicit clone name
-with the `NAME@CLONE` syntax, will henceforth use the specified clone
+Kubernetes integrations, that *do not* specify an explicit branch name
+with the `NAME@BRANCH` syntax, will henceforth use the specified branch
 rather than the original default of `master`.
 
 In addition, any existing Docker containers using the default will be
@@ -1182,18 +1168,14 @@ called.
 
 ##### Request.
 
-The `CurrentCloneName` parameter is reserved for future use. Please
-leave it blank for now.
-
 ```json
 {
   "jsonrpc": "2.0",
   "method": "DotmeshRPC.SwitchContainers",
   "params": {
     "Namespace": "admin",
-    "TopLevelFilesystemName": "test",
-    "CurrentCloneName": "",
-    "NewCloneName": "testing_v2"
+    "Name": "test",
+    "NewBranchName": "testing_v2"
   },
   "id": 6129484611666146000
 }
@@ -1231,12 +1213,12 @@ a node in the remote cluster, plus a username and an API key for that cluster.
     "ApiKey": "MYRJNBIKDMT7OCAZYEHM2YITDS4TK3EY",
     "Direction": "push",
     "LocalNamespace": "admin",
-    "LocalFilesystemName": "volume_1",
-    "LocalCloneName": "",
+    "LocalName": "volume_1",
+    "LocalBranchName": "",
     "RemoteNamespace": "admin",
-    "RemoteFilesystemName": "volume_1",
-    "RemoteCloneName": "",
-    "TargetSnapshot": ""
+    "RemoteName": "volume_1",
+    "RemoteBranchName": "",
+    "TargetCommit": ""
   },
   "id": 5577006791947779000
 }
@@ -1259,24 +1241,24 @@ we do the secure connectivity!</dd>
 
 <dd>This should either be `"push"` or `"pull"`. You may not be
 surprised to find out that `"push"` causes the cluster you send the
-API request to to transfer a filesystem to the remote cluster, and that
-`"pull"` causes it to request a filesystem from the remote cluster.</dd>
+API request to to transfer a branch to the remote cluster, and that
+`"pull"` causes it to request a branch from the remote cluster.</dd>
 
 <dt><code>LocalNamespace</code>.</dt>
-<dt><code>LocalFilesystemName</code>.</dt>
-<dt><code>LocalCloneName</code>.</dt>
+<dt><code>LocalName</code>.</dt>
+<dt><code>LocalBranchName</code>.</dt>
 
-<dd>These identify the filesystem on the local cluster - which may be
+<dd>These identify the branch on the local cluster - which may be
 the source or target, depending on the `Direction`!</dd>
 
 <dt><code>RmoteNamespace</code>.</dt>
-<dt><code>RemoteFilesystemName</code>.</dt>
-<dt><code>RemoteCloneName</code>.</dt>
+<dt><code>RemoteName</code>.</dt>
+<dt><code>RemoteBranchName</code>.</dt>
 
-<dd>These identify the filesystem on the remote cluster - which also may be
+<dd>These identify the branch on the remote cluster - which also may be
 the source or target, depending on the `Direction`!</dd>
 
-<dt><code>TargetSnapshot</code>.</dt>
+<dt><code>TargetCommit</code>.</dt>
 
 <dd>This is reserved for future use. Leave it as an empty string for now.</dd>
 
@@ -1324,16 +1306,16 @@ transfer ID returned by `Transfer`.
     "ApiKey": "MYRJNBIKDMT7OCAZYEHM2YITDS4TK3EY",
     "Direction": "push",
     "LocalNamespace": "admin",
-    "LocalFilesystemName": "volume_1",
-    "LocalCloneName": "",
+    "LocalName": "volume_1",
+    "LocalBranchName": "",
     "RemoteNamespace": "admin",
-    "RemoteFilesystemName": "volume_1",
-    "RemoteCloneName": "",
+    "RemoteName": "volume_1",
+    "RemoteBranchName": "",
     "FilesystemId": "3d55917d-a742-4afa-57ec-207fd589da3c",
     "InitiatorNodeId": "cc35b6b4c2edbd4d",
     "PeerNodeId": "",
-    "StartingSnapshot": "START",
-    "TargetSnapshot": "b0af7015-9a01-497e-6249-8cf973fb3bd2",
+    "StartingCommit": "START",
+    "TargetCommit": "b0af7015-9a01-497e-6249-8cf973fb3bd2",
     "Index": 1,
     "Total": 1,
     "Status": "finished",

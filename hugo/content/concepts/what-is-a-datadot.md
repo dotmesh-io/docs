@@ -50,7 +50,7 @@ dm switch myapp
 And then creating a new commit:
 
 ```bash
-dm commit -m "Empty state."
+dm commit -m "empty state"
 ```
 
 This creates a commit: a point-in-time snapshot of the state of the filesystem on the current branch for the current dot.
@@ -60,28 +60,45 @@ Suppose PostgreSQL then writes some data to the docker volume.
 You can then create another commit with:
 
 ```bash
-dm commit -m "Here is some data."
+dm commit -m "some data"
 ```
 
-TODO diagram
+There will then be two commits, frozen point-in-time snapshots, that were created from the state of the `master` branch at the point in time when they were created:
 
-You can then roll back to the first commit with:
+<img src="/hugo/what-is-a-datadot-02-myapp-commits.png" alt="two commits on the master branch" style="width: 80%;" />
+
+You can confirm this in the output of:
+
+```bash
+dm log
+```
+
+```plain
+TODO: capture dm log output
+```
+
+### Consistency
+
+Commits are made immediately and atomically: they are "consistent snapshots" in the sense used [in the PostgreSQL documentation](https://www.postgresql.org/docs/current/static/backup-file.html).
+
+It's safe to create a commit while a database is running as long as the database supports recovering from a crash.
+
+### Rollback
+
+Given the example above, you can roll back to the first commit with:
 
 ```bash
 dm reset --hard HEAD^
 ```
 
+Note that rolling back stops the containers using a branch before the rollback, and starts them again afterwards.
+Otherwise, the database would be confused by its data directory changing "under its feet".
 
-### Consistency
-
-Commits are made immediately and atomically: they are "consistent snapshots" in the sense used [here](https://www.postgresql.org/docs/current/static/backup-file.html).
-
-It's safe to create a commit while a database is running as long as the database supports recovering from a crash.
-Rolling back to or recovering from a commit will work on the same basis.
+Note also that a rollback is *destructive* -- the commits after the commit that is rolled back to are irretrievably destroyed.
 
 ## Subdots
 
-Microservices applications often have more than one stateful component, e.g. database, cache or queue.
+Microservices applications often have more than one stateful component, e.g. databases, caches and queues.
 A datadot can capture all of those states in a single, atomic and consistent commit.
 
 A datadot might be named with your application:
@@ -96,10 +113,11 @@ A `.` character is used to separated the dot name from the subdot name.
 * `myapp.orders-db`
 * `myapp.catalog-db`
 
-Commits and branches apply to the _entire_ datadot, not specific subdots.
-This means that your datadots can represent the state of your _entire application_, not it just the individual data services.
+Commits and branches of a datadot apply to the _entire_ datadot, not specific subdots.
+This means that your datadot commits can represent snapshots of the state of your _entire application_, not the individual data services.
 
 See the [subdots tutorial](TODO) for a more complete example.
+
 
 ## Branches
 
@@ -112,6 +130,7 @@ dm commit -m "[...]"
 
 
 ## Pushing
+TODO introduce the hub.
 
 If you, `pete`, want to make your dot available to others, push it:
 

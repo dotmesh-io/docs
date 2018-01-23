@@ -1,7 +1,7 @@
 +++
 draft = false
 title = "What is a Datadot"
-synopsis = "Datadots, commits, subdots, branches.
+synopsis = "Datadots, commits, subdots, branches."
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
 order = "1"

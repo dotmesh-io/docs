@@ -1,7 +1,7 @@
 +++
 draft = false
 title = "What is a Datadot"
-synopsis = "Datadots, commits, subdots, branches."
+synopsis = "Datadots, commits, subdots, branches, pushing & pulling."
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
 order = "1"
@@ -10,48 +10,96 @@ order = "1"
     parent = "concepts"
 +++
 
+_Want to try the examples here without [installing Dotmesh](/install-setup)?_
+_Try running the commands in our [online learning environment](TODO Katacoda)._
+
 ## Datadots
 
-A Datadot allows you to capture your entire application's state and treat it like a `git` repo.
+A Datadot allows you to capture your application's state and treat it like a `git` repo.
 
-A simple example is to start a Redis container using a Datadot called `myapp`:
+A simple example is to start a PostgreSQL container using a Datadot called `myapp`:
 
 ```bash
-docker run -d -v myapp:/data --volume-driver dm redis
+docker run -d --volume-driver dm \
+    -v myapp:/var/lib/postgres/data --name postgres postgres
 ```
 
-This creates a datadot called `myapp`, creates the default `master` branch in that datadot, mounts the `master` branch into `/data` in the `redis` container, and starts the `redis` container, like this:
+This creates a datadot called `myapp`, creates the default `master` branch in that datadot, mounts the `master` branch into `/data` in the `postgres` container, and starts the `postgres` container, like this:
 
-<img src="/hugo/what-is-a-datadot-01-myapp-dot.png" alt="myapp dot with master branch and redis container's /data volume attached" style="width: 50%;" />
+<img src="/hugo/what-is-a-datadot-01-myapp-dot.png" alt="myapp dot with master branch and postgres container's /data volume attached" style="width: 50%;" />
 
 You can see this in the `dm list` output:
 
+```bash
+dm list
+```
+
+```plain
+  DATADOT  BRANCH  SERVER   CONTAINERS  SIZE       COMMITS  DIRTY
+* myapp    master  a1b2c3d  /postgres   19.00 kiB  0        19.00 kiB
+```
+
 ## Commits
 
-You can commit a datadot with:
+You can commit a datadot by ensuring the dot is active:
 
 ```bash
 dm switch myapp
+```
+
+And then creating a new commit:
+
+```bash
 dm commit -m "Empty state."
 ```
 
+This creates a commit: a point-in-time snapshot of the state of the filesystem on the current branch for the current dot.
+The current branch is shown in the `BRANCH` column and the current dot is marked with a `*` in the `dm list` output.
+
+Suppose PostgreSQL then writes some data to the docker volume.
+You can then create another commit with:
+
+```bash
+dm commit -m "Here is some data."
+```
+
+TODO diagram
+
+You can then roll back to the first commit with:
+
+```bash
+dm reset --hard HEAD^
+```
+
+
+### Consistency
+
+Commits are made immediately and atomically: they are "consistent snapshots" in the sense used [here](https://www.postgresql.org/docs/current/static/backup-file.html).
+
+It's safe to create a commit while a database is running as long as the database supports recovering from a crash.
+Rolling back to or recovering from a commit will work on the same basis.
 
 ## Subdots
 
-Modern apps often have more than one database, cache or queue.
-A datadot can capture all of those states in a single, atomically consistent commit.
+Microservices applications often have more than one stateful component, e.g. database, cache or queue.
+A datadot can capture all of those states in a single, atomic and consistent commit.
 
 A datadot might be named with your application:
 
-* `sockshop`
+* `myapp`
 
-That dot's subdots are named with a `.`:
+Assume that your app has an `orders` service with an `orders-db`, and a `catalog` service with a `catalog-db`.
 
-* `sockshop.orders-db`
-* `sockshop.catalog-db`
+In this case, name your dots as follows.
+A `.` character is used to separated the dot name from the subdot name.
 
-And so on, for the different microservices in `sockshop`.
+* `myapp.orders-db`
+* `myapp.catalog-db`
 
+Commits and branches apply to the _entire_ datadot, not specific subdots.
+This means that your datadots can represent the state of your _entire application_, not it just the individual data services.
+
+See the [subdots tutorial](TODO) for a more complete example.
 
 ## Branches
 

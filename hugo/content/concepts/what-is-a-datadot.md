@@ -57,7 +57,7 @@ This creates a commit: a point-in-time snapshot of the state of the filesystem o
 The current branch is shown in the `BRANCH` column and the current dot is marked with a `*` in the `dm list` output.
 
 Suppose PostgreSQL then writes some data to the docker volume.
-You can then create another commit with:
+You can then capture this new state in another commit with:
 
 ```bash
 dm commit -m "some data"
@@ -113,6 +113,22 @@ A `.` character is used to separated the dot name from the subdot name.
 * `myapp.orders-db`
 * `myapp.catalog-db`
 
+Example Docker Compose syntax would be:
+```yaml
+  # ...
+  orders-db:
+    image: mongo:3.4
+    hostname: orders-db
+    volume_driver: dm
+    volume: myapp.orders-db:TODO
+  # ...
+  catalogue-db:
+    image: mysql:5.6
+    hostname: catalogue-db
+    volume: myapp.catalogue-db:TODO
+  # ...
+```
+
 Commits and branches of a datadot apply to the _entire_ datadot, not specific subdots.
 This means that your datadot commits can represent snapshots of the state of your _entire application_, not the individual data services.
 
@@ -130,6 +146,7 @@ dm commit -m "[...]"
 
 
 ## Pushing
+
 TODO introduce the hub.
 
 If you, `pete`, want to make your dot available to others, push it:

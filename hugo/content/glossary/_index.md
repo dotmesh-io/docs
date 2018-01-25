@@ -33,3 +33,7 @@ A point in time snapshot of a branch with a given hash/identifier.
 
 ## Volume
 The manifestation of a branch's writeable filesystem when it is e.g. mounted into a container.
+
+## Relationship diagram
+
+<img src="/hugo/glossary-01-relationship-diagram.png" alt="Relationships between the above concepts" style="width: 100%;" />

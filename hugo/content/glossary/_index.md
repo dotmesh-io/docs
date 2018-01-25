@@ -17,7 +17,7 @@ A dotmesh cluster, one or more machines hosting a set of dots.
 
 ## Datadot
 A way to organise, capture and share a collection of states that relate to an application (possibly including multiple data stores, and multi-instance data stores).
-Like a git repo, it's a branchable, committable, subdottable thing.
+Like a git repo, it's a branchable, committable thing.
 But unlike a git repo, it supports running real databases on top of it and can process large amounts of data efficiently.
 
 ## Branch

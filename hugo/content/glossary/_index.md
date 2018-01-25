@@ -7,7 +7,7 @@ date = 2017-12-19T15:02:07Z
 order = "7"
 +++
 
-* See also: [What is a Datadot](/concepts/what-is-a-datadot/) for a more detailed explanation of these topics with examples and diagrams.
+See also: [What is a Datadot](/concepts/what-is-a-datadot/) for a more detailed explanation of these topics with examples and diagrams.
 
 ## Mesh
 A set of dotmesh clusters, spanning different data centers, laptops etc, with a hub (another dotmesh cluster) at the center (also the people and workflows around it).

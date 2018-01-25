@@ -10,7 +10,8 @@ order = "7"
 See also: [What is a Datadot](/concepts/what-is-a-datadot/) for a more detailed explanation of these topics with examples and diagrams.
 
 ## Mesh
-A set of dotmesh clusters, spanning different data centers, laptops etc, with a hub (another dotmesh cluster) at the center (also the people and workflows around it).
+A set of dotmesh clusters, spanning different data centers, laptops etc, with a hub -- another dotmesh cluster -- at the center.
+Also the people and workflows around it.
 
 ## Cluster
 A dotmesh cluster, one or more machines hosting a set of dots.

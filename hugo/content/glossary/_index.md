@@ -29,7 +29,7 @@ The analogy is to git branches.
 A point in time snapshot of a branch with a given hash/identifier.
 
 ## Subdot
-"Partitions" of a dot which can be mounted into different containers and which can be committed together.
+"Partitions" of a dot which can be mounted into different containers and which can be committed and branched together.
 
 ## Volume
 The manifestation of a branch's writeable filesystem when it is e.g. mounted into a container.

@@ -7,6 +7,8 @@ date = 2017-12-19T15:02:07Z
 order = "7"
 +++
 
+* See also: [What is a Datadot](/concepts/what-is-a-datadot/)
+
 ## Mesh
 A set of dotmesh clusters, spanning different data centers, laptops etc, with the hub at the centre (and the people and workflows around it).
 
@@ -14,9 +16,9 @@ A set of dotmesh clusters, spanning different data centers, laptops etc, with th
 A dotmesh cluster, one or more machines hosting a set of dots.
 
 ## Datadot
-datadot - a way to organise, capture and share a collection of states that relate to an application (possibly including multiple data stores, and multi-instance data stores). Like a git repo, it's a branchable, committable, subdottable thing.
-
-* See also: [What is a Datadot](/concepts/what-is-a-datadot/)
+A way to organise, capture and share a collection of states that relate to an application (possibly including multiple data stores, and multi-instance data stores).
+Like a git repo, it's a branchable, committable, subdottable thing.
+But unlike a git repo, it supports running real databases on top of it and can process large amounts of data efficiently.
 
 ## Branch
 A writable filesystem that can be based on another branch's commit (or is the initially empty "master" branch).

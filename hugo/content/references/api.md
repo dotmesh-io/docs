@@ -108,7 +108,9 @@ When connecting to the Hub, you'll need to know the user's Hub
 username and their API key. They can get their API key by browsing to
 the (FIXME: Where is the page to get your API key?) page.
 
-The URL to send the JSON-RPC POSTs to is `https://hub.dotmesh.io:6969/rpc`.
+The URL to send the JSON-RPC POSTs to is `https://saas.dotmesh.io:6969/rpc`.
+
+FIXME: Check this URL is correct.
 
 It's also possible to authenticate to the API by submitting a user's
 password instead of their API key.
@@ -146,9 +148,9 @@ The dotmesh API contains a whole load of different methods, so let's look at the
    * [DotmeshRPC.Create](#dotmeshrpc-create)
    * [DotmeshRPC.ContainersById](#dotmeshrpc-containersbyid)
    * [DotmeshRPC.Containers](#dotmeshrpc-containers)
-   * [DotmeshRPC.SnapshotsById](#dotmeshrpc-snapshotsbyid)
-   * [DotmeshRPC.Snapshots](#dotmeshrpc-snapshots)
-   * [DotmeshRPC.Snapshot](#dotmeshrpc-snapshot)
+   * [DotmeshRPC.CommitsById](#dotmeshrpc-commitsbyid)
+   * [DotmeshRPC.Commits](#dotmeshrpc-commits)
+   * [DotmeshRPC.Commit](#dotmeshrpc-commit)
    * [DotmeshRPC.Rollback](#dotmeshrpc-rollback)
    * [DotmeshRPC.Branches](#dotmeshrpc-branchs)
    * [DotmeshRPC.Branch](#dotmeshrpc-branch)
@@ -980,7 +982,7 @@ method](#dotmeshrpc-commits).
     "Namespace": "admin",
     "Name": "test",
     "Branch": "",
-    "SnapshotId": "880fb2c4-24db-4d16-5fc4-974d17525450"
+    "CommitId": "880fb2c4-24db-4d16-5fc4-974d17525450"
   },
   "id": 6129484611666146000
 }
@@ -1044,7 +1046,7 @@ the name of the branch.
 ##### Request.
 
 In this example, we create a branch called `testing_v2` from one of the
-snapshots on the master branch we saw in the result from our
+commits on the master branch we saw in the result from our
 example call to the [`Commits` method](#dotmeshrpc-commits).
 
 ```json

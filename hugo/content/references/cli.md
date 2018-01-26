@@ -2,7 +2,7 @@
 draft = false
 title = "Command Line Reference"
 synopsis = "Drive Dotmesh from your shell"
-knowledgelevel = ""
+knowledgelevel = "Intermediate"
 date = 2018-01-24T13:22:53Z
 order = "1"
 [menu]
@@ -11,13 +11,13 @@ order = "1"
 +++
 
 Let's take a look at the `dm` command-line tool in more detail. This
-is a reference guide - the [tutorial](FIXME) is where to go if you
-want a quick start guide. We're also going to assume you're familiar
-with [Dotmesh concepts](FIXME) here. As a reference, it's written so
-you can dive straight into the heading for the command you want - but
-it's also been laid out in a suitable order for reading top-to-bottom,
-should you want to become a Dotmesh command-line expert and impress
-your friends.
+is a reference guide - a [tutorial](../../tutorials) is where to go if
+you want a quick start guide. We're also going to assume you're
+familiar with [Dotmesh concepts](../../concepts/) here. As a reference, it's
+written so you can dive straight into the heading for the command you
+want - but it's also been laid out in a suitable order for reading
+top-to-bottom, should you want to become a Dotmesh command-line expert
+and impress your friends.
 
 ## How to read the examples.
 
@@ -228,6 +228,8 @@ Server:
 </pre></div>
 
 FIXME: Put realistic versions in, rather than my weird dev ones.
+
+FIXME: Priya's updating this output, please regenerate the example when she's done.
 
 ## Dot management.
 

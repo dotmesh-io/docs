@@ -13,6 +13,8 @@ order = "1"
 _Want to try the examples here without [installing Dotmesh](/install-setup)?_
 _Try running the commands in our [online learning environment](TODO Katacoda)._
 
+# TODO: Test and document responses from all commands in this file
+
 ## Datadots
 
 A Datadot allows you to capture your application's state and treat it like a `git` repo.
@@ -169,7 +171,7 @@ dm checkout master
 
 When switching branches on a dot, containers that are using the dot are stopped, the branch is switched out underneath them, and then the containers are started again.
 
-If you want to disable this behavior, you can pin a branch by specifying `dot@branch` rather than just `dot` when specifying the dot name.
+If you want to disable this behavior, you can pin a branch for a mount by specifying `dot@branch` rather than just `dot` when specifying the dot name.
 
 The following commands:
 ```bash
@@ -185,32 +187,64 @@ dm commit -m "E"
 
 Would create the following dot structure:
 
+<img src="/hugo/what-is-a-datadot-04-myapp-branches.png" alt="a dot with commits A and B on master, a branch newbranch from B going to C and E, and a later commit (on the other side of the fork) D on master. two writeable filesystems, and the postgres container using the writeable filesystem of newbranch" style="width: 80%;" />
+
+Note that the postgres container in this example is using the writeable filesystem of `newbranch` -- that is because at the end of the commands `newbranch` was the current branch, the latest one that was checked out.
+Running a further `dm checkout master` would switch the `postgres` container over to the `master` branch.
+
 
 ## Pushing
 
-TODO introduce the hub.
+You can get more out of dotmesh by sharing your dots with others -- either other users, or systems like a CI system.
+In order to facilitate this sharing, you can push the commits on a branch to a hub.
 
-If you, `pete`, want to make your dot available to others, push it:
+You can either use [our hub](https://dothub.com) or you can just install dotmesh on a server and use that.
+
+If your username is `alice` and you want to make commit `E` on `newbranch` from the example above available to others, first log into the hub:
 
 ```bash
-dm remote add hub pete@dothub.com
-dm push sockshop hub
+dm remote add hub alice@dothub.com
 ```
+
+Then push the branch to the hub:
+
+```bash
+dm push hub myapp newbranch
+```
+
+This will push all the commits (including commits on branches that a non-master branch depends on) necessary to get the latest commit on `newbranch` up to the hub:
+
+<img src="/hugo/what-is-a-datadot-05-myapp-pushing.png" alt="pushing newbranch to a hub, showing that commits A, B, C and E are transferred to the hub" style="width: 100%;" />
+
+B is the base commit for branch newbranch, so, first the commits on the master branch up to and including B are pushed, then commits C and E are transferred to get the hub up to date with the latest commit on `newbranch`.
 
 
 ## Cloning & pulling
 
-If you, `lukemarsden`, have collaborator access to a colleague `pete`'s dot `sockshop`, you can clone it with:
+The opposite of pushing is cloning & pushing.
+Cloning is for the first time you pull down a dot.
+Pulling is for updating it later with more commits.
+
+If you, `bob`, have collaborator access to a colleague `alice`'s dot `myapp`, you can clone it with:
 
 ```bash
-dm clone lukemarsden@dothub.com:pete/sockshop
+dm clone hub alice/myapp newbranch
 ```
 
 Later, if `pete` pushes new commits, you can pull them into your local `sockshop` dot with:
 
 ```bash
-dm pull hub sockshop
+dm pull hub myapp
 ```
+
+Note that when pulling, you give the local name `myapp`.
+You can see how the default upstream dot is configured by running:
+
+```bash
+dm dot show myapp
+```
+
+For more details, see the [CLI reference](TODO: link to CLI reference).
 
 ## Further reading
 

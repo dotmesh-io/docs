@@ -4,10 +4,10 @@ metadata:
   name: docs
   namespace: ${NAMESPACE}
 spec:
-  replicas: 1
+  replicas: 2
   strategy:
     rollingUpdate:
-      maxUnavailable: 0
+      maxUnavailable: 1
   template:
     metadata:
       labels:

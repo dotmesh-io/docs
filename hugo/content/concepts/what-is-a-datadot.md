@@ -24,9 +24,9 @@ docker run -d --volume-driver dm \
     -v myapp:/var/lib/postgres/data --name postgres postgres
 ```
 
-This creates a datadot called `myapp`, creates the default `master` branch in that datadot, mounts the `master` branch into `/data` in the `postgres` container, and starts the `postgres` container, like this:
+This creates a datadot called `myapp`, creates the writeable filesystem for the default `master` branch in that datadot, mounts the writeable filesystem for the `master` branch into `/var/lib/postgres/data` in the `postgres` container, and starts the `postgres` container, like this:
 
-<img src="/hugo/what-is-a-datadot-01-myapp-dot.png" alt="myapp dot with master branch and postgres container's /data volume attached" style="width: 50%;" />
+<img src="/hugo/what-is-a-datadot-01-myapp-dot.png" alt="myapp dot with master branch and postgres container's /data volume attached" style="width: 80%;" />
 
 You can see this in the `dm list` output:
 
@@ -35,13 +35,14 @@ dm list
 ```
 
 ```plain
-  DATADOT  BRANCH  SERVER   CONTAINERS  SIZE       COMMITS  DIRTY
+  DOT      BRANCH  SERVER   CONTAINERS  SIZE       COMMITS  DIRTY
 * myapp    master  a1b2c3d  /postgres   19.00 kiB  0        19.00 kiB
 ```
+The current branch is shown in the `BRANCH` column and the current dot is marked with a `*` in the `dm list` output.
 
 ## Commits
 
-You can commit a datadot by ensuring the dot is active:
+You can commit a datadot by switching to it, which, like `cd`'ing into a git repo, makes it the "current" dot:
 
 ```bash
 dm switch myapp
@@ -54,7 +55,6 @@ dm commit -m "empty state"
 ```
 
 This creates a commit: a point-in-time snapshot of the state of the filesystem on the current branch for the current dot.
-The current branch is shown in the `BRANCH` column and the current dot is marked with a `*` in the `dm list` output.
 
 Suppose PostgreSQL then writes some data to the docker volume.
 You can then capture this new state in another commit with:
@@ -81,7 +81,7 @@ TODO: capture dm log output
 
 Commits are made immediately and atomically: they are "consistent snapshots" in the sense used [in the PostgreSQL documentation](https://www.postgresql.org/docs/current/static/backup-file.html).
 
-It's safe to create a commit while a database is running as long as the database supports recovering from a crash.
+It's safe to create a commit while a database is running as long as the database supports recovering from a power outage.
 
 ### Rollback
 
@@ -90,6 +90,9 @@ Given the example above, you can roll back to the first commit with:
 ```bash
 dm reset --hard HEAD^
 ```
+
+`HEAD^` means "one commit before the latest commit on the current branch".
+You can also do `dm log` and refer to commits by id.
 
 Note that rolling back stops the containers using a branch before the rollback, and starts them again afterwards.
 Otherwise, the database would be confused by its data directory changing "under its feet".
@@ -114,20 +117,27 @@ A `.` character is used to separated the dot name from the subdot name.
 * `myapp.catalog-db`
 
 Example Docker Compose syntax would be:
+
 ```yaml
   # ...
   orders-db:
     image: mongo:3.4
     hostname: orders-db
     volume_driver: dm
-    volume: myapp.orders-db:TODO
+    volume: myapp.orders-db:/data/db
   # ...
-  catalogue-db:
+  catalog-db:
     image: mysql:5.6
-    hostname: catalogue-db
-    volume: myapp.catalogue-db:TODO
+    hostname: catalog-db
+    volume: myapp.catalog-db:/var/lib/mysql
   # ...
 ```
+
+Starting the above Docker Compose file would create a dot with the following structure:
+
+<img src="/hugo/what-is-a-datadot-03-myapp-subdots.png" alt="a dot with an orders-db and catalog-db subdots" style="width: 80%;" />
+
+The subdots are "partitions" of the master branch's writeable filesystem so that different containers can have different parts of it.
 
 Commits and branches of a datadot apply to the _entire_ datadot, not specific subdots.
 This means that your datadot commits can represent snapshots of the state of your _entire application_, not the individual data services.
@@ -138,11 +148,42 @@ See the [subdots tutorial](TODO) for a more complete example.
 ## Branches
 
 Just like `git`, you can make a branch from a commit on a datadot.
+You can checkout a branch and create it at the same time with:
 
 ```bash
 dm checkout -b bug-16637
-dm commit -m "[...]"
 ```
+
+Then suppose you make some changes to the current dot by interacting with the app, which modifies its databases.
+You can then capture these changes:
+
+```bash
+dm commit -m "Reproducer for bug 16637"
+```
+
+Finally, you can go back to the original `master` branch:
+
+```bash
+dm checkout master
+```
+
+When switching branches on a dot, containers that are using the dot are stopped, the branch is switched out underneath them, and then the containers are started again.
+
+If you want to disable this behavior, you can pin a branch by specifying `dot@branch` rather than just `dot` when specifying the dot name.
+
+The following commands:
+```bash
+dm commit -m "A"
+dm commit -m "B"
+dm checkout -b newbranch
+dm commit -m "C"
+dm checkout master
+dm commit -m "D"
+dm checkout newbranch
+dm commit -m "E"
+```
+
+Would create the following dot structure:
 
 
 ## Pushing

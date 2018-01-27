@@ -23,14 +23,6 @@ Dotmesh borrows a lot of its concepts and language from Git, but there are some 
 * A branch cannot be rolled back to before its origin commit.
   Unlike `git`, you cannot roll a branch back to a commit from before it was started.
 
-XXX not sure if we should keep this next one, Alaric WDYT?
-
-* The `master` branch is special.
-  In `git`, branches are just pointers to commits.
-  In `dm`, branches are concrete filesystems.
-  This means that in `git` you could change what the `master` branch points to.
-  But in `dm`, the `master` branch is always the _root_ of the `dm` filesystem tree, and the `dm` filesystem tree structure is relatively fixed once created. (XXX This is probably more confusing than it needs to be, we don't want to make dotmesh seem "hard").
-
 ## What is DotOps?
 
 DotOps describes the new workflows that are enabled by using Dotmesh in your software development lifecycle, such as sharing dots with colleagues to debug problem states, or pushing dots from CI when a test fails.

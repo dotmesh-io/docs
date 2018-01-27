@@ -21,7 +21,7 @@ A simple example is to start a PostgreSQL container using a Datadot called `myap
 
 ```bash
 docker run -d --volume-driver dm \
-    -v myapp:/var/lib/postgresql/data --name postgres postgres
+    -v myapp:/var/lib/postgresql/data --name postgres postgres:9.6.6
 ```
 
 This creates a datadot called `myapp`, creates the writeable filesystem for the default `master` branch in that datadot, mounts the writeable filesystem for the `master` branch into `/var/lib/postgresql/data` in the `postgres` container, and starts the `postgres` container, like this:
@@ -116,7 +116,7 @@ Note also that a rollback is *destructive* -- the commits after the commit that 
 Microservices applications often have more than one stateful component, e.g. databases, caches and queues.
 A datadot can capture all of those states in a single, atomic and consistent commit.
 
-A datadot should be named after your application: `myapp`.
+A datadot should be named after your application: `myapp2`.
 
 Assume that your app has an `orders` service with an `orders-db`, and a `catalog` service with a `catalog-db`.
 
@@ -126,22 +126,28 @@ The `.` character is used to separated the dot name from the subdot name.
 
 Example Docker Compose syntax would be:
 
-TODO: make this example runnable
-
 ```yaml
-  # ...
+version: '3'
+services:
   orders-db:
-    image: mongo:3.4
+    image: mongo:3.4.10
     hostname: orders-db
-    volume_driver: dm
-    volume: myapp.orders-db:/data/db
-  # ...
+    volumes:
+     - myapp.orders-db:/data/db
   catalog-db:
-    image: mysql:5.6
+    image: mysql:5.6.39
     hostname: catalog-db
-    volume: myapp.catalog-db:/var/lib/mysql
-  # ...
+    volumes:
+     - myapp.catalog-db:/var/lib/mysql
+
+volumes:
+  myapp.orders-db:
+    driver: dm
+  myapp.catalog-db:
+    driver: dm
 ```
+
+See also: [Docker Compose integration](TODO).
 
 Starting the above Docker Compose file would create a dot with the following structure:
 

@@ -106,17 +106,13 @@ Note also that a rollback is *destructive* -- the commits after the commit that 
 Microservices applications often have more than one stateful component, e.g. databases, caches and queues.
 A datadot can capture all of those states in a single, atomic and consistent commit.
 
-A datadot might be named with your application:
-
-* `myapp`
+A datadot should be named after your application: `myapp`.
 
 Assume that your app has an `orders` service with an `orders-db`, and a `catalog` service with a `catalog-db`.
 
-In this case, name your dots as follows.
-A `.` character is used to separated the dot name from the subdot name.
+In this case, good names for your subdots would be `myapp.orders-db` and `myapp.catalog-db`.
 
-* `myapp.orders-db`
-* `myapp.catalog-db`
+The `.` character is used to separated the dot name from the subdot name.
 
 Example Docker Compose syntax would be:
 
@@ -139,10 +135,25 @@ Starting the above Docker Compose file would create a dot with the following str
 
 <img src="/hugo/what-is-a-datadot-03-myapp-subdots.png" alt="a dot with an orders-db and catalog-db subdots" style="width: 80%;" />
 
-The subdots are "partitions" of the master branch's writeable filesystem so that different containers can have different parts of it.
+You can think of subdots as different "partitions" of the master branch's writeable filesystem, in the sense that they divide it up, so that different containers can use different independent parts of it.
 
 Commits and branches of a datadot apply to the _entire_ datadot, not specific subdots.
-This means that your datadot commits can represent snapshots of the state of your _entire application_, not the individual data services.
+This means that your datadot commits can represent snapshots of the state of your _entire application_, not the individual data services, like this:
+
+```bash
+dm switch myapp
+dm commit -m "two empty dbs"
+```
+
+Then some data is written to both databases by the app, then you can capture them together atomically:
+
+```bash
+dm commit -m "data in two dbs"
+```
+
+The resulting dot structure is:
+
+<img src="/hugo/what-is-a-datadot-04-myapp-subdots-with-commits.png" alt="a dot with an orders-db and catalog-db subdots showing two commits which capture the entire dot, not the individual subdot - so the commits are of multiple databases simultaneously" style="width: 80%;" />
 
 See the [subdots tutorial](TODO) for a more complete example.
 
@@ -187,10 +198,16 @@ dm commit -m "E"
 
 Would create the following dot structure:
 
-<img src="/hugo/what-is-a-datadot-04-myapp-branches.png" alt="a dot with commits A and B on master, a branch newbranch from B going to C and E, and a later commit (on the other side of the fork) D on master. two writeable filesystems, and the postgres container using the writeable filesystem of newbranch" style="width: 80%;" />
+<img src="/hugo/what-is-a-datadot-05-myapp-branches.png" alt="a dot with commits A and B on master, a branch newbranch from B going to C and E, and a later commit (on the other side of the fork) D on master. two writeable filesystems, and the postgres container using the writeable filesystem of newbranch" style="width: 80%;" />
 
 Note that the postgres container in this example is using the writeable filesystem of `newbranch` -- that is because at the end of the commands `newbranch` was the current branch, the latest one that was checked out.
 Running a further `dm checkout master` would switch the `postgres` container over to the `master` branch.
+
+Branches work just fine with subdots too:
+
+<img src="/hugo/what-is-a-datadot-06-myapp-branches-with-subdots.png" alt="the same branching structure as above, but this time with subdots - each writeable filesystem and commit now has two databases in it" style="width: 80%;" />
+
+In which case each writeable filesystem and each commit just has multiple data stores in it.
 
 
 ## Pushing

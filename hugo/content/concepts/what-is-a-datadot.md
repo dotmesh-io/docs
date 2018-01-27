@@ -136,6 +136,8 @@ services:
      - myapp.orders-db:/data/db
   catalog-db:
     image: mysql:5.6.39
+    environment:
+     - MYSQL_ROOT_PASSWORD=secret
     hostname: catalog-db
     volumes:
      - myapp.catalog-db:/var/lib/mysql

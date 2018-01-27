@@ -1,6 +1,6 @@
 +++
 draft = false
-title = "What is a Datadot"
+title = " What is a Datadot"
 synopsis = "Datadots, commits, subdots, branches, pushing & pulling."
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
@@ -11,9 +11,7 @@ order = "1"
 +++
 
 _Want to try the examples here without [installing Dotmesh](/install-setup)?_
-_Try running the commands in our [online learning environment](TODO Katacoda)._
-
-# TODO: Test and document responses from all commands in this file
+_Try running the commands in our [online learning environment](/install-setup/katacoda)._
 
 ## Datadots
 
@@ -23,14 +21,20 @@ A simple example is to start a PostgreSQL container using a Datadot called `myap
 
 ```bash
 docker run -d --volume-driver dm \
-    -v myapp:/var/lib/postgres/data --name postgres postgres
+    -v myapp:/var/lib/postgresql/data --name postgres postgres
 ```
 
-This creates a datadot called `myapp`, creates the writeable filesystem for the default `master` branch in that datadot, mounts the writeable filesystem for the `master` branch into `/var/lib/postgres/data` in the `postgres` container, and starts the `postgres` container, like this:
+This creates a datadot called `myapp`, creates the writeable filesystem for the default `master` branch in that datadot, mounts the writeable filesystem for the `master` branch into `/var/lib/postgresql/data` in the `postgres` container, and starts the `postgres` container, like this:
 
 <img src="/hugo/what-is-a-datadot-01-myapp-dot.png" alt="myapp dot with master branch and postgres container's /data volume attached" style="width: 80%;" />
 
-You can see this in the `dm list` output:
+First, switch to it, which, like `cd`'ing into a git repo, makes it the "current" dot -- the dot which later `dm` commands will operate on by default:
+
+```bash
+dm switch myapp
+```
+
+You can then see the `dm list` output:
 
 ```bash
 dm list
@@ -38,19 +42,15 @@ dm list
 
 ```plain
   DOT      BRANCH  SERVER   CONTAINERS  SIZE       COMMITS  DIRTY
-* myapp    master  a1b2c3d  /postgres   19.00 kiB  0        19.00 kiB
+* myapp    master  a1b2c3d  /postgres   40.82 MiB  0        40.82 MiB
 ```
 The current branch is shown in the `BRANCH` column and the current dot is marked with a `*` in the `dm list` output.
 
+For more information on what all of the columns mean, see the [CLI Reference](/references/cli/).
+
 ## Commits
 
-You can commit a datadot by switching to it, which, like `cd`'ing into a git repo, makes it the "current" dot:
-
-```bash
-dm switch myapp
-```
-
-And then creating a new commit:
+You can commit a datadot by running:
 
 ```bash
 dm commit -m "empty state"
@@ -76,7 +76,17 @@ dm log
 ```
 
 ```plain
-TODO: capture dm log output
+commit 7f8c7cb6-c925-44b4-5a65-bcbf05a1da39
+Author: admin
+Date: 1517055060834886217
+
+    empty state
+
+commit 435a520f-d01e-4bda-70e0-fc42e2043634
+Author: admin
+Date: 1517055069443640226
+
+    some data
 ```
 
 ### Consistency
@@ -115,6 +125,8 @@ In this case, good names for your subdots would be `myapp.orders-db` and `myapp.
 The `.` character is used to separated the dot name from the subdot name.
 
 Example Docker Compose syntax would be:
+
+TODO: make this example runnable
 
 ```yaml
   # ...
@@ -231,7 +243,7 @@ dm push hub myapp newbranch
 
 This will push all the commits (including commits on branches that a non-master branch depends on) necessary to get the latest commit on `newbranch` up to the hub:
 
-<img src="/hugo/what-is-a-datadot-05-myapp-pushing.png" alt="pushing newbranch to a hub, showing that commits A, B, C and E are transferred to the hub" style="width: 100%;" />
+<img src="/hugo/what-is-a-datadot-07-myapp-pushing.png" alt="pushing newbranch to a hub, showing that commits A, B, C and E are transferred to the hub" style="width: 100%;" />
 
 B is the base commit for branch newbranch, so, first the commits on the master branch up to and including B are pushed, then commits C and E are transferred to get the hub up to date with the latest commit on `newbranch`.
 

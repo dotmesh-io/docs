@@ -10,4 +10,8 @@ order = "1"
     parent = "install-setup"
 +++
 
+## Supported versions
+
+* Kubernetes >= 1.6
+
 

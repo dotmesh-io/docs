@@ -10,6 +10,10 @@ order = "1"
     parent = "install-setup"
 +++
 
+## Supported versions
+
+* Docker >= 1.8.0
+
 ## Linux and macOS
 
 Install the dotmesh client `dm` on macOS or Ubuntu Linux (TODO: add more distributions here when we support them).

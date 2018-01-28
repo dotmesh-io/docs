@@ -10,4 +10,7 @@ order = "1"
     parent = "install-setup"
 +++
 
+## Supported versions
+
+* GKE cluster with Kubernetes >= 1.6
 

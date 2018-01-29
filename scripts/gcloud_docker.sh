@@ -30,6 +30,7 @@ docker run --rm ${DOCKER_ARGS} \
   -e GCLOUD_ZONE \
   -e GCLOUD_CLUSTER_ID \
   -e GCLOUD_SERVICE_KEY \
+  -e IMAGE \
   -e NAMESPACE \
   -e HOSTNAME \
   -e VERSION \

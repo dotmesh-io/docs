@@ -5,8 +5,6 @@
 
 set -e
 
-export IMAGE=${IMAGE:="$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/docs:$VERSION"}
-
 function deploy-manifest() {
   local filename="$1"
   echo "running manifest: $filename"

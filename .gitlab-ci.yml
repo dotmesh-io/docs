@@ -1,83 +1,84 @@
 variables:
-  DOCKER_REGISTRY: gcr.io
-  CI_DOCKER_IMAGE: dotmesh-docs
+
+  NAME: dotmesh-docs
+
+  CI_DOCKER_REGISTRY: quay.io/dotmesh
+  CI_DOCKER_TAG: $CI_COMMIT_SHA
+
+  GCLOUD_REGISTRY: gcr.io/dotmesh-production
   GCLOUD_PROJECT_ID: dotmesh-production
   GCLOUD_ZONE: europe-west2-a
   GCLOUD_CLUSTER_ID: production-cluster
 
 stages:
   - build
-  - deploy_staging
-  - deploy_production
+  - deploy
 
 build_staging:
   stage: build
   tags:
     - ubuntu
     - fast
+  variables:
+    NAMESPACE: docs-stage
+    ENV_NAME: staging
+    IMAGE: $GCLOUD_REGISTRY/$NAME-staging
+    VERSION: $CI_COMMIT_SHA
   before_script:
-    # use the git sha as the version tag
-    - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
-    - export NAMESPACE=docs-stage
-    - export ENV_NAME=staging
-    - export IMAGE=$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/${CI_DOCKER_IMAGE}-staging
-    # we will move this infra into config at some point and have
-    # this as a pullable Docker image that is shared amoungst repos
-    # until then - we need to build the gcloud docker image on the runner
-    - bash scripts/build_gcloud_docker.sh
+    - ./scripts/gcloud.sh login
   script:
-    # make the builder-image that can produce the hugo build
     - make images
-    # build the content and burn the deployable nginx image
     - make release.build
-    # push the image to GCR
-    - bash scripts/gcloud_docker.sh gcloud docker -- push $IMAGE
+    - echo "pushing image - $IMAGE:$VERSION"
+    - ./scripts/gcloud.sh gcloud docker -- push $IMAGE
 
 build_production:
   stage: build
   tags:
     - ubuntu
     - fast
+  variables:
+    NAMESPACE: docs
+    ENV_NAME: production
+    IMAGE: $GCLOUD_REGISTRY/$NAME-production
+    VERSION: $CI_COMMIT_SHA
   before_script:
-    # use the git sha as the version tag
-    - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
-    - export NAMESPACE=docs
-    - export ENV_NAME=production
-    - export IMAGE=$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/${CI_DOCKER_IMAGE}-production
-    - bash scripts/build_gcloud_docker.sh
+    - ./scripts/gcloud.sh login
   script:
-    # make the builder-image that can produce the hugo build
     - make images
-    # build the content and burn the deployable nginx image
     - make release.build
-    # push the image to GCR
-    - bash scripts/gcloud_docker.sh gcloud docker -- push $IMAGE
+    - echo "pushing image - $IMAGE:$VERSION"
+    - ./scripts/gcloud.sh gcloud docker -- push $IMAGE
 
 deploy_staging:
-  stage: deploy_staging
+  stage: deploy
   tags:
     - ubuntu
     - fast
-  before_script:    
-    - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
-    - export NAMESPACE=docs-stage
-    - export HOSTNAME=stage.docs.dotmesh.io
-    - export IMAGE=$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/${CI_DOCKER_IMAGE}-staging:$VERSION
-    - bash scripts/build_gcloud_docker.sh
+  variables:
+    NAMESPACE: docs-stage
+    ENV_NAME: staging
+    IMAGE: $GCLOUD_REGISTRY/$NAME-staging
+    VERSION: $CI_COMMIT_SHA
+  before_script:
+    - ./scripts/gcloud.sh login
   script:
-    - bash scripts/gcloud_docker.sh bash /app/scripts/deploy.sh
+    - echo "deploying image - $IMAGE:$VERSION to $NAMESPACE"
+    - ./scripts/gcloud.sh bash /app/scripts/deploy.sh
 
 deploy_production:
-  stage: deploy_production
+  stage: deploy
   when: manual
   tags:
     - ubuntu
     - fast
-  before_script:    
-    - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
-    - export NAMESPACE=docs
-    - export HOSTNAME=docs.dotmesh.io
-    - export IMAGE=$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/${CI_DOCKER_IMAGE}-production:$VERSION
-    - bash scripts/build_gcloud_docker.sh
+  variables:
+    NAMESPACE: docs
+    ENV_NAME: production
+    IMAGE: $GCLOUD_REGISTRY/$NAME-production
+    VERSION: $CI_COMMIT_SHA
+  before_script:
+    - ./scripts/gcloud.sh login
   script:
-    - bash scripts/gcloud_docker.sh bash /app/scripts/deploy.sh
+    - echo "deploying image - $IMAGE:$VERSION to $NAMESPACE"
+    - ./scripts/gcloud.sh bash /app/scripts/deploy.sh

@@ -1,5 +1,5 @@
 VERSION?=v0.0.1
-IMAGE?=dotmeshio/docs
+IMAGE?=dotmeshio-docs
 BUILDER_IMAGE=$(IMAGE)-builder
 
 .PHONY: images
@@ -45,7 +45,6 @@ design.url:
 .PHONY: design.copy
 design.copy:
 	rm -rf hugo/static/{assets,css}
-	mkdir -p hugo/static
 	cp -r design/public/{assets,css} hugo/static
 
 .PHONY: hugo.build
@@ -73,6 +72,7 @@ hugo.watch: design.build design.copy
 .PHONY: release.build
 release.build:
 	@echo "Running the hugo build"
+	docker rm -f docs-builder-$(ENV_NAME)-$(VERSION) || true
 	docker run \
 		--name docs-builder-$(ENV_NAME)-$(VERSION) \
 		-e NAMESPACE \

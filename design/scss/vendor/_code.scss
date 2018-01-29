@@ -64,12 +64,20 @@ button.copy {
   position:absolute;
   right:0;
   bottom:0;
+  width: 75px;
   font-family: $fontMono;
+  text-align: center;
+  outline: 0;
   font-size: rem($typeS);
   cursor:pointer;
+  @include transition(all .2s ease-in);
   background-color: $dmEleven;
   color: #fff;
   padding: 10px 15px 10px 15px;
+  &:hover {
+    background-color: $dmWheeler;
+    color: $dmByers;
+  } 
 }
 
 

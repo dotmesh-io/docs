@@ -59,65 +59,127 @@
         {{ end }}
       </div>
     </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script> 
+    <script type="text/javascript">
+      // TODO move into external file
+      var mainNav = document.getElementById('navigationwrapper');
+      var navToggle = document.getElementById('navigationtoggle');
+  
+      // Start by adding the class "collapse" to the mainNav
+      //mainNav.classList.add('navigationwrapperCollapsed');
+  
+      // Establish a function to toggle the class "collapse"
+      function mainNavToggle() {
+        mainNav.classList.toggle('navigationwrapperCollapsed');
+        navToggle.classList.toggle('navigationtoggleActive');
+      }
+      // Add a click event to run the mainNavToggle function
+      navToggle.addEventListener('click', mainNavToggle);
+
+      docsearch({ 
+       apiKey: '6d43307603b5a549a82161f4f44a2d1e', 
+       indexName: 'dotmesh', 
+       inputSelector: '#searchbar_input', 
+       debug: true 
+      }); 
+
+      (function(document, Clipboard) {  
+        new Clipboard('.copy', {
+            target: function(trigger) {
+                {{ if in (.Site.BaseURL | string) "https://docs.dotmesh.io" }}
+                  var name = trigger.previousElementSibling.getAttribute("data-segment-name");
+                  analytics.track('Copy Clicked', {
+                    location: name,
+                    pageTitle: document.title
+                  });
+                {{ end }}
+                return trigger.previousElementSibling;
+            }
+        });
+      })(document, Clipboard);
+      
+      (function() {
+        function preCode(selector) {
+          var els = Array.prototype.slice.call(document.querySelectorAll(selector), 0);
+
+          els.forEach(function(el) {
+            var txt = el.textContent
+              .replace(/^[\r\n]+/, "")
+              .replace(/\s+$/g, "");
+
+            if (/^\S/gm.test(txt)) {
+              el.textContent = txt;
+              return;
+            }
+
+            var mat, str, re = /^[\t ]+/gm, len, min = 1e3;
+
+            while (mat = re.exec(txt)) {
+              len = mat[0].length;
+
+              if (len < min) {
+                min = len;
+                str = mat[0];
+              }
+            }
+
+            if (min == 1e3)
+              return;
+
+            el.textContent = txt.replace(new RegExp("^" + str, 'gm'), "");
+          });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+          preCode("pre code, textarea");
+        }, false);
+      })();      
+    </script>
+  
+  {{ block "footeradditions" . }}
+    <script type="text/javascript">
+  
+      // Straight up nab from Hugo docs website. Doth of the cap
+      var anchorForId = function anchorForId(id) {
+        var anchor = document.createElement("a");
+        anchor.className = "anchor";
+        anchor.href = "#" + id;
+        anchor.innerHTML = '<svg class="icon icon_link_svg"><use xlink:href="/assets/icons/renders/sprite.svg#link"></use></svg>';
+        return anchor;
+      };
+  
+      var linkifyAnchors = function linkifyAnchors(level, containingElement) {
+        var headers = containingElement.getElementsByTagName("h" + level);
+        for (var h = 0; h < headers.length; h++) {
+          var header = headers[h];
+          if (typeof header.id !== "undefined" && header.id !== "") {
+            header.prepend(anchorForId(header.id));
+          }
+        }
+      };
+  
+      document.onreadystatechange = function () {
+        if (this.readyState === "complete") {
+          var contentBlock = document.getElementsByClassName("typebaseArticle")[0];
+          if (!contentBlock) {
+            return;
+          }
+          for (var level = 2; level <= 4; level++) {
+            linkifyAnchors(level, contentBlock);
+          }
+        }
+      };  
+    </script>     
+  {{ end }}
+
+  {{ if in (.Site.BaseURL | string) "https://docs.dotmesh.io" }}
+    <script type="text/javascript">
+      !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="4.0.0";
+      analytics.load("ZA3PUzTjl2cCsFSHCD1KDzf750a71285");
+      analytics.page();
+      }}();
+    </script>  
+  {{ end }}
   </body>
-  <script>
-    // TODO move into external file
-    var mainNav = document.getElementById('navigationwrapper');
-    var navToggle = document.getElementById('navigationtoggle');
-
-    // Start by adding the class "collapse" to the mainNav
-    //mainNav.classList.add('navigationwrapperCollapsed');
-
-    // Establish a function to toggle the class "collapse"
-    function mainNavToggle() {
-    	mainNav.classList.toggle('navigationwrapperCollapsed');
-  		navToggle.classList.toggle('navigationtoggleActive');
-    }
-    // Add a click event to run the mainNavToggle function
-    navToggle.addEventListener('click', mainNavToggle);
-  </script>
-
-{{ block "footeradditions" . }}
-  <script>
-
-    // Straight up nab from Hugo docs website. Doth of the cap
-    var anchorForId = function anchorForId(id) {
-      var anchor = document.createElement("a");
-      anchor.className = "anchor";
-      anchor.href = "#" + id;
-      anchor.innerHTML = '<svg class="icon icon_link_svg"><use xlink:href="/assets/icons/renders/sprite.svg#link"></use></svg>';
-      return anchor;
-    };
-
-    var linkifyAnchors = function linkifyAnchors(level, containingElement) {
-      var headers = containingElement.getElementsByTagName("h" + level);
-      for (var h = 0; h < headers.length; h++) {
-        var header = headers[h];
-        if (typeof header.id !== "undefined" && header.id !== "") {
-          header.prepend(anchorForId(header.id));
-        }
-      }
-    };
-
-    document.onreadystatechange = function () {
-      if (this.readyState === "complete") {
-        var contentBlock = document.getElementsByClassName("typebaseArticle")[0];
-        if (!contentBlock) {
-          return;
-        }
-        for (var level = 2; level <= 4; level++) {
-          linkifyAnchors(level, contentBlock);
-        }
-      }
-    };
-  </script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script> 
-  <script type="text/javascript"> docsearch({ 
-   apiKey: '6d43307603b5a549a82161f4f44a2d1e', 
-   indexName: 'dotmesh', 
-   inputSelector: '#searchbar_input', 
-   debug: true 
-  }); 
-  </script> 
-{{ end }}
 </html>

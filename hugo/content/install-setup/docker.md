@@ -4,7 +4,7 @@ title = "Installing on Docker"
 synopsis = "Installing Dotmesh on a computer with Docker installed"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
-order = "1"
+weight = "2"
 [menu]
   [menu.main]
     parent = "install-setup"
@@ -18,10 +18,10 @@ order = "1"
 
 Install the dotmesh client `dm` on macOS or Ubuntu Linux (TODO: add more distributions here when we support them).
 
-```bash
+{{< copyable name="step-1" >}}
 sudo curl -sSL -o /usr/local/bin/dm \
     https://get.dotmesh.io/$(uname -s)/dm
-```
+{{< /copyable >}}  
 
 Make the client binary executable.
 ```bash

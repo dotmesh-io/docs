@@ -60,6 +60,17 @@ code {
     tab-width: 2;
   }
 }
+button.copy {
+  position:absolute;
+  right:0;
+  bottom:0;
+  font-family: $fontMono;
+  font-size: rem($typeS);
+  cursor:pointer;
+  background-color: $dmEleven;
+  color: #fff;
+  padding: 10px 15px 10px 15px;
+}
 
 
 // Pygments

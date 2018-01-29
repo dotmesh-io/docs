@@ -52,6 +52,7 @@ design.copy:
 hugo.build: design.build design.copy
 	docker run --rm \
 		-v $(PWD)/hugo:/app/hugo \
+		-e NAMESPACE \
 		-w /app/hugo \
 		$(BUILDER_IMAGE) hugo -v
 
@@ -60,6 +61,7 @@ hugo.watch: design.build design.copy
 	docker run -ti --rm \
 		--name docs-hugo \
 		-p 1313:1313 \
+		-e NAMESPACE \
 		-v $(PWD)/hugo:/app/hugo \
 		-w /app/hugo \
 		$(BUILDER_IMAGE) hugo \
@@ -73,6 +75,7 @@ release.build:
 	@echo "Running the hugo build"
 	docker run \
 		--name docs-builder-$(ENV_NAME)-$(VERSION) \
+		-e NAMESPACE \
 		-w /app/hugo \
 		$(BUILDER_IMAGE):latest hugo -v
 	@echo "Copy built folder"

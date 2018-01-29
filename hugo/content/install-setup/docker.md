@@ -10,13 +10,14 @@ order = "1"
     parent = "install-setup"
 +++
 
-## Supported versions
+{{% overview %}}
+* [Docker](https://docs.docker.com/install/) ≥ 1.8.0
+* macOS or Ubuntu 16.04 or later
+{{% /overview %}}
 
-* Docker >= 1.8.0
+## Installation
 
-## Linux and macOS
-
-Install the dotmesh client `dm` on macOS or Ubuntu Linux (TODO: add more distributions here when we support them).
+Install the dotmesh client `dm`:
 
 ```bash
 sudo curl -sSL -o /usr/local/bin/dm \
@@ -49,7 +50,7 @@ dm list
 ```
 
 If the installation fails, please [report an issue](https://github.com/dotmesh-io/dotmesh).
-You can also experiment with our [online learning environment](/install-setup/katacoda/).
+You can also experiment in our [online learning environment](/install-setup/katacoda/).
 Thanks!
 
 ## What's next?

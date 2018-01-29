@@ -18,12 +18,12 @@ order = "1"
 
 ## Run your first dotmesh enabled container
 
-Start a MySQL container using a dotmesh volume named `mydata` for the MySQL data directory.
+Start a MySQL container using a dot named `mydata` for the MySQL data directory.
 
 ```bash
 docker run -d -v mydata:/var/lib/mysql \
     --volume-driver=dm --name=db \
-    -e MYSQL_ROOT_PASSWORD=secret mysql
+    -e MYSQL_ROOT_PASSWORD=secret mysql:5.6.39
 ```
 
 `dm switch` makes the new volume the active volume, which means the CLI operates on it, a bit like `cd`ing into a `git` working directory.
@@ -38,10 +38,10 @@ dm switch mydata
 dm list
 ```
 ```plain
-Current remote: default
+Current remote: local (use 'dm remote -v' to list and 'dm remote switch' to switch)
 
-  VOLUME   SERVER          BRANCH   CONTAINERS
-* mydata   172.16.93.101   master   /db
+  DOT     BRANCH  SERVER            CONTAINERS  SIZE        COMMITS  DIRTY
+* mydata  master  e21268d0e6df269c  /db         115.34 MiB  0        115.34 MiB
 ```
 
 The `dm` CLI supports a subset of `git` syntax to operate on this volume, see `dm --help` and the [CLI command reference](/references/cli/) for more details.
@@ -55,13 +55,13 @@ Here we use the `dm` CLI to make a commit (snapshot) of our empty MySQL instance
 dm commit -m "No database"
 ```
 
-Then we use a `mysql` client container to create a database and a table in our MySQL instance.</p>
+Then we use a `mysql` client container to create a database and a table in our MySQL instance.
 
 ```plain
-docker run --link db:db -ti mysql \
+docker run --link db:db -ti mysql:5.6.39 \
     mysql -hdb -uroot -psecret
 ```
-At the `mysql>` prompt, run the following commands:
+At the `mysql>` prompt:
 ```plain
 create database hello;
 use hello;
@@ -69,17 +69,21 @@ create table countries (name varchar(255));
 exit;
 ```
 
-Then we create a new branch based on the schema, insert some data into it, and make a commit.
+Then we make a commit to capture the schema:
 
 ```plain
 dm commit -m "Created hello database and countries table"
+```
+Create a new branch based on the schema:
+```plain
 dm checkout -b newbranch
 ```
+Insert some data into it:
 ```plain
-docker run --link db:db -ti mysql \
+docker run --link db:db -ti mysql:5.6.39 \
     mysql -hdb -uroot -psecret hello
 ```
-At the `mysql>` prompt, run the following commands:
+At the `mysql>` prompt:
 ```plain
 insert into countries set name="england";
 ```
@@ -89,18 +93,21 @@ Query OK, 1 row affected (0.01 sec)
 ```plain
 exit;
 ```
+And make a commit:
+```plain
+dm commit -m "Inserted england row"
+```
 
 Then we go back to the `master` branch and observe that the data has disappeared.
 
 ```plain
-dm commit -m "Inserted england row"
 dm checkout master
 ```
 ```plain
-docker run --link db:db -ti mysql \
+docker run --link db:db -ti mysql:5.6.39 \
     mysql -hdb -uroot -psecret hello
 ```
-At the `mysql>` prompt, run the following commands:
+At the `mysql>` prompt:
 ```plain
 select * from countries;
 ```
@@ -114,10 +121,10 @@ And we can switch back to `newbranch` and it will reappear.
 dm checkout newbranch
 ```
 ```plain
-docker run --link db:db -ti mysql \
+docker run --link db:db -ti mysql:5.6.39 \
     mysql -hdb -uroot -psecret hello
 ```
-At the `mysql>` prompt, run the following commands:
+At the `mysql>` prompt:
 ```plain
 select * from countries;
 ```
@@ -143,10 +150,7 @@ dm branch
 ```
 To see which branch you're on now.
 
-```plain
-dm reset
-```
-To roll a branch back to a previous commit.
+To see other commands you can run, check out the [CLI reference](/references/cli/).
 
 ## Push to a remote dotmesh
 
@@ -166,7 +170,7 @@ dm remote add hub ${DOTHUB_USER}@dothub.com
 ```
 
 You will be asked for your API key, which you can get from TODO FIXME.
-```
+```plain
 Please enter your API key:
 Successfully connected to <your-username>@dothub.com
 Remote added
@@ -216,16 +220,15 @@ Then have them switch to the dot:
 ```plain
 dm switch mydata
 ```
+Start the MySQL server using it:
 ```plain
 docker run -d -v mydata:/var/lib/mysql \
     --volume-driver=dm --name=db \
-    -e MYSQL_ROOT_PASSWORD=secret mysql
+    -e MYSQL_ROOT_PASSWORD=secret mysql:5.6.39
 ```
+Connect with the `mysql` client:
 ```plain
-dm checkout newbranch
-```
-```plain
-docker run --link db:db -ti mysql \
+docker run --link db:db -ti mysql:5.6.39 \
     mysql -hdb -uroot -psecret hello
 ```
 At the `mysql>` prompt:

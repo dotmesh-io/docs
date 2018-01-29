@@ -72,11 +72,11 @@ hugo.watch: design.build design.copy
 release.build:
 	@echo "Running the hugo build"
 	docker run \
-		--name docs-release-builder-$(VERSION) \
+		--name $(BUILDER_IMAGE)-$(VERSION) \
 		-w /app/hugo \
 		$(BUILDER_IMAGE) hugo -v
 	@echo "Copy built folder"
-	docker cp docs-release-builder-$(VERSION):/app/hugo/public ./hugo/public
+	docker cp $(BUILDER_IMAGE)-$(VERSION):/app/hugo/public ./hugo/public
 	@echo "Build nginx image"
 	docker build -t $(IMAGE):$(VERSION) -f Dockerfile.nginx .
 	docker tag $(IMAGE):$(VERSION) $(IMAGE):latest

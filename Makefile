@@ -45,6 +45,7 @@ design.url:
 .PHONY: design.copy
 design.copy:
 	rm -rf hugo/static/{assets,css}
+	mkdir -p hugo/static
 	cp -r design/public/{assets,css} hugo/static
 
 .PHONY: hugo.build

@@ -30,7 +30,7 @@ build_staging:
     # build the content and burn the deployable nginx image
     - make release.build
     # push the image to GCR
-    - bash scripts/gcloud_docker.sh bash /app/scripts/pushimages.sh
+    - bash scripts/gcloud_docker.sh gcloud docker -- push $IMAGE
 
 build_production:
   stage: build
@@ -49,7 +49,7 @@ build_production:
     # build the content and burn the deployable nginx image
     - make release.build
     # push the image to GCR
-    - bash scripts/gcloud_docker.sh bash /app/scripts/pushimages.sh
+    - bash scripts/gcloud_docker.sh gcloud docker -- push $IMAGE
 
 deploy_staging:
   stage: deploy_staging

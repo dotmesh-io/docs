@@ -74,7 +74,7 @@ release.build:
 	docker run \
 		--name docs-builder-$(ENV_NAME)-$(VERSION) \
 		-w /app/hugo \
-		$(BUILDER_IMAGE) hugo -v
+		$(BUILDER_IMAGE):latest hugo -v
 	@echo "Copy built folder"
 	docker cp docs-builder-$(ENV_NAME)-$(VERSION):/app/hugo/public ./hugo/public
 	@echo "Build nginx image"

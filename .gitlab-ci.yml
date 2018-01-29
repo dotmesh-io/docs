@@ -40,7 +40,7 @@ build_production:
   before_script:
     # use the git sha as the version tag
     - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
-    - export ENV_NAME=staging
+    - export ENV_NAME=production
     - export IMAGE=$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/${CI_DOCKER_IMAGE}-production
     - bash scripts/build_gcloud_docker.sh
   script:
@@ -58,7 +58,6 @@ deploy_staging:
     - fast
   before_script:    
     - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
-    - export ENV_NAME=staging
     - export NAMESPACE=docs-stage
     - export HOSTNAME=stage.docs.dotmesh.io
     - export IMAGE=$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/${CI_DOCKER_IMAGE}-staging:$VERSION
@@ -74,7 +73,6 @@ deploy_production:
     - fast
   before_script:    
     - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
-    - export ENV_NAME=staging
     - export NAMESPACE=docs
     - export HOSTNAME=docs.dotmesh.io
     - export IMAGE=$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/${CI_DOCKER_IMAGE}-production:$VERSION

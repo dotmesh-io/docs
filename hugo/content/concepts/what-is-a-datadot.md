@@ -268,7 +268,7 @@ If you, `bob`, have collaborator access to a colleague `alice`'s dot `myapp`, yo
 dm clone hub alice/myapp newbranch
 ```
 
-Later, if `pete` pushes new commits, you can pull them into your local `sockshop` dot with:
+Later, if `alice` pushes new commits, you can pull them into your local `sockshop` dot with:
 
 ```bash
 dm pull hub myapp

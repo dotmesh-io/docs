@@ -26,13 +26,13 @@ docker run -d -v mydata:/var/lib/mysql \
     -e MYSQL_ROOT_PASSWORD=secret mysql:5.6.39
 ```
 
-`dm switch` makes the new volume the active volume, which means the CLI operates on it, a bit like `cd`ing into a `git` working directory.
+`dm switch` makes the new dot the current dot, which means the CLI operates on it, a bit like `cd`ing into a `git` working directory.
 
 ```plain
 dm switch mydata
 ```
 
-`dm list` shows you the `mydata` volume that was created on-demand, that it is active, and that the `db` container is using `mydata`'s default `master` branch.
+`dm list` shows you the `mydata` volume that was created on-demand, that it is current, and that the `db` container is using `mydata`'s default `master` branch.
 
 ```plain
 dm list

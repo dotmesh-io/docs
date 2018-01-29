@@ -1,6 +1,6 @@
 VERSION?=v0.0.1
 BUILDER_IMAGE=dotmeshio/docs-builder
-IMAGE=dotmeshio/docs
+IMAGE?=dotmeshio/docs
 
 .PHONY: images
 images:

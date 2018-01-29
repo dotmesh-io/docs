@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: docs
-          image: ${DOCKER_REGISTRY}/${GCLOUD_PROJECT_ID}/docs:${VERSION}
+          image: ${IMAGE}
           ports:
             - containerPort: 80
           livenessProbe:

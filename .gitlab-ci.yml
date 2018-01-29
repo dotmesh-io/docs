@@ -1,6 +1,6 @@
 variables:
-  DOCKER_API_VERSION: "1.23"
   DOCKER_REGISTRY: gcr.io
+  CI_DOCKER_IMAGE: dotmesh-docs
   GCLOUD_PROJECT_ID: dotmesh-production
   GCLOUD_ZONE: europe-west2-a
   GCLOUD_CLUSTER_ID: production-cluster
@@ -10,7 +10,7 @@ stages:
   - deploy_staging
   - deploy_production
 
-build:
+build_staging:
   stage: build
   tags:
     - ubuntu
@@ -18,9 +18,28 @@ build:
   before_script:
     # use the git sha as the version tag
     - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
+    - export IMAGE=$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/${CI_DOCKER_IMAGE}-staging
     # we will move this infra into config at some point and have
     # this as a pullable Docker image that is shared amoungst repos
     # until then - we need to build the gcloud docker image on the runner
+    - bash scripts/build_gcloud_docker.sh
+  script:
+    # make the builder-image that can produce the hugo build
+    - make images
+    # build the content and burn the deployable nginx image
+    - make release.build
+    # push the image to GCR
+    - bash scripts/gcloud_docker.sh bash /app/scripts/pushimages.sh
+
+build_production:
+  stage: build
+  tags:
+    - ubuntu
+    - fast
+  before_script:
+    # use the git sha as the version tag
+    - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
+    - export IMAGE=$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/${CI_DOCKER_IMAGE}-production
     - bash scripts/build_gcloud_docker.sh
   script:
     # make the builder-image that can produce the hugo build
@@ -39,6 +58,7 @@ deploy_staging:
     - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
     - export NAMESPACE=docs-stage
     - export HOSTNAME=stage.docs.dotmesh.io
+    - export IMAGE=$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/${CI_DOCKER_IMAGE}-staging:$VERSION
     - bash scripts/build_gcloud_docker.sh
   script:
     - bash scripts/gcloud_docker.sh bash /app/scripts/deploy.sh
@@ -53,6 +73,7 @@ deploy_production:
     - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
     - export NAMESPACE=docs
     - export HOSTNAME=docs.dotmesh.io
+    - export IMAGE=$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/${CI_DOCKER_IMAGE}-production:$VERSION
     - bash scripts/build_gcloud_docker.sh
   script:
     - bash scripts/gcloud_docker.sh bash /app/scripts/deploy.sh

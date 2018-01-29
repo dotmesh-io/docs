@@ -1,6 +1,5 @@
 design/node_modules
 design/public
 hugo/public
-hugo/static
 .DS_Store
 *.sw*

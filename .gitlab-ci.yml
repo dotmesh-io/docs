@@ -18,6 +18,7 @@ build_staging:
   before_script:
     # use the git sha as the version tag
     - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
+    - export NAMESPACE=docs-stage
     - export ENV_NAME=staging
     - export IMAGE=$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/${CI_DOCKER_IMAGE}-staging
     # we will move this infra into config at some point and have
@@ -40,6 +41,7 @@ build_production:
   before_script:
     # use the git sha as the version tag
     - export VERSION=$(echo $CI_COMMIT_SHA | cut -c1-8)
+    - export NAMESPACE=docs
     - export ENV_NAME=production
     - export IMAGE=$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/${CI_DOCKER_IMAGE}-production
     - bash scripts/build_gcloud_docker.sh

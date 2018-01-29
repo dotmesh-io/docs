@@ -5,7 +5,7 @@
 
 set -e
 
-IMAGE="$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/docs:$VERSION"
+export IMAGE=${IMAGE:="$DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/docs:$VERSION"}
 
 function deploy-manifest() {
   local filename="$1"

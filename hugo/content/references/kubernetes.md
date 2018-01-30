@@ -12,7 +12,7 @@ order = "4"
 
 This guide will explain the ins and outs of the Dotmesh Kubernetes
 YAML file. It's not a guide to just using it to install and use
-Dotmesh with Kubernetes - you can find that in the [Installation  guides](/install-setup/). This guide is for
+Dotmesh with Kubernetes - you can find that in the [Installation guides](/install-setup/). This guide is for
 people who want to modify the YAML and do non-standard installations.
 
 We assume you have read the [Concrete Architecture
@@ -93,16 +93,6 @@ namespace) to configure the initial API key and admin password, which
 is not created by the YAML - you have to provide these secrets
 yourself; we wouldn't dream of shipping you a default API key! This
 gets mounted into the container filesystem at `/secret`.
-
-FIXME: Discuss USE_POOL_NAME and USE_POOL_DIR.
-
-FIXME: Discuss LOG_ADDR.
-
-FIXME: Why "test-pools-dir" and "/dotmesh-test-pools"? THis is for
-production, not testing!
-
-FIXME: Talk about how to limit Dotmesh to the nodes wit big disks, to
-keep it off dedicated compute nodes.
 
 ## The `dotmesh-provisioner` ServiceAccount.
 

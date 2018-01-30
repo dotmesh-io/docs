@@ -14,4 +14,5 @@ order = "1"
 
 * Kubernetes >= 1.6
 
-
+FIXME: Mention that if you create a ZFS pool called `pool`, Dotmesh
+will use it. That's how to control where it stores the Dots.

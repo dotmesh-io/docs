@@ -88,14 +88,12 @@ port 42380.
 
 ## ZFS.
 
-FIXME: I don't know enough about ZFS, zpools, and how Dotmesh uses
-them to really explain this here. `/pool` is special in some
-way. `/var/lib/dotmesh/dotmesh_data` needs explaining. The
-`--use-pool-dir` and `--use-pool-name` options to `dm cluster`.
-
-What's our default behaviour?
-
-What should a "production" setup with dedicated partitions look like?
+Dotmesh stores Dot content in ZFS. It will use a pool called `pool`;
+if one does not exist, it will create a ten GiB file called
+`/var/log/dotmesh/dotmesh_data` and use that as a ZFS pool. That's
+sufficient for casual use of Dotmesh, but serious users will want to
+create their own zpool called `pool`, either on a dedicated disk
+partition or a larger file.
 
 ## Intra-cluster communications.
 

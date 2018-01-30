@@ -562,20 +562,13 @@ These commands are for managing a Dotmesh cluster built using
 Docker. If you're using Kubernetes, you don't need these commands -
 the Dotmesh Kubernetes integration handles all of this for you!
 
-### Create a cluster: `dm cluster init [--use-pool-dir PATH|--use-pool-name ZFS-POOL]`.
+### Create a cluster: `dm cluster init`.
 
 This command creates a new single-node Dotmesh cluster.
 
-If you specify a pool `PATH`, then files will be created in the
-directory pointed at by `PATH` to store the actual dots.
-
-If, instead, you specify a `ZFS-POOL`, then the dots will be stored in
-the ZFS pool with that name, which you must have created yourself. Use
-this option if you have dedicated disk partitions for Dotmesh to
-use.
-
-If you specify neither, then Dotmesh will default to creating a pool
-directory in `/var/lib/dotmesh`.
+If a ZFS pool called `pool` already exists, it will be used for Dot
+storage. Otherwise, Dotmesh will default to creating a pool based on a
+file in `/var/lib/dotmesh`. The file will be ten gigibytes in size.
 
 The newly-created cluster will be automically configured as a remote
 called `local` in your `dm` [configuration
@@ -610,7 +603,7 @@ Note the join command, highlighted in the example above. Keep a copy
 of that - you can't get it again, and you'll need it if you want to
 add any more nodes to your cluster.
 
-### Join a cluster: `dm cluster join [--use-pool-dir PATH|--use-pool-name ZFS-POOL] DISCOVERY-URL`.
+### Join a cluster: `dm cluster join DISCOVERY-URL`.
 
 This command sets up a Dotmesh node on your computer, and joins it
 into an existing cluster using the `DISCOVERY-URL` printed out when

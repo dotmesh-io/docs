@@ -48,7 +48,7 @@ build_production:
     - make images
     - make release.build
     - echo "pushing image - $IMAGE:$VERSION"
-    - ./scripts/gcloud.sh gcloud docker -- push $IMAGE
+    - bash ./scripts/gcloud.sh gcloud docker -- push $IMAGE
 
 deploy_staging:
   stage: deploy
@@ -64,7 +64,7 @@ deploy_staging:
     - ./scripts/gcloud.sh login
   script:
     - echo "deploying image - $IMAGE:$VERSION to $NAMESPACE"
-    - ./scripts/gcloud.sh bash /app/scripts/deploy.sh
+    - bash ./scripts/gcloud.sh bash /app/scripts/deploy.sh
 
 deploy_production:
   stage: deploy

@@ -157,10 +157,8 @@ settings. The dynamic provisioner is started automatically by the
 default DotMesh YAML file, which also creates a StorageClass called
 `dotmesh` which references the provisioner correctly.
 
-The practical usage of these components is explained in the Docker and
-Kubernetes integration manuals.
-
-FIXME: Link to the docker & kubernetes config manuals.
+The practical usage of these components is explained in the [Docker and
+Kubernetes integration guides](/install-setup/).
 
 ## The `dm` client.
 

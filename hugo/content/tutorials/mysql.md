@@ -169,7 +169,7 @@ dm remote -v
 dm remote add hub ${DOTHUB_USER}@dothub.com
 ```
 
-You will be asked for your API key, which you can get from TODO FIXME.
+You will be asked for your API key, which you can get from the [Settings/API Key page in the Hub](https://saas.dotmesh.io/ui/settings/apikey).
 ```plain
 Please enter your API key:
 Successfully connected to <your-username>@dothub.com

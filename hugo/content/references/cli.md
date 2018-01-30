@@ -139,8 +139,8 @@ Remote added.
 
 </pre></div>
 
-You can get your Hub API key by browising to the (FIXME: Where is the
-page to get your API key?) page on the Hub.
+You can get your Hub API key by browising to the [Settings/API
+Key](https://saas.dotmesh.io/ui/settings/apikey) page on the Hub.
 
 To get the admin API key for a Kubernetes Dotmesh cluster, get the
 `dotmesh-api-key.txt` key from the `dotmesh` secret in the `dotmesh`
@@ -183,8 +183,6 @@ $ <kbd>dm remote -v</kbd>
 <em>* local	admin@127.0.0.1</em>
 </pre></div>
 
-FIXME: Confirm the hub hostname!
-
 All the remotes in the config file are listed, one per line. Each line
 has the name of the remote, followed by the username and the hostname
 in `USER@HOSTNAME` form. The API keys are not printed out.
@@ -222,14 +220,10 @@ $ <kbd>dm remote -v</kbd>
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>dm version</kbd>
 Client:
-	Version: 172-cli-renamings-6ccafe5
+	Version: 0.1.0
 Server:
-	Version: master-671c800
+	Version: 0.1.0
 </pre></div>
-
-FIXME: Put realistic versions in, rather than my weird dev ones.
-
-FIXME: Priya's updating this output, please regenerate the example when she's done.
 
 ## Dot management.
 
@@ -655,7 +649,12 @@ done.
 ### Upgrade your node: `dm cluster upgrade`.
 
 This command stops the Dotmesh server on the current node, downloads
-the latest Dotmesh server Docker image, and starts it up.
+the Dotmesh server Docker image corresponding to the version of the
+`dm` client you're using, and starts it up. You would normally upgrade
+Dotmesh on your node by downloading a new `dm` client binary and
+running `dm cluster upgrade` with it. You can use `dm version` to
+check the client and server versions (make sure you've selected the
+`local` remote!).
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>dm cluster upgrade</kbd>

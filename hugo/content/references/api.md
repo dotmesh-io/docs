@@ -105,12 +105,9 @@ used to talk to the Dotmesh Hub. However, some API methods are only
 useful with the Hub, and some are only useful with a local cluster.
 
 When connecting to the Hub, you'll need to know the user's Hub
-username and their API key. They can get their API key by browsing to
-the (FIXME: Where is the page to get your API key?) page.
+username and their API key. They can get their API key from [the Settings/API Key page](https://saas.dotmesh.io/ui/settings/apikey).
 
 The URL to send the JSON-RPC POSTs to is `https://saas.dotmesh.io:6969/rpc`.
-
-FIXME: Check this URL is correct.
 
 It's also possible to authenticate to the API by submitting a user's
 password instead of their API key.
@@ -1236,8 +1233,7 @@ The request has many parameters. Let's look at them in more detail.
 
 <dd>These are the details to connect to the remote cluster. `Peer` is
 the hostname of a node in the remote cluster; for the Dotmesh Hub,
-provide `secure:hub.datamesh.io`. FIXME: Make sure that's right when
-we do the secure connectivity!</dd>
+provide `saas.datamesh.io`.</dd>
 
 <dt><code>Direction</code>.</dt>
 

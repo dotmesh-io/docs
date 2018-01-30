@@ -94,6 +94,10 @@
                     pageTitle: document.title
                   });
                 {{ end }}
+                trigger.innerHTML="copied";
+                setTimeout(function() {
+                  trigger.innerHTML="copy";
+                }, 1500);                
                 return trigger.previousElementSibling;
             }
         });

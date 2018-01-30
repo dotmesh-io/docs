@@ -12,11 +12,8 @@ order = "4"
 
 This guide will explain the ins and outs of the Dotmesh Kubernetes
 YAML file. It's not a guide to just using it to install and use
-Dotmesh with Kubernetes - you can find that in the [Installing on
-Kubernetes guides](/install-setup/). This guide is for
+Dotmesh with Kubernetes - you can find that in the [Installation  guides](/install-setup/). This guide is for
 people who want to modify the YAML and do non-standard installations.
-
-FIXME: Check that URL's correct.
 
 We assume you have read the [Concrete Architecture
 guide](/concepts/architecture/), and understand what the

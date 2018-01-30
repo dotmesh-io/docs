@@ -25,15 +25,15 @@ sudo curl -sSL -o /usr/local/bin/dm \
 {{< /copyable >}}  
 
 Make the client binary executable.
-```bash
+{{< copyable name="step-2" >}}
 sudo chmod +x /usr/local/bin/dm
-```
+{{< /copyable >}} 
 
 Then use the client to install `dotmesh-server`, assuming you have Docker installed and your user account has access to the Docker daemon.
 
-```bash
+{{< copyable name="step-3" >}}
 dm cluster init
-```
+{{< /copyable >}} 
 
 ```plain
 Checking suitable Docker is installed... yes, got 17.12.0-ce.
@@ -45,9 +45,9 @@ Pulling dotmesh-server docker image...
 This will set up a single-instance cluster on your local machine.
 
 Verify that the `dm` client can talk to the `dotmesh-server`:
-```bash
+{{< copyable name="step-4" >}}
 dm list
-```
+{{< /copyable >}} 
 
 If the installation fails, please [report an issue](https://github.com/dotmesh-io/dotmesh).
 You can also experiment in our [online learning environment](/install-setup/katacoda/).

@@ -113,10 +113,10 @@ $code-background: #EBEBEB,
 $responsive-breakpoint: 768px
 ){
 
-  $header-size: 1em;
-  $title-size: .9em;
-  $text-size: .85em;
-  $subtitle-size: .9em;
+  $header-size: rem($typeMe);
+  $title-size: rem($typeS);
+  $text-size: rem($typeXS);
+  $subtitle-size: rem($typeS);
   $padding: spacing($spacing);
 
   @if $font-size == 'small' {

@@ -78,6 +78,23 @@
   }
 }
 
+.algolia-autocomplete  {
+  &:hover {
+    & + b {
+      background-color: $dmPrime;
+      transition: all linear 0.5s;
+    }
+  }
+  &:focus {
+    outline: none;
+    background-color: $dmHarrington;
+    color: $dmWheeler;
+    & + b {
+      background-color: $dmHarrington;
+    }
+  }
+}
+
 .search {
   display: block;
   margin-bottom: ($bufferSpaceM - $strokeWidth);

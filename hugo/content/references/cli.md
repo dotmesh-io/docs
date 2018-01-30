@@ -649,7 +649,12 @@ done.
 ### Upgrade your node: `dm cluster upgrade`.
 
 This command stops the Dotmesh server on the current node, downloads
-the latest Dotmesh server Docker image, and starts it up.
+the Dotmesh server Docker image corresponding to the version of the
+`dm` client you're using, and starts it up. You would normally upgrade
+Dotmesh on your node by downloading a new `dm` client binary and
+running `dm cluster upgrade` with it. You can use `dm version` to
+check the client and server versions (make sure you've selected the
+`local` remote!).
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>dm cluster upgrade</kbd>

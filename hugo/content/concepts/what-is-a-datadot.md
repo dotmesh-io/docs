@@ -202,7 +202,7 @@ dm checkout master
 
 When switching branches on a dot, containers that are using the dot are stopped, the branch is switched out underneath them, and then the containers are started again.
 
-If you want to disable this behavior, you can pin a branch for a mount by specifying `dot@branch` rather than just `dot` when specifying the dot name.
+If you want to disable the container stopping and starting behavior, you can pin a branch for a mount by specifying `dot@branch` rather than just `dot` when specifying the dot name.
 
 The following commands:
 ```bash

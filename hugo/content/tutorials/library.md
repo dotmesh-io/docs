@@ -9,3 +9,5 @@ order = "1"
   [menu.main]
     parent = "tutorials"
 +++
+
+We plan to add content here very soon! In the mean time, ask any questions on [our Slack channel](https://dotmesh-community.slack.com/)!

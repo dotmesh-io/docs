@@ -32,7 +32,7 @@ dm list
 * moby_counter master  8f15abe  /moby       19.00 kiB  1        9.50 kiB
 ```
 
-# Capture the empty state
+## Capture the empty state
 
 Now, let's quickly capture the empty state, run:
 ```plain
@@ -45,12 +45,22 @@ Now, load up the app in your browser at http://localhost:8100/ – you'll see an
 dm checkout -b branch_a
 ```
 
-# Draw an A on the screen
+## Draw an A on the screen
 
 Now, draw an "A" on the screen! Then capture it:
 ```plain
 dm commit -m "A on the screen"
 ```
+
+Note that if you go back to the master branch, the app updates and you go back to your empty state:
+
+```plain
+dm checkout master
+```
+
+Let's go back to the A state, as next we'll to push it.
+
+## Push it to the dothub
 
 At this point, try pushing your branch to [Dothub](https://dothub.com).
 Register there, and follow the in-app instruction to add a remote, e.g.:
@@ -58,17 +68,20 @@ Register there, and follow the in-app instruction to add a remote, e.g.:
 ```plain
 dm remote add hub <yourusername>@dothub.com
 ```
-You will be prompted for your API key, which you can get from the [Settings/API Key page](https://saas.dotmesh.io/ui/settings/apikey).
+You will be prompted for your API key, which you can get from the [Settings/API Key page](https://saas.dotmesh.io/ui/settings/apikey). TODO fix URL
 
 You can then push branches to the hub. Push defaults to the current branch of the current volume (indicated with a `*` in the output of `dm list` and `dm branch` respectively), so you can just do:
 
 ```plain
-dm switch <volume>
-dm checkout <branch>
 dm push hub
 ```
 
-Then, go to Dothub and you should be able to see the volume, its branches and commits. Then, add a collaborator, by going to the _Settings_ page for a volume, and type another user's username to add them as a collaborator. Finally, that user can then `clone` your volume like this:
+Then, go to Dothub and you should be able to see the volume, its branches and commits.
+
+## Adding a collaborator
+
+Then, add a collaborator, by going to the _Settings_ page for a volume, and type another user's username to add them as a collaborator.
+Finally, that user can then `clone` your volume like this:
 
 ```plain
 dm remote add hub <their-username>@cloud.datamesh.io
@@ -77,8 +90,8 @@ dm clone hub <your-username>/<your-volume-name> [<your-branch-name>]
 
 They can then clone the same Git repo and do `docker-compose up -d`, and they should then be able to see whatever picture you drew with moby counter.
 
-# Video demo
+## Video demo
 
 {{< youtube WUJAkdTwAPA>}}
 
-FIXME re-record the video
+FIXME re-record the video when the SaaS is minimally-reskinned

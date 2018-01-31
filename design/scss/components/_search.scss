@@ -53,14 +53,6 @@
     }
     &:focus {
       outline: none;
-      background-color: $dmHarrington;
-      color: $dmWheeler;
-      &::placeholder {
-        color: $dmWheeler;
-      }
-      & + b {
-        background-color: $dmHarrington;
-      }
     }
   }
   &_button {
@@ -80,17 +72,13 @@
 
 .algolia-autocomplete  {
   &:hover {
-    & + b {
+    input {
       background-color: $dmPrime;
       transition: all linear 0.5s;
     }
-  }
-  &:focus {
-    outline: none;
-    background-color: $dmHarrington;
-    color: $dmWheeler;
     & + b {
-      background-color: $dmHarrington;
+      background-color: $dmPrime;
+      transition: all linear 0.5s;
     }
   }
 }

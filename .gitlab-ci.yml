@@ -25,12 +25,12 @@ build_staging:
     IMAGE: $GCLOUD_REGISTRY/$NAME-staging
     VERSION: $CI_COMMIT_SHA
   before_script:
-    - ./scripts/gcloud.sh login
+    - bash ./scripts/gcloud.sh login
   script:
     - make images
     - make release.build
     - echo "pushing image - $IMAGE:$VERSION"
-    - ./scripts/gcloud.sh gcloud docker -- push $IMAGE
+    - bash ./scripts/gcloud.sh gcloud docker -- push $IMAGE
 
 build_production:
   stage: build
@@ -43,12 +43,12 @@ build_production:
     IMAGE: $GCLOUD_REGISTRY/$NAME-production
     VERSION: $CI_COMMIT_SHA
   before_script:
-    - ./scripts/gcloud.sh login
+    - bash ./scripts/gcloud.sh login
   script:
     - make images
     - make release.build
     - echo "pushing image - $IMAGE:$VERSION"
-    - ./scripts/gcloud.sh gcloud docker -- push $IMAGE
+    - bash ./scripts/gcloud.sh gcloud docker -- push $IMAGE
 
 deploy_staging:
   stage: deploy
@@ -61,10 +61,10 @@ deploy_staging:
     IMAGE: $GCLOUD_REGISTRY/$NAME-staging
     VERSION: $CI_COMMIT_SHA
   before_script:
-    - ./scripts/gcloud.sh login
+    - bash ./scripts/gcloud.sh login
   script:
     - echo "deploying image - $IMAGE:$VERSION to $NAMESPACE"
-    - ./scripts/gcloud.sh bash /app/scripts/deploy.sh
+    - bash ./scripts/gcloud.sh bash /app/scripts/deploy.sh
 
 deploy_production:
   stage: deploy
@@ -78,7 +78,7 @@ deploy_production:
     IMAGE: $GCLOUD_REGISTRY/$NAME-production
     VERSION: $CI_COMMIT_SHA
   before_script:
-    - ./scripts/gcloud.sh login
+    - bash ./scripts/gcloud.sh login
   script:
     - echo "deploying image - $IMAGE:$VERSION to $NAMESPACE"
-    - ./scripts/gcloud.sh bash /app/scripts/deploy.sh
+    - bash ./scripts/gcloud.sh bash /app/scripts/deploy.sh

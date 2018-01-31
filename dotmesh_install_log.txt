@@ -1,0 +1,6 @@
+=== TIMING ===
+check docker version => 0.31
+check dotmesh isn't running => 0.08
+pull dotmesh-server docker image => 29.45
+=== END TIMING ===
+docker run --restart=always --privileged --pid=host --net=host -d --name=dotmesh-server -v /lib:/system-lib/lib -v dotmesh-kernel-modules:/bundled-lib -v /var/lib:/var/lib -v /run/docker:/run/docker -v /var/run/docker.sock:/var/run/docker.sock -e PATH=/bundled-lib/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin -e LD_LIBRARY_PATH=/bundled-lib/lib:/bundled-lib/usr/lib/ -e USE_POOL_NAME= -e USE_POOL_DIR= -e DOCKER_API_VERSION= -e TRACE_ADDR= -e LOG_ADDR= -e PKI_PATH=/Users/dan/.dotmesh/pki -e DOTMESH_DOCKER_IMAGE=quay.io/dotmesh/dotmesh-server:latest -e FRONTEND_STATIC_FOLDER= -e BILLING_URL= -e FILESYSTEM_METADATA_TIMEOUT= -e EXTRA_HOST_COMMANDS= quay.io/dotmesh/dotmesh-server:latest /require_zfs.sh dotmesh-server

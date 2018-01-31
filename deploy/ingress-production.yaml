@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - docs.dotmesh.io
+    - docs.dotmesh.com
     secretName: docs-ingress
   rules:
-  - host: docs.dotmesh.io
+  - host: docs.dotmesh.com
     http:
       paths:
       - path: /

@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - stage.docs.dotmesh.io
+    - stage.docs.dotmesh.com
     secretName: docs-stage-ingress
   rules:
-  - host: stage.docs.dotmesh.io
+  - host: stage.docs.dotmesh.com
     http:
       paths:
       - path: /

@@ -149,7 +149,7 @@ volumes:
     driver: dm
 ```
 
-See also: [Docker Compose integration](TODO).
+For more information on using Docker Compose with Dotmesh, see the [tutorial](/tasks/docker-compose/)
 
 Starting the above Docker Compose file would create a dot with the following structure:
 
@@ -175,7 +175,7 @@ The resulting dot structure is:
 
 <img src="/hugo/what-is-a-datadot-04-myapp-subdots-with-commits.png" alt="a dot with an orders-db and catalog-db subdots showing two commits which capture the entire dot, not the individual subdot - so the commits are of multiple databases simultaneously" style="width: 80%;" />
 
-See the [subdots tutorial](TODO) for a more complete example.
+See the [subdots tutorial](/tutorials/subdots/) for a more complete example.
 
 
 ## Branches
@@ -281,9 +281,9 @@ You can see how the default upstream dot is configured by running:
 dm dot show myapp
 ```
 
-For more details, see the [CLI reference](TODO: link to CLI reference).
+For more details, see the [CLI reference](/references/cli/).
 
 ## Further reading
 
 * See also: [Hello Dotmesh Tutorial](/tutorials/hello-dotmesh-docker/)
-* See also: [Docker Compose reference](/references/docker-compose/)
+* See also: [Docker Compose Guide](/tasks/docker-compose/)

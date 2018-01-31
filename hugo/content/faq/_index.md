@@ -14,7 +14,7 @@ Dotmesh borrows a lot of its concepts and language from Git, but there are some 
 * With the Docker and Kubernetes integrations, Datadots don't manifest directly on your filesystem.
   Instead, they are mounted into containers which aren't directly accessible via your normal CLI interactions.
   In `git`, you can switch between different repos by just using `cd` to switch between directories.
-  This is why `dm` has `dm switch` (TODO: link to command reference), it's the equivalent of using `cd` to switch between `git` repos.
+  This is why `dm` has [`dm switch`](/references/cli/#select-a-different-current-dot-dm-switch-dot), it's the equivalent of using `cd` to switch between `git` repos.
 * Dotmesh has no staging area like `git`.
   This means that commits are one-stage (just commit) rather than two-stage (stage changes, then commit).
   The state of the writeable filesystem that each branch comes with is exactly what will be committed when you type `dm commit`.
@@ -32,9 +32,9 @@ DotOps is complementary with [GitOps](https://www.weave.works/blog/gitops-operat
 ## What do you encrypt?
 
 We encrypt your password (but not your API keys) in the Dothub using [scrypt](https://godoc.org/golang.org/x/crypto/scrypt).
-We encrypt data pushed to and pulled from the Dothub using TLS. (TODO: ensure this is true.)
+We encrypt data pushed to and pulled from the Dothub using TLS.
 
-Currently, we do not encrypt pushes and pulls between OSS clusters. (TODO: link to issue for this.)
+Currently, we do not encrypt pushes and pulls between OSS clusters, but it's on the roadmap.
 
 We do not currently encrypt your volumes on disk.
 

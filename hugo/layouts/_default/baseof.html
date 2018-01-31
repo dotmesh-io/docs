@@ -9,10 +9,17 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ .Site.BaseURL }}assets/favicons/favicon-32x32.png"/>
     <link rel="icon" type="image/png" sizes="16x16" href="{{ .Site.BaseURL }}assets/favicons/favicon-16x16.png"/>
     <link rel="manifest" href="{{ .Site.BaseURL }}assets/favicons/manifest.json"/>
-    <link rel="mask-icon" href="{{ .Site.BaseURL }}assets/favicons/safari-pinned-tab.svg" color="#5c2d70"/>
-    
+    <link rel="mask-icon" href="{{ .Site.BaseURL }}assets/favicons/safari-pinned-tab.svg" color="#5c2d70"/>    
     <meta name="theme-color" content="#21F9EE">
     <title>{{ block "title" . }}{{ end }}.</title>
+    {{ if eq (getenv "NAMESPACE") "docs" }}
+      <script type="text/javascript">
+        !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="4.0.0";
+        analytics.load("ZA3PUzTjl2cCsFSHCD1KDzf750a71285");
+        analytics.page();
+        }}();
+      </script>  
+    {{ end }}
   </head>
   <body>
     <div class="docs">
@@ -176,15 +183,6 @@
         }
       };  
     </script>     
-  {{ end }}
-
-  {{ if eq (getenv "NAMESPACE") "docs" }}
-    <script type="text/javascript">
-      !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="4.0.0";
-      analytics.load("ZA3PUzTjl2cCsFSHCD1KDzf750a71285");
-      analytics.page();
-      }}();
-    </script>  
   {{ end }}
   </body>
 </html>

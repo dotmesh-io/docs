@@ -149,7 +149,7 @@ volumes:
     driver: dm
 ```
 
-For more information on using Docker Compose with Dotmesh, see the [tutorial](/tasks/docker-compose/)
+For more information on using Docker Compose with Dotmesh, see the [Docker Compose docs](/tasks/docker-compose/).
 
 Starting the above Docker Compose file would create a dot with the following structure:
 

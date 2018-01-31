@@ -149,6 +149,8 @@ volumes:
     driver: dm
 ```
 
+For more information on using Docker Compose with Dotmesh, see the [tutorial](/tasks/docker-compose/)
+
 Starting the above Docker Compose file would create a dot with the following structure:
 
 <img src="/hugo/what-is-a-datadot-03-myapp-subdots.png" alt="a dot with an orders-db and catalog-db subdots" style="width: 80%;" />
@@ -284,3 +286,4 @@ For more details, see the [CLI reference](/references/cli/).
 ## Further reading
 
 * See also: [Hello Dotmesh Tutorial](/tutorials/hello-dotmesh-docker/)
+* See also: [Docker Compose Guide](/tasks/docker-compose/)

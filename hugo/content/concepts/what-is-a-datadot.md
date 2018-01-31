@@ -229,6 +229,8 @@ Branches work just fine with subdots too:
 
 In which case each writeable filesystem and each commit just has multiple data stores in it.
 
+When multiple data stores are captured in a commit, the commit is atomic across all of them.
+
 
 ## Pushing
 
@@ -254,6 +256,8 @@ This will push all the commits (including commits on branches that a non-master 
 <img src="/hugo/what-is-a-datadot-07-myapp-pushing.png" alt="pushing newbranch to a hub, showing that commits A, B, C and E are transferred to the hub" style="width: 100%;" />
 
 B is the base commit for branch newbranch, so, first the commits on the master branch up to and including B are pushed, then commits C and E are transferred to get the hub up to date with the latest commit on `newbranch`.
+
+Only the differences between one commit and the next are sent in a push or a clone/pull -- so it's as efficient as possible.
 
 
 ## Cloning & pulling

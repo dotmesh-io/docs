@@ -68,7 +68,7 @@ Register there, and follow the in-app instruction to add a remote, e.g.:
 ```plain
 dm remote add hub <yourusername>@dothub.com
 ```
-You will be prompted for your API key, which you can get from the [Settings/API Key page](https://saas.dotmesh.io/ui/settings/apikey). TODO fix URL
+You will be prompted for your API key, which you can get from the [Settings/API Key page](https://saas.dotmesh.io/ui/settings/apikey).
 
 You can then push branches to the hub. Push defaults to the current branch of the current volume (indicated with a `*` in the output of `dm list` and `dm branch` respectively), so you can just do:
 
@@ -93,5 +93,3 @@ They can then clone the same Git repo and do `docker-compose up -d`, and they sh
 ## Video demo
 
 {{< youtube WUJAkdTwAPA>}}
-
-FIXME re-record the video when the SaaS is minimally-reskinned

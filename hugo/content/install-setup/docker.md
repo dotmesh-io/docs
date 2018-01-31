@@ -64,7 +64,5 @@ Take it for a spin with the [Basic Docker demo](/tutorials/hello-dotmesh-docker/
 If you want your [Datadots](/concepts/what-is-a-datadot/) to be available automatically across multiple machines, you can join more nodes to the one-node cluster you just created using [`dm cluster join`](/references/cli/#join-a-cluster-dm-cluster-join-use-pool-dir-path-use-pool-name-zfs-pool-discovery-url).
 You can also deploy [Dotmesh on Kubernetes](/install-setup/) with a DaemonSet so that it automatically gets installed on all the machines in your cluster.
 
-* [Supported Docker versions](TODO)
-* [Supported Linux Distributions](TODO)
 * [Architecture](/concepts/architecture/)
 * [Dotmesh on Kubernetes](/install-setup/)

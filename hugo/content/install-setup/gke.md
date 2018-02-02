@@ -14,4 +14,4 @@ order = "1"
 
 * GKE cluster with Kubernetes >= 1.6
 
-We plan to add content here very soon! In the mean time, ask any questions on [our Slack channel](https://dotmesh-community.slack.com/)!
+We plan to add content here very soon! In the mean time, ask any questions on [our Slack channel](https://join.slack.com/t/dotmesh-community/shared_invite/enQtMjU0NzczMTQ2MDgxLTM0MGJhNDcxNWQ4ZWE0OWMxMTE4NDg4ZmY5ZDRiMmQyYzIwYTIyMWNiYTIxMWMyMGUzNDI5YTc0N2JiMzg5OGE)!

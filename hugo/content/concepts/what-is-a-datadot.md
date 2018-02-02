@@ -149,7 +149,7 @@ volumes:
     driver: dm
 ```
 
-For more information on using Docker Compose with Dotmesh, see the [tutorial](/tasks/docker-compose/)
+For more information on using Docker Compose with Dotmesh, see the [Docker Compose docs](/tasks/docker-compose/).
 
 Starting the above Docker Compose file would create a dot with the following structure:
 
@@ -202,7 +202,7 @@ dm checkout master
 
 When switching branches on a dot, containers that are using the dot are stopped, the branch is switched out underneath them, and then the containers are started again.
 
-If you want to disable this behavior, you can pin a branch for a mount by specifying `dot@branch` rather than just `dot` when specifying the dot name.
+If you want to disable the container stopping and starting behavior, you can pin a branch for a mount by specifying `dot@branch` rather than just `dot` when specifying the dot name.
 
 The following commands:
 ```bash
@@ -229,6 +229,8 @@ Branches work just fine with subdots too:
 
 In which case each writeable filesystem and each commit just has multiple data stores in it.
 
+When multiple data stores are captured in a commit, the commit is atomic across all of them.
+
 
 ## Pushing
 
@@ -254,6 +256,8 @@ This will push all the commits (including commits on branches that a non-master 
 <img src="/hugo/what-is-a-datadot-07-myapp-pushing.png" alt="pushing newbranch to a hub, showing that commits A, B, C and E are transferred to the hub" style="width: 100%;" />
 
 B is the base commit for branch newbranch, so, first the commits on the master branch up to and including B are pushed, then commits C and E are transferred to get the hub up to date with the latest commit on `newbranch`.
+
+Only the differences between one commit and the next are sent in a push or a clone/pull -- so it's as efficient as possible.
 
 
 ## Cloning & pulling

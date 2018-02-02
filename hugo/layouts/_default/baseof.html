@@ -9,7 +9,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ .Site.BaseURL }}assets/favicons/favicon-32x32.png"/>
     <link rel="icon" type="image/png" sizes="16x16" href="{{ .Site.BaseURL }}assets/favicons/favicon-16x16.png"/>
     <link rel="manifest" href="{{ .Site.BaseURL }}assets/favicons/manifest.json"/>
-    <link rel="mask-icon" href="{{ .Site.BaseURL }}assets/favicons/safari-pinned-tab.svg" color="#5c2d70"/>    
+    <link rel="mask-icon" href="{{ .Site.BaseURL }}assets/favicons/safari-pinned-tab.svg" color="#5c2d70"/> 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>   
     <meta name="theme-color" content="#21F9EE">
     <title>{{ block "title" . }}{{ end }}.</title>
     {{ if eq (getenv "NAMESPACE") "docs" }}
@@ -41,7 +42,7 @@
   	        </svg>
   				</button>
   			</div>
-  			<form class="searchbar">
+  			<form class="searchbar" id="searchForm">
   				<div class="searchbar_field">
   					<label for="searchbar_input" class="searchbar_label">Search docs</label>
   					<input class="searchbar_input" type="text" value="" id="searchbar_input" placeholder="Search docs.">
@@ -85,11 +86,31 @@
       navToggle.addEventListener('click', mainNavToggle);
 
       docsearch({ 
-       apiKey: '6d43307603b5a549a82161f4f44a2d1e', 
-       indexName: 'dotmesh', 
-       inputSelector: '#searchbar_input', 
-       debug: true 
+        apiKey: '6d43307603b5a549a82161f4f44a2d1e', 
+        indexName: 'dotmesh', 
+        inputSelector: '#searchbar_input', 
+        autocompleteOptions : {
+          hint: false,
+          autoselect: false
+        }
       }); 
+
+      $('#searchForm').on('submit', function(e) {
+        if ( e.isDefaultPrevented() ) {
+          return
+        }
+        e.preventDefault();
+      });
+      
+      $('#searchForm').on('keyup keypress', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) { 
+        e.preventDefault();
+        return false;
+        }
+      });
+
+      
 
       (function(document, Clipboard) {  
         new Clipboard('.copy', {

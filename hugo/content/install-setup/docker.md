@@ -57,7 +57,8 @@ Thanks!
 
 Now that you've got `dm` installed on Docker, the Docker integration will work automatically.
 
-Take it for a spin with the [Basic Docker demo](/tutorials/hello-dotmesh-docker/).
+* Take it for a spin with the [Hello Dotmesh tutorial](/tutorials/hello-dotmesh-docker/).
+* Learn about [Using dots in Docker Compose](/tasks/docker-compose).
 
 ## Clustering
 

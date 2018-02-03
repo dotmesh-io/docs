@@ -10,6 +10,4 @@ order = "1"
     parent = "install-setup"
 +++
 
-FIXME link to the page on our marketing site which embeds the katacoda more nicely than this.
-
-<iframe style="height:760px; width:1280px;" src="https://katacoda.com/dotmesh/scenarios/deploying-dotmesh-docker" id="kata"></iframe>
+[Launch Katacoda](https://dotmesh.com/try-dotmesh/).

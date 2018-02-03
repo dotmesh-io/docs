@@ -39,14 +39,14 @@ Installing Jenkins is beyond the scope of this example, please see the Jenkins i
 
 1. Run your Jenkins server. In our case, we are running a simple one-node master/agent. Adjust your volumes and ports if you want to customize. Note that you need the `docker` client binary installed, which, for reasons unknown, is not included with the jenkins image. You either can install it with `apt` or bind-mount it in from another container, as we have done.
 
-```
+```plain
 $ docker run -v dockerbin:/usr/local/bin --rm docker
 $ docker run -p 8080:8080 -p 50000:50000 -v /var/run/docker.sock:/var/run/docker.sock -v jenkins_home:/var/jenkins_home -v dockerbin:/usr/local/sbin --group-add root jenkins/jenkins:lts
 ```
 
 2. Find your initial admin password key in the logs. It looks something like:
 
-```
+```plain
 *************************************************************
 *************************************************************
 *************************************************************
@@ -99,9 +99,9 @@ A normal test run would include a Jenkinsfile snippet that looks something like 
 
 ```groovy
 stage('test') {
-		steps {
-				sh 'make test'
-		}
+    steps {
+        sh 'make test'
+    }
 }
 ```
 
@@ -123,9 +123,9 @@ Once the tests are done, we want to capture the state of CI. However, we will no
 
 ```groovy
 post {
-		always {
-				sh 'dm switch ${VOL_ID} && dm commit -m "CI run $(date)" && dm push dothub --remote-name ${REMOTE_ID}'
-		}
+    always {
+        sh 'dm switch ${VOL_ID} && dm commit -m "CI run $(date)" && dm push dothub --remote-name ${REMOTE_ID}'
+    }
 }
 ```
 

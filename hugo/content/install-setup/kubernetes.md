@@ -80,48 +80,6 @@ those are the only ones where stateful containers will reside - the
 YAML we supply is easy to customise. Check out the [Kubernetes YAML
 reference guide](/references/kubernetes/) for the full run-down!
 
-## Using Dotmesh in Kubernetes
-
-The default YAML registers a StorageClass called `dotmesh` that you
-can use in your PersistentVolumeClaims. For instance:
-
-```yaml
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: my-exciting-data
-spec:
-  storageClassName: dotmesh
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-```
-
-That will be backed by the default subdot of a dot called
-`my-exciting-data`, but that can be overridden with dotmesh
-annotations:
-
-```yaml
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: my-exciting-data
-  annotations:
-    dotmeshName: myapp
-	dotmeshSubdot: db
-spec:
-  storageClassName: dotmesh
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-```
-
-In that case, the volume will be mounted from the subdot `db` of the dot `myapp`.
-
 ### Using the `dm` client to control Dotmesh
 
 In order to manage branches and commits, push and pull dots, and so
@@ -149,5 +107,6 @@ $ <kbd>dm list</kbd>
 ...
 </pre></div>
 
+## What's next?
 
-
+* [Adding dots to Kubernetes YAMLs](/tasks/kubernetes/).

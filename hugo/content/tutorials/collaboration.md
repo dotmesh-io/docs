@@ -1,7 +1,7 @@
 +++
 draft = false
-title = "Collaborating"
-synopsis = "Using Dotmesh to collaborate"
+title = "3. Collaborating with Dotmesh"
+synopsis = "Using Dotmesh to share problem states with a colleague"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
 order = "1"

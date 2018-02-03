@@ -1,6 +1,6 @@
 +++
 draft = false
-title = "Hello Dotmesh on Docker"
+title = "1. Hello Dotmesh on Docker"
 synopsis = "Getting Started with Dotmesh on Docker"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
@@ -18,7 +18,7 @@ order = "1"
 ## Clone the demo app
 
 ```plain
-git clone https://github.com/datamesh-io/moby-counter
+git clone https://github.com/dotmesh-io/moby-counter
 cd moby-counter
 docker-compose up -d
 ```
@@ -84,7 +84,7 @@ Then, add a collaborator, by going to the _Settings_ page for a volume, and type
 Finally, that user can then `clone` your volume like this:
 
 ```plain
-dm remote add hub <their-username>@cloud.datamesh.io
+dm remote add hub <their-username>@dothub.com
 dm clone hub <your-username>/<your-volume-name> [<your-branch-name>]
 ```
 

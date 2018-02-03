@@ -12,4 +12,4 @@ order = "2"
 
 See the [GitHub releases page for dotmesh](https://github.com/dotmesh-io/dotmesh/releases) for details on the open source releases.
 
-The [Datamesh Hub](https://hub.dotmesh.io) SaaS service is continuously delivered.
+The [Dothub](https://dothub.com) SaaS service is continuously delivered.

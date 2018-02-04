@@ -277,6 +277,8 @@ and you'll see pirate flags.
 
 It means that when someone else, potentially on a different team, certainly on a different computer, quite possibly on the other side of the planet, comes along to try and fix the bug, they'll be able to pull down and have the reproducer right there in front of them.
 
+_NB: in the example above, it would be better if the URLs linked to did pin specific commits, rather than just referring to branches where the latest commits can change over time._
+
 ## What next?
 
 OK, so you've filed all your issues.

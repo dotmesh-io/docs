@@ -12,7 +12,7 @@ order = "1"
 
 {{% overview %}}
 * [Dotmesh on Docker](/install-setup/docker/).
-* Or try this example on our [hosted demo](/install-setup/katacoda/).
+* Or try this example on our [hosted tutorial](/install-setup/katacoda/).
 {{% /overview %}}
 
 ## Clone the app
@@ -204,6 +204,6 @@ Now navigate to http://localhost:8100/ and you should see the same data that you
 
 ## What's next?
 
-Try a more advanced version of the demo app with multiple microservices and polyglot persistence, and start building up a set of interesting states for your team in:
+Try a more advanced version of the app with multiple microservices and polyglot persistence, and start building up a set of interesting states for your team in:
 
 * [Using Dotmesh as a Library](/tutorials/library/).

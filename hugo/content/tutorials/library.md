@@ -284,4 +284,4 @@ What next?
 
 Next up, let's pretend to be one of the developers who has to fix one of the bugs that we've captured in the library.
 
-* [Collaborating with dotmesh and dothub.](/tutorials/collaboration/).
+* [Collaborating with dotmesh and dothub](/tutorials/collaboration/).

@@ -141,7 +141,7 @@ Then tell the person who sent you here to add you as a collaborator to their dot
 Next, let's set up some environment variables.
 
 ```plain
-export INITIAL_USER=<their-username>
+export DOT_OWNER=<their-username>
 export COLLABORATOR=<your-username>
 ```
 
@@ -157,7 +157,7 @@ dm cluster init
 Authenticate to the hub:
 
 {{< copyable name="step-12" >}}
-dm remote add hub ${HUB_USERNAME}@dothub.com
+dm remote add hub ${COLLABORATOR}@dothub.com
 {{< /copyable >}}
 
 You will be prompted for your API key, which you can get from the [Settings/API Key page](https://dothub.com/ui/settings/apikey).
@@ -172,7 +172,7 @@ cd moby-counter
 Clone and switch to the dot before you start the app:
 
 {{< copyable name="step-14" >}}
-dm clone hub $HUB_USERNAME/moby_counter
+dm clone hub ${DOT_OWNER}/moby_counter
 {{< /copyable >}}
 
 Make `moby_counter` the current datadot.

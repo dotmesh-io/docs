@@ -222,7 +222,7 @@ You will need to give your friend or colleague permission to collaborate on a do
 Ask your friend to set an environment variable referring to your dothub username:
 ```plain
 export DOTHUB_USER=<your-username>
-
+```
 
 {{< copyable name="step-24" >}}
 dm clone origin ${DOTHUB_USER}/mydata newbranch

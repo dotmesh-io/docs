@@ -10,7 +10,7 @@ order = "1"
     parent = "tutorials"
 +++
 
-In this tutorial, we'll show how to use dotmesh to capture a library of states so that you can avoid excess clicking and easily capture, organize and share problem states.
+In this tutorial, we'll show how to use dotmesh to capture a library of states so that you can avoid excess clicking and easily capture, organize and share interesting states.
 
 {{% overview %}}
 * [Dotmesh on Docker](/install-setup/docker/).
@@ -71,19 +71,19 @@ Let's get our hands on the app:
 git clone git@github.com:dotmesh-io/moby-counter
 cd moby-counter
 git checkout multiple-services
-{{< /copyable >}}  
+{{< /copyable >}}
 
 And start it up (requires [Dotmesh on Docker](/install-setup/docker/) and Docker Compose):
 
 {{< copyable name="step-02" >}}
 docker-compose up -d
-{{< /copyable >}}  
+{{< /copyable >}}
 
 Notice now that there is a new dot:
 
 {{< copyable name="step-03" >}}
 dm list
-{{< /copyable >}}  
+{{< /copyable >}}
 
 Why is it called `mobycounter_app`?
 
@@ -91,15 +91,195 @@ Docker Compose automatically prefixes the name of the folder that the compose fi
 
 Dotmesh strips off everything after the `.` because it puts multiple subdots inside a single dot.
 
+Make it the active dot.
+
+{{< copyable name="step-03" >}}
+dm switch mobycounter_app
+{{< /copyable >}}
+
+We're ready to start capturing states!
+
 ## Let's capture some states and make a library!
 
 There are at least four interesting states we can capture with this app, one useful to avoid excess clicking, and three which represent problem states which need fixes in the code:
 
-1. A users database with more than 10 users in it, which will be useful for testing pagination in the admin panel (which doesn't exist yet).
-2. An _actual bug_ that shows up sometimes when you click enough times in certain parts of the screen.
+1. **Pagination.** A users database with more than 10 users in it, which will be useful for testing pagination in the admin panel (which doesn't exist yet).
+2. **The bug bug.** A bizarre _actual bug_ that shows up sometimes when you click enough times in certain parts of the screen.
    You might manage to cause it but not know how you did it!
-   That makes it hard to explain how to reproduce it! 
-3. A bug when uploading images with tall aspect ratios.
-4. 
+   That makes it hard to explain how to reproduce it.
+3. **Aspect ratios.** A display bug with how uploaded images with tall aspect ratios look. This is probably one for the frontend team.
+4. **Security vulerability.** The best one: a security vulnerability!
+   You've figured out how an unprivileged user can set the _default image_ for _all new users_!
+   Oh no!
+   Better get a reproducer over to the security team ASAP.
+
+Note that all of the states depend on the state of _more than one of the databases_!
+Good thing we can capture more than one of them at a time.
+
+### First, capture the empty state on the master branch
+
+{{< copyable name="step-04" >}}
+dm commit -m "Empty state"
+{{< /copyable >}}
+
+This way we can come back to the master branch each time we want to create a new state.
+
+### Big users database
+
+{{< copyable name="step-05" >}}
+dm checkout -b many-users
+{{< /copyable >}}
+
+Go to the app at [localhost:8100](http://localhost:8100) and sign up 11 times (just by putting a new username in the login field each time).
+Sign out by just reloading the page (stripping `?user=` off the URL if necessary).
+
+{{< copyable name="step-06" >}}
+dm commit -m "Created user1...user11 in user databases."
+{{< /copyable >}}
+
+Wow, that was boring.
+Wouldn't it be nice if neither you nor anyone else on the team ever had to do that ever again.
+
+{{< copyable name="step-07" >}}
+dm push hub mobycounter_app many-users
+{{< /copyable >}}
+
+Now you don't, you can just pull down this state next time you need to test pagination of users.
+
+Switch back to master for the next one.
+
+{{< copyable name="step-08" >}}
+dm checkout master
+{{< /copyable >}}
 
 
+### Bizarre "actual bug"
+
+{{< copyable name="step-09" >}}
+dm checkout -b bug-bug
+{{< /copyable >}}
+
+Go to the app at [localhost:8100](http://localhost:8100) and click 5 times in the top 100px of the screen.
+You should see a real bug show up.
+
+Now, if you didn't know that it only happened in those specific circumstances, and you created the state by accident, and then a co-worker struggled to reproduce it, that would be pretty annoying!
+Let's keep this valuable and weird state safe until we get a chance to debug it.
+
+{{< copyable name="step-10" >}}
+dm commit -m "Huh, a real bug shows up on the screen, wtf."
+{{< /copyable >}}
+
+{{< copyable name="step-11" >}}
+dm push hub mobycounter_app bug-bug
+{{< /copyable >}}
+
+Maybe you'll get round to figuring this one out, or maybe a coworker will need to pick it up because you're on vacation and it's affecting one of your biggest customers.
+Good thing it's stored in dothub so that whoever needs to reproduce the state will be able to pick it up whenever they need to.
+
+Switch back to master for the next one.
+
+{{< copyable name="step-12" >}}
+dm checkout master
+{{< /copyable >}}
+
+
+### Aspect ratio bug
+
+{{< copyable name="step-13" >}}
+dm checkout -b aspect-ratios
+{{< /copyable >}}
+
+Go to the app at [localhost:8100](http://localhost:8100) and register (log in) as a user called `fred`.
+Now go and find an image file with a tall aspect ratio.
+I recommend searching Google Images for a picture of the Eiffel Tower.
+
+Uplaod it as that user's custom image.
+
+{{< copyable name="step-14" >}}
+dm commit -m "
+    Log in as 'fred' to see that only the top half of the uploaded image
+    will show up.
+"
+{{< /copyable >}}
+
+{{< copyable name="step-15" >}}
+dm push hub mobycounter_app aspect-ratios
+{{< /copyable >}}
+
+Now you can send this off to the frontend team to sort out.
+
+Switch back to master for the next one.
+
+{{< copyable name="step-16" >}}
+dm checkout master
+{{< /copyable >}}
+
+
+### Security vulnerability
+
+{{< copyable name="step-13" >}}
+dm checkout -b security-vulnerability
+{{< /copyable >}}
+
+Go to the app at [localhost:8100](http://localhost:8100) and register (log in) as a user with an _empty string username_.
+Now go and find a scary looking image that's the sort of thing a hacker would use to deface your app.
+I recommend searching Google Images for a pirate flag.
+
+Upload it as that user's custom image.
+
+Observe that upon logging out (refreshing) and then creating a _new_ user, say `georgina`, that Georgina's account will now appear to be compromised, and will show the pirate flag when it should show the dotmesh logo!
+
+{{< copyable name="step-14" >}}
+dm commit -m "
+   Eek - register as any new user (e.g. 'newuser1') to see
+   that all new accounts are showing a compromised image.
+"
+{{< /copyable >}}
+
+{{< copyable name="step-15" >}}
+dm push hub mobycounter_app security-vulnerability
+{{< /copyable >}}
+
+Now you can send this off to the security team to sort out.
+Let's hope they write an acceptance test to catch this unexpected interaction and make sure it never comes back!
+
+{{< copyable name="step-16" >}}
+dm checkout master
+{{< /copyable >}}
+
+## Library created
+
+OK, so you've created four branches and pushed them all to dothub.
+
+What now?
+You might want to open some issues for the bugs in your issue tracker.
+
+In the issue tracker, you can link to the specific branch in the dothub, along with the specific branch of the code (`multiple-services`) that are needed _together_ to reproduce the issue.
+
+So for example, for the security issue, you might write up the issue as:
+```plain
+Security issue
+--------------
+
+A regular user managed to set the default image for all new users - by creating
+a user account with an empty string username.
+
+Reproducer here:
+https://dothub.com/ui/lukemarsden/mobycounter_app/tree/pirates-of-the-carribean
++
+https://github.com/dotmesh-io/moby-counter/tree/multiple-services
+
+Register as any new user that doesn't exist in the data commit, e.g. newuser1.
+```
+
+Being able to pin specific versions of data + code is what makes this workflow so powerful.
+It means that when someone else, potentially on a different team, certainly on a different computer, comes along to try and fix the bug, they'll have the reproducer right there in front of them.
+
+## What next?
+
+OK, so you've filed all your issues.
+What next?
+
+Next up, let's pretend to be one of the developers who has to fix one of the bugs that we've captured in the library.
+
+* [Collaborating with dotmesh and dothub.](/tutorials/collaboration/).

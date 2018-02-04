@@ -44,11 +44,11 @@ In particular, it demonstrates Dotmesh's support for _polyglot persistence_: mul
 
 ## Using subdots to support polyglot persistence
 
-Take a look at the [`docker-compose.yml`](https://github.com/dotmesh-io/moby-counter/blob/multiple-services/docker-compose.yml) file in this branch.
-
 <img src="/hugo/library-01-one-does-not-simply.png" alt="one does not simply capture the state of three microservices at once (meme based on 'one does not simply walk into mordor' from the lord of the rings)" style="width: 80%;" />
 
-_Yes we can!_
+_Actually, we can!_
+
+Take a look at the [`docker-compose.yml`](https://github.com/dotmesh-io/moby-counter/blob/multiple-services/docker-compose.yml) file in this branch.
 
 Note how it has _three_ stateful components (excerpt):
 
@@ -174,7 +174,7 @@ dm push hub mobycounter_app bug-bug
 {{< /copyable >}}
 
 Maybe you'll get round to figuring this one out, or maybe a coworker will need to pick it up because you're on vacation and it's affecting one of your biggest customers.
-Good thing it's stored in dothub so that whoever needs to reproduce the state will be able to pick it up whenever they need to.
+Good thing it's stored in **dothub** so that whoever needs to reproduce the state will be able to pick it up whenever they need to.
 
 Switch back to master for the next one.
 
@@ -249,12 +249,12 @@ dm checkout master
 
 ## Library created
 
-OK, so you've created four branches and pushed them all to dothub.
+OK, so you've created four branches and pushed them all to **dothub**.
 
 What now?
 You might want to open some issues for the bugs in your issue tracker.
 
-In the issue tracker, you can link to the specific branch in the dothub, along with the specific branch of the code (`multiple-services`) that are needed _together_ to reproduce the issue.
+In the issue tracker, you can link to the specific branch in the **dothub**, along with the specific branch of the code (`multiple-services`) that are needed _together_ to reproduce the issue.
 
 So for example, for the security issue, you might write up the issue as:
 ```plain
@@ -265,15 +265,17 @@ A regular user managed to set the default image for all new users - by creating
 a user account with an empty string username.
 
 Reproducer here:
-https://dothub.com/ui/lukemarsden/mobycounter_app/tree/pirates-of-the-carribean
+https://dothub.com/ui/lukemarsden/mobycounter_app/tree/security-vulnerability
 +
 https://github.com/dotmesh-io/moby-counter/tree/multiple-services
 
-Register as any new user that doesn't exist in the data commit, e.g. newuser1.
+Register as any new user that doesn't exist in the data commit, e.g. newuser1,
+and you'll see pirate flags.
 ```
 
-Being able to pin specific versions of data + code is what makes this workflow so powerful.
-It means that when someone else, potentially on a different team, certainly on a different computer, comes along to try and fix the bug, they'll have the reproducer right there in front of them.
+**Being able to pin specific versions of data + code and run them together anywhere is what makes this workflow so powerful.**
+
+It means that when someone else, potentially on a different team, certainly on a different computer, quite possibly on the other side of the planet, comes along to try and fix the bug, they'll be able to pull down and have the reproducer right there in front of them.
 
 ## What next?
 

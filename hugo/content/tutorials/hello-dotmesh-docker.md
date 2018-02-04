@@ -130,7 +130,7 @@ When they've signed up, add them as a collaborator, by going to the _Settings_ p
 Finally, send them a link to the following section so that they can clone your datadot and then you can finish the tutorial together!
 
 
-## Instructions for your co-worker
+### Instructions for your co-worker
 
 So you been invited to pull down someone else's datadot?
 Great, let's do it!

@@ -25,7 +25,7 @@ Dotmesh borrows a lot of its concepts and language from Git, but there are some 
 
 ## How does Dotmesh differ from dat?
 
-dat project is a decentralized network for sharing files while Dotmesh treats multiple databases (mysql, postgres, redis etc) in cloud-native (docker, kubernetes) apps like a git repo. The effect is that Dotmesh snapshots databases with the added bonus that it can capture multiple databases in a single atomic commit.
+The dat project is a decentralized network for sharing files while Dotmesh treats multiple databases (mysql, postgres, redis etc) in cloud-native (docker, kubernetes) apps like a git repo. So, Dotmesh is a database snapshotting tool with the added bonus that it can capture multiple databases in a single atomic commit.
 
 ## How does Dotmesh differ from Portworx?
 

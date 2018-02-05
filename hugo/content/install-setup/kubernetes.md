@@ -63,6 +63,12 @@ deployment "dotmesh-dynamic-provisioner" configured
 storageclass "dotmesh" configured
 </pre></div>
 
+**NOTE** if you are using Kubernetes > `1.8` then use the following URL:
+
+<div class="highlight"><pre class="chromaManual">
+$ <kbd>kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml</kbd>
+</pre></div>
+
 By default, that will install Dotmesh on every node in your
 cluster. Dot storage will be in a 10GiB file created in
 `/var/lib/dotmesh` in the host filesystem; that's fine for light

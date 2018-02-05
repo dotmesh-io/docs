@@ -227,7 +227,7 @@ I recommend searching Google Images for a pirate flag.
 
 Upload it as that user's custom image.
 
-Observe that upon logging out (refreshing) and then creating a _new_ user, say `georgina`, that Georgina's account will now appear to be compromised, and will show the pirate flag when it should show the dotmesh logo!
+Observe that upon logging out (refreshing) and then creating a _new_ user, say `georgina`, that Georgina's account will now appear to be compromised, and will show the pirate flag when it should show the dotmesh logo as the default image (before she's uploaded anything)!
 
 {{< copyable name="step-14" >}}
 dm commit -m "

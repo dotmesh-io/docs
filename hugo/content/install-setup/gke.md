@@ -18,7 +18,7 @@ order = "1"
 
 This guide will show you how to install dotmesh onto a Kubernetes cluster provisioned on [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
 
-### Authenticate
+## Authenticate
 
 First - let's authenticate our `gcloud` cli and point to the correct project.
 
@@ -63,7 +63,7 @@ gke-dotmesh-gke-cluster-default-pool-3144fa14-ggl9  ...  v1.8.6-gke.0   35.189.1
 gke-dotmesh-gke-cluster-default-pool-3144fa14-tdhw  ...  v1.8.6-gke.0   35.197.226.3     Ubuntu 16.04.3 LTS  ...
 </pre></div>
 
-### Cluster Admin Role
+## Cluster Admin Role
 
 We need to ensure that we are known to the Kubernetes cluster as an administrator - to do this, we create a `cluster-admin` binding for our user:
 
@@ -74,7 +74,7 @@ $ <kbd>kubectl create clusterrolebinding cluster-admin-binding \
 clusterrolebinding "cluster-admin-binding" created
 </pre></div>
 
-### Create namespace & secrets
+## Create namespace & secrets
 
 Create the namespace and set the admin password and api key for your dotmesh cluster:
 
@@ -89,7 +89,7 @@ secret "dotmesh" created
 $ <kbd>rm dotmesh-admin-password.txt dotmesh-api-key.txt</kbd>
 </pre></div>
 
-### Etcd operator
+## Etcd operator
 
 Install the etcd operator ready for our dotmesh cluster:
 
@@ -100,7 +100,7 @@ $ <kbd>kubectl apply -f https://get.dotmesh.io/yaml/etcd-operator-dep.yaml</kbd>
 deployment "etcd-operator" configured
 </pre></div>
 
-### Dotmesh
+## Dotmesh
 
 Use the following command to apply the YAML configuration for running dotmesh:
 
@@ -119,7 +119,7 @@ deployment "dotmesh-dynamic-provisioner" configured
 storageclass "dotmesh" configured
 </pre></div>
 
-### Customising the installation
+## Customising the installation
 
 If you want a non-default installation - for instance, only running
 Dotmesh on those of your nodes that have capacious fast disks, as
@@ -127,7 +127,7 @@ those are the only ones where stateful containers will reside - the
 YAML we supply is easy to customise. Check out the [Kubernetes YAML
 reference guide](/references/kubernetes/) for the full run-down!
 
-### Using the `dm` client to control Dotmesh
+## Using the `dm` client to control Dotmesh
 
 In order to manage branches and commits, push and pull dots, and so
 on, you'll need to connect the `dm` client to your Kubernetes-hosted

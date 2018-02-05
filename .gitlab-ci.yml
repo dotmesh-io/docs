@@ -82,3 +82,5 @@ deploy_production:
   script:
     - echo "deploying image - $IMAGE:$VERSION to $NAMESPACE"
     - bash ./scripts/gcloud.sh bash /app/scripts/deploy.sh
+  only:
+    - master

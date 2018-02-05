@@ -156,10 +156,11 @@ $ <kbd>kubectl create secret generic gitlaburl --from-file=gitlaburl.txt -n gitl
 $ <kbd>rm -f runnertoken.txt gitlaburl.txt</kbd>
 </pre></div>
 
-Now we actually deploy the runner using a local manifest from the example repo:
+Now we actually deploy the runner using a local manifest from the example repo and check it's status:
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>kubectl apply -f gitlab-runner/deployment.yaml</kbd>
+$ <kbd>kubectl get po -n gitlab-runner -w</kbd>
 </pre></div>
 
 

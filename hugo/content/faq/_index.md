@@ -23,6 +23,23 @@ Dotmesh borrows a lot of its concepts and language from Git, but there are some 
 * A branch cannot be rolled back to before its origin commit.
   Unlike `git`, you cannot roll a branch back to a commit from before it was started.
 
+## How does Dotmesh differ from dat?
+
+dat project is a decentralized network for sharing files while Dotmesh treats multiple databases (mysql, postgres, redis etc) in cloud-native (docker, kubernetes) apps like a git repo. The effect is that Dotmesh snapshots databases with the added bonus that it can capture multiple databases in a single atomic commit.
+
+## How does Dotmesh differ from Portworx?
+
+Portworx and Dotmesh are really tackling different problems. We believe that Portworx is tackling storage for containers in production, with synchronously replicated block storage, the adoption of which will typically be an operations decision. This is great and it's a necessary component for many customers, especially on-prem where you don't have technology like EBS or GCE PD available (or where that technology is lacking).
+
+Dotmesh on the other hand is tackling data management for cloud native apps – and it's starting with a developer tools focus. Our vision is to be able to capture, organize and share application states, i.e. snapshots of entire applications. Entire cloud native apps are often made up out of many microservices with polyglot persistence – that is, several of your microservices have their own databases. We solve that by each datadot (the unit that dotmesh operates on) being capable of hosting multiple databases for different microservices in subdots (/concepts/what-is-a-datadot/#subdots), and then being able to treat the entire datadot like a git repo: where you can commit, branch, push and pull it.
+
+Rather than trying to build another synchronously replicated block storage system, we're tackling the broader, more workflow-focused problem of getting the data you need to the right place throughout the software development lifecycle. 
+
+## How does dotmesh differ from Rook?
+
+We see Rook in the same category as Portworx, it's storage for containers in production. We believe new storage and data management tech should be built assuming public cloud first – and so it needs to make sense to run it on top of an EBS or a GCE PD.
+
+
 ## What is DotOps?
 
 DotOps describes the new workflows that are enabled by using Dotmesh in your software development lifecycle, such as sharing dots with colleagues to debug problem states, or pushing dots from CI when a test fails.

@@ -178,7 +178,7 @@ $ <kbd>cat ~/.dotmesh/config | jq .Remotes.local.ApiKey</kbd>
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>dm remote -v</kbd>
-  hub	alaric@saas.dotmesh.io
+  hub	alaric@dothub.com
   test  alaric@test-cluster.local
 <em>* local	admin@127.0.0.1</em>
 </pre></div>
@@ -194,12 +194,12 @@ line.
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>dm remote -v</kbd>
-  hub	alaric@saas.dotmesh.io
+  hub	alaric@dothub.com
   test  alaric@test-cluster.local
 * local	admin@127.0.0.1
 $ <kbd>dm remote rm test</kbd>
 $ <kbd>dm remote -v</kbd>
-  hub	alaric@saas.dotmesh.io
+  hub	alaric@dothub.com
 * local	admin@127.0.0.1
 </pre></div>
 
@@ -207,11 +207,11 @@ $ <kbd>dm remote -v</kbd>
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>dm remote -v</kbd>
-  hub	alaric@saas.dotmesh.io
+  hub	alaric@dothub.com
 <em>* local</em>	admin@127.0.0.1
 $ <kbd>dm remote switch hub</kbd>
 $ <kbd>dm remote -v</kbd>
-<em>* hub</em>	alaric@saas.dotmesh.io
+<em>* hub</em>	alaric@dothub.com
   local	admin@127.0.0.1
 </pre></div>
 

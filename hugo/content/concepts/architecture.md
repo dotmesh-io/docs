@@ -90,7 +90,7 @@ port 42380.
 
 Dotmesh stores Dot content in ZFS. It will use a pool called `pool`;
 if one does not exist, it will create a ten GiB file called
-`/var/log/dotmesh/dotmesh_data` and use that as a ZFS pool. That's
+`/var/lib/dotmesh/dotmesh_data` and use that as a ZFS pool. That's
 sufficient for casual use of Dotmesh, but serious users will want to
 create their own zpool called `pool`, either on a dedicated disk
 partition or a larger file.
@@ -121,10 +121,10 @@ system functionality.
 ## Inter-cluster communications.
 
 Communication between your local cluster and the Hub is via HTTPS on
-port 6969. This includes both API traffic as documented in the [API
+port 443. This includes both API traffic as documented in the [API
 manual](../../references/api/), and the transfer of Dot filesystem
 data. Please make sure all your Dotmesh nodes are able to connect to
-`saas.dotmesh.io` on port 6969 for the Hub to work correctly.
+`dothub.com` on port 6969 for the Hub to work correctly.
 
 ## Docker and Kubernetes.
 
@@ -162,11 +162,11 @@ Kubernetes integration guides](/install-setup/).
 
 Other than asking Docker or Kubernetes to attach subdots as container
 volumes, the main way users interact with Dotmesh is via the `dm`
-command-line client. This communicates with the cluster via HTTP (or
-HTTPS when talking to the Hub) on port 6969, simply by [invoking the
-API](../../references/api/). The one exception is when the user performs
-`dm cluster init`, `dm cluster join`, `dm cluster reset` or `dm
-cluster upgrade`, which also communicate with Docker and ZFS to
-control Dotmesh containers and configure the ZFS pools.
+command-line client. This communicates with the cluster via HTTP on
+port 6969 (or HTTPS on port 443 when talking to the Hub), simply by
+[invoking the API](../../references/api/). The one exception is when
+the user performs `dm cluster init`, `dm cluster join`, `dm cluster
+reset` or `dm cluster upgrade`, which also communicate with Docker and
+ZFS to control Dotmesh containers and configure the ZFS pools.
 
 Further details on the `dm` client and how it obtains the details required to invoke the API on your local cluster can be found in the [`dm` command-line reference guide](../../references/cli/)

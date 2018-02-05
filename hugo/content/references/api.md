@@ -107,7 +107,7 @@ useful with the Hub, and some are only useful with a local cluster.
 When connecting to the Hub, you'll need to know the user's Hub
 username and their API key. They can get their API key from [the Settings/API Key page](https://saas.dotmesh.io/ui/settings/apikey).
 
-The URL to send the JSON-RPC POSTs to is `https://saas.dotmesh.io:6969/rpc`.
+The URL to send the JSON-RPC POSTs to is `https://dothub.com:443/rpc`.
 
 It's also possible to authenticate to the API by submitting a user's
 password instead of their API key.

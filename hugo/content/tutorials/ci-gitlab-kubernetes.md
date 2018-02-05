@@ -1,6 +1,6 @@
 +++
 draft = false
-title = "Capture failed CI runs in GitLab"
+title = "7. CI with GitLab and Kubernetes"
 synopsis = "Save failed CI runs"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z

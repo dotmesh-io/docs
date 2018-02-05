@@ -46,8 +46,11 @@ This will set up a single-instance cluster on your local machine.
 
 Verify that the `dm` client can talk to the `dotmesh-server`:
 {{< copyable name="step-4" >}}
-dm list
+dm version
 {{< /copyable >}} 
+
+You should see the client and server version on the screen.
+If this works, it means the client was able to communicate with the server.
 
 If the installation fails, please [report an issue](https://github.com/dotmesh-io/dotmesh).
 You can also experiment in our [online learning environment](/install-setup/katacoda/).
@@ -57,7 +60,8 @@ Thanks!
 
 Now that you've got `dm` installed on Docker, the Docker integration will work automatically.
 
-Take it for a spin with the [Basic Docker demo](/tutorials/hello-dotmesh-docker/).
+* Take it for a spin with the [Hello Dotmesh tutorial](/tutorials/hello-dotmesh-docker/).
+* Learn about [Using dots in Docker Compose](/tasks/docker-compose).
 
 ## Clustering
 

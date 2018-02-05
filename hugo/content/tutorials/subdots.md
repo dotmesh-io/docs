@@ -1,6 +1,6 @@
 +++
 draft = false
-title = "Subdots on Docker"
+title = "9. Subdots on Docker"
 synopsis = "Capturing multiple stateful components in a single commit"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z

@@ -1,6 +1,6 @@
 +++
 draft = false
-title = "Capture failed CI runs in Travis"
+title = "5. Capture failed CI runs in Travis"
 synopsis = "Save failed CI runs"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
@@ -58,7 +58,7 @@ Your testing scripts will need access to the API key. You can save it either as 
 ### Modify your travis.yml to initialize dotmesh
 Initializing dotmesh using the following process:
 
-1. Download the dotmesh client `dm`: `sudo curl -oL /usr/local/bin/dm https://get.datamesh.io/$(uname -s)/dm && chmod +x /usr/local/bin/dm`.
+1. Download the dotmesh client `dm`: `sudo curl -oL /usr/local/bin/dm https://get.dotmesh.io/$(uname -s)/dm && chmod +x /usr/local/bin/dm`.
 2. Initialize a dotmesh cluster: `dm cluster init`
 3. Add the dothub as a remote: `dm remote add dothub <youraccount>@dothub.com` . This step is optional; you always can capture states and keep them local. However, it is extremely useful to be able to save your states in a central hub, and recall them afterwards.
 
@@ -72,7 +72,7 @@ script:
 - make test
 ```
 
-In this example, our `Makefile` target named `test` just runs `docker-compose -f docker-compose.yml run test`. In order to use datamesh volumes instead of the usual ephemeral directories, we extend our compose file with:
+In this example, our `Makefile` target named `test` just runs `docker-compose -f docker-compose.yml run test`. In order to use dotmesh volumes instead of the usual ephemeral directories, we extend our compose file with:
 
 ```yml
 volumes:

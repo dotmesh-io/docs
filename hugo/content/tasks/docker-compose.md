@@ -1,6 +1,6 @@
 +++
 draft = false
-title = "Docker Compose"
+title = "Using dots in Docker Compose"
 synopsis = "Adding dots to Docker Compose files."
 knowledgelevel = ""
 date = 2017-12-20T11:17:29Z

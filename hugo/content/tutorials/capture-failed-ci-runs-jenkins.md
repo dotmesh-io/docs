@@ -1,6 +1,6 @@
 +++
 draft = false
-title = "Capture failed CI runs in Jenkins"
+title = "6. Capture failed CI runs in Jenkins"
 synopsis = "Save failed CI runs"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
@@ -39,14 +39,14 @@ Installing Jenkins is beyond the scope of this example, please see the Jenkins i
 
 1. Run your Jenkins server. In our case, we are running a simple one-node master/agent. Adjust your volumes and ports if you want to customize. Note that you need the `docker` client binary installed, which, for reasons unknown, is not included with the jenkins image. You either can install it with `apt` or bind-mount it in from another container, as we have done.
 
-```
+```plain
 $ docker run -v dockerbin:/usr/local/bin --rm docker
 $ docker run -p 8080:8080 -p 50000:50000 -v /var/run/docker.sock:/var/run/docker.sock -v jenkins_home:/var/jenkins_home -v dockerbin:/usr/local/sbin --group-add root jenkins/jenkins:lts
 ```
 
 2. Find your initial admin password key in the logs. It looks something like:
 
-```
+```plain
 *************************************************************
 *************************************************************
 *************************************************************
@@ -88,7 +88,7 @@ Your Jenkins scripts will need access to the API key. Save it as a "Global Crede
 ### Modify your Jenkinsfile to initialize dotmesh
 Initializing dotmesh using the following process:
 
-1. Download the dotmesh client `dm`: `curl -oL /usr/local/bin/dm https://get.datamesh.io/$(uname -s)/dm && chmod +x /usr/local/bin/dm`. If you are running Jenkins in a container using the [default image](https://hub.docker.com/r/jenkins/jenkins/), the path `/usr/local/bin` is owned by root, while Jenkins runs as `USER jenkins`. In that case, we recommend installing in `/var/jenkins_hom/bin/`.
+1. Download the dotmesh client `dm`: `curl -oL /usr/local/bin/dm https://get.dotmesh.io/$(uname -s)/dm && chmod +x /usr/local/bin/dm`. If you are running Jenkins in a container using the [default image](https://hub.docker.com/r/jenkins/jenkins/), the path `/usr/local/bin` is owned by root, while Jenkins runs as `USER jenkins`. In that case, we recommend installing in `/var/jenkins_hom/bin/`.
 2. Initialize a dotmesh cluster: `dm cluster init`
 3. Add the dothub as a remote: `dm remote add dothub <youraccount>@dothub.com` . This step is optional; you always can capture states and keep them local. However, it is extremely useful to be able to save your states in a central hub, and recall them afterwards.
 
@@ -99,13 +99,13 @@ A normal test run would include a Jenkinsfile snippet that looks something like 
 
 ```groovy
 stage('test') {
-		steps {
-				sh 'make test'
-		}
+    steps {
+        sh 'make test'
+    }
 }
 ```
 
-In this example, our `Makefile` target named `test` just runs `docker-compose -f docker-compose.yml run test`. In order to use datamesh volumes instead of the usual ephemeral directories, we extend our compose file with:
+In this example, our `Makefile` target named `test` just runs `docker-compose -f docker-compose.yml run test`. In order to use dotmesh volumes instead of the usual ephemeral directories, we extend our compose file with:
 
 ```yml
 volumes:
@@ -123,9 +123,9 @@ Once the tests are done, we want to capture the state of CI. However, we will no
 
 ```groovy
 post {
-		always {
-				sh 'dm switch ${VOL_ID} && dm commit -m "CI run $(date)" && dm push dothub --remote-name ${REMOTE_ID}'
-		}
+    always {
+        sh 'dm switch ${VOL_ID} && dm commit -m "CI run $(date)" && dm push dothub --remote-name ${REMOTE_ID}'
+    }
 }
 ```
 

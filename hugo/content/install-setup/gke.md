@@ -12,10 +12,11 @@ order = "1"
 
 ## Requirements
 
+{{% overview %}}
 * An account on the [Google Cloud Console](https://console.cloud.google.com)
 * The [Cloud SDK](https://cloud.google.com/sdk/downloads) (with the `gcloud` command)
 * GKE activated on the [console page](https://console.cloud.google.com/kubernetes/list)
-
+{{% /overview %}}
 
 ## How to install Dotmesh on GKE
 

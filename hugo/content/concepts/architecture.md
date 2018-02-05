@@ -104,11 +104,11 @@ via two means:
    42380.
  * HTTP via port 6969.
 
-<div class="alert alertNotice">WARNING: Communications via HTTP on
+<div class="alert alertNotice"><p>WARNING: Communications via HTTP on
 port 6969 aren't encrypted or protected from attackers in any
 meaningful sense, so please keep those ports locked down in your
 cluster and use a VPN if you're extending a cluster over untrusted
-networks!</div>
+networks!</p></div>
 
 The actual transfer of Dot contents is via HTTP on port 6969, so
 that's where the bulk of the bandwidth will be - route that via a good

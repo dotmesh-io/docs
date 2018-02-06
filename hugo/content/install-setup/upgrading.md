@@ -51,7 +51,7 @@ Apply the latest stable dotmesh YAML:
 kubectl apply -f https://get.dotmesh.io/yaml/dotmesh.yaml
 {{< /copyable >}}
 
-You'll notice the version of `dotmesh-server` are specified in the image tags within the Kubernetes YAML.
+You'll notice the version of `dotmesh-server` is specified in the image tags within the Kubernetes YAML.
 
 Run:
 

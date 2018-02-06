@@ -10,22 +10,53 @@ order = "1"
     parent = "install-setup"
 +++
 
-### Upgrade your node: `dm cluster upgrade`.
+## Upgrading Dotmesh on Docker
 
-This command stops the Dotmesh server on the current node, downloads
-the Dotmesh server Docker image corresponding to the version of the
-`dm` client you're using, and starts it up. You would normally upgrade
-Dotmesh on your node by downloading a new `dm` client binary and
-running `dm cluster upgrade` with it. You can use `dm version` to
-check the client and server versions (make sure you've selected the
-`local` remote!).
+Download the latest stable `dm` client binary:
 
-<div class="highlight"><pre class="chromaManual">
-$ <kbd>dm cluster upgrade</kbd>
-Pulling dotmesh-server docker image... done.
-Stopping dotmesh-server...done.
-Stopping dotmesh-server-inner...done.
-Starting dotmesh server... done.
-</pre></div>
+{{< copyable name="step-1" >}}
+sudo curl -sSL -o /usr/local/bin/dm \
+    https://get.dotmesh.io/$(uname -s)/dm
+{{< /copyable >}}
 
+Run:
 
+{{< copyable name="step-2" >}}
+dm cluster upgrade
+{{< /copyable >}}
+
+This will download the `dotmesh-server` docker image corresponding to the version of the `dm` client you're using.
+It will then stop the Dotmesh server on the current node, and start the new version.
+
+Run:
+
+{{< copyable name="step-3" >}}
+dm version
+{{< /copyable >}}
+
+To check that the version of the client and the server match, and are up-to-date.
+
+## Upgrading Dotmesh on Kubernetes
+
+Download the latest stable `dm` client binary:
+
+{{< copyable name="step-4" >}}
+sudo curl -sSL -o /usr/local/bin/dm \
+    https://get.dotmesh.io/$(uname -s)/dm
+{{< /copyable >}}
+
+Apply the latest stable dotmesh YAML:
+
+{{< copyable name="step-5" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh.yaml
+{{< /copyable >}}
+
+You'll notice the version of `dotmesh-server` are specified in the image tags within the Kubernetes YAML.
+
+Run:
+
+{{< copyable name="step-6" >}}
+dm version
+{{< /copyable >}}
+
+To check that the version of the client and the server match, and are up-to-date.

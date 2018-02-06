@@ -74,8 +74,19 @@ server. You shouldn't need to change this.
 
 ## The `dotmesh` ClusterRole.
 
-This is the role Dotmesh will run under. You shouldn't need to change
-this.
+This is the role Dotmesh will run under. You shouldn't need to change this file.
+
+If you are running Kubernetes >= `1.8` then RBAC is probably enabled and you need to create a `cluster-admin` role for your cluster.
+
+Here is an example of adding that role for a gcloud user running a GKE cluster:
+
+<div class="highlight"><pre class="chromaManual">
+$ <kbd>kubectl create clusterrolebinding cluster-admin-binding \
+  --clusterrole cluster-admin \
+  --user "$(gcloud config get-value core/account)"</kbd>
+</pre></div>
+
+The `--user` can be replaced with a local user (e.g. `root`) or another user depending on where your cluster is deployed.
 
 ## The `dotmesh` ClusterRoleBinding.
 

@@ -43,7 +43,7 @@ Then we provision a new Kubernetes cluster of 3 nodes:
 gcloud container clusters create dotmesh-gke-cluster \
   --image-type=ubuntu \
   --tags=dotmesh \
-  --cluster-version=1.8.6-gke.0
+  --cluster-version=1.8.7-gke.1
 {{< /copyable >}}
 
 **NOTE** - At present the cluster needs to use `--image-type=ubuntu` - in upcoming releases this requirement will be removed.

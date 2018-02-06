@@ -117,7 +117,7 @@ Here we can see all the subdots, because we mounted the special name `__root__` 
 Subdots are just directories inside the dot.
 Let's look inside the "uploads" subdot:
 
-{{< copyable name="step-05" >}}
+{{< copyable name="step-06" >}}
 docker run -ti -v mobycounter_app:__root__:/dot --volume-driver dm \
     bash ls -alh /dot/uploads
 {{< /copyable >}}
@@ -125,7 +125,7 @@ docker run -ti -v mobycounter_app:__root__:/dot --volume-driver dm \
 OK, interesting.
 There's a `default.png` here that looks different to the one shipped with the code:
 
-{{< copyable name="step-05" >}}
+{{< copyable name="step-07" >}}
 md5 users/default.png
 docker run -ti -v mobycounter_app:__root__:/dot --volume-driver dm \
     bash md5 /dot/uploads/default.png
@@ -140,14 +140,14 @@ How did the default image get overwritten?
 
 Now let's go and inspect the users database, and see what's going on there.
 
-{{< copyable name="step-06" >}}
+{{< copyable name="step-08" >}}
 docker run -ti --net=XXX --rm jbergknoff/postgresql-client \
     postgresql://postgres:secret@users-db:5432/postgres
 {{< /copyable >}}
 
 At the `pgsql>` prompt:
 
-{{< copyable name="step-07" >}}
+{{< copyable name="step-09" >}}
 SELECT * FROM users;
 {{< /copyable >}}
 
@@ -162,7 +162,7 @@ There was an empty-string username in the response.
 
 Let's go and test our hypothesis by adding some logging to the users service:
 
-```go
+```golang
 func SetImageForUser(w http.ResponseWriter, r *http.Request) {
 
     /* ... */
@@ -186,9 +186,45 @@ func SetImageForUser(w http.ResponseWriter, r *http.Request) {
 
 Now let's rebuild the containers and try reproducing the issue by uploading an image as the user with the empty-string username:
 
-{{< copyable name="step-08" >}}
+{{< copyable name="step-10" >}}
 docker-compose build && docker-compose down && docker-compose up -d
 {{< /copyable >}}
 
 Now go to the app at [http://localhost:8100](http://localhost:8100) and log in without putting anything in the text box.
-Then 
+Then upload a new image, and check the users service docker logs:
+
+{{< copyable name="step-11" >}}
+docker logs XXX
+{{< /copyable >}}
+
+A-ha, yes indeed!
+So, now we:
+
+* can reproduce the problem
+* understand what's causing it
+
+Fixing the code is now the easy bit!
+And writing a test should be straightforward too.
+
+## Exercises for the reader
+
+1. Fix the code.
+2. Write an end-to-end test that proves that the problem is fixed.
+
+Feel free to do these the other way round if you're a fan of test-driven development.
+
+Bonus points for finding the other, related bug.
+
+## What's next?
+
+As part of fixing this problem, we'll want to _write an end-to-end (a.k.a. acceptance or integration) test to ensure that the problem doesn't come back_.
+
+What happens if that test starts failing in the future?
+
+Is there a way to make the CI system automatically push the failed state to the dothub, so that reproducing the failure and minimizing *mean time to clue* next time will be as easy as it was above?
+
+Check out at least one of:
+
+* [Capture failed CI runs in Travis](/tutorials/capture-failed-ci-runs-travis/)
+* [Capture failed CI runs in Jenkins](/tutorials/capture-failed-ci-runs-jenkins/)
+* [CI with GitLab and Kubernetes](/tutorials/ci-gitlab-kubernetes/)

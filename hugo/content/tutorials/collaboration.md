@@ -221,9 +221,10 @@ As part of fixing this problem, we'll want to _write an end-to-end (a.k.a. accep
 
 What happens if that test starts failing in the future?
 
-Is there a way to make the CI system automatically push the failed state to the dothub, so that reproducing the failure and minimizing *mean time to clue* next time will be as easy as it was above?
+Is there a way to make the CI system automatically push the failed state to the dothub?
+This means that reproducing the failure and minimizing *mean time to clue* next time will be as easy as it was above when someone gave us a manually-created reproducer in a datadot?
 
-Check out at least one of:
+## Check out these tutorials
 
 * [Capture failed CI runs in Travis](/tutorials/capture-failed-ci-runs-travis/)
 * [Capture failed CI runs in Jenkins](/tutorials/capture-failed-ci-runs-jenkins/)

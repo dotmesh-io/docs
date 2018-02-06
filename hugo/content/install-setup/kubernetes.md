@@ -109,4 +109,5 @@ $ <kbd>dm list</kbd>
 
 ## What's next?
 
+* [Hello Dotmesh on Kubernetes](/tutorials/hello-dotmesh-kubernetes/).
 * [Adding dots to Kubernetes YAMLs](/tasks/kubernetes/).

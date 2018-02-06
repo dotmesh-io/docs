@@ -21,4 +21,9 @@
     background-color: shade(dmSuccess, Light);
     outline: 1px solid shade(dmSuccess, Dark);
   }
+  .typebase & {
+    p {
+      margin-top: 0;
+    }
+  }
 }

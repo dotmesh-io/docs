@@ -16,19 +16,24 @@ order = "1"
 
 ## How to install Dotmesh on Kubernetes
 
-Before we can install Dotmesh, we need to create the `dotmesh`
-namespace and set up the initial admin password and API keys:
+Before we can install Dotmesh, we need to set out admin password and api key:
 
-<div class="highlight"><pre class="chromaManual">
-$ <kbd>kubectl create namespace dotmesh</kbd>
-namespace "dotmesh" created
-$ <kbd>echo -n '<em>Initial admin password</em>' > dotmesh-admin-password.txt</kbd>
-$ <kbd>echo -n '<em>Initial admin API key</em>' > dotmesh-api-key.txt</kbd>
-$ <kbd>kubectl create secret generic dotmesh --from-file=./dotmesh-admin-password.txt \
-  --from-file=./dotmesh-api-key.txt -n dotmesh</kbd>
-secret "dotmesh" created
-$ <kbd>rm dotmesh-admin-password.txt dotmesh-api-key.txt</kbd>
-</pre></div>
+```plain
+export ADMIN_PASSWORD=apples
+export ADMIN_API_KEY=apples
+```
+
+Then we create the namespace before adding our credentials as secrets:
+
+{{< copyable name="step-01" >}}
+kubectl create namespace dotmesh
+echo -n $ADMIN_PASSWORD > dotmesh-admin-password.txt
+echo -n $ADMIN_API_KEY > dotmesh-api-key.txt
+kubectl create secret generic dotmesh \
+  --from-file=./dotmesh-admin-password.txt \
+  --from-file=./dotmesh-api-key.txt -n dotmesh
+rm dotmesh-admin-password.txt dotmesh-api-key.txt
+{{< /copyable >}}
 
 Dotmesh relies on coreos etcd
 [operator](https://coreos.com/blog/introducing-operators.html) to set
@@ -38,36 +43,23 @@ mirrored a copy of the etcd operator YAML ([part
 2](https://get.dotmesh.io/yaml/etcd-operator-dep.yaml)), but it's
 unmodified so feel free to use your own.
 
-<div class="highlight"><pre class="chromaManual">
-$ <kbd>kubectl apply -f https://get.dotmesh.io/yaml/etcd-operator-clusterrole.yaml</kbd>
-clusterrolebinding "dotmesh-etcd-operator" configured
-$ <kbd>kubectl apply -f https://get.dotmesh.io/yaml/etcd-operator-dep.yaml</kbd>
-deployment "etcd-operator" configured
-</pre></div>
+{{< copyable name="step-02" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/etcd-operator-clusterrole.yaml
+kubectl apply -f https://get.dotmesh.io/yaml/etcd-operator-dep.yaml
+{{< /copyable >}}
 
 With the etcd operator loaded into your cluster, installing Dotmesh is
 a simple matter of loading the Dotmesh YAML:
 
-<div class="highlight"><pre class="chromaManual">
-$ <kbd>kubectl apply -f https://get.dotmesh.io/yaml/dotmesh.yaml</kbd>
-etcdcluster "dotmesh-etcd-cluster" configured
-serviceaccount "dotmesh" configured
-clusterrole "dotmesh" configured
-clusterrolebinding "dotmesh" configured
-service "dotmesh" configured
-daemonset "dotmesh" configured
-serviceaccount "dotmesh-provisioner" configured
-clusterrole "dotmesh-provisioner-runner" configured
-clusterrolebinding "dotmesh-provisioner" configured
-deployment "dotmesh-dynamic-provisioner" configured
-storageclass "dotmesh" configured
-</pre></div>
+{{< copyable name="step-03" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh.yaml
+{{< /copyable >}}
 
 **NOTE** if you are using Kubernetes > `1.8` then use the following URL:
 
-<div class="highlight"><pre class="chromaManual">
-$ <kbd>kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml</kbd>
-</pre></div>
+{{< copyable name="step-04" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml
+{{< /copyable >}}
 
 By default, that will install Dotmesh on every node in your
 cluster. Dot storage will be in a 10GiB file created in
@@ -93,12 +85,15 @@ on, you'll need to connect the `dm` client to your Kubernetes-hosted
 Dotmesh cluster. To do that, you'll need the API key you chose in the
 setup phase, and the hostname of a node in the cluster:
 
-<div class="highlight"><pre class="chromaManual">
-$ <kbd>dm remote add NAME admin@HOSTNAME</kbd>
+{{< copyable name="step-05" >}}
+dm remote add NAME admin@HOSTNAME
+{{< /copyable >}}
+
+```plain
 API key: <kbd>Paste your API key here, it won't be echoed!</kbd>
 
 Remote added.
-</pre></div>
+```
 
 The `NAME` is just a name for this cluster that you'll use in
 subsequent [dm remote
@@ -107,11 +102,10 @@ that describes it.
 
 You can then switch to that remote, and use it:
 
-<div class="highlight"><pre class="chromaManual">
-$ <kbd>dm remote switch NAME</kbd>
-$ <kbd>dm list</kbd>
-...
-</pre></div>
+{{< copyable name="step-06" >}}
+dm remote switch NAME
+dm list
+{{< /copyable >}}
 
 ## What's next?
 

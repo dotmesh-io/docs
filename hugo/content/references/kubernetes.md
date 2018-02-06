@@ -160,8 +160,8 @@ metadata:
   name: example-pvc
   annotations:
     dotmeshNamespace: admin
-	dotmeshName: example
-	dotmeshSubdot: logging_db
+    dotmeshName: example
+    dotmeshSubdot: logging_db
 spec:
   storageClassName: dotmesh
   accessModes:

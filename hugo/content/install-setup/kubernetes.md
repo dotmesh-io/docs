@@ -35,6 +35,11 @@ kubectl create secret generic dotmesh \
 rm dotmesh-admin-password.txt dotmesh-api-key.txt
 {{< /copyable >}}
 
+```plain
+namespace "dotmesh" created
+secret "dotmesh" created
+```
+
 Dotmesh relies on coreos etcd
 [operator](https://coreos.com/blog/introducing-operators.html) to set
 up our own dedicated etcd cluster in the `dotmesh` namespace. We've
@@ -48,6 +53,11 @@ kubectl apply -f https://get.dotmesh.io/yaml/etcd-operator-clusterrole.yaml
 kubectl apply -f https://get.dotmesh.io/yaml/etcd-operator-dep.yaml
 {{< /copyable >}}
 
+```plain
+clusterrolebinding "dotmesh-etcd-operator" configured
+deployment "etcd-operator" configured
+```
+
 With the etcd operator loaded into your cluster, installing Dotmesh is
 a simple matter of loading the Dotmesh YAML:
 
@@ -60,6 +70,20 @@ kubectl apply -f https://get.dotmesh.io/yaml/dotmesh.yaml
 {{< copyable name="step-04" >}}
 kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml
 {{< /copyable >}}
+
+```plain
+etcdcluster "dotmesh-etcd-cluster" configured
+serviceaccount "dotmesh" configured
+clusterrole "dotmesh" configured
+clusterrolebinding "dotmesh" configured
+service "dotmesh" configured
+daemonset "dotmesh" configured
+serviceaccount "dotmesh-provisioner" configured
+clusterrole "dotmesh-provisioner-runner" configured
+clusterrolebinding "dotmesh-provisioner" configured
+deployment "dotmesh-dynamic-provisioner" configured
+storageclass "dotmesh" configured
+```
 
 By default, that will install Dotmesh on every node in your
 cluster. Dot storage will be in a 10GiB file created in

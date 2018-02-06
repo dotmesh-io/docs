@@ -262,7 +262,7 @@ Only the differences between one commit and the next are sent in a push or a clo
 
 ## Cloning & pulling
 
-The opposite of pushing is cloning & pushing.
+The opposite of pushing is cloning & pulling.
 Cloning is for the first time you pull down a dot.
 Pulling is for updating it later with more commits.
 

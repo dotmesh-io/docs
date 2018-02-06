@@ -10,11 +10,10 @@ order = "1"
     parent = "install-setup"
 +++
 
-## Supported versions
+{{% overview %}}
+* A Kubernetes cluster (version >= 1.6)
+{{% /overview %}}
 
-* Kubernetes >= 1.6
-
-## How to install Dotmesh on Kubernetes
 
 Before we can install Dotmesh, we need to set out admin password and api key:
 
@@ -22,6 +21,8 @@ Before we can install Dotmesh, we need to set out admin password and api key:
 export ADMIN_PASSWORD=apples
 export ADMIN_API_KEY=apples
 ```
+
+## Credentials
 
 Then we create the namespace before adding our credentials as secrets:
 
@@ -32,13 +33,15 @@ echo -n $ADMIN_API_KEY > dotmesh-api-key.txt
 kubectl create secret generic dotmesh \
   --from-file=./dotmesh-admin-password.txt \
   --from-file=./dotmesh-api-key.txt -n dotmesh
-rm dotmesh-admin-password.txt dotmesh-api-key.txt
+rm -f dotmesh-admin-password.txt dotmesh-api-key.txt
 {{< /copyable >}}
 
 ```plain
 namespace "dotmesh" created
 secret "dotmesh" created
 ```
+
+## Etcd
 
 Dotmesh relies on coreos etcd
 [operator](https://coreos.com/blog/introducing-operators.html) to set
@@ -57,6 +60,8 @@ kubectl apply -f https://get.dotmesh.io/yaml/etcd-operator-dep.yaml
 clusterrolebinding "dotmesh-etcd-operator" configured
 deployment "etcd-operator" configured
 ```
+
+## Dotmesh
 
 With the etcd operator loaded into your cluster, installing Dotmesh is
 a simple matter of loading the Dotmesh YAML:
@@ -94,7 +99,7 @@ called `pool` on each of your nodes before installing Dotmesh. Dotmesh
 will use that pool for Dot storage if it finds it already existing at
 install time.
 
-### Customising the installation
+## Customising the installation
 
 If you want a non-default installation - for instance, only running
 Dotmesh on those of your nodes that have capacious fast disks, as
@@ -102,7 +107,7 @@ those are the only ones where stateful containers will reside - the
 YAML we supply is easy to customise. Check out the [Kubernetes YAML
 reference guide](/references/kubernetes/) for the full run-down!
 
-### Using the `dm` client to control Dotmesh
+## Using the `dm` client to control Dotmesh
 
 In order to manage branches and commits, push and pull dots, and so
 on, you'll need to connect the `dm` client to your Kubernetes-hosted
@@ -114,7 +119,7 @@ dm remote add NAME admin@HOSTNAME
 {{< /copyable >}}
 
 ```plain
-API key: <kbd>Paste your API key here, it won't be echoed!</kbd>
+API key: Paste your API key here, it won't be echoed!
 
 Remote added.
 ```

@@ -121,6 +121,24 @@ deployment "dotmesh-dynamic-provisioner" configured
 storageclass "dotmesh" configured
 ```
 
+Let's check to see that we have our dotmesh pods running on our Kubernetes cluster.  They might take a few moments to get going - wait for the pods to start before proceeding.
+
+{{< copyable name="step-01" >}}
+kubectl get po -n dotmesh
+{{< /copyable >}}
+
+```plain
+NAME                                           READY     STATUS        RESTARTS   AGE
+dotmesh-5hg2g                                  1/1       Running       0          1h
+dotmesh-6fthj                                  1/1       Running       0          1h
+dotmesh-dynamic-provisioner-7b766c4f7f-hkjkl   1/1       Running       0          1h
+dotmesh-etcd-cluster-0000                      1/1       Running       0          1h
+dotmesh-etcd-cluster-0001                      1/1       Running       0          1h
+dotmesh-etcd-cluster-0002                      1/1       Running       0          1h
+dotmesh-rd9c4                                  1/1       Running       0          1h
+etcd-operator-56b49b7ffd-529zn                 1/1       Running       0          1h
+```
+
 ## Customising the installation
 
 If you want a non-default installation - for instance, only running

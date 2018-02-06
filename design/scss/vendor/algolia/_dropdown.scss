@@ -35,15 +35,24 @@
 @mixin layout-width($type) {
   @if $type == 'small' {
     max-width: 500px;
-    min-width: 400px;
+    min-width: 100%;
+    @include respond-to($vpMenu) {
+      min-width: 400px;
+    }
   }
   @if $type == 'normal' {
     max-width: 600px;
-    min-width: 500px;
+    min-width: 100%;
+    @include respond-to($vpMenu) {
+      min-width: 500px;
+    }
   }
   @if $type == 'large' {
     max-width: 800px;
-    min-width: 600px;
+    min-width: 100%;
+    @include respond-to($vpMenu) {
+      min-width: 600px;
+    }
   }
   @if $type == 'full' {
     width: 100%;
@@ -57,8 +66,10 @@
     right: inherit !important;
   }
   @if $type == 'right' {
-    right: 0 !important;
-    left: inherit !important;
+    //right: 0 !important;
+    //left: inherit !important;
+    left: 0 !important;
+    right: inherit !important;
   }
   @if $type == 'center' {
     left: 0 !important;
@@ -134,7 +145,7 @@ $responsive-breakpoint: 768px
   }
 
   .algolia-autocomplete {
-
+    width: 100%!important;
     &.algolia-autocomplete-right .ds-dropdown-menu{
       @include alignment-type(right);
       &:before {

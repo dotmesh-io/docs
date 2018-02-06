@@ -4,7 +4,7 @@
   {{ else if eq (.CurrentSection.Title) (.Title) }}
     <span class="masthead_metatag">Introducing.</span>
   {{ else }}
-    <span class="masthead_metatag">{{ .CurrentSection.Title | safeHTML}}.</span>
+    <span class="masthead_metatag">{{ .CurrentSection.Title | safeHTML}}</span>
   {{ end }}
-  <h1 class="typeXL heading">{{ .Title | safeHTML }}.</h1>
+  <h1 class="typeXL heading">{{ .Title | safeHTML }}</h1>
 </header>

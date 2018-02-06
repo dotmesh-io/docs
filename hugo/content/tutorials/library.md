@@ -124,7 +124,28 @@ dm commit -m "Empty state"
 
 This way we can come back to the master branch each time we want to create a new state.
 
-### Big users database
+### Make sure you have the hub as a remote
+
+Check the output of the following command to see if `hub` is listed as a remote.
+
+{{< copyable name="step-04b" >}}
+dm remote -v
+{{< /copyable >}}
+
+If it isn't, add it.
+Set an environment variable with your Dothub username in it:
+
+```plain
+export HUB_USERNAME=<username>
+```
+{{< copyable name="step-09" >}}
+dm remote add hub ${HUB_USERNAME}@dothub.com
+{{< /copyable >}}
+
+You will be prompted for your API key, which you can get from the [Settings/API Key page](https://dothub.com/ui/settings/apikey).
+
+
+### Pagination: Big users database
 
 {{< copyable name="step-05" >}}
 dm checkout -b many-users
@@ -153,7 +174,7 @@ dm checkout master
 {{< /copyable >}}
 
 
-### Bizarre "actual bug"
+### The bug bug: Bizarre "actual bug"
 
 {{< copyable name="step-09" >}}
 dm checkout -b bug-bug
@@ -183,7 +204,7 @@ dm checkout master
 {{< /copyable >}}
 
 
-### Aspect ratio bug
+### Aspect ratios: Display bug with tall images
 
 {{< copyable name="step-13" >}}
 dm checkout -b aspect-ratios
@@ -193,7 +214,7 @@ Go to the app at [localhost:8100](http://localhost:8100) and register (log in) a
 Now go and find an image file with a tall aspect ratio.
 I recommend searching Google Images for a picture of the Eiffel Tower.
 
-Uplaod it as that user's custom image.
+Upload it as that user's custom image.
 
 {{< copyable name="step-14" >}}
 dm commit -m "
@@ -215,7 +236,7 @@ dm checkout master
 {{< /copyable >}}
 
 
-### Security vulnerability
+### Security vulnerability: Attacker can set default image
 
 {{< copyable name="step-13" >}}
 dm checkout -b security-vulnerability

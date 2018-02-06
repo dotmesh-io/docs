@@ -27,7 +27,7 @@ git clone https://github.com/dotmesh-io/moby-counter
 cd moby-counter
 {{< /copyable >}}
 
-The docker-compose file includes not only the app but also a request for a Docker volume from a dotmesh datadot. 
+The docker-compose file includes not only the app but also a request for a Docker volume from a dotmesh datadot.
 
 Start the app.
 

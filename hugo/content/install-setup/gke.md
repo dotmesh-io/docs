@@ -160,7 +160,6 @@ dm remote switch gke
 dm list
 {{< /copyable >}}
 
-
 ## What's next?
 
 * [Hello Dotmesh on Kubernetes](/tutorials/hello-dotmesh-kubernetes/).

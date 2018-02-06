@@ -140,3 +140,5 @@ dm list
 
 * [Hello Dotmesh on Kubernetes](/tutorials/hello-dotmesh-kubernetes/).
 * [Adding dots to Kubernetes YAMLs](/tasks/kubernetes/).
+* [Kubernetes YAML reference guide](/references/kubernetes/)
+* [Command Line Reference](/references/cli/)

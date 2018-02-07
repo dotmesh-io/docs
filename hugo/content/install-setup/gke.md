@@ -3,8 +3,9 @@ draft = false
 title = "Installing on GKE"
 synopsis = "Installing Dotmesh on a GKE cluster"
 knowledgelevel = ""
-date = 2017-12-21T11:27:29Z
-order = "1"
+date = 2017-12-22T11:27:29Z
+order = "2"
+weight = "4"
 [menu]
   [menu.main]
     parent = "install-setup"
@@ -43,7 +44,8 @@ Then we provision a new Kubernetes cluster of 3 nodes:
 gcloud container clusters create dotmesh-gke-cluster \
   --image-type=ubuntu \
   --tags=dotmesh \
-  --cluster-version=1.8.7-gke.1
+  --machine-type=n1-standard-4 \
+  --cluster-version=1.7.11-gke.1
 {{< /copyable >}}
 
 **NOTE** - At present the cluster needs to use `--image-type=ubuntu` - in upcoming releases this requirement will be removed.
@@ -86,7 +88,7 @@ echo -n $ADMIN_API_KEY > dotmesh-api-key.txt
 kubectl create secret generic dotmesh \
   --from-file=./dotmesh-admin-password.txt \
   --from-file=./dotmesh-api-key.txt -n dotmesh
-rm dotmesh-admin-password.txt dotmesh-api-key.txt
+rm -f dotmesh-admin-password.txt dotmesh-api-key.txt
 {{< /copyable >}}
 
 ## Etcd operator
@@ -103,7 +105,7 @@ kubectl apply -f https://get.dotmesh.io/yaml/etcd-operator-dep.yaml
 Use the following command to apply the YAML configuration for running dotmesh:
 
 {{< copyable name="step-06" >}}
-kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.yaml
 {{< /copyable >}}
 
 
@@ -138,6 +140,28 @@ dotmesh-etcd-cluster-0002                      1/1       Running       0        
 dotmesh-rd9c4                                  1/1       Running       0          1h
 etcd-operator-56b49b7ffd-529zn                 1/1       Running       0          1h
 ```
+
+## Restart Kubelet
+
+To get the kubelet to pick up the flexvolume driver dotmesh just installed - run this script that logs in to each of the nodes and restarts the kubelet process:
+
+{{< copyable name="step-01" >}}
+for node in $(kubectl get no | tail -n +2 | awk '{print $1}'); do
+  gcloud compute ssh $node --command "sudo systemctl restart kubelet"
+done
+{{< /copyable >}}
+
+**NOTE** In Kubernetes 1.8 restarting the kubelet will not be needed
+
+## Dotmesh config
+
+So the flexvolume driver can communicate with the dotmesh cluster - we download the `dm` binary on each node and add the config using the `dm remote add` command:
+
+{{< copyable name="step-01" >}}
+for node in $(kubectl get no | tail -n +2 | awk '{print $1}'); do
+  gcloud compute ssh $node --command "sudo curl -sSL -o /usr/local/bin/dm https://get.dotmesh.io/Linux/dm && sudo chmod a+x /usr/local/bin/dm && DOTMESH_PASSWORD=apples dm remote add local admin@127.0.0.1 && sudo mkdir -p /root/.dotmesh && sudo cp -f .dotmesh/config /root/.dotmesh"
+done
+{{< /copyable >}}
 
 ## Customising the installation
 

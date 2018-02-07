@@ -5,6 +5,7 @@ synopsis = "Try Dotmesh on Docker without installing anything"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
 order = "1"
+weight = "2"
 [menu]
   [menu.main]
     parent = "install-setup"

@@ -4,7 +4,7 @@ title = "Installing on Docker"
 synopsis = "Installing Dotmesh on a computer with Docker installed"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
-weight = "2"
+weight = "1"
 [menu]
   [menu.main]
     parent = "install-setup"

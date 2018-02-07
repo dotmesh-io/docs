@@ -63,6 +63,7 @@
       li {
         font-size: rem($typeS);
         @include leading_adjust(2);
+        padding-bottom: rem(6);
         a {
           line-height: inherit;
         }

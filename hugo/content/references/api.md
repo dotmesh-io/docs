@@ -19,7 +19,7 @@ You need to ensure that you choose the most appropriate node to mount the volume
 
 ## Architecture diagram
 
-<img src="/hugo/concrete_architecture.png" alt="dotmesh architecture, described below" style="width: 80%;" />
+<img src="/hugo/concrete_architecture.png" alt="dotmesh architecture, described below" />
 
 ## Basics.
 

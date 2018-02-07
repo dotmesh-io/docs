@@ -14,6 +14,7 @@ weight = "4"
 {{% overview %}}
 * An account on the [Google Cloud Console](https://console.cloud.google.com)
 * The [Cloud SDK](https://cloud.google.com/sdk/downloads) (with the `gcloud` command)
+* `kubectl` installed: given the Cloud SDK, run `gcloud components install kubectl`
 * GKE activated on the [console page](https://console.cloud.google.com/kubernetes/list)
 {{% /overview %}}
 
@@ -23,7 +24,7 @@ This guide will show you how to install dotmesh onto a Kubernetes cluster provis
 
 First - let's authenticate our `gcloud` cli and point to the correct project.
 
-Change the value of `my-gcloud-project` to your active project:
+Change the value of `my-gcloud-project` to your active project id:
 
 ```plain
 export GCLOUD_PROJECT=my-gcloud-project

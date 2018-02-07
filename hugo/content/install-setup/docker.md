@@ -1,6 +1,6 @@
 +++
 draft = false
-title = "Installing on Docker"
+title = "Install on Docker"
 synopsis = "Installing Dotmesh on a computer with Docker installed"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z

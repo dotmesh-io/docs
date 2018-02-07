@@ -1,6 +1,6 @@
 +++
 draft = false
-title = "Installing on GKE"
+title = "Install on GKE"
 synopsis = "Installing Dotmesh on a GKE cluster"
 knowledgelevel = ""
 date = 2017-12-22T11:27:29Z

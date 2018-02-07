@@ -14,9 +14,8 @@ weight = "3"
 ## DOES NOT WORK YET
 
 Sorry, this guide doesn't work yet.
-It should start working when [#263](https://github.com/dotmesh-io/dotmesh/issues/263) is fixed and we start working with Kubernetes 1.8 and hopefully 1.9 (which is what ships with latest Docker for Mac).
+It should start working when [#263](https://github.com/dotmesh-io/dotmesh/issues/263) and [#268](https://github.com/dotmesh-io/dotmesh/issues/268) are fixed.
 
-We also need to figure out how hostPort networking interacts with Docker for Mac, and probably provide alternative dotmesh yaml for Docker for Mac which exposes the dotmesh service in a way that means it actually gets exposed on localhost.
 
 ## ARE YOU SURE YOU WANT TO READ IT ANYWAY?
 

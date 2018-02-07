@@ -12,6 +12,7 @@ order = "1"
 
 {{% overview %}}
 * [Dotmesh on GKE](/install-setup/gke/) or [Dotmesh on generic Kubernetes](/install-setup/kubernetes/).
+* `kubectl` working and pointing at the cluster which you installed Dotmesh on.
 {{% /overview %}}
 
 ## Clone the app
@@ -31,10 +32,11 @@ The docker-compose file includes not only the app but also a request for a Docke
 Start the app.
 
 {{< copyable name="step-02" >}}
-docker-compose up -d
+cd kubernetes
+kubectl apply -f .
 {{< /copyable >}}
 
-You can see that the datadot referenced in the docker-compose file has been created.
+You should see that the datadot referenced in the `redis-pvc.yaml` file has been created.
 
 {{< copyable name="step-03" >}}
 dm list
@@ -48,7 +50,7 @@ dm switch moby_counter
 
 This means that later `dm` commands will operate on that datadot, as indicated by the `*` in the list.
 
-{{< copyable name="step-03" >}}
+{{< copyable name="step-04b" >}}
 dm list
 {{< /copyable >}}
 
@@ -61,14 +63,28 @@ dm list
 
 Now, let's capture the empty state, run:
 
-{{< copyable name="step-04" >}}
+{{< copyable name="step-04c" >}}
 dm commit -m "Empty state"
 {{< /copyable >}}
 
-Now, load up the app in your browser at http://localhost:8100/ – you'll see an invitation to click on the screen. Before you do, let's make a new branch:
+Now, load up the app in your browser at http://`<ip-of-a-cluster-node>`:30004/ – you'll see an invitation to click on the screen.
+Before you do, let's make a new branch:
 
 {{< copyable name="step-05" >}}
 dm checkout -b branch_a
+{{< /copyable >}}
+
+## Switch branches manually
+
+The dotmesh Kubernetes integration doesn't automatically stop and start containers when you switch branches with `dm checkout` like the Docker integration does.
+
+Instead, the branch is pinned in the `redis-pvc.yaml` file using `moby_counter@master` syntax, which means "pin the manifestation of this dot to this branch".
+
+So, in order to switch branches in the app as well, we'll need to change and re-apply the Kubernetes YAML.
+
+{{< copyable name="step-05b" >}}
+sed -i 's/master/branch_a/' redis-pvc.yaml
+kubectl apply -f .
 {{< /copyable >}}
 
 ## Draw an A on the screen
@@ -83,12 +99,16 @@ Note that if you go back to the master branch, the app updates automatically and
 
 {{< copyable name="step-07" >}}
 dm checkout master
+sed -i 's/branch_a/master/' redis-pvc.yaml
+kubectl apply -f .
 {{< /copyable >}}
 
 Let's go back to the A state, as next we'll push it to the dothub.
 
 {{< copyable name="step-08" >}}
-dm checkout branch_a
+dm checkout master
+sed -i 's/master/branch_a/' redis-pvc.yaml
+kubectl apply -f .
 {{< /copyable >}}
 
 ## Push "A state" to the dothub
@@ -122,7 +142,7 @@ Then, go to Dothub and you should be able to see the volume, its branches and co
 
 ## Optional: Adding a collaborator
 
-Prove that data can move between machines by inviting a friend or co-worker to join the [Dothub](https://dothub.com/) too!
+Prove that data can move between Kubernetes clusters by inviting a friend or co-worker to join the [Dothub](https://dothub.com/) too!
 
 When they've signed up, add them as a collaborator, by going to the _Settings_ page for your datadot, and type their user's username to add them as a collaborator.
 
@@ -131,7 +151,7 @@ Finally, send them a link to the following section so that they can clone your d
 
 ### Instructions for your co-worker
 
-So you been invited to pull down someone else's datadot?
+So you been invited to pull down someone else's datadot on Kubernetes?
 Great, let's do it!
 First, sign up for an account on the [Dothub](https://dothub.com).
 
@@ -144,14 +164,10 @@ export DOT_OWNER=<their-username>
 export COLLABORATOR=<your-username>
 ```
 
-Install Dotmesh:
-
-{{< copyable name="step-11" >}}
-sudo curl -sSL -o /usr/local/bin/dm \
-    https://get.dotmesh.io/$(uname -s)/dm
-sudo chmod +x /usr/local/bin/dm
-dm cluster init
-{{< /copyable >}}
+{{% overview %}}
+* [Dotmesh on GKE](/install-setup/gke/) or [Dotmesh on generic Kubernetes](/install-setup/kubernetes/).
+* `kubectl` working and pointing at the cluster which you installed Dotmesh on.
+{{% /overview %}}
 
 Authenticate to the hub:
 
@@ -186,12 +202,6 @@ This means that later `dm` commands will operate on that datadot, as indicated b
 dm list
 {{< /copyable >}}
 
-Start the app:
-
-{{< copyable name="step-17" >}}
-docker-compose up -d
-{{< /copyable >}}
-
 Pull and checkout the branch your co-worker created earlier:
 
 {{< copyable name="step-18" >}}
@@ -199,7 +209,15 @@ dm pull hub moby_counter branch_a
 dm checkout branch_a
 {{< /copyable >}}
 
-Now navigate to http://localhost:8100/ and you should see the same data that your coworker created running locally!
+Start the app in your Kubernetes cluster:
+
+{{< copyable name="step-17" >}}
+cd kubernetes
+sed -i 's/master/branch_a/' redis-pvc.yaml
+kubectl apply -f .
+{{< /copyable >}}
+
+Now navigate to http://`<ip-of-a-cluster-node>`:30004/ and you should see the same data that your coworker created running on your Kubernetes cluster!
 
 ## What's next?
 

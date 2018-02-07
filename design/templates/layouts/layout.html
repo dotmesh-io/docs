@@ -30,11 +30,6 @@
 					<input class="searchbar_input" type="text" value="{% if setTerm == '' %}{% else %}{{ setTerm }}{% endif %}" id="searchbar_input" placeholder="Search docs.">
 					<b></b><!-- This isn't a mistake, it's a visual hack -->
 				</div>
-				<button class="searchbar_button" type="submit">
-					<svg class="icon icon22 icon_search_svg">
-						<use xlink:href="./assets/icons/renders/sprite.svg#search"></use>
-					</svg>
-				</button>
 			</form>
       <div class="navigationwrapper navigationwrapperCollapsed" id="navigationwrapper">
         <nav class="navigation">
@@ -51,7 +46,7 @@
     </div>
   </div>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script> 
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
   <script type="text/javascript">
     // TODO move into external file
     var mainNav = document.getElementById('navigationwrapper');
@@ -68,25 +63,25 @@
     // Add a click event to run the mainNavToggle function
     navToggle.addEventListener('click', mainNavToggle);
 
-    docsearch({ 
-     apiKey: '6d43307603b5a549a82161f4f44a2d1e', 
-     indexName: 'dotmesh', 
-     inputSelector: '#searchbar_input', 
-     debug: true 
-    }); 
+    docsearch({
+     apiKey: '6d43307603b5a549a82161f4f44a2d1e',
+     indexName: 'dotmesh',
+     inputSelector: '#searchbar_input',
+     debug: true
+    });
 
-    (function(document, Clipboard) {  
+    (function(document, Clipboard) {
       new Clipboard('.copy', {
           target: function(trigger) {
               trigger.innerHTML="copied";
               setTimeout(function() {
                 trigger.innerHTML="copy";
-              }, 1500);                
+              }, 1500);
               return trigger.previousElementSibling;
           }
       });
     })(document, Clipboard);
-    
+
     (function() {
       function preCode(selector) {
         var els = Array.prototype.slice.call(document.querySelectorAll(selector), 0);
@@ -118,13 +113,13 @@
           el.textContent = txt.replace(new RegExp("^" + str, 'gm'), "");
         });
       }
-      
+
 
       document.addEventListener("DOMContentLoaded", function() {
         preCode("pre code, textarea");
       }, false);
-    })();      
-  </script>  
+    })();
+  </script>
 </body>
 
 {% block footer_after %}

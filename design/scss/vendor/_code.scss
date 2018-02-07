@@ -21,11 +21,25 @@ code {
   }
   p &,
   li &,
-  dl & {
+  dl &,
+  .typebase h2 &,
+  .typebase h3 &,
+  .typebase h4 &,
+  .typebase h5 &,
+  .typebase h6 &,
+  a & {
     color: $dmEleven;
     background-color: $dmHargrove;
     outline: 1px solid shade(dmHargrove, Dark);
     padding: 3px 6px 0 6px;
+  }
+  .typebase h2 &,
+  .typebase h3 &,
+  .typebase h4 &,
+  .typebase h5 &,
+  .typebase h6 & {
+    color: $dmByers;
+    font-size: inherit;
   }
 }
 
@@ -77,7 +91,7 @@ button.copy {
   &:hover {
     background-color: $dmWheeler;
     color: $dmByers;
-  } 
+  }
 }
 
 

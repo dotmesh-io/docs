@@ -9,8 +9,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ .Site.BaseURL }}assets/favicons/favicon-32x32.png"/>
     <link rel="icon" type="image/png" sizes="16x16" href="{{ .Site.BaseURL }}assets/favicons/favicon-16x16.png"/>
     <link rel="manifest" href="{{ .Site.BaseURL }}assets/favicons/manifest.json"/>
-    <link rel="mask-icon" href="{{ .Site.BaseURL }}assets/favicons/safari-pinned-tab.svg" color="#5c2d70"/> 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>   
+    <link rel="mask-icon" href="{{ .Site.BaseURL }}assets/favicons/safari-pinned-tab.svg" color="#5c2d70"/>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <meta name="theme-color" content="#21F9EE">
     <title>{{ block "title" . }}{{ end }}.</title>
     {{ if eq (getenv "NAMESPACE") "docs" }}
@@ -19,7 +19,7 @@
         analytics.load("ZA3PUzTjl2cCsFSHCD1KDzf750a71285");
         analytics.page();
         }}();
-      </script>  
+      </script>
     {{ end }}
   </head>
   <body>
@@ -48,11 +48,6 @@
   					<input class="searchbar_input" type="text" value="" id="searchbar_input" placeholder="Search docs.">
   					<b></b><!-- This isn't a mistake, it's a visual hack -->
   				</div>
-  				<button class="searchbar_button" type="submit">
-  					<svg class="icon icon22 icon_search_svg">
-  						<use xlink:href="{{ .Site.BaseURL }}assets/icons/renders/sprite.svg#search"></use>
-  					</svg>
-  				</button>
   			</form>
         <div class="navigationwrapper navigationwrapperCollapsed" id="navigationwrapper">
           <nav class="navigation">
@@ -68,15 +63,15 @@
       </div>
     </div>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script> 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
     <script type="text/javascript">
       // TODO move into external file
       var mainNav = document.getElementById('navigationwrapper');
       var navToggle = document.getElementById('navigationtoggle');
-  
+
       // Start by adding the class "collapse" to the mainNav
       //mainNav.classList.add('navigationwrapperCollapsed');
-  
+
       // Establish a function to toggle the class "collapse"
       function mainNavToggle() {
         mainNav.classList.toggle('navigationwrapperCollapsed');
@@ -85,15 +80,15 @@
       // Add a click event to run the mainNavToggle function
       navToggle.addEventListener('click', mainNavToggle);
 
-      docsearch({ 
-        apiKey: '6d43307603b5a549a82161f4f44a2d1e', 
-        indexName: 'dotmesh', 
-        inputSelector: '#searchbar_input', 
+      docsearch({
+        apiKey: '6d43307603b5a549a82161f4f44a2d1e',
+        indexName: 'dotmesh',
+        inputSelector: '#searchbar_input',
         autocompleteOptions : {
           hint: false,
           autoselect: false
         }
-      }); 
+      });
 
       $('#searchForm').on('submit', function(e) {
         if ( e.isDefaultPrevented() ) {
@@ -101,18 +96,18 @@
         }
         e.preventDefault();
       });
-      
+
       $('#searchForm').on('keyup keypress', function(e) {
         var keyCode = e.keyCode || e.which;
-        if (keyCode === 13) { 
+        if (keyCode === 13) {
         e.preventDefault();
         return false;
         }
       });
 
-      
 
-      (function(document, Clipboard) {  
+
+      (function(document, Clipboard) {
         new Clipboard('.copy', {
             target: function(trigger) {
                 {{ if eq (getenv "NAMESPACE") "docs" }}
@@ -125,12 +120,12 @@
                 trigger.innerHTML="copied";
                 setTimeout(function() {
                   trigger.innerHTML="copy";
-                }, 1500);                
+                }, 1500);
                 return trigger.previousElementSibling;
             }
         });
       })(document, Clipboard);
-      
+
       (function() {
         function preCode(selector) {
           var els = Array.prototype.slice.call(document.querySelectorAll(selector), 0);
@@ -162,17 +157,17 @@
             el.textContent = txt.replace(new RegExp("^" + str, 'gm'), "");
           });
         }
-        
+
 
         document.addEventListener("DOMContentLoaded", function() {
           preCode("pre code, textarea");
         }, false);
-      })();      
+      })();
     </script>
-  
+
   {{ block "footeradditions" . }}
     <script type="text/javascript">
-  
+
       // Straight up nab from Hugo docs website. Doth of the cap
       var anchorForId = function anchorForId(id) {
         var anchor = document.createElement("a");
@@ -181,7 +176,7 @@
         anchor.innerHTML = '<svg class="icon icon_link_svg"><use xlink:href="/assets/icons/renders/sprite.svg#link"></use></svg>';
         return anchor;
       };
-  
+
       var linkifyAnchors = function linkifyAnchors(level, containingElement) {
         var headers = containingElement.getElementsByTagName("h" + level);
         for (var h = 0; h < headers.length; h++) {
@@ -191,7 +186,7 @@
           }
         }
       };
-  
+
       document.onreadystatechange = function () {
         if (this.readyState === "complete") {
           var contentBlock = document.getElementsByClassName("typebaseArticle")[0];
@@ -202,8 +197,8 @@
             linkifyAnchors(level, contentBlock);
           }
         }
-      };  
-    </script>     
+      };
+    </script>
   {{ end }}
   </body>
 </html>

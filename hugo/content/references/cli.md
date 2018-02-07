@@ -222,9 +222,9 @@ $ <kbd>dm version</kbd>
 Current remote: local (use 'dm remote -v' to list and 'dm remote switch' to switch)
 
 Client:
-	Version: 0.1.0
+	Version: release-0.1.0
 Server:
-	Version: 0.1.0
+	Version: release-0.1.0
 </pre></div>
 
 ## Dot management.

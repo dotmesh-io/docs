@@ -71,9 +71,12 @@ kubectl create clusterrolebinding cluster-admin-binding \
   --user "$(gcloud config get-value core/account)"
 {{< /copyable >}}
 
+If this doesn't work straight away, wait a few minutes and try again.
+It might just be that your Kubernetes cluster is warming up.
+
 ## Create namespace & secrets
 
-Before we can install Dotmesh, we need to set out admin password and api key:
+Before we can install Dotmesh, we need to set our admin password and api key:
 
 ```plain
 export ADMIN_PASSWORD=apples
@@ -165,6 +168,8 @@ for node in $(kubectl get no | tail -n +2 | awk '{print $1}'); do
   gcloud compute ssh $node --command "sudo curl -sSL -o /usr/local/bin/dm https://get.dotmesh.io/Linux/dm && sudo chmod a+x /usr/local/bin/dm && DOTMESH_PASSWORD=apples dm remote add local admin@127.0.0.1 && sudo mkdir -p /root/.dotmesh && sudo cp -f .dotmesh/config /root/.dotmesh"
 done
 {{< /copyable >}}
+
+**NOTE** If you used a different admin password, you need to replace `apples` above with it.
 
 ## Customising the installation
 

@@ -14,8 +14,11 @@ weight = "3"
 ## DOES NOT WORK YET
 
 Sorry, this guide doesn't work yet.
-It should start working when [#263](https://github.com/dotmesh-io/dotmesh/issues/263) is fixed and we start working with Kubernetes 1.8 and hopefully 1.9.
+It should start working when [#263](https://github.com/dotmesh-io/dotmesh/issues/263) is fixed and we start working with Kubernetes 1.8 and hopefully 1.9 (which is what ships with latest Docker for Mac).
 
+We also need to figure out how hostPort networking interacts with Docker for Mac, and probably provide alternative dotmesh yaml for Docker for Mac which exposes the dotmesh service in a way that means it actually gets exposed on localhost.
+
+## ARE YOU SURE YOU WANT TO READ IT ANYWAY?
 
 {{% overview %}}
 * [Edge build of Docker for Mac](https://docs.docker.com/docker-for-mac/install/) with [Kubernetes enabled](https://docs.docker.com/docker-for-mac/#kubernetes).
@@ -169,7 +172,7 @@ on, you'll need to connect the `dm` client to your Kubernetes-hosted
 Dotmesh cluster. To do that, you'll need the API key you chose in the
 setup phase.
 
-As this is a local install on Docker for Mac, we just use localhost as the hostname
+As this is a local install on Docker for Mac, we just use localhost as the hostname.
 
 {{< copyable name="step-05" >}}
 dm remote add local-kube admin@localhost

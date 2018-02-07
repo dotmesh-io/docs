@@ -1,7 +1,7 @@
 +++
 draft = false
-title = "Installing on generic Kubernetes"
-synopsis = "Installing Dotmesh on a generic Kubernetes cluster"
+title = "Install on Kubernetes on Docker for Mac"
+synopsis = "Installing Dotmesh on Kubernetes on Docker for Mac"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
 order = "1"
@@ -11,11 +11,32 @@ weight = "3"
     parent = "install-setup"
 +++
 
+## DOES NOT WORK YET
+
+Sorry, this guide doesn't work yet.
+It should start working when [#263](https://github.com/dotmesh-io/dotmesh/issues/263) is fixed and we start working with Kubernetes 1.8 and hopefully 1.9.
+
+
 {{% overview %}}
-* A Kubernetes cluster (version >= 1.6)
-* Kubernetes 1.8 is NOT supported yet: see [#263](https://github.com/dotmesh-io/dotmesh/issues/263)
+* [Edge build of Docker for Mac](https://docs.docker.com/docker-for-mac/install/) with [Kubernetes enabled](https://docs.docker.com/docker-for-mac/#kubernetes).
 {{% /overview %}}
 
+
+## Check Kubernetes on Docker for Mac is working
+
+{{< copyable name="step-01" >}}
+kubectl config current-context
+{{< /copyable >}}
+
+Should show:
+```plain
+docker-for-desktop
+```
+
+If it doesn't, check the [Docker for Mac docs on Kubernetes](https://docs.docker.com/docker-for-mac/#kubernetes).
+Also make sure you don't have a `KUBECONFIG` environment variable set.
+
+## Installing Dotmesh on Kubernetes
 
 Before we can install Dotmesh, we need to set out admin password and api key:
 
@@ -25,6 +46,7 @@ export ADMIN_API_KEY=apples
 ```
 
 You may want to use stronger credentials than `apples`.
+
 
 ## Credentials
 
@@ -74,7 +96,7 @@ With the etcd operator loaded into your cluster, installing Dotmesh is
 a simple matter of loading the Dotmesh YAML:
 
 {{< copyable name="step-03" >}}
-kubectl apply -f https://get.dotmesh.io/yaml/dotmesh.yaml
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml
 {{< /copyable >}}
 
 <!--
@@ -145,10 +167,12 @@ reference guide](/references/kubernetes/) for the full run-down!
 In order to manage branches and commits, push and pull dots, and so
 on, you'll need to connect the `dm` client to your Kubernetes-hosted
 Dotmesh cluster. To do that, you'll need the API key you chose in the
-setup phase, and the hostname of a node in the cluster:
+setup phase.
+
+As this is a local install on Docker for Mac, we just use localhost as the hostname
 
 {{< copyable name="step-05" >}}
-dm remote add NAME admin@HOSTNAME
+dm remote add local-kube admin@localhost
 {{< /copyable >}}
 
 ```plain
@@ -157,15 +181,10 @@ API key: Paste your API key here, it won't be echoed!
 Remote added.
 ```
 
-The `NAME` is just a name for this cluster that you'll use in
-subsequent [dm remote
-commands](/references/cli/#connecting-to-clusters), so pick something
-that describes it.
-
 You can then switch to that remote, and use it:
 
 {{< copyable name="step-06" >}}
-dm remote switch NAME
+dm remote switch local-kube
 dm list
 {{< /copyable >}}
 

@@ -17,10 +17,6 @@ Most operations can be performed on any node in the cluster, and will automatica
 The only exceptions are API calls that mount a volume from a dot, which will cause that mount to happen on the node that receives the API call.
 You need to ensure that you choose the most appropriate node to mount the volume on!
 
-## Architecture diagram
-
-<img src="/hugo/concrete_architecture.png" alt="dotmesh architecture, described below" style="width: 120%;" />
-
 ## Basics.
 
 Every node in a Dotmesh cluster exposes the Dotmesh API on port 6969; in a Kubernetes cluster, this is made accessible as a ClusterIP service called "dotmesh" in the "dotmesh" namespace by default, which can be accessed through [the standard Kubernetes service discovery methods](https://kubernetes.io/docs/concepts/services-networking/service/#discovering-services).

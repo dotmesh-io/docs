@@ -14,6 +14,10 @@ This guide will tell you how Dotmesh works under the hood: how all
 these dots are actually stored on the nodes, and what bits of software
 run where.
 
+## Architecture diagram
+
+<img src="/hugo/concrete_architecture.png" alt="dotmesh architecture, described below" style="width: 150%;" />
+
 ## The cluster.
 
 Dotmesh nodes are organised into clusters.

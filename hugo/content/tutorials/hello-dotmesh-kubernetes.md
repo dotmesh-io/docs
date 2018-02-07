@@ -67,7 +67,13 @@ Now, let's capture the empty state, run:
 dm commit -m "Empty state"
 {{< /copyable >}}
 
-Now, load up the app in your browser at http://`<ip-of-a-cluster-node>`:30004/ – you'll see an invitation to click on the screen.
+Now, load up the app in your browser at http://`<ip-of-a-cluster-node>`:30004/
+You should have the address of a cluster node in the output of `dm remote -v`.
+
+**NOTE** - you may need to open port 30004 on any firewall in front of your Kubernetes cluster.
+If you followed our [GKE tutorial](/tutorials/gke/) then we already did that.
+
+You'll see an invitation to click on the screen.
 Before you do, let's make a new branch:
 
 {{< copyable name="step-05" >}}
@@ -78,13 +84,13 @@ dm checkout -b branch_a
 
 The dotmesh Kubernetes integration doesn't automatically stop and start containers when you switch branches with `dm checkout` like the Docker integration does.
 
-Instead, the branch is pinned in the `redis-pvc.yaml` file using `moby_counter@master` syntax, which means "pin the manifestation of this dot to this branch".
+Instead, the branch is pinned in the `redis-pvc.yaml` file using `moby_counter@master` syntax, which means "pin this mount of this dot to this branch".
 
 So, in order to switch branches in the app as well, we'll need to change and re-apply the Kubernetes YAML.
 
 {{< copyable name="step-05b" >}}
-sed -i 's/master/branch_a/' redis-pvc.yaml
-kubectl apply -f .
+sed -i '' 's/master/branch_a/' redis-pvc.yaml
+kubectl delete -f . && kubectl apply -f .
 {{< /copyable >}}
 
 ## Draw an A on the screen
@@ -99,16 +105,16 @@ Note that if you go back to the master branch, the app updates automatically and
 
 {{< copyable name="step-07" >}}
 dm checkout master
-sed -i 's/branch_a/master/' redis-pvc.yaml
-kubectl apply -f .
+sed -i '' 's/branch_a/master/' redis-pvc.yaml
+kubectl delete -f . && kubectl apply -f .
 {{< /copyable >}}
 
 Let's go back to the A state, as next we'll push it to the dothub.
 
 {{< copyable name="step-08" >}}
 dm checkout master
-sed -i 's/master/branch_a/' redis-pvc.yaml
-kubectl apply -f .
+sed -i '' 's/master/branch_a/' redis-pvc.yaml
+kubectl delete -f . && kubectl apply -f .
 {{< /copyable >}}
 
 ## Push "A state" to the dothub
@@ -213,7 +219,7 @@ Start the app in your Kubernetes cluster:
 
 {{< copyable name="step-17" >}}
 cd kubernetes
-sed -i 's/master/branch_a/' redis-pvc.yaml
+sed -i '' 's/master/branch_a/' redis-pvc.yaml
 kubectl apply -f .
 {{< /copyable >}}
 

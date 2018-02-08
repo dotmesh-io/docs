@@ -48,6 +48,14 @@ In particular, it demonstrates Dotmesh's support for _polyglot persistence_: mul
 
 _Actually, we can!_
 
+Let's get our hands on the app:
+
+{{< copyable name="step-01" >}}
+git clone git@github.com:dotmesh-io/moby-counter
+cd moby-counter
+git checkout multiple-services
+{{< /copyable >}}
+
 Take a look at the [`docker-compose.yml`](https://github.com/dotmesh-io/moby-counter/blob/multiple-services/docker-compose.yml) file in this branch.
 
 Note how it has _three_ stateful components (excerpt):
@@ -65,15 +73,7 @@ volumes:
 These docker volumes reference three subdots of the same dotmesh dot: "app".
 Note how they are then used in the `volumes` definitions of the various microservices.
 
-Let's get our hands on the app:
-
-{{< copyable name="step-01" >}}
-git clone git@github.com:dotmesh-io/moby-counter
-cd moby-counter
-git checkout multiple-services
-{{< /copyable >}}
-
-And start it up (requires [Dotmesh on Docker](/install-setup/docker/) and Docker Compose):
+Let's start it up (requires [Dotmesh on Docker](/install-setup/docker/) and Docker Compose):
 
 {{< copyable name="step-02" >}}
 docker-compose up -d
@@ -246,7 +246,7 @@ Go to the app at [localhost:8100](http://localhost:8100) and register (log in) a
 Now go and find a scary looking image that's the sort of thing a hacker would use to deface your app.
 I recommend searching Google Images for a pirate flag.
 
-Upload it as that user's custom image.
+Upload it as that user's custom image and click a few times to see the image you uploaded.
 
 Observe that upon logging out (refreshing) and then creating a _new_ user, say `georgina`, that Georgina's account will now appear to be compromised, and will show the pirate flag when it should show the dotmesh logo as the default image (before she's uploaded anything)!
 

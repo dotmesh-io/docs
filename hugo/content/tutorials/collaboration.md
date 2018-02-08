@@ -78,7 +78,18 @@ git checkout multiple-services
 {{< /copyable >}}
 
 Now, before starting up the app, let's get the right version of the data!
-Clone the datadot as well:
+
+Make sure you have a remote setup for [dothub.com](dothub.com).
+
+
+{{< copyable name="step-01" >}}
+dm remote -v | grep dothub.com
+{{< /copyable >}}
+
+
+If you need to add the dothub remote, you can follow the [setup docs](/tutorials/library/#make-sure-you-have-the-hub-as-a-remote)
+
+Clone the datadot:
 
 {{< copyable name="step-02" >}}
 dm clone hub mobycounter_app
@@ -95,7 +106,7 @@ And then finally pull down and switch to the specific branch which has the data 
 
 {{< copyable name="step-04" >}}
 dm pull hub mobycounter_app security-vulnerability
-dm checkout multiple-services
+dm checkout security-vulnerability
 {{< /copyable >}}
 
 ## Inspect the state to find clues and form a hypothesis

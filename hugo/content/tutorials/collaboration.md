@@ -99,7 +99,7 @@ dm switch mobycounter_app
 Now that we've cloned the datadot, we can start up the app:
 
 {{< copyable name="step-03" >}}
-docker-compose up -d
+docker-compose up -d --build
 {{< /copyable >}}
 
 And then finally pull down and switch to the specific branch which has the data we need to reproduce the problem:

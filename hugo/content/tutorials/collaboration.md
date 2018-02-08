@@ -137,9 +137,9 @@ OK, interesting.
 There's a `default.png` here that looks different to the one shipped with the code:
 
 {{< copyable name="step-07" >}}
-md5 users/default.png
+md5sum users/default.png
 docker run -ti -v mobycounter_app.__root__:/dot --volume-driver dm \
-    bash md5 /dot/uploads/default.png
+    bash md5sum /dot/uploads/default.png
 {{< /copyable >}}
 
 ## Clue #1: the default image got overwritten
@@ -152,7 +152,7 @@ How did the default image get overwritten?
 Now let's go and inspect the users database, and see what's going on there.
 
 {{< copyable name="step-08" >}}
-docker run -ti --net=XXX --rm jbergknoff/postgresql-client \
+docker run -ti --net=mobycounter_default --rm jbergknoff/postgresql-client \
     postgresql://postgres:secret@users-db:5432/postgres
 {{< /copyable >}}
 
@@ -162,7 +162,17 @@ At the `pgsql>` prompt:
 SELECT * FROM users;
 {{< /copyable >}}
 
-A-ha!
+```plain
+ id | username
+----+----------
+  1 |
+ 34 | sdsd
+(2 rows)
+```
+
+A-ha! There is a user with an empty username!
+
+(tip: `\q` to quit psql)
 
 ## Clue #2: an empty-string username
 
@@ -171,42 +181,50 @@ There was an empty-string username in the response.
 
 **Hypothesis:** an empty string username allows an attacker to overwrite the default image for all new users.
 
-Let's go and test our hypothesis by adding some logging to the users service:
+Let's go and test our hypothesis by enabling some logging to the users service by activating the following code we conviniently placed for this exercise:
 
 ```golang
 func SetImageForUser(w http.ResponseWriter, r *http.Request) {
 
     /* ... */
-	defer file.Close()
 
-	log.Printf(
-		"[SetImageForUser] using image filename %v for user name=%v id=%v",
-		username, userId,
-	)
-
-	f, err := os.OpenFile(
-		os.Getenv("IMAGE_STORE")+"/"+getImageFilename(username),
+    if os.Getenv("DEBUG") != "" {
+      log.Printf(
+        "[SetImageForUser] using image filename %v for user name=%v id=%v",
+        username, userId,
+      )
+    }
 
     /* ... */
 
 }
 ```
 
+It will enable us to log the users container and see what is happening when we upload an image as a user.
+
 
 ## Test the hypothesis
 
-Now let's rebuild the containers and try reproducing the issue by uploading an image as the user with the empty-string username:
+Let's activate the logging feature by restarting the users container exporting the `DEBUG` variable in the meantime:
 
 {{< copyable name="step-10" >}}
-docker-compose build && docker-compose down && docker-compose up -d
+docker-compose stop users
+export DEBUG=1
+docker-compose up -d users
 {{< /copyable >}}
 
 Now go to the app at [http://localhost:8100](http://localhost:8100) and log in without putting anything in the text box.
 Then upload a new image, and check the users service docker logs:
 
 {{< copyable name="step-11" >}}
-docker logs XXX
+docker-compose logs -f users
 {{< /copyable >}}
+
+```plain
+Attaching to mobycounter_users_1
+users_1     | 2018/02/08 19:14:10 Initialized users table if it didn't exist.
+users_1     | 2018/02/08 19:14:41 [SetImageForUser] using image filename  for user name=1 id=%!v(MISSING)
+```
 
 A-ha, yes indeed!
 So, now we:

@@ -120,7 +120,7 @@ Now that you have the reproducer locally, we can immediately start inspecting th
 Let's start by taking a look at the state of the datadot:
 
 {{< copyable name="step-05" >}}
-docker run -ti -v mobycounter_app:__root__:/dot --volume-driver dm \
+docker run -ti -v mobycounter_app.__root__:/dot --volume-driver dm \
     bash ls -alh /dot
 {{< /copyable >}}
 
@@ -129,7 +129,7 @@ Subdots are just directories inside the dot.
 Let's look inside the "uploads" subdot:
 
 {{< copyable name="step-06" >}}
-docker run -ti -v mobycounter_app:__root__:/dot --volume-driver dm \
+docker run -ti -v mobycounter_app.__root__:/dot --volume-driver dm \
     bash ls -alh /dot/uploads
 {{< /copyable >}}
 
@@ -138,7 +138,7 @@ There's a `default.png` here that looks different to the one shipped with the co
 
 {{< copyable name="step-07" >}}
 md5 users/default.png
-docker run -ti -v mobycounter_app:__root__:/dot --volume-driver dm \
+docker run -ti -v mobycounter_app.__root__:/dot --volume-driver dm \
     bash md5 /dot/uploads/default.png
 {{< /copyable >}}
 

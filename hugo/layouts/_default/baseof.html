@@ -33,6 +33,7 @@
           </a>
           <span class="titlecard_version">v: {{ $.Site.Params.version }}.</span>
           <h1 class="typeM heading"><a href="{{ .Site.BaseURL }}" role="home">{{ .Site.Title }}.</a></h1>
+          <a class="typeXS" href="https://dotmesh.com/">Visit dotmesh.com</a>
         </div>
   			<div class="navigationtrigger">
   	      <button type="button" class="navigationtoggle" id="navigationtoggle">
@@ -42,14 +43,14 @@
   	        </svg>
   				</button>
   			</div>
-  			<form class="searchbar" id="searchForm">
-  				<div class="searchbar_field">
-  					<label for="searchbar_input" class="searchbar_label">Search docs</label>
-  					<input class="searchbar_input" type="text" value="" id="searchbar_input" placeholder="Search docs.">
-  					<b></b><!-- This isn't a mistake, it's a visual hack -->
-  				</div>
-  			</form>
         <div class="navigationwrapper navigationwrapperCollapsed" id="navigationwrapper">
+    			<form class="searchbar" id="searchForm">
+    				<div class="searchbar_field">
+    					<label for="searchbar_input" class="searchbar_label">Search docs</label>
+    					<input class="searchbar_input" type="text" value="" id="searchbar_input" placeholder="Search docs.">
+    					<b></b><!-- This isn't a mistake, it's a visual hack -->
+    				</div>
+    			</form>
           <nav class="navigation">
             <ul class="navigation_parent">
               {{ partial "navigation/primary.html" . }}

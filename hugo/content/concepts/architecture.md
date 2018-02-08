@@ -16,7 +16,8 @@ run where.
 
 ## Architecture diagram
 
-<img src="/hugo/concrete_architecture.png" alt="dotmesh architecture, described below" style="width: 150%;" />
+{{< figure src="/hugo/concrete_architecture.png" title="dotmesh architecture, described below" link="/hugo/concrete_architecture.png" >}}
+
 
 ## The cluster.
 

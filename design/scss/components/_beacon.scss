@@ -49,6 +49,12 @@
       border: 1px solid $dmBorder;
       padding: 5px;
     }
+    a img {
+      border-color: $dmHopper;
+    }
+    a:hover img {
+      border-color: $dmWheeler;
+    }
     figcaption {
       display: block;
       h1,h2,h3,h4,h5,h6,p,li {

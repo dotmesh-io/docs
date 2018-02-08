@@ -214,7 +214,7 @@ Go to the app at [localhost:8100](http://localhost:8100) and register (log in) a
 Now go and find an image file with a tall aspect ratio.
 I recommend searching Google Images for a picture of the Eiffel Tower.
 
-Upload it as that user's custom image.
+Upload it as that user's custom image and click on the screen a few times to see the image display.
 
 {{< copyable name="step-14" >}}
 dm commit -m "

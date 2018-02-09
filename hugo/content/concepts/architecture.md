@@ -33,9 +33,12 @@ as they're needed.
 All the commits on all the branches get replicated to every node
 automatically. The only thing that isn't replicated is the uncommitted
 "dirty" state of each subdot on each branch; that's stored on a single
-node, known as the "master node" for that branch. To protect it from
-loss if that node is destroyed, commit it so the commit gets
-replicated!
+node, known as the "master node" for that branch.
+
+We recommend that, to protect data from loss if that node is
+destroyed, you commit your dots regularly so the commit gets
+replicated to other nodes in the cluster! Dotmesh does not replicate
+the uncommitted state of a dot.
 
 Clusters can  come in various  different flavours, but they  all work
 the same inside.
@@ -91,7 +94,7 @@ happens.
 The dotmesh server communicates with the etcd instance on the node on
 port 42380.
 
-## ZFS.
+## ZFS: Dots and Subdots on disk.
 
 Dotmesh stores Dot content in ZFS. It will use a pool called `pool`;
 if one does not exist, it will create a ten GiB file called
@@ -99,6 +102,18 @@ if one does not exist, it will create a ten GiB file called
 sufficient for casual use of Dotmesh, but serious users will want to
 create their own zpool called `pool`, either on a dedicated disk
 partition or a larger file.
+
+Each branch of each dot is a ZFS filesystem within the node, and each
+dotmesh commit is a ZFS snapshot. When a branch is on its "master"
+node, then the ZFS filesystem corresponding to that branch is directly
+mountable into a container as a writable filesystem; otherwise, it's
+just used as a repository of snapshots and kept read-only.
+
+Each subdot is a subdirectory of the ZFS filesystem corresponding to
+the dot. The "default subdot", used when users don't request a subdot,
+just just a subdot called `__default__`. Users can directly mount the
+root of the dot as a volume by asking for a subdot called
+`__root__`. Subdot names starting with `_` are reserved.
 
 ## Intra-cluster communications.
 

@@ -59,9 +59,9 @@ Please [open an issue](https://github.com/dotmesh-io/dotmesh/issues/new) or give
 
 ## What is the Circle of Control?
 
-It's a concept borrowed from Stephen Covey's book _[The Seven Habits
+It's a concept borrowed from Stephen Covey's book [The Seven Habits
 of Highly Effective
-People](https://en.wikipedia.org/wiki/The_7_Habits_of_Highly_Effective_People)_. In
+People](https://en.wikipedia.org/wiki/The_7_Habits_of_Highly_Effective_People). In
 essence it means things that are inside the boundary of what you can
 control. In software, and specifically when talking about dotmesh we
 are referring to creating immutability as a form of control. For
@@ -79,7 +79,7 @@ Yes. See the [setup and install guides](/install-setup/) for details.
 
 Yes. You have to explicitly attach a volume to a datadot for it to be
 part of it, using PersistentVolumeClaims bound to the `dotmesh`
-StorageClass in Kubernetes, or the `dotmesh` volume driver in Docker.
+StorageClass in Kubernetes, or the `dm` volume driver in Docker.
 
 ## What environments will dotmesh work in? / What are the requirements for using dotmesh?
 

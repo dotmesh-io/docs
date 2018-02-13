@@ -2,12 +2,12 @@ FROM ubuntu:16.04
 MAINTAINER kai@dotmesh.io
 
 # versions
-ENV HUGO_VERSION=0.31.1
+ENV HUGO_VERSION=0.33
 
 # install
 RUN apt-get update
 RUN apt-get install -y curl bzip2
-RUN curl -L https://github.com/gohugoio/hugo/releases/download/v0.31.1/hugo_${HUGO_VERSION}_Linux-64bit.deb > hugo.deb
+RUN curl -L https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.deb > hugo.deb
 RUN dpkg -i hugo.deb
 RUN rm -f hugo.deb
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash

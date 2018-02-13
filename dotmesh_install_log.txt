@@ -1,0 +1,5 @@
+=== TIMING ===
+pull dotmesh-server docker image => 1.86
+check docker version => 0.24
+check dotmesh isn't running => 0.20
+=== END TIMING ===

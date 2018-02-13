@@ -56,3 +56,64 @@ Currently, we do not encrypt pushes and pulls between OSS clusters, but it's on 
 We do not currently encrypt your volumes on disk.
 
 Please [open an issue](https://github.com/dotmesh-io/dotmesh/issues/new) or give us feedback on Slack if you're interested in these features!
+
+## What is the Circle of Control?
+
+It's a concept borrowed from Stephen Covey's book _[The Seven Habits
+of Highly Effective
+People](https://en.wikipedia.org/wiki/The_7_Habits_of_Highly_Effective_People)_. In
+essence it means things that are inside the boundary of what you can
+control. In software, and specifically when talking about dotmesh we
+are referring to creating immutability as a form of control. For
+example, version control and software testing lets you tame your
+code. Immutable infrastructure lets you control your cloud resources,
+but until now data has been outside the circle of control. Dotmesh
+helps you to get a handle on your application state by snapshotting it
+to give you immutable data and sane working practices.
+
+## Does dotmesh support clusters?
+
+Yes. See the [setup and install guides](/install-setup/) for details.
+
+## Can I control which elements of my application state are captured in a datadot?
+
+Yes. You have to explicitly attach a volume to a datadot for it to be
+part of it, using PersistentVolumeClaims bound to the `dotmesh`
+StorageClass in Kubernetes, or the `dotmesh` volume driver in Docker.
+
+## What environments will dotmesh work in? / What are the requirements for using dotmesh?
+
+See the [setup and install guides](/install-setup/) for details on
+dotmesh's platform requirements in different configurations.
+
+## Do I have to use dothub or can I use another back end?
+
+You don't need to use dothub. You might not want to pay us money, or
+the bandwidth costs of transferring data into and out of your network
+might be excessive, or you might have regulatory requirements about
+handing your data to third parties. We understand.
+
+If you configure all your dotmesh nodes into a cluster, then your dots
+will be available uniformly across that cluster. You don't need any
+external places to store them, and you can use the automatic commit
+replication to provide a backup.
+
+You can also run multiple clusters and push/pull dots between them, by
+adding other clusters as a "remote". Read the [command line
+reference](/references/cli/) for instructions on how to do that.
+
+Also, you can run your own instance of dothub. If you would like to
+use dothub for your enterprise, please [contact
+us](https://dotmesh.com/pricing/register-interest/).
+
+## What databases and data sources can dotmesh capture?
+
+Anything that can run in Docker or Kubernetes and store its state in a
+volume mounted into the container filesystem! Dotmesh provides a
+filesystem interface to datadots, so anything that stores its state in
+a filesystem can store its state in a datadot.
+
+##  Can I host my own instance of dothub?
+
+If you would like to use dothub for your enterprise, please [contact
+us](https://dotmesh.com/pricing/register-interest/).

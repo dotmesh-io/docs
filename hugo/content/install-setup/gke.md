@@ -108,6 +108,16 @@ kubectl apply -f https://get.dotmesh.io/yaml/etcd-operator-dep.yaml
 It may take a few minutes for the etcd operator to activate.
 Use `kubectl get pods -n dotmesh` to check for a running `etcd-operator` pod.
 
+## Create an etcd cluster for dotmesh to use
+
+{{< copyable name="step-05a" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-etcd-cluster.yaml
+{{< /copyable >}}
+
+```plain
+etcdcluster "dotmesh-etcd-cluster" configured
+```
+
 ## Dotmesh
 
 Use the following command to apply the YAML configuration for running dotmesh:
@@ -117,7 +127,6 @@ kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.yaml
 {{< /copyable >}}
 
 ```plain
-etcdcluster "dotmesh-etcd-cluster" configured
 serviceaccount "dotmesh" configured
 clusterrole "dotmesh" configured
 clusterrolebinding "dotmesh" configured

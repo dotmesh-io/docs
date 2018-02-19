@@ -134,7 +134,7 @@ etcd-operator-56b49b7ffd-529zn                 1/1       Running       0        
 
 ## Restart Kubelet
 
-To get the kubelet to pick up the flexvolume driver dotmesh just installed - run this script that logs in to each of the nodes and restarts the kubelet process:
+To get the kubelet to pick up the flexvolume driver dotmesh just installed - log into each of the nodes and restart the kubelet process:
 
 {{< copyable name="step-01a" >}}
 sudo systemctl restart kubelet

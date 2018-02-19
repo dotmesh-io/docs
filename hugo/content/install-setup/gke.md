@@ -169,18 +169,6 @@ done
 
 **NOTE** In Kubernetes 1.8 restarting the kubelet will not be needed
 
-## Dotmesh config
-
-So the flexvolume driver can communicate with the dotmesh cluster - we download the `dm` binary on each node and add the config using the `dm remote add` command:
-
-{{< copyable name="step-01" >}}
-for node in $(kubectl get no | tail -n +2 | awk '{print $1}'); do
-  gcloud compute ssh $node --command "sudo curl -sSL -o /usr/local/bin/dm https://get.dotmesh.io/Linux/dm && sudo chmod a+x /usr/local/bin/dm && DOTMESH_PASSWORD=apples dm remote add local admin@127.0.0.1 && sudo mkdir -p /root/.dotmesh && sudo cp -f .dotmesh/config /root/.dotmesh"
-done
-{{< /copyable >}}
-
-**NOTE** If you used a different admin password, you need to replace `apples` above with it.
-
 ## Customising the installation
 
 If you want a non-default installation - for instance, only running

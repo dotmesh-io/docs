@@ -136,10 +136,8 @@ etcd-operator-56b49b7ffd-529zn                 1/1       Running       0        
 
 To get the kubelet to pick up the flexvolume driver dotmesh just installed - run this script that logs in to each of the nodes and restarts the kubelet process:
 
-{{< copyable name="step-01" >}}
-for node in $(kubectl get no | tail -n +2 | awk '{print $1}'); do
-  gcloud compute ssh $node --command "sudo systemctl restart kubelet"
-done
+{{< copyable name="step-01a" >}}
+sudo systemctl restart kubelet
 {{< /copyable >}}
 
 **NOTE** In Kubernetes 1.8 restarting the kubelet will not be needed

@@ -23,16 +23,16 @@
     {{ end }}
   </head>
   <body>
-    <script src="//track.dotmesh.com/track.min.js"></script>
+    <script src="//track.dotmesh.com/xdomain_cookie.js"></script>
     <script type="text/javascript">
-      var xd_cookie = xDomainCookie("//track.dotmesh.com","dotmesh");
-      var tracking_id = trackingID();      
+      var xd_cookie = xDomainCookie("//track.dotmesh.com","dotmesh");      
       xd_cookie.get('tracking_id', function(cookie_val){
         console.log("tracking_id", cookie_val);
         if(!cookie_val){
-          xd_cookie.set('tracking_id', tracking_id, 365);
+          var new_tracking_id = trackingID();
+          xd_cookie.set('tracking_id', new_tracking_id, 365);
         }
-      });      
+      });     
     </script> 
     <div class="docs">
       <aside class="docs_aside">

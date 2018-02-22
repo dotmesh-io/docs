@@ -32,7 +32,8 @@
           dm_cookie.set('dm_tracking_id', new_tracking_id, 365);
         }
         dm_tracking_id = cookie_val;
-      });   
+      });
+      analytics.identify(dm_tracking_id);   
     </script>
     <div class="docs">
       <aside class="docs_aside">

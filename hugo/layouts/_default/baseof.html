@@ -24,15 +24,17 @@
     <script src="https://track.dotmesh.com/track.min.js"></script>
     <script type="text/javascript">
       var dm_cookie = xDomainCookie('https://track.dotmesh.com', 'dotmesh');      
+      var dm_tracking_id = trackingID();
       dm_cookie.get('dm_tracking_id', function(cookie_val){     
-        if(!cookie_val){
-          var new_tracking_id = trackingID();
-          dm_cookie.set('dm_tracking_id', new_tracking_id, 365);
+        if(!cookie_val) {
+          dm_cookie.set('dm_tracking_id', dm_tracking_id, 365);
+        } 
+        else {
+          dm_tracking_id = cookie_val;
         }
-        dm_tracking_id = cookie_val;
-      });
-      analytics.identify(dm_tracking_id);   
-    </script>
+      }); 
+      analytics.identify(dm_tracking_id);  
+    </script> 
     <div class="docs">
       <aside class="docs_aside">
         <div class="titlecard">

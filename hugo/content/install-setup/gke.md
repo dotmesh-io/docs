@@ -18,7 +18,10 @@ weight = "4"
 * GKE activated on the [console page](https://console.cloud.google.com/kubernetes/list)
 {{% /overview %}}
 
-This guide will show you how to install dotmesh onto a Kubernetes cluster provisioned on [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine/).
+This guide will show you how to install dotmesh onto a Kubernetes
+cluster provisioned on [Google Kubernetes
+Engine](https://cloud.google.com/kubernetes-engine/). We support
+Kubernetes 1.7 or 1.8 GKE clusters, running the Ubuntu image type.
 
 ## Authenticate
 
@@ -46,7 +49,7 @@ gcloud container clusters create dotmesh-gke-cluster \
   --image-type=ubuntu \
   --tags=dotmesh \
   --machine-type=n1-standard-4 \
-  --cluster-version=1.7.11-gke.1
+  --cluster-version=1.8.7-gke.1
 {{< /copyable >}}
 
 **NOTE** - At present the cluster needs to use `--image-type=ubuntu` - in upcoming releases this requirement will be removed.
@@ -123,7 +126,13 @@ etcdcluster "dotmesh-etcd-cluster" configured
 Use the following command to apply the YAML configuration for running dotmesh:
 
 {{< copyable name="step-06" >}}
-kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.yaml
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.gke.yaml
+{{< /copyable >}}
+
+If you're running Kubernetes 1.7 on your cluster, you must use a different YAML:
+
+{{< copyable name="step-06" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.gke.yaml
 {{< /copyable >}}
 
 ```plain
@@ -157,17 +166,17 @@ dotmesh-rd9c4                                  1/1       Running       0        
 etcd-operator-56b49b7ffd-529zn                 1/1       Running       0          1h
 ```
 
-## Restart Kubelet
+## Restart Kubelet (Kubernetes 1.7 only)
 
-To get the kubelet to pick up the flexvolume driver dotmesh just installed - run this script that logs in to each of the nodes and restarts the kubelet process:
+If you are running Kubernetes 1.7, then to get the kubelet to pick up
+the flexvolume driver dotmesh just installed - run this script that
+logs in to each of the nodes and restarts the kubelet process:
 
 {{< copyable name="step-01" >}}
 for node in $(kubectl get no | tail -n +2 | awk '{print $1}'); do
   gcloud compute ssh $node --command "sudo systemctl restart kubelet"
 done
 {{< /copyable >}}
-
-**NOTE** In Kubernetes 1.8 restarting the kubelet will not be needed
 
 ## Customising the installation
 

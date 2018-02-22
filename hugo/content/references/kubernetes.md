@@ -22,11 +22,12 @@ different components of a Dotmesh cluster are.
 ## Using customised YAML.
 
 Download [the default Dotmesh YAML
-file](https://get.dotmesh.io/yaml/dotmesh.yaml) and use it as a basis
+file for kubernetes 1.6 and 1.7](https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.yaml) or [the default Dotmesh YAML
+file for kubernetes 1.8 and 1.9](https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml) and use it as a basis
 to write your own, like so:
 
 <div class="highlight"><pre class="chromaManual">
-$ <kbd>curl https://get.dotmesh.io/yaml/dotmesh.yaml > dotmesh-default.yaml</kbd>
+$ <kbd>curl https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml > dotmesh-default.yaml</kbd>
 $ <kbd>cp dotmesh-default.yaml dotmesh-customised.yaml</kbd>
 # ...edit dotmesh-customised.yaml...
 $ <kbd>kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-customised.yaml</kbd>
@@ -43,7 +44,6 @@ namespaced in Kubernetes.
 
 The following objects comprise the core Dotmesh cluster:
 
- * The `dotmesh-etcd-cluster` etcd cluster
  * The `dotmesh` ServiceAccount
  * The `dotmesh` ClusterRole
  * The `dotmesh` ClusterRoleBinding
@@ -110,6 +110,14 @@ namespace) to configure the initial API key and admin password, which
 is not created by the YAML - you have to provide these secrets
 yourself; we wouldn't dream of shipping you a default API key! This
 gets mounted into the container filesystem at `/secret`.
+
+One thing that might need configuring differently here is the
+directory to store the Flexvolume driver in, which is specified in the
+`FLEXVOLUME_DRIVER_DIR` environment variable. The default is
+`/usr/libexec/kubernetes/kubelet-plugins/volume/exec`, but GKE post
+version 1.8 moved it to `/home/kubernetes/flexvolume` (a change we
+ship in our `dotmesh-k8s-1.8.gke.yaml`. Other Kubernetes environments
+may have it elsewhere.
 
 ## The `dotmesh-provisioner` ServiceAccount.
 

@@ -319,8 +319,6 @@ dm commit -m "gitlab failure state"
 We can now pull the volume locally and use it to debug or start our service against it:
 
 ```plain
-dm switch testb9fb4663
-dm commit -m "gitlab failure state"
 dm clone gke testb9fb4663 master
 dm remote switch local
 dm list

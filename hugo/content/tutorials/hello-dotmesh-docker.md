@@ -140,10 +140,10 @@ First, sign up for an account on the [Dothub](https://dothub.com).
 
 Then tell the person who sent you here to add you as a collaborator to their dot.
 
-{{% overview %}}
+### You're gonna need
+
 * [Dotmesh on Docker](/install-setup/docker/).
 * [Docker Compose](https://docs.docker.com/compose/install/) if it didn't come with your Docker.
-{{% /overview %}}
 
 Next, let's set up some environment variables.
 

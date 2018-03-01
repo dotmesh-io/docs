@@ -16,6 +16,7 @@ In this tutorial, we clone the (code, data) pair that exhibited one of the bugs 
 
 {{% overview %}}
 * [Dotmesh on Docker](/install-setup/docker/).
+* [Docker Compose](https://docs.docker.com/compose/install/) if it didn't come with your Docker.
 * Or try this example on our [hosted demo](/install-setup/katacoda/).
 {{% /overview %}}
 

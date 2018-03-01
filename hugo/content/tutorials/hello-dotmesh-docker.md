@@ -12,6 +12,7 @@ order = "1"
 
 {{% overview %}}
 * [Dotmesh on Docker](/install-setup/docker/).
+* [Docker Compose](https://docs.docker.com/compose/install/) if it didn't come with your Docker.
 * Or try this example on our [hosted tutorial](/install-setup/katacoda/).
 {{% /overview %}}
 
@@ -134,9 +135,15 @@ Finally, send them a link to the following section so that they can clone your d
 
 So you been invited to pull down someone else's datadot?
 Great, let's do it!
+
 First, sign up for an account on the [Dothub](https://dothub.com).
 
 Then tell the person who sent you here to add you as a collaborator to their dot.
+
+{{% overview %}}
+* [Dotmesh on Docker](/install-setup/docker/).
+* [Docker Compose](https://docs.docker.com/compose/install/) if it didn't come with your Docker.
+{{% /overview %}}
 
 Next, let's set up some environment variables.
 
@@ -144,15 +151,6 @@ Next, let's set up some environment variables.
 export DOT_OWNER=<their-username>
 export COLLABORATOR=<your-username>
 ```
-
-Install Dotmesh:
-
-{{< copyable name="step-11" >}}
-sudo curl -sSL -o /usr/local/bin/dm \
-    https://get.dotmesh.io/$(uname -s)/dm
-sudo chmod +x /usr/local/bin/dm
-dm cluster init
-{{< /copyable >}}
 
 Authenticate to the hub:
 

@@ -14,6 +14,7 @@ In this tutorial, we'll show how to use dotmesh to capture a library of states s
 
 {{% overview %}}
 * [Dotmesh on Docker](/install-setup/docker/).
+* [Docker Compose](https://docs.docker.com/compose/install/) if it didn't come with your Docker.
 * Or try this example on our [hosted demo](/install-setup/katacoda/).
 {{% /overview %}}
 

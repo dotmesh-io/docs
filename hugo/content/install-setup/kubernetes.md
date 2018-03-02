@@ -13,7 +13,6 @@ weight = "3"
 
 {{% overview %}}
 * A Kubernetes cluster (version >= 1.6)
-* Kubernetes 1.8 is NOT supported yet: see [#263](https://github.com/dotmesh-io/dotmesh/issues/263)
 {{% /overview %}}
 
 
@@ -83,20 +82,14 @@ etcdcluster "dotmesh-etcd-cluster" configured
 With the etcd cluster created, installing Dotmesh is a simple matter of loading the Dotmesh YAML:
 
 {{< copyable name="step-03" >}}
-kubectl apply -f https://get.dotmesh.io/yaml/dotmesh.yaml
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.yaml
 {{< /copyable >}}
-
-<!--
-
-TODO uncomment when https://github.com/dotmesh-io/dotmesh/issues/263 is fixed.
 
 **NOTE** if you are using Kubernetes > `1.8` then use the following URL:
 
 {{< copyable name="step-04" >}}
 kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml
 {{< /copyable >}}
-
--->
 
 ```plain
 serviceaccount "dotmesh" configured

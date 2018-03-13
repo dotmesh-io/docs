@@ -126,7 +126,7 @@ deployment "dotmesh-dynamic-provisioner" configured
 storageclass "dotmesh" configured
 ```
 
-**NOTE** - This will create a service of type Loadbalancer that will expose port port 6969 on the Internet. The need for a firewall rule will be replaced with an ingress rule in an upcoming release.
+**NOTE** - This will create a service of type Loadbalancer that will expose port port 32607 on the Internet. The need for a firewall rule will be replaced with an ingress rule in an upcoming release.
 
 Let's check to see that we have our dotmesh pods running on our Kubernetes cluster.  They might take a few moments to get going - wait for the pods to start before proceeding.
 

@@ -96,7 +96,7 @@ ClusterRole. You shouldn't need to change this.
 ## The `dotmesh` Service.
 
 This is the service used to access the Dotmesh server on
-port 6969. It's needed both for internal connectivity between nodes in
+port 32607. It's needed both for internal connectivity between nodes in
 the cluster, and to allow other clusters to push/pull from this one.
 
 ## The `dotmesh` DaemonSet.

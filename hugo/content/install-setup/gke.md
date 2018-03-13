@@ -51,12 +51,12 @@ gcloud container clusters create dotmesh-gke-cluster \
 
 **NOTE** - At present the cluster needs to use `--image-type=ubuntu` - in upcoming releases this requirement will be removed.
 
-Then open port `6969` so external `dm` clients can communicate with our cluster.
+Then open port `32607` so external `dm` clients can communicate with our cluster.
 Also, we open `30004` as we use that in later examples.
 
 {{< copyable name="step-03" >}}
 gcloud compute firewall-rules create dotmesh-ingress \
-  --allow tcp:6969,tcp:30004 \
+  --allow tcp:32607,tcp:30004 \
   --target-tags=dotmesh
 {{< /copyable >}}
 

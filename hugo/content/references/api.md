@@ -19,7 +19,7 @@ You need to ensure that you choose the most appropriate node to mount the volume
 
 ## Basics.
 
-Every node in a Dotmesh cluster exposes the Dotmesh API on port 6969; in a Kubernetes cluster, this is made accessible as a ClusterIP service called "dotmesh" in the "dotmesh" namespace by default, which can be accessed through [the standard Kubernetes service discovery methods](https://kubernetes.io/docs/concepts/services-networking/service/#discovering-services).
+Every node in a Dotmesh cluster exposes the Dotmesh API on port 32607; in a Kubernetes cluster, this is made accessible as a ClusterIP service called "dotmesh" in the "dotmesh" namespace by default, which can be accessed through [the standard Kubernetes service discovery methods](https://kubernetes.io/docs/concepts/services-networking/service/#discovering-services).
 
 Our API uses [JSON-RPC](http://www.jsonrpc.org) v2 over HTTP when
 talking to a local cluster, or HTTPS for talking to the Hub. But don't
@@ -29,7 +29,7 @@ with examples below.
 ### Connecting to your Dotmesh cluster.
 
 All API methods are invoked by making a POST to
-`http://SERVERNAME:6969/rpc`, with Basic HTTP authentication. To talk
+`http://SERVERNAME:32607/rpc`, with Basic HTTP authentication. To talk
 to your local cluster, you'll need the `admin` user and the
 corresponding API key.  If you created your cluster from the command
 line with `dm cluster init`, these can be found in the

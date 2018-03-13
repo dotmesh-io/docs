@@ -122,15 +122,15 @@ via two means:
 
  * Shared state in etcd, which communicates between nodes using port
    42380.
- * HTTP via port 6969.
+ * HTTP via port 32607.
 
 <div class="alert alertNotice"><p>WARNING: Communications via HTTP on
-port 6969 aren't encrypted or protected from attackers in any
+port 32607 aren't encrypted or protected from attackers in any
 meaningful sense, so please keep those ports locked down in your
 cluster and use a VPN if you're extending a cluster over untrusted
 networks!</p></div>
 
-The actual transfer of Dot contents is via HTTP on port 6969, so
+The actual transfer of Dot contents is via HTTP on port 32607, so
 that's where the bulk of the bandwidth will be - route that via a good
 (and cheap for bulk!) network connection. The communications with
 etcd, and between etcd nodes, are just metadata so the bandwidth usage
@@ -144,7 +144,7 @@ Communication between your local cluster and the Hub is via HTTPS on
 port 443. This includes both API traffic as documented in the [API
 manual](../../references/api/), and the transfer of Dot filesystem
 data. Please make sure all your Dotmesh nodes are able to connect to
-`dothub.com` on port 6969 for the Hub to work correctly.
+`dothub.com` on port 32607 for the Hub to work correctly.
 
 ## Docker and Kubernetes.
 
@@ -183,7 +183,7 @@ Kubernetes integration guides](/install-setup/).
 Other than asking Docker or Kubernetes to attach subdots as container
 volumes, the main way users interact with Dotmesh is via the `dm`
 command-line client. This communicates with the cluster via HTTP on
-port 6969 (or HTTPS on port 443 when talking to the Hub), simply by
+port 32607 (or HTTPS on port 443 when talking to the Hub), simply by
 [invoking the API](../../references/api/). The one exception is when
 the user performs `dm cluster init`, `dm cluster join`, `dm cluster
 reset` or `dm cluster upgrade`, which also communicate with Docker and

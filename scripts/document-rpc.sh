@@ -16,6 +16,6 @@ echo "##### Response."
 echo ""
 echo '```json'
 
-curl --user admin:`cat ~/.dotmesh/admin-password.txt` -H 'Content-Type: application/json' http://localhost:6969/rpc --data-binary "$JSON" 2>/dev/null | jq .
+curl --user admin:`cat ~/.dotmesh/admin-password.txt` -H 'Content-Type: application/json' http://localhost:32607/rpc --data-binary "$JSON" 2>/dev/null | jq .
 
 echo '```'

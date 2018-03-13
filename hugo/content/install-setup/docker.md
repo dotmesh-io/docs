@@ -12,7 +12,7 @@ weight = "1"
 
 {{% overview %}}
 * [Docker](https://docs.docker.com/install/) ≥ 1.8.0
-* macOS or Ubuntu 16.04 or later
+* macOS, Ubuntu 16.04 or later, or CentOS 7.4
 {{% /overview %}}
 
 ## Installation

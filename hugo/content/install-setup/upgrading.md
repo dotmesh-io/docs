@@ -45,10 +45,16 @@ sudo curl -sSL -o /usr/local/bin/dm \
     https://get.dotmesh.io/$(uname -s)/dm
 {{< /copyable >}}
 
-Apply the latest stable dotmesh YAML:
+Apply the latest stable dotmesh YAML for your Kubernetes version. For 1.6 and 1.7:
 
 {{< copyable name="step-5" >}}
-kubectl apply -f https://get.dotmesh.io/yaml/dotmesh.yaml
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.yaml
+{{< /copyable >}}
+
+For 1.8 and 1.9:
+
+{{< copyable name="step-5" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml
 {{< /copyable >}}
 
 You'll notice the version of `dotmesh-server` is specified in the image tags within the Kubernetes YAML.

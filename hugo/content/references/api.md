@@ -103,10 +103,15 @@ If there is a problem with your request, you will receive a standard JSON-RPC v2
 Let's check the version of our local Dotmesh cluster from the shell:
 
 <div class="highlight"><pre class="chromaManual">
-$ <kbd>curl --user admin:`jq -r .Remotes.local.ApiKey &lt; ~/.dotmesh/config` \
-    -H 'Content-Type: application/json' http://localhost:6969/rpc \
+$ <kbd>curl --user \
+      admin:`jq -r .Remotes.local.ApiKey &lt; ~/.dotmesh/config` \
+    -H 'Content-Type: application/json' \
+    http://localhost:6969/rpc \
     --data-binary \
-    '{"jsonrpc": "2.0", "method": "DotmeshRPC.Version", "params": {}, "id": 1}' \
+    '{"jsonrpc": "2.0",
+      "method": "DotmeshRPC.Version",
+      "params": {},
+      "id": 1}' \
     | jq</kbd>
 {
   "jsonrpc": "2.0",
@@ -114,7 +119,8 @@ $ <kbd>curl --user admin:`jq -r .Remotes.local.ApiKey &lt; ~/.dotmesh/config` \
     "installed_version": "master-63703ec",
     "current_version": "release-0.3.0",
     "current_release_date": 1520003781,
-    "current_download_url": "https://github.com/dotmesh-io/dotmesh/releases/tag/release-0.3.0",
+    "current_download_url":
+       "https://github.com/dotmesh-io/dotmesh/releases/tag/release-0.3.0",
     "current_changelog_url": "",
     "project_website": "https://dotmesh.com",
     "outdated": true

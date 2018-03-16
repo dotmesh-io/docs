@@ -36,8 +36,8 @@ line with `dm cluster init`, these can be found in the
 `$HOME/.dotmesh/config` file:
 
 <div class="highlight"><pre class="chromaManual">
-$ <kbd>cat ~/.dotmesh/config | jq .Remotes.local.ApiKey</kbd>
-"<em>VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD</em>"
+$ <kbd>cat ~/.dotmesh/config | jq -r .Remotes.local.ApiKey</kbd>
+<em>VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD</em>
 </pre></div>
 
 If your cluster was created purely through Kubernetes, the admin API
@@ -97,6 +97,31 @@ If there is a problem with your request, you will receive a standard JSON-RPC v2
   "id": 6129484611666146000
 }
 ```
+
+#### Example
+
+Let's check the version of our local Dotmesh cluster from the shell:
+
+<div class="highlight"><pre class="chromaManual">
+$ <kbd>curl --user admin:`jq -r .Remotes.local.ApiKey &lt; ~/.dotmesh/config` \
+    -H 'Content-Type: application/json' http://localhost:6969/rpc \
+    --data-binary \
+    '{"jsonrpc": "2.0", "method": "DotmeshRPC.Version", "params": {}, "id": 1}' \
+    | jq</kbd>
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "installed_version": "master-63703ec",
+    "current_version": "release-0.3.0",
+    "current_release_date": 1520003781,
+    "current_download_url": "https://github.com/dotmesh-io/dotmesh/releases/tag/release-0.3.0",
+    "current_changelog_url": "",
+    "project_website": "https://dotmesh.com",
+    "outdated": true
+  },
+  "id": 1
+}
+</pre></div>
 
 ### Connecting to the Hub.
 

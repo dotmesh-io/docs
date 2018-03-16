@@ -170,8 +170,8 @@ The admin API key from an existing Docker-based cluster created with
 cluster init` was run, with the following command:
 
 <div class="highlight"><pre class="chromaManual">
-$ <kbd>cat ~/.dotmesh/config | jq .Remotes.local.ApiKey</kbd>
-"<em>VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD</em>"
+$ <kbd>cat ~/.dotmesh/config | jq -r .Remotes.local.ApiKey</kbd>
+<em>VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD</em>
 </pre></div>
 
 ### List remotes: `dm remote -v`

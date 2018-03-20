@@ -49,10 +49,16 @@ gcloud container clusters create dotmesh-gke-cluster \
   --image-type=ubuntu \
   --tags=dotmesh \
   --machine-type=n1-standard-4 \
-  --cluster-version=1.8.7-gke.1
+  --cluster-version=1.8.8-gke.0
 {{< /copyable >}}
 
 **NOTE** - At present the cluster needs to use `--image-type=ubuntu` - in upcoming releases this requirement will be removed.
+
+You can run the following command to list the available cluster versions for GKE.  You can choose a version that suits you as long as it is `>= 1.8.X`
+
+```plain
+gcloud container get-server-config
+```
 
 Then open port `32607` so external `dm` clients can communicate with our cluster.
 Also, we open `30004` as we use that in later examples.

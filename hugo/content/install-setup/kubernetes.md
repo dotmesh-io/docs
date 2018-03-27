@@ -12,7 +12,7 @@ weight = "3"
 +++
 
 {{% overview %}}
-* A Kubernetes cluster (version >= 1.6)
+* A Kubernetes cluster (version >= 1.7)
 {{% /overview %}}
 
 

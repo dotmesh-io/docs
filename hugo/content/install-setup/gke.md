@@ -21,7 +21,7 @@ weight = "4"
 This guide will show you how to install dotmesh onto a Kubernetes
 cluster provisioned on [Google Kubernetes
 Engine](https://cloud.google.com/kubernetes-engine/). We support
-Kubernetes 1.7 or 1.8 GKE clusters, running the Ubuntu image type.
+Kubernetes 1.7, 1.8 and 1.9 GKE clusters, **only if they are running the Ubuntu image type**.
 
 ## Authenticate
 
@@ -129,7 +129,7 @@ etcdcluster "dotmesh-etcd-cluster" configured
 
 ## Dotmesh
 
-Use the following command to apply the YAML configuration for running dotmesh:
+Use the following command to apply the YAML configuration for running dotmesh on Kubernetes 1.8 and 1.9:
 
 {{< copyable name="step-06" >}}
 kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.gke.yaml

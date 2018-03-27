@@ -45,16 +45,34 @@ sudo curl -sSL -o /usr/local/bin/dm \
     https://get.dotmesh.io/$(uname -s)/dm
 {{< /copyable >}}
 
-Apply the latest stable dotmesh YAML for your Kubernetes version. For 1.6 and 1.7:
+Apply the latest stable dotmesh YAML for your Kubernetes version. For 1.7 generic:
 
 {{< copyable name="step-5" >}}
 kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.yaml
 {{< /copyable >}}
 
-For 1.8 and 1.9:
+For 1.7 on GKE:
 
-{{< copyable name="step-5" >}}
+{{< copyable name="step-5a" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.gke.yaml
+{{< /copyable >}}
+
+For 1.8 or 1.9 generic:
+
+{{< copyable name="step-5b" >}}
 kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml
+{{< /copyable >}}
+
+For 1.8 or 1.9 on GKE:
+
+{{< copyable name="step-5b" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.gke.yaml
+{{< /copyable >}}
+
+For 1.8 on AKS:
+
+{{< copyable name="step-5c" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.aks.yaml
 {{< /copyable >}}
 
 You'll notice the version of `dotmesh-server` is specified in the image tags within the Kubernetes YAML.

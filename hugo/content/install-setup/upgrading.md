@@ -38,60 +38,6 @@ To check that the version of the client and the server match, and are up-to-date
 
 ## Upgrading Dotmesh on Kubernetes
 
-### dotmesh 0.3 -> 0.4
-
-We upgraded the version of the etcd operator in the 0.4 release, and in order to be able to safely upgrade etcd and the etcd operator we added `dm cluster backup-etcd` and `dm cluster restore-etcd` commands so that you can tolerate the loss of an etcd cluster during the upgrade.
-
-It may also be useful to automate running the `backup-etcd` command regularly, in case of data loss due to e.g. upgrading your GKE cluster or rebooting your nodes all at the same time (scenarios that the etcd operator deals with poorly). Future versions of dotmesh will automate doing this continuously.
-
-So to upgrade from dotmesh 0.3 to 0.4 on Kubernetes, follow these steps:
-
-Download the latest stable `dm` client binary (see "Instructions for all versions" below).
-
-Apply the appropriate YAML for your Kubernetes type (see "Instructions for all versions" below).
-
-You will now have a `dm` client and a running cluster which supports `backup-etcd` and `restore-etcd` commands.
-
-Back up etcd (assuming your `dm` binary is pointing at the right cluster, use `dm remote -v` to check):
-
-{{< copyable name="step-0.3-0.4-upgrade0" >}}
-dm cluster backup-etcd > dotmesh-etcd-backup.json
-{{< /copyable >}}
-
-Now, deploy the latest etcd operator:
-
-{{< copyable name="step-0.3-0.4-upgrade1" >}}
-kubectl apply -f https://get.dotmesh.io/yaml/etcd-operator-clusterrole.yaml
-kubectl apply -f https://get.dotmesh.io/yaml/etcd-operator-dep.yaml
-{{< /copyable >}}
-
-Delete your etcd cluster, it may well be in a failed state anyway (`kubectl describe etcd dotmesh-etcd -n dotmesh` if you are curious), and besides, we need to kick it to upgrade the etcd version itself:
-
-{{< copyable name="step-0.3-0.4-upgrade2" >}}
-kubectl delete etcd dotmesh-etcd-cluster -n dotmesh
-{{< /copyable >}}
-
-Create a new etcd cluster:
-
-{{< copyable name="step-0.3-0.4-upgrade3" >}}
-kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-etcd-cluster.yaml
-{{< /copyable >}}
-
-Wait for the etcd cluster to come back up:
-
-{{< copyable name="step-0.3-0.4-upgrade4" >}}
-kubectl get pods -n dotmesh
-{{< /copyable >}}
-
-Restore the backup.
-
-{{< copyable name="step-0.3-0.4-upgrade5" >}}
-dm cluster restore-etcd < dotmesh-etcd-backup.json
-{{< /copyable >}}
-
-
-### Instructions for all versions
-
 Download the latest stable `dm` client binary:
 
 {{< copyable name="step-4" >}}
@@ -138,3 +84,57 @@ dm version
 {{< /copyable >}}
 
 To check that the version of the client and the server match, and are up-to-date.
+
+## dotmesh 0.3 -> 0.4
+
+In the dotmesh 0.4 release, we upgraded the version of the etcd operator.
+In order to be able to safely upgrade etcd and the etcd operator we added `dm cluster backup-etcd` and `dm cluster restore-etcd` commands.
+These commands let you tolerate the loss of an etcd cluster during the upgrade.
+
+It may also be useful to automate running the `backup-etcd` command regularly, so that you can recover from etcd data loss due to, for example, upgrading your GKE cluster or rebooting your nodes all at the same time -- scenarios that the etcd operator deals with poorly.
+Future versions of dotmesh will automate continuous etcd backups.
+
+So to upgrade dotmesh and the etcd operator and etcd on Kubernetes, follow these steps:
+
+* Download the latest stable `dm` client binary (see "Instructions for all versions" below).
+
+* Apply the appropriate YAML for your Kubernetes type (see "Instructions for all versions" below).
+
+* You will now have a `dm` client and a running cluster which supports `backup-etcd` and `restore-etcd` commands.
+
+* Back up etcd (assuming your `dm` binary is pointing at the right cluster, use `dm remote -v` to check):
+
+{{< copyable name="step-0.3-0.4-upgrade0" >}}
+dm cluster backup-etcd > dotmesh-etcd-backup.json
+{{< /copyable >}}
+
+* Now, deploy the latest etcd operator:
+
+{{< copyable name="step-0.3-0.4-upgrade1" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/etcd-operator-clusterrole.yaml
+kubectl apply -f https://get.dotmesh.io/yaml/etcd-operator-dep.yaml
+{{< /copyable >}}
+
+* Delete your etcd cluster, it may well be in a failed state anyway (`kubectl describe etcd dotmesh-etcd -n dotmesh` if you are curious), and besides, we need to kick it to upgrade the etcd version itself:
+
+{{< copyable name="step-0.3-0.4-upgrade2" >}}
+kubectl delete etcd dotmesh-etcd-cluster -n dotmesh
+{{< /copyable >}}
+
+* Create a new etcd cluster:
+
+{{< copyable name="step-0.3-0.4-upgrade3" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-etcd-cluster.yaml
+{{< /copyable >}}
+
+* Wait for the etcd cluster to come back up (look for three `dotmesh-etcd-cluster-*` pods to come up):
+
+{{< copyable name="step-0.3-0.4-upgrade4" >}}
+kubectl get pods -n dotmesh
+{{< /copyable >}}
+
+* Restore the backup.
+
+{{< copyable name="step-0.3-0.4-upgrade5" >}}
+dm cluster restore-etcd < dotmesh-etcd-backup.json
+{{< /copyable >}}

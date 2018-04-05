@@ -96,9 +96,9 @@ Future versions of dotmesh will [automate continuous etcd backups](https://githu
 
 So to upgrade dotmesh and the etcd operator and etcd on Kubernetes, follow these steps:
 
-* Download the latest stable `dm` client binary (see "Instructions for all versions" below).
+* Download the latest stable `dm` client binary (see [here](#upgrading-dotmesh-on-kubernetes)).
 
-* Apply the appropriate YAML for your Kubernetes type (see "Instructions for all versions" below).
+* Apply the appropriate dotmesh YAML for your Kubernetes type (see [here](#upgrading-dotmesh-on-kubernetes)).
 
 * You will now have a `dm` client and a running cluster which supports `backup-etcd` and `restore-etcd` commands.
 

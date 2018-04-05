@@ -92,7 +92,7 @@ In order to be able to safely upgrade etcd and the etcd operator we added `dm cl
 These commands let you tolerate the loss of an etcd cluster during an etcd upgrade.
 
 It may also be useful to automate running the `backup-etcd` command regularly, so that you can recover from etcd data loss due to, for example, upgrading your GKE cluster or rebooting your nodes all at the same time -- scenarios that the etcd operator deals with poorly.
-Future versions of dotmesh will automate continuous etcd backups.
+Future versions of dotmesh will [automate continuous etcd backups](https://github.com/dotmesh-io/dotmesh/issues/359).
 
 So to upgrade dotmesh and the etcd operator and etcd on Kubernetes, follow these steps:
 

@@ -87,9 +87,9 @@ To check that the version of the client and the server match, and are up-to-date
 
 ## dotmesh 0.3 -> 0.4
 
-In the dotmesh 0.4 release, we upgraded the version of the etcd operator.
+In the dotmesh 0.4 release, we upgraded the version of the etcd operator (0.5.0 -> 0.8.4) and etcd (3.1.8 -> 3.2.13).
 In order to be able to safely upgrade etcd and the etcd operator we added `dm cluster backup-etcd` and `dm cluster restore-etcd` commands.
-These commands let you tolerate the loss of an etcd cluster during the upgrade.
+These commands let you tolerate the loss of an etcd cluster during an etcd upgrade.
 
 It may also be useful to automate running the `backup-etcd` command regularly, so that you can recover from etcd data loss due to, for example, upgrading your GKE cluster or rebooting your nodes all at the same time -- scenarios that the etcd operator deals with poorly.
 Future versions of dotmesh will automate continuous etcd backups.

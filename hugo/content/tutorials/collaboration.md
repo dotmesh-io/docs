@@ -22,7 +22,7 @@ In this tutorial, we clone the (code, data) pair that exhibited one of the bugs 
 
 ## Run through the library tutorial
 
-If you haven't done the library tutorial yet, then do that first -- at least the [security vulnerability](/tutorials/library/#security-vulnerability) task.
+If you haven't done the library tutorial yet, then do that first -- at least the [security vulnerability](/tutorials/library/#security-vulnerability-attacker-can-set-default-image) task.
 You'll need the state in your dothub account (either as an owner or a collaborator of a dot) before you can clone it.
 
 In particular, we'll assume that you have a `mobycounter_app` dot in your **dothub** account with a a `security-vulnerability` branch that exibits the bug:

@@ -114,7 +114,7 @@ dm checkout security-vulnerability
 
 Now go to [http://localhost:8100](http://localhost:8100) to observe the exploited state of the app.
 
-Register as a new user and observe that indeed, the pirate flag (or whatever image you uploaded in the [library tutorial](/tutorials/library) does show up.
+Register as a new user and observe that indeed, the pirate flag (or whatever image you uploaded in the [library tutorial](/tutorials/library)) does show up.
 
 Now that you have the reproducer locally, we can immediately start inspecting the state, and once we've found some clues, and formed a hypothesis, we can start changing the code in the users service -- adding `print` statements, and so on, to confirm our hypothesis and then -- hopefully -- fix the problem.
 

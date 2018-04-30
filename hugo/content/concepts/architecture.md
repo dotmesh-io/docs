@@ -157,7 +157,7 @@ These two interfaces are simply adapters from the Docker and
 FlexVolume protocols to the Dotmesh server, mounting subdots as
 volumes when required. The flexvolume driver is activated when a
 Kubernetes persistent volume (PV) is created using FlexVolume and
-specifying the drver as `dotmesh.io/dm`.
+specifying the driver as `dotmesh.io/dm`.
 
 The docker volume plugin is inside the Dotmesh server itself, while
 the FlexVolume driver is an executable that gets installed into

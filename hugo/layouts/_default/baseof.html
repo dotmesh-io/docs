@@ -22,20 +22,20 @@
   <body>
     <script src="https://track.dotmesh.com/track.min.js"></script>
     <script type="text/javascript">
-      var dm_cookie = xDomainCookie('https://track.dotmesh.com', 'dotmesh');      
+      var dm_cookie = xDomainCookie('https://track.dotmesh.com', 'dotmesh');
       var dm_tracking_id = trackingID();
-      dm_cookie.get('dm_tracking_id', function(cookie_val){     
+      dm_cookie.get('dm_tracking_id', function(cookie_val){
         if(!cookie_val) {
           dm_cookie.set('dm_tracking_id', dm_tracking_id, 365);
-        } 
+        }
         else {
           dm_tracking_id = cookie_val;
         }
       });
       analytics.page({}, {
         anonymousId: dm_tracking_id
-      });  
-    </script> 
+      });
+    </script>
     <div class="docs">
       <aside class="docs_aside">
         <div class="titlecard">
@@ -44,7 +44,6 @@
               <use xlink:href="{{ .Site.BaseURL }}assets/icons/renders/sprite.svg#marque_small"></use>
             </svg>
           </a>
-          <span class="titlecard_version">v: {{ $.Site.Params.version }}.</span>
           <h1 class="typeM heading"><a href="{{ .Site.BaseURL }}" role="home">{{ .Site.Title }}.</a></h1>
           <a class="typeXS" href="https://dotmesh.com/">Visit dotmesh.com</a>
         </div>

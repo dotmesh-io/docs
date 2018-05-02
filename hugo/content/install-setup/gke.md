@@ -129,24 +129,32 @@ etcdcluster "dotmesh-etcd-cluster" configured
 
 ## Dotmesh
 
-Use the following command to apply the YAML configuration for running dotmesh on Kubernetes 1.8 and 1.9:
+Use the following command to apply the YAML for the ConfigMap:
 
 {{< copyable name="step-06" >}}
-kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.gke.yaml
+kubectl apply -f https://get.dotmesh.io/yaml/configmap.gke.yaml
+{{< /copyable >}}
+
+Use the following command to apply the YAML for running dotmesh on Kubernetes 1.8 and 1.9:
+
+{{< copyable name="step-06a" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml
 {{< /copyable >}}
 
 If you're running Kubernetes 1.7 on your cluster, you must use a different YAML:
 
-{{< copyable name="step-06" >}}
-kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.gke.yaml
+{{< copyable name="step-06b" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.yaml
 {{< /copyable >}}
 
 ```plain
 serviceaccount "dotmesh" configured
+serviceaccount "dotmesh-operator" configured
 clusterrole "dotmesh" configured
 clusterrolebinding "dotmesh" configured
+clusterrolebinding "dotmesh-operator" configured
 service "dotmesh" configured
-daemonset "dotmesh" configured
+deployment "dotmesh-operator" configured
 serviceaccount "dotmesh-provisioner" configured
 clusterrole "dotmesh-provisioner-runner" configured
 clusterrolebinding "dotmesh-provisioner" configured
@@ -162,14 +170,15 @@ kubectl get po -n dotmesh
 
 ```plain
 NAME                                           READY     STATUS        RESTARTS   AGE
-dotmesh-5hg2g                                  1/1       Running       0          1h
-dotmesh-6fthj                                  1/1       Running       0          1h
-dotmesh-dynamic-provisioner-7b766c4f7f-hkjkl   1/1       Running       0          1h
-dotmesh-etcd-cluster-0000                      1/1       Running       0          1h
-dotmesh-etcd-cluster-0001                      1/1       Running       0          1h
-dotmesh-etcd-cluster-0002                      1/1       Running       0          1h
-dotmesh-rd9c4                                  1/1       Running       0          1h
-etcd-operator-56b49b7ffd-529zn                 1/1       Running       0          1h
+dotmesh-dynamic-provisioner-7b766c4f7f-hkjkl     1/1       Running       0          1h
+dotmesh-etcd-cluster-0000                        1/1       Running       0          1h
+dotmesh-etcd-cluster-0001                        1/1       Running       0          1h
+dotmesh-etcd-cluster-0002                        1/1       Running       0          1h
+dotmesh-operator-7ff894567-mx75b                 1/1       Running       0          1h
+server-gke-mycluster-default-pool-11111111-d4j9a 1/1       Running       0          1h
+server-gke-mycluster-default-pool-11111111-5hg2g 1/1       Running       0          1h
+server-gke-mycluster-default-pool-11111111-6fthj 1/1       Running       0          1h
+etcd-operator-56b49b7ffd-529zn                   1/1       Running       0          1h
 ```
 
 ## Restart Kubelet (Kubernetes 1.7 only)

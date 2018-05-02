@@ -48,30 +48,35 @@ sudo curl -sSL -o /usr/local/bin/dm \
 Apply the latest stable dotmesh YAML for your Kubernetes version. For 1.7 generic:
 
 {{< copyable name="step-5" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/configmap.yaml
 kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.yaml
 {{< /copyable >}}
 
 For 1.7 on GKE:
 
 {{< copyable name="step-5a" >}}
-kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.gke.yaml
+kubectl apply -f https://get.dotmesh.io/yaml/configmap.gke.yaml
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.yaml
 {{< /copyable >}}
 
 For 1.8 or 1.9 generic:
 
 {{< copyable name="step-5b" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/configmap.yaml
 kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml
 {{< /copyable >}}
 
 For 1.8 or 1.9 on GKE:
 
 {{< copyable name="step-5c" >}}
-kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.gke.yaml
+kubectl apply -f https://get.dotmesh.io/yaml/configmap.gke.yaml
+kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml
 {{< /copyable >}}
 
 For 1.8 on AKS:
 
 {{< copyable name="step-5d" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/configmap.aks.yaml
 kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.aks.yaml
 {{< /copyable >}}
 
@@ -84,6 +89,17 @@ dm version
 {{< /copyable >}}
 
 To check that the version of the client and the server match, and are up-to-date.
+
+## dotmesh 0.4 -> 0.5
+
+In versions 0.4 and below, Dotmesh was deployed via a DaemonSet, but
+version 0.5 introduces the Dotmesh Operator. Before upgrading to 0.5,
+please manually delete the Dotmesh DameonSet before running the normal
+upgrade procedure:
+
+{{< copyable name="step-0.4-0.5-upgrade1" >}}
+kubectl delete deployment dotmesh -n dotmesh
+{{< /copyable >}}
 
 ## dotmesh 0.3 -> 0.4
 

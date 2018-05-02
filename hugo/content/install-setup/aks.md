@@ -109,16 +109,26 @@ etcdcluster "dotmesh-etcd-cluster" configured
 
 Use the following command to apply the YAML configuration for running dotmesh:
 
-{{< copyable name="step-06" >}}
+{{< copyable name="step-06a" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/configmap.aks.yaml
+{{< /copyable >}}
+
+```plain
+configmap "configuration" configured
+```
+
+{{< copyable name="step-06b" >}}
 kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.aks.yaml
 {{< /copyable >}}
 
 ```plain
 serviceaccount "dotmesh" configured
+serviceaccount "dotmesh-operator" configured
 clusterrole "dotmesh" configured
 clusterrolebinding "dotmesh" configured
+clusterrolebinding "dotmesh-operator" configured
 service "dotmesh" configured
-daemonset "dotmesh" configured
+deployment "dotmesh-operator" configured
 serviceaccount "dotmesh-provisioner" configured
 clusterrole "dotmesh-provisioner-runner" configured
 clusterrolebinding "dotmesh-provisioner" configured
@@ -128,7 +138,7 @@ storageclass "dotmesh" configured
 
 **NOTE** - This will create a service of type Loadbalancer that will expose port port 32607 on the Internet. The need for a firewall rule will be replaced with an ingress rule in an upcoming release.
 
-Let's check to see that we have our dotmesh pods running on our Kubernetes cluster.  They might take a few moments to get going - wait for the pods to start before proceeding.
+Let's check to see that we have our dotmesh server pods running on our Kubernetes cluster.  They might take a few moments to get going - wait for the pods to start before proceeding.
 
 {{< copyable name="step-01" >}}
 kubectl get po -n dotmesh
@@ -136,13 +146,14 @@ kubectl get po -n dotmesh
 
 ```plain
 NAME                                          READY     STATUS    RESTARTS   AGE
-dotmesh-548jc                                 1/1       Running   0          9m
 dotmesh-dynamic-provisioner-5599bfc5f-f5v8z   1/1       Running   0          9m
 dotmesh-etcd-cluster-0000                     1/1       Running   0          10m
 dotmesh-etcd-cluster-0001                     1/1       Running   0          10m
 dotmesh-etcd-cluster-0002                     1/1       Running   0          10m
-dotmesh-n44wj                                 1/1       Running   0          9m
-dotmesh-rskdk                                 1/1       Running   0          9m
+dotmesh-operator-7ff894567-mx75b              1/1       Running   0          1h
+server-node1                                  1/1       Running   0          9m
+server-node2                                  1/1       Running   0          9m
+server-node3                                  1/1       Running   0          9m
 etcd-operator-56b49b7ffd-rh5ql                1/1       Running   0          10m
 ```
 

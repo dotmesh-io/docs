@@ -21,19 +21,59 @@ different components of a Dotmesh cluster are.
 
 ## Using customised YAML.
 
-Download [the default Dotmesh YAML
-file for kubernetes 1.6 and 1.7](https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.yaml) or [the default Dotmesh YAML
-file for kubernetes 1.8 and 1.9](https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml) and use it as a basis
-to write your own, like so:
+The Dotmesh YAML is split between two files.
+
+The first file is a ConfigMap that, as you might expect, provides
+configuration used by the Dotmesh Operator to configure Dotmesh on
+your cluster; that's the one you're most likely to need to modify.
+
+The second file actually sets up the components of the cluster, and is
+less likely to need changing. However, this guide will explain both in
+detail, to enable customised setups.
+
+We provide pre-customised versions of both YAML files:
+
+### ConfigMap
+
+* [Vanilla ConfigMap](https://get.dotmesh.io/yaml/configmap.yaml)
+* [GKE (Google) ConfigMap](https://get.dotmesh.io/yaml/configmap.gke.yaml)
+* [AKS (Azure) ConfigMap](https://get.dotmesh.io/yaml/configmap.aks.yaml)
+
+### Core YAML
+
+* [Core YAML for Kubernetes 1.7](https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.yaml)
+* [Core YAML for Kubernetes 1.8](https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml)
+* [Core YAML for Kubernetes 1.8 on AKS (Azure)](https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.aks.yaml)
+
+### Getting the YAML ready for customisation
+
+Grab the most appropriate base YAML for your situation, and customise it like so:
 
 <div class="highlight"><pre class="chromaManual">
+$ <kbd>curl https://get.dotmesh.io/yaml/configmap.yaml > configmap-default.yaml</kbd>
 $ <kbd>curl https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml > dotmesh-default.yaml</kbd>
+$ <kbd>cp configmap-default.yaml configmap-customised.yaml</kbd>
 $ <kbd>cp dotmesh-default.yaml dotmesh-customised.yaml</kbd>
-# ...edit dotmesh-customised.yaml...
+# ...edit configmap-customised.yaml and/or dotmesh-customised.yaml...
+$ <kbd>kubectl apply -f https://get.dotmesh.io/yaml/configmap-customised.yaml</kbd>
 $ <kbd>kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-customised.yaml</kbd>
 </pre></div>
 
-## Components of the YAML.
+## The ConfigMap
+
+The ConfigMap has the following keys in its `data` section:
+
+* `nodeSelector`: A selector for the nodes that should run Dotmesh. If it's left as the empty string, then Dotmesh will be installed on every node.
+* `upgradesUrl`: The URL of the checkpoint server. The Dotmesh server on each node will periodically ping an API call to this URL to find out if a new version is available; if so, a message will be presented to users. To turn this off so that we don't know you're running Dotmesh, set it to the empty string.
+* `upgradesIntervalSeconds`: How many seconds to wait between checks of the checkpoint server.
+* `flexvolumeDriverDir`: The directory on the nodes (in the host filesystem) where flexdriver plugins need to be installed. This varies between cloud providers; this is the line that changes between the vanilla, GKE and AKS versions of the ConfigMap YAML.
+* `poolName`: The name of the ZFS pool to use for backend storage.
+* `logAddress`: The IP address of a syslog server to send log messages to. If left as the empty string, then logging will go to standard output (which means is recommended).
+* `storageMode`: This is reserved for future expansion. Leave it as `local` ([for now...](https://github.com/dotmesh-io/dotmesh/issues/344)).
+* `local.poolSizePerNode`: How large a pool file to create on each node. Defaults to `10G` for a ten gigabyte pool.
+* `local.poolLocation`: The location on the host filesystem where the pool file will be created.
+
+## Components of the Core YAML.
 
 The YAML is a List, composed of a series of different objects. We'll
 summarise them, then look at each in detail.
@@ -44,11 +84,13 @@ namespaced in Kubernetes.
 
 The following objects comprise the core Dotmesh cluster:
 
- * The `dotmesh` ServiceAccount
- * The `dotmesh` ClusterRole
- * The `dotmesh` ClusterRoleBinding
- * The `dotmesh` Service
- * The `dotmesh` DaemonSet
+* The `dotmesh` ServiceAccount
+* The `dotmesh-operator` ServiceAccount
+* The `dotmesh` ClusterRole
+* The `dotmesh` ClusterRoleBinding
+* The `dotmesh-operator` ClusterRoleBinding
+* The `dotmesh` Service
+* The `dotmesh-operator` Deployment
 
 Then the following comprise the Dynamic Provisioner:
 
@@ -72,6 +114,11 @@ to learn how to customise it.
 This is the ServiceAccount that will be used to run the Dotmesh
 server. You shouldn't need to change this.
 
+## The `dotmesh-operator` ServiceAccount.
+
+This is the ServiceAccount that will be used to run the Dotmesh
+operator. You shouldn't need to change this.
+
 ## The `dotmesh` ClusterRole.
 
 This is the role Dotmesh will run under. You shouldn't need to change this file.
@@ -93,31 +140,35 @@ The `--user` can be replaced with a local user (e.g. `root`) or another user dep
 This simply binds the `dotmesh` ServiceAccount to the `dotmesh`
 ClusterRole. You shouldn't need to change this.
 
+## The `dotmesh-operator` ClusterRoleBinding.
+
+This simply binds the `dotmesh` ServiceAccount to the `cluster-admin`
+ClusterRole (so that it can manage pods and PVCs). You shouldn't need
+to change this.
+
 ## The `dotmesh` Service.
 
 This is the service used to access the Dotmesh server on
 port 32607. It's needed both for internal connectivity between nodes in
 the cluster, and to allow other clusters to push/pull from this one.
 
-## The `dotmesh` DaemonSet.
+## The `dotmesh-operator` Deployment.
 
-This actually runs the Dotmesh server on every node in the cluster,
-referencing the `dotmesh` ServiceAccount in order to obtain the
-priveleges it needs.
+This runs the Dotmesh operator, which then creates a Dotmesh server
+pod for every node in your cluster (that matches the `nodeSelector` in
+the ConfigMap, at any rate).
 
-It also refers to the `dotmesh` secret (also in the `dotmesh`
+The operator references the `dotmesh-operator` ServiceAccount in order
+to be able to create and destroy pods and PVCs.
+
+The Dotmesh server pods it creates reference the `dotmesh`
+ServiceAccount in order to obtain the privileges it needs.
+
+They also refer to the `dotmesh` secret (also in the `dotmesh`
 namespace) to configure the initial API key and admin password, which
 is not created by the YAML - you have to provide these secrets
 yourself; we wouldn't dream of shipping you a default API key! This
 gets mounted into the container filesystem at `/secret`.
-
-One thing that might need configuring differently here is the
-directory to store the Flexvolume driver in, which is specified in the
-`FLEXVOLUME_DRIVER_DIR` environment variable. The default is
-`/usr/libexec/kubernetes/kubelet-plugins/volume/exec`, but GKE post
-version 1.8 moved it to `/home/kubernetes/flexvolume` (a change we
-ship in our `dotmesh-k8s-1.8.gke.yaml`. Other Kubernetes environments
-may have it elsewhere.
 
 ## The `dotmesh-provisioner` ServiceAccount.
 

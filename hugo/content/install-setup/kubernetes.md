@@ -79,9 +79,15 @@ etcdcluster "dotmesh-etcd-cluster" configured
 
 ## Dotmesh
 
-With the etcd cluster created, installing Dotmesh is a simple matter of loading the Dotmesh YAML:
+Next, you must create the ConfigMap (if you want to customise it, please see the [Kubernetes YAML reference guide](/references/kubernetes/)):
 
 {{< copyable name="step-03" >}}
+kubectl apply -f https://get.dotmesh.io/yaml/configmap.yaml
+{{< /copyable >}}
+
+With the configmap created, installing Dotmesh is a simple matter of loading the Dotmesh YAML:
+
+{{< copyable name="step-03a" >}}
 kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.7.yaml
 {{< /copyable >}}
 
@@ -93,10 +99,12 @@ kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-k8s-1.8.yaml
 
 ```plain
 serviceaccount "dotmesh" configured
+serviceaccount "dotmesh-operator" configured
 clusterrole "dotmesh" configured
 clusterrolebinding "dotmesh" configured
+clusterrolebinding "dotmesh-operator" configured
 service "dotmesh" configured
-daemonset "dotmesh" configured
+deployment "dotmesh-operator" configured
 serviceaccount "dotmesh-provisioner" configured
 clusterrole "dotmesh-provisioner-runner" configured
 clusterrolebinding "dotmesh-provisioner" configured
@@ -123,14 +131,15 @@ kubectl get po -n dotmesh
 
 ```plain
 NAME                                           READY     STATUS        RESTARTS   AGE
-dotmesh-5hg2g                                  1/1       Running       0          1h
-dotmesh-6fthj                                  1/1       Running       0          1h
-dotmesh-dynamic-provisioner-7b766c4f7f-hkjkl   1/1       Running       0          1h
+etcd-operator-56b49b7ffd-529zn                 1/1       Running       0          1h
 dotmesh-etcd-cluster-0000                      1/1       Running       0          1h
 dotmesh-etcd-cluster-0001                      1/1       Running       0          1h
 dotmesh-etcd-cluster-0002                      1/1       Running       0          1h
-dotmesh-rd9c4                                  1/1       Running       0          1h
-etcd-operator-56b49b7ffd-529zn                 1/1       Running       0          1h
+dotmesh-operator-7ff894567-mx75b               1/1       Running       0          1h
+server-node1                                   1/1       Running       0          1h
+server-node2                                   1/1       Running       0          1h
+server-node3                                   1/1       Running       0          1h
+dotmesh-dynamic-provisioner-7b766c4f7f-hkjkl   1/1       Running       0          1h
 ```
 
 ## Restart Kubelet

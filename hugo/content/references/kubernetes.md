@@ -64,7 +64,7 @@ $ <kbd>kubectl apply -f https://get.dotmesh.io/yaml/dotmesh-customised.yaml</kbd
 The ConfigMap has the following keys in its `data` section:
 
 * `nodeSelector`: A selector for the nodes that should run Dotmesh. If it's left as the empty string, then Dotmesh will be installed on every node.
-* `upgradesUrl`: The URL of the checkpoint server. The Dotmesh server on each node will periodically ping an API call to this URL to find out if a new version is available; if so, a message will be presented to users. To turn this off so that we don't know you're running Dotmesh, set it to the empty string.
+* `upgradesUrl`: The URL of the checkpoint server. The Dotmesh server on each node will periodically ping an API call to this URL to find out if a new version is available; if so, a message will be presented to users when they run `dm version`. To turn this off so that we don't know you're running Dotmesh, set it to the empty string.
 * `upgradesIntervalSeconds`: How many seconds to wait between checks of the checkpoint server.
 * `flexvolumeDriverDir`: The directory on the nodes (in the host filesystem) where flexdriver plugins need to be installed. This varies between cloud providers; this is the line that changes between the vanilla, GKE and AKS versions of the ConfigMap YAML.
 * `poolName`: The name of the ZFS pool to use for backend storage.

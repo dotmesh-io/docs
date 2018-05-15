@@ -49,7 +49,8 @@ gcloud container clusters create dotmesh-gke-cluster \
   --image-type=ubuntu \
   --tags=dotmesh \
   --machine-type=n1-standard-4 \
-  --cluster-version=1.8.8-gke.0
+  --cluster-version=1.9.6-gke.1 \
+  --num-nodes 3
 {{< /copyable >}}
 
 **NOTE** - At present the cluster needs to use `--image-type=ubuntu` - in upcoming releases this requirement will be removed.

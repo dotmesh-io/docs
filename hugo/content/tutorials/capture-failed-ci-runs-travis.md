@@ -1,10 +1,10 @@
 +++
 draft = false
-title = "5. Capture failed CI runs in Travis"
+title = "Capture failed CI runs in Travis"
 synopsis = "Save failed CI runs"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
-order = "1"
+weight = "5"
 [menu]
   [menu.main]
     parent = "tutorials"

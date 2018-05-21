@@ -4,7 +4,7 @@ title = "Kubernetes YAML"
 synopsis = "Configure Dotmesh in Kubernetes"
 knowledgelevel = "Intermediate"
 date = 2018-01-26T14:12:28Z
-order = "4"
+weight = "3"
 [menu]
   [menu.main]
     parent = "references"

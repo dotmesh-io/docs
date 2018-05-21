@@ -4,7 +4,7 @@ title = "Release Notes"
 synopsis = "What changed when."
 knowledgelevel = "Expert"
 date = 2018-01-17T12:04:35Z
-order = "2"
+weight = "4"
 [menu]
   [menu.main]
     parent = "references"

@@ -4,6 +4,7 @@ title = "Using dots in Kubernetes"
 synopsis = "Adding dots to Kubernetes YAML files."
 knowledgelevel = ""
 date = 2017-12-20T11:17:29Z
+weight = "2"
 [menu]
   [menu.main]
     parent = "tasks"

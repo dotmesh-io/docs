@@ -1,10 +1,10 @@
 +++
 draft = false
-title = "3. Collaborating with Dotmesh"
+title = "Collaborating with Dotmesh"
 synopsis = "Fixing bugs others have captured with dotmesh"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
-order = "1"
+weight = "3"
 [menu]
   [menu.main]
     parent = "tutorials"

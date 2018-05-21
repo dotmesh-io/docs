@@ -1,10 +1,10 @@
 +++
 draft = false
-title = "2. Using Dotmesh as a Library"
+title = "Using Dotmesh as a Library"
 synopsis = "Store development states of an app with polyglot persistence in a library."
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
-order = "1"
+weight = "2"
 [menu]
   [menu.main]
     parent = "tutorials"

@@ -1,10 +1,10 @@
 +++
 draft = false
-title = "7. CI with GitLab and Kubernetes"
+title = "CI with GitLab and Kubernetes"
 synopsis = "Save failed CI runs using Dotmesh, Gitlab and Kubernetes"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
-order = "1"
+weight = "7"
 [menu]
   [menu.main]
     parent = "tutorials"

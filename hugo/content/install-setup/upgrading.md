@@ -4,7 +4,7 @@ title = "Upgrading"
 synopsis = "Instructions for upgrading your dotmesh cluster"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
-order = "1"
+weight = "7"
 [menu]
   [menu.main]
     parent = "install-setup"

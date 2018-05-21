@@ -4,7 +4,7 @@ title = " What is a Datadot"
 synopsis = "Datadots, commits, subdots, branches, pushing & pulling."
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
-order = "1"
+weight = "1"
 [menu]
   [menu.main]
     parent = "concepts"

@@ -4,7 +4,7 @@ title = "API Reference"
 synopsis = "Take control of Dotmesh"
 knowledgelevel = "Expert"
 date = 2018-01-17T12:04:35Z
-order = "2"
+weight = "2"
 [menu]
   [menu.main]
     parent = "references"

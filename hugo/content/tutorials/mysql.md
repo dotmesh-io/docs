@@ -1,10 +1,10 @@
 +++
 draft = false
-title = "8. Dotmesh with MySQL"
+title = "Dotmesh with MySQL"
 synopsis = "A simple example using dotmesh with MySQL and the MySQL client"
 knowledgelevel = ""
 date = 2017-12-21T11:27:29Z
-order = "1"
+weight = "8"
 [menu]
   [menu.main]
     parent = "tutorials"

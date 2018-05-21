@@ -4,7 +4,7 @@ title = "Command Line Reference"
 synopsis = "Drive Dotmesh from your shell"
 knowledgelevel = "Intermediate"
 date = 2018-01-24T13:22:53Z
-order = "1"
+weight = "1"
 [menu]
   [menu.main]
     parent = "references"

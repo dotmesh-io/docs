@@ -4,8 +4,7 @@ title = "Install on AKS"
 synopsis = "Installing Dotmesh on a AKS cluster"
 knowledgelevel = ""
 date = 2017-12-22T11:27:29Z
-order = "2"
-weight = "5"
+weight = "6"
 [menu]
   [menu.main]
     parent = "install-setup"

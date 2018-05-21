@@ -4,7 +4,7 @@ title = "Architecture"
 synopsis = "The Concrete Architecture of Dotmesh"
 knowledgelevel = "Advanced"
 date = 2018-01-26T14:53:25Z
-order = "2"
+weight = "2"
 [menu]
   [menu.main]
     parent = "concepts"

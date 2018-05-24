@@ -487,7 +487,7 @@ last commit (or the creation of the dot), and makes them into a new
 commit with the given `MESSAGE`.
 
 <div class="highlight"><pre class="chromaManual">
-$ <kbd>dm commit -m A well-written commit message</kbd>
+$ <kbd>dm commit -m "A well-written commit message"</kbd>
 </pre></div>
 
 ### List commits: `dm log`.

@@ -966,6 +966,11 @@ accepting a branch ID, it requires a namespace, dot name, and
 optional branch name; it looks up the branch for you. You also need
 to provide a commit message.
 
+You can optionally provide arbitrary key-value metadata.
+
+The result value is the commit ID (as returned by `DotmeshRPC.Commits`, for
+example).
+
 ##### Request.
 
 ```json
@@ -991,7 +996,7 @@ to provide a commit message.
 ```json
 {
   "jsonrpc": "2.0",
-  "result": true,
+  "result": "880fb2c4-24db-4d16-5fc4-974d17525451",
   "id": 6129484611666146000
 }
 ```

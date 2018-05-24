@@ -480,7 +480,7 @@ Tracks dot alice/test_data on remote hub
 
 These commands deal with the contents of a dot: branches and commits.
 
-### Commit: `dm commit -m 'MESSAGE'`.
+### Commit: `dm commit -m 'MESSAGE' [--metadata fieldname=value]`.
 
 This command takes the "dirty" changes to the current dot since the
 last commit (or the creation of the dot), and makes them into a new
@@ -490,6 +490,14 @@ commit with the given `MESSAGE`.
 $ <kbd>dm commit -m "A well-written commit message"</kbd>
 </pre></div>
 
+You can also pass extra metadata fields that are added to the commit
+by using the `--metadata` flag.  You can pass multiple metadata fields,
+each using the format: `--metadata fieldname=value`:
+
+<div class="highlight"><pre class="chromaManual">
+$ <kbd>dm commit -m "A well-written commit message" --metadata fruit=apples --metadata color=red</kbd>
+</pre></div>
+
 ### List commits: `dm log`.
 
 This command lists the commits on the current branch.
@@ -497,14 +505,18 @@ This command lists the commits on the current branch.
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>dm log</kbd>
 commit <em>c96eefda-6940-499a-411c-22521f4a3452</em>
-Author: admin
-Date: 1516898188388491967
+author: admin
+date: 1516898188388491967
+fruit: apples
+color: red
 
     A well-written commit message
 
 commit <em>e568407c-5ea3-42bc-48e8-6e375c121d2b</em>
-Author: admin
-Date: 1516898511693726664
+author: admin
+date: 1516898511693726664
+fruit: apples
+color: red
 
     A poorly-written commit message
 

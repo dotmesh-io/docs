@@ -951,7 +951,8 @@ ID.
       "Metadata": {
         "author": "admin",
         "message": "A well-written commit message",
-        "timestamp": "1516272712508219206"
+        "timestamp": "1516272712508219206",
+        "customfield": "customvalue"
       }
     }
   ],
@@ -975,7 +976,11 @@ to provide a commit message.
     "Namespace": "admin",
     "Name": "test",
     "Branch": "",
-    "Message": "A thoughtfully-written and clear commit message"
+    "Message": "A thoughtfully-written and clear commit message",
+    "Metadata": {
+      "fruit": "apples",
+      "color": "green"
+    }
   },
   "id": 6129484611666146000
 }

@@ -69,7 +69,7 @@ The ConfigMap has the following keys in its `data` section:
 * `flexvolumeDriverDir`: The directory on the nodes (in the host filesystem) where flexdriver plugins need to be installed. This varies between cloud providers; this is the line that changes between the vanilla, GKE and AKS versions of the ConfigMap YAML.
 * `poolName`: The name of the ZFS pool to use for backend storage.
 * `logAddress`: The IP address of a syslog server to send log messages to. If left as the empty string, then logging will go to standard output (which means is recommended).
-* `storageMode`: This is reserved for future expansion. Leave it as `local` ([for now...](https://github.com/dotmesh-io/dotmesh/issues/344)).
+* `storageMode`: This is reserved for future expansion. Leave it as `local` ([for now...](https://github.com/dotmesh-io/dotmesh/issues/401)).
 * `local.poolSizePerNode`: How large a pool file to create on each node. Defaults to `10G` for a ten gigabyte pool.
 * `local.poolLocation`: The location on the host filesystem where the pool file will be created.
 

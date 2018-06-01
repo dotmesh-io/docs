@@ -51,7 +51,7 @@ If you are communicating with the dotmesh hub, you can use the API or Web UI to 
 
 While it _is_ possible to authenticate to the API by submitting a user's password instead of their API key, we **strongly** recommend against it; future implementations may remove this ability entirely. The password is intended for use when users log into administrative interfaces and supply their username and password through a login screen, rather than being stored; API keys are intended to be stored, and can be easily revoked by the user. Use the API key instead.
 
-The **sole** exception to theh above rule is API methods to manage the user account, which are explicitly prohibited from use with just an API key, so that a lost API key is not able to permanently compromise an account. These will be discussed below.
+The **sole** exception to the above rule is API methods to manage the user account, which are explicitly prohibited from use with just an API key, so that a lost API key is not able to permanently compromise an account. These will be discussed below.
 
 #### Local
 If you are communicating with a local cluster you will have a single username `admin` and a single available API key. You can retrieve the key in a number of ways, depending on how you created your dotmesh cluster.

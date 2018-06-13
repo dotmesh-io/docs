@@ -3,7 +3,7 @@
 {{ define "main" }}
   {{ partial "components/masthead.html" . }}
   <div class="deck">
-    {{ range .Page.Sections.ByParam "order" }}
+    {{ range .Page.Sections.ByWeight }}
       {{ partial "components/card.html" . }}
     {{ end }}
     <a href="/install-setup/" class="card cardFiller">

@@ -4,7 +4,7 @@ title = "Glossary"
 synopsis = "Names of Things."
 knowledgelevel = ""
 date = 2017-12-19T15:02:07Z
-weight = "1"
+weight = "7"
 +++
 
 See also: [What is a Datadot](/concepts/what-is-a-datadot/) for a more detailed explanation of these topics with examples and diagrams.

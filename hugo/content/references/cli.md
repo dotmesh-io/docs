@@ -129,7 +129,7 @@ need to add a remote yourself.
 The following commands are for managing the list of remotes stored in
 your local configuration file.
 
-### Add a new remote: `dm remote add NAME USER@HOSTNAME`.
+### Add a new remote: `dm remote add NAME USER@HOSTNAME[:PORT]`.
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>dm remote add test alaric@test-cluster.local</kbd>
@@ -138,6 +138,7 @@ API key: <kbd>Paste your API key here, it won't be echoed!</kbd>
 Remote added.
 
 </pre></div>
+You can optionally specify a port if your remote cluster is not running on the default port (`32607`).
 
 You can get your Hub API key by browising to the [Settings/API
 Key](https://saas.dotmesh.io/ui/settings/apikey) page on the Hub.
@@ -576,9 +577,9 @@ These commands are for managing a Dotmesh cluster built using
 Docker. If you're using Kubernetes, you don't need these commands -
 the Dotmesh Kubernetes integration handles all of this for you!
 
-### Create a cluster: `dm cluster init`.
+### Create a cluster: `dm cluster init [--port PORTNUM]`.
 
-This command creates a new single-node Dotmesh cluster.
+This command creates a new single-node Dotmesh cluster. You can force the cluster to be exposed on a specific port by specifying the port flag.
 
 If a ZFS pool called `pool` already exists, it will be used for Dot
 storage. Otherwise, Dotmesh will default to creating a pool based on a

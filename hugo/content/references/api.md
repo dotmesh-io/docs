@@ -1125,7 +1125,7 @@ Availability:
     "Namespace": "admin",
     "Name": "test",
     "Branch": "",
-    "CommitId": "880fb2c4-24db-4d16-5fc4-974d17525450"
+    "SnapshotId": "880fb2c4-24db-4d16-5fc4-974d17525450"
   },
   "id": 6129484611666146000
 }

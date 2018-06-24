@@ -23,7 +23,7 @@ This document describes the API in its entirety. With this API, you not only can
 As described in the [architecture documentation](../concepts/architecture), dotmesh is installed as software running on one or many server nodes. For example, in kubernetes, it will be deployed as a `DaemonSet` running on every node in your cluster.
 
 ### Hub
-The dotmesh hub API is available at https://hub.dotmesh.io/rpc . Note that the Hub API is available over https and is exposed at port 443.
+The dotmesh hub API is available at https://dothub.com/rpc . Note that the Hub API is available over https and is exposed at port 443.
 
 ### Local
 Every node in a Dotmesh cluster exposes the Dotmesh API on the host at port `32607` and the path `/rpc`. For example, if you have dotmesh running on host `myhost.example.com`, then the endpoint for services will be `http://myhost.example.com:32607/rpc`

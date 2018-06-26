@@ -15,15 +15,15 @@ The dotmesh API is the fundamental way of interacting with dotmesh, the service.
 
 Before attempting to use the API, we recommend understanding the [dotmesh architecture](../concepts/architecture).
 
-Any time you interact with any part of dotmesh - whether a local deployment or the dotmesh hub - you are using the API. Our Web UI for dotmesh hub, the `dm` command-line interface, any interaction between a local deployment and the hub, all use the same, publicly-exposed dotmesh API.
+Any time you interact with any part of dotmesh - whether a local deployment or the dothub - you are using the API. Our Web UI for dothub, the `dm` command-line interface, any interaction between a local deployment and the hub, all use the same, publicly-exposed dotmesh API.
 
 This document describes the API in its entirety. With this API, you not only can understand how to interact with dotmesh, but you can write your own clients and connect your own services. In fact, we **encourage** you to do so and would be happy to publish it, if you want.
 
 ### Local
-As described in the [architecture documentation](../concepts/architecture), dotmesh is installed as software running on one or many server nodes. For example, in kubernetes, it will be deployed as a `DaemonSet` running on every node in your cluster.
+As described in the [architecture documentation](../concepts/architecture), dotmesh is installed as software running on one or many server nodes. For example, in kubernetes, it will be deployed using the [dotmesh Kubernetes operator](https://dotmesh.com/blog/operator-architecture/).
 
 ### Hub
-The dotmesh hub API is available at https://dothub.com/rpc . Note that the Hub API is available over https and is exposed at port 443.
+The dothub API is available at https://dothub.com/rpc . Note that the Hub API is available over https and is exposed at port 443.
 
 ### Local
 Every node in a Dotmesh cluster exposes the Dotmesh API on the host at port `32607` and the path `/rpc`. For example, if you have dotmesh running on host `myhost.example.com`, then the endpoint for services will be `http://myhost.example.com:32607/rpc`
@@ -35,7 +35,7 @@ There are two types of local API calls: cluster and node.
 * Cluster: The majority of API calls are cluster-level calls. They operate on any or every node of the cluster. Once any one node processes the call, it will ensure that all of the nodes in the cluster are aware of the new state, if any.  Thus, in general, an API command, including those performed by the `dm` CLI, may be sent to any one node. It then will be routed to all of the other nodes as needed, and the entire cluster of nodes will be aware.
 * Node: A subset of calls are node-specific, e.g. mounting a volume from a dot. Since a mount happens on a particular node, the API call needs to be sent to the server running on the actual node on which the volume is to be mounted. These calls rarely are made by clients. Instead, they are called by drivers for specific implementations, for example a Kubernetes `kubelet`, which calls the dotmesh driver to mount a specific volume from a specific dot on a specific node, which the `kubelet` already is aware.
 
-Each API call is prefaced with a section indicating if it applies to dotmesh hub, dotmesh local or both.
+Each API call is prefaced with a section indicating if it applies to dothub, dotmesh local or both.
 
 ## Protocol
 The dotmesh API uses [JSON-RPC](http://www.jsonrpc.org) v2 over HTTP when
@@ -47,7 +47,7 @@ with examples below.
 API calls _always_ require authentication. The credentials you use depend on which API target you are talking to.
 
 #### Hub
-If you are communicating with the dotmesh hub, you can use the API or Web UI to retrieve your credentials. These will consist of a username and API token.
+If you are communicating with the dothub, you can use the API or Web UI to retrieve your credentials. These will consist of a username and API token.
 
 While it _is_ possible to authenticate to the API by submitting a user's password instead of their API key, we **strongly** recommend against it; future implementations may remove this ability entirely. The password is intended for use when users log into administrative interfaces and supply their username and password through a login screen, rather than being stored; API keys are intended to be stored, and can be easily revoked by the user. Use the API key instead.
 

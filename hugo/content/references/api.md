@@ -194,6 +194,7 @@ The dotmesh API encompasses many different methods. This section organizes them 
    * [DotmeshRPC.Exists](#dotmeshrpc-exists)
    * [DotmeshRPC.Get](#dotmeshrpc-get)
    * [DotmeshRPC.List](#dotmeshrpc-list)
+   * [DotmeshRPC.ListWithContainers](#dotmeshrpc-listwithcontainers)
    * [DotmeshRPC.AllDotsAndBranches](#dotmeshrpc-alldotsandbranches)
    * [DotmeshRPC.Create](#dotmeshrpc-create)
    * [DotmeshRPC.ContainersById](#dotmeshrpc-containersbyid)
@@ -659,6 +660,63 @@ The result is a JSON object with a key per namespace - which will just
 be `admin` for a local cluster. Within that key is an object with a
 key per Dot, the contents of which is as per the result of the [`Get`
 method](#dotmeshrpc-get).
+
+#### DotmeshRPC.ListWithContainers.
+
+This method returns a list of Dots, as does the [`List` method](#dotmeshrpc-list). However, it also returns the list of containers using each dot, like the [`ContainersById` method](#dotmeshrpc-containersbyid). This is a convenience method, returning exactly the information required to provide the `dm list` command!
+
+Availability:
+* Local: YES
+* Hub: YES
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.ListWithContainers",
+  "params": {},
+  "id": 6129484611666146000
+}
+```
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "admin": {
+      "fooasdf": {
+        "Volume": {
+          "Id": "bf056e31-2a3e-442b-649a-4b417242b38b",
+          "Name": {
+            "Namespace": "admin",
+            "Name": "fooasdf"
+          },
+          "Branch": "",
+          "Master": "f8b1b659877608d8",
+          "SizeBytes": 19456,
+          "DirtyBytes": 19456,
+          "CommitCount": 0,
+          "ServerStatuses": {
+            "f8b1b659877608d8": "active: waiting, 0 snaps (v1662)"
+          }
+        },
+        "Containers": [
+          {
+            "Name": "/backstabbing_shannon",
+            "Id": "c499b42e96e11d7a3c6d4875d5d5b752ea47ac59ce62bc2756694ff7e6041f01"
+          }
+        ]
+      }
+    }
+  },
+  "id": 6129484611666146000
+}
+```
+
+The result is the same as the result of the `List` method, except that for each Dot, it provides a JSON object with `Volume` and `Containers` keys - containing the same JSON as you'd get from the [`Get` method](#dotmeshrpc-get) and the [`ContainersById` method](#dotmeshrpc-containersbyid) for that dot, respectively.
 
 #### DotmeshRPC.AllDotsAndBranches.
 

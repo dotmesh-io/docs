@@ -69,9 +69,31 @@ The ConfigMap has the following keys in its `data` section:
 * `flexvolumeDriverDir`: The directory on the nodes (in the host filesystem) where flexdriver plugins need to be installed. This varies between cloud providers; this is the line that changes between the vanilla, GKE and AKS versions of the ConfigMap YAML.
 * `poolName`: The name of the ZFS pool to use for backend storage.
 * `logAddress`: The IP address of a syslog server to send log messages to. If left as the empty string, then logging will go to standard output (which means is recommended).
-* `storageMode`: This is reserved for future expansion. Leave it as `local` ([for now...](https://github.com/dotmesh-io/dotmesh/issues/344)).
-* `local.poolSizePerNode`: How large a pool file to create on each node. Defaults to `10G` for a ten gigabyte pool.
-* `local.poolLocation`: The location on the host filesystem where the pool file will be created.
+* `storageMode`: This controls how Dotmesh obtains the actual underlying storage used to store the dots. Valid values are `local` and `pvcPerNode`.
+* `local.poolSizePerNode`: (`storageMode`=`local` only) How large a pool file to create on each node. Defaults to `10G` for a ten gigabyte pool.
+* `local.poolLocation`: (`storageMode`=`local` only) The location on the host filesystem where the pool file will be created. Defaults to `/var/lib/dotmesh`.
+* `pvcPerNode.pvSizePerNode`: (`storageMode`=`pvcPerNode` only) How large a PVC to request for each node. Defaults to `10G` for a ten gigabyte PVC.
+* `pvcPerNode.storageClass`: (`storageMode`=`pvcPerNode` only) What `storageClass` to use when creating PVCs. Defaults to `standard`.
+
+### `local` storage mode
+
+In this storage mode, Dotmesh will store the dots in a pool file (with size `local.poolSizePerNode`) located in the directory named in `local.poolLocation` on each node.
+
+This means that destroying the node will throw away that file. This isn't a problem if there was no dirty data on this node all the commits on this node have been replicated to other nodes - but if not, then some data will be lost. That's not nice, so please use `pvcPerNode` mode in production clusters. However, `local` mode just works out of the box; there's no requirement for a dynamic provisioner to create PersistentVolume objects when the Dotmesh Operator creates a PersistentVolumeClaim to request storage.
+
+In this mode, the Dotmesh server pods are named `server-(NODE NAME)`, so it's easy to tell which one is associated with the storage on which node.
+
+### `pvcPerNode` storage mode
+
+In this storage mode, Dotmesh will store the dots in a Kubernetes PersistentVolume obtained by creating a PersistentVolumeClaim for a volume of size `pvcPerNode.pvSizePerNode` and storageClass `pvcPerNode.storageClass`, for each node.
+
+For this to work, the PersistentVolumeClaims it creates need to be matched with PersistentVolumes. You *can* do this manually by creating PersistentVolumes, but it's intended to be used in a cloud environment with automatic dynamic provisioning.
+
+The PersistentVolumeClaims are created in the `dotmesh` namespace, with names of the form `pvc-(SOME UNIQUE ID)`. The Dotmesh server pods are created with names of the form `server-(PVC NAME)-node-(NODE NAME)`, making it clear which PVC and which node the server pod is associated with.
+
+### Switching modes
+
+We don't currently officially support switching modes in a running cluster - although it is a feature we could add if there's demand. For now, we'd recommend creating a new cluster and pulling all your dots across. If you'd like Dotmesh to automatically do this for you by simply changing the ConfigMap and sitting back, please [comment on this issue](https://github.com/dotmesh-io/dotmesh/issues/435)!
 
 ## Components of the Core YAML.
 

@@ -4,7 +4,7 @@ title = "FAQ"
 synopsis = "Frequently Asked Questions."
 knowledgelevel = ""
 date = 2017-12-19T15:02:07Z
-weight = "1"
+weight = "6"
 +++
 
 ## How does Dotmesh differ from Git?

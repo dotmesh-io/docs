@@ -78,7 +78,7 @@ etcdcluster "dotmesh-etcd-cluster" configured
 
 ## Dotmesh
 
-Next, you must create the ConfigMap (if you want to customise it, please see the [Kubernetes YAML reference guide](/references/kubernetes/)):
+Next, you must create the ConfigMap (if you want to customise it, please see the [Kubernetes YAML reference guide](/references/kubernetes/); seriously consider using `pvcPerNode` mode for a production cluster):
 
 {{< copyable name="step-03" >}}
 kubectl apply -f https://get.dotmesh.io/yaml/configmap.yaml

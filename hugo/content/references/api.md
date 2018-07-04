@@ -192,6 +192,7 @@ The dotmesh API encompasses many different methods. This section organizes them 
  * Dot Management
    * [DotmeshRPC.Lookup](#dotmeshrpc-lookup)
    * [DotmeshRPC.Exists](#dotmeshrpc-exists)
+   * [DotmeshRPC.CheckNameIsValid](#dotmeshrpc-checknameisvalid)
    * [DotmeshRPC.Get](#dotmeshrpc-get)
    * [DotmeshRPC.List](#dotmeshrpc-list)
    * [DotmeshRPC.ListWithContainers](#dotmeshrpc-listwithcontainers)
@@ -521,6 +522,69 @@ Availability:
   "id": 6129484611666146000
 }
 ```
+
+#### DotmeshRPC.CheckNameIsValid.
+
+Checks if a given dot name (optionally including a branch name) is valid. If it is, it returns an empty string; if not, it returns an error string.
+
+This is intended to allow user interfaces to provide early feedback to the user if the name they have chosen for a dot or branch isn't going to be accepted when it gets passed through to a clone/pull or create request for a dot name, or a branch creation request for a branch name. The same test will be applied by all API methods that create dots and branches anyway, so there's no point calling it if you're immediately going to call such an API method anyway. It makes sense to call it when a user has entered a name but before they press the actual button that will create something!
+
+To just check a dot name, leave the Branch field blank (which is the valid way to indicate the master branch).
+
+Availability:
+* Local: YES
+* Hub: YES
+
+##### Valid Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.CheckNameIsValid",
+  "params": {
+    "Namespace": "x",
+    "Name": "x",
+    "Branch": ""
+  },
+  "id": 6129484611666146000
+}
+```
+
+##### Valid Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": "",
+  "id": 6129484611666146000
+}
+```
+
+##### Invalid Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.CheckNameIsValid",
+  "params": {
+    "Namespace": "x",
+    "Name": "x!",
+    "Branch": ""
+  },
+  "id": 6129484611666146000
+}
+```
+
+##### Invalid Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": "Invalid dot name x!",
+  "id": 6129484611666146000
+}
+```
+
 
 #### DotmeshRPC.Get.
 

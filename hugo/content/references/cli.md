@@ -83,6 +83,7 @@ Available Commands:
 
 Flags:
   -c, --config string   Config file to use (default "~/.dotmesh/config")
+      --verbose         Display details of RPC requests and responses to the dotmesh server
 
 Use "dm [command] --help" for more information about a command.
 </pre></div>
@@ -98,6 +99,7 @@ Usage:
 
 Global Flags:
   -c, --config string   Config file to use (default "~/.dotmesh/config")
+      --verbose         Display details of RPC requests and responses to the dotmesh server
 </pre></div>
 
 ## The configuration file.
@@ -106,6 +108,12 @@ Global Flags:
 this directory - `dm` will manage it for you. By default, it's located
 in `$HOME/.dotmesh/config`, but all `dm` subcommands accept a `-c
 PATH` or `--config PATH` flag, to make `dm` use a different config file.
+
+## Verbose mode
+
+You can view the contents of the RPC requests between the `dm` client and the
+dotmesh server by using the `--verbose` flag.  It will print the contents of
+the JSON request and reponse body to standard out.
 
 ## Connecting to clusters.
 

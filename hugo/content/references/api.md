@@ -1565,7 +1565,7 @@ The result is a transfer ID, which you can then poll with the
 
 #### DotmeshRPC.S3Transfer.
 
-This API method initiates an s3 transfer - which can be a pull or a push - with an S3 bucket. To invoke it, you need to provide the secret key and access key for the S3-enabled account, plus a hostname if the bucket is not hosted in AWS.
+This API method initiates an S3 transfer - which can be a pull or a push - with an S3 bucket. To invoke it, you need to provide the secret key and access key for the S3-enabled account, plus a hostname if the bucket is not hosted in AWS. Everytime a pull is initiated which results in new data, a commit will be automatically created. Everytime a push is initiated which includes a commit which has not been stored in S3, a new metadata commit will be created in Dotmesh storing the versionIDs returned from S3 in local metadata.
 
 ##### Request.
 
@@ -1601,7 +1601,7 @@ the hostname of the S3 cluster; leave this blank if it is an AWS-hosted bucket.<
 
 <dt><code>Direction</code>.</dt>
 
-<dd>This should either be `"push"` or `"pull"`. Push will sync the state of your dotmesh data dot with S3 - any files which still exist will be sent to S3, any which are in S3 but not in Dotmesh will be deleted. Pull will sync S3's state with Dotmesh's state - in other words, the inverse happens (anything that does not exist in S3 will be deleted locally, all files which exist in both will be updated).</dd>
+<dd>This should either be `"push"` or `"pull"`. Push will sync the state of your dotmesh data dot with S3: any files which exist locally will be pushed to S3; any files which exist in S3 but do not exist locally will be deleted from S3. Pull will sync S3's state with Dotmesh's state - in other words, the inverse happens (anything that does not exist in S3 will be deleted locally, all files which exist in both will be updated).</dd>
 
 <dt><code>LocalNamespace</code>.</dt>
 <dt><code>LocalName</code>.</dt>

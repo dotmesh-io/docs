@@ -704,7 +704,7 @@ Deleting cached PKI assets... done.
 </pre></div>
 
 ## S3 management.
-### Add a new S3 remote: `dm s3 remote add ACCESS_KEY:SECRET_KEY[@HOST:PORT]`
+### Add a new S3 remote: `dm s3 remote add ACCESS_KEY:SECRET_KEY[@HOST:PORT]`.
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>dm s3 remote add test access_key:secret</kbd>
 
@@ -714,10 +714,10 @@ S3 remote added.
 
 Invoking this command will check that Dotmesh is able to list buckets using the access key and secret supplied - if it cannot connect it will fail with an appropriate error.
 
-You can then manage S3 buckets using `clone`, `push` and `pull` as normal, or clone a subset of an S3 bucket using `dm s3 clone-subset`, but you will not be able to switch to an S3 remote.
+You can then manage S3 buckets using `clone`, `push` and `pull` as if they were Dotmesh servers, but you will not be able to make an S3 remote your current default. You can also clone a subset of an S3 bucket using `dm s3 clone-subset`.
 
 
-### Clone a section of an S3 bucket: `dm s3 clone-subset REMOTE BUCKET PREFIXES [--local-name LOCAL-DOT]`
+### Clone a section of an S3 bucket: `dm s3 clone-subset REMOTE BUCKET PREFIXES [--local-name LOCAL-DOT]`.
 This command will clone only a selection of files from an S3 bucket, as dictated by PREFIXES.
 
 <div class="highlight"><pre class="chromaManual">

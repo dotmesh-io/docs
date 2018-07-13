@@ -1561,6 +1561,71 @@ the source or target, depending on the `Direction`!</dd>
 ```
 
 The result is a transfer ID, which you can then poll with the
+[`GetTransfer` method](#dotmeshrpc-gettransfer).
+
+#### DotmeshRPC.S3Transfer.
+
+This API method initiates an s3 transfer - which can be a pull or a push - with an S3 bucket. To invoke it, you need to provide the secret key and access key for the S3-enabled account, plus a hostname if the bucket is not hosted in AWS.
+
+##### Request.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "DotmeshRPC.S3Transfer",
+  "params": {
+    "AccessKey": "someaccesskeyfromaws",
+    "SecretKey": "somesecret",
+    "Endpoint": "",
+    "Direction": "push",
+    "Prefixes": [],
+    "LocalNamespace": "admin",
+    "LocalName": "volume_1",
+    "LocalBranchName": "",
+    "RemoteName": "test.bucket",
+  },
+  "id": 5577006791947779000
+}
+```
+
+The request has many parameters. Let's look at them in more detail.
+
+<dl>
+
+<dt><code>AccessKey</code>.</dt>
+<dt><code>SecretKey</code>.</dt>
+<dt><code>Endpoint</code>.</dt>
+
+<dd>These are the details to connect to the S3 cluster. `Endpoint` is
+the hostname of the S3 cluster; leave this blank if it is an AWS-hosted bucket.</dd>
+
+<dt><code>Direction</code>.</dt>
+
+<dd>This should either be `"push"` or `"pull"`. Push will sync the state of your dotmesh data dot with S3 - any files which still exist will be sent to S3, any which are in S3 but not in Dotmesh will be deleted. Pull will sync S3's state with Dotmesh's state - in other words, the inverse happens (anything that does not exist in S3 will be deleted locally, all files which exist in both will be updated).</dd>
+
+<dt><code>LocalNamespace</code>.</dt>
+<dt><code>LocalName</code>.</dt>
+<dt><code>LocalBranchName</code>.</dt>
+
+<dd>These identify the branch on the local dotmesh cluster.</dd>
+
+<dt><code>RemoteName</code>.</dt>
+
+<dd>The name of the bucket you wish to sync with.</dd>
+
+</dl>
+
+##### Response.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": "b655e1f4-ae90-422b-78ac-b1090c7391bb",
+  "id": 5577006791947779000
+}
+```
+
+The result is a transfer ID, which you can then poll with the
 [`GetTransfer` method](#dotmeshrpc-gettransfer). Speaking of which...
 
 #### DotmeshRPC.GetTransfer.

@@ -183,18 +183,7 @@ $ <kbd>cat ~/.dotmesh/config | jq -r .Remotes.local.ApiKey</kbd>
 <em>VVKGYCC3G4K5G2QM3GLIVTECVSBWWJZD</em>
 </pre></div>
 
-### Add a new S3 remote: `dm s3 remote add ACCESS_KEY:SECRET_KEY[@HOST:PORT]`
-<div class="highlight"><pre class="chromaManual">
-$ <kbd>dm s3 remote add test access_key:secret</kbd>
-
-S3 remote added.
-
-</pre></div>
-
-Invoking this command will check that Dotmesh is able to list buckets using the access key and secret supplied - if it cannot connect it will fail with an appropriate error.
-
-You can then manage S3 buckets using `clone`, `push` and `pull` as normal, or clone a subset of an S3 bucket using `dm s3 clone-subset`, but you will not be able to switch to an S3 remote.
-
+For S3 remotes please see [`dm s3 remote add`](#add-a-new-s3-remote-dm-s3-remote-add-access-key-secret-key-host-port)
 ### List remotes: `dm remote -v`
 
 <div class="highlight"><pre class="chromaManual">
@@ -427,25 +416,7 @@ Branches:
 If you omit the `--local-name LOCAL-DOT` part, then the dot will just
 have the same name as the remote one - in this case, `testing_data`.
 
-### Clone a section of an S3 bucket: `dm s3 clone-subset REMOTE BUCKET PREFIXES [--local-name LOCAL-DOT]`
-This command will clone only a selection of files from an S3 bucket, as dictated by PREFIXES.
-
-<div class="highlight"><pre class="chromaManual">
-$ <kbd>dm s3 clone-subset --local-name new_data s3 test directory_1/</kbd>
-Pulling admin/new_data from s3:/test
-Calculating...
-finished 9.50 KB / 9.50 KB [==========================] 100.00% 0.43 MiB/s (1/1)
-Done!
-</pre></div>
-
-You can also use multiple prefixes, separating them by a comma:
-<div class="highlight"><pre class="chromaManual">
-$ <kbd>dm s3 clone-subset --local-name new_data s3 test directory_1/,hello-</kbd>
-Pulling admin/new_data from s3:/test
-Calculating...
-finished 9.50 KB / 9.50 KB [==========================] 100.00% 0.43 MiB/s (2/2)
-Done!
-</pre></div>
+If you are cloning an S3 bucket and only want to select a subset of the files, please see [`dm s3 clone-subset`](#clone-a-section-of-an-s3-bucket-dm-s3-clone-subset-remote-bucket-prefixes-local-name-local-dot)
 
 ### Pull: `dm pull REMOTE [DOT [BRANCH]] [--remote-name REMOTE-DOT]`
 
@@ -731,3 +702,36 @@ Deleting 'local' remote... done.
 Deleting cached PKI assets... done.
 </pre></div>
 
+## S3 management.
+### Add a new S3 remote: `dm s3 remote add ACCESS_KEY:SECRET_KEY[@HOST:PORT]`
+<div class="highlight"><pre class="chromaManual">
+$ <kbd>dm s3 remote add test access_key:secret</kbd>
+
+S3 remote added.
+
+</pre></div>
+
+Invoking this command will check that Dotmesh is able to list buckets using the access key and secret supplied - if it cannot connect it will fail with an appropriate error.
+
+You can then manage S3 buckets using `clone`, `push` and `pull` as normal, or clone a subset of an S3 bucket using `dm s3 clone-subset`, but you will not be able to switch to an S3 remote.
+
+
+### Clone a section of an S3 bucket: `dm s3 clone-subset REMOTE BUCKET PREFIXES [--local-name LOCAL-DOT]`
+This command will clone only a selection of files from an S3 bucket, as dictated by PREFIXES.
+
+<div class="highlight"><pre class="chromaManual">
+$ <kbd>dm s3 clone-subset --local-name new_data s3 test directory_1/</kbd>
+Pulling admin/new_data from s3:/test
+Calculating...
+finished 9.50 KB / 9.50 KB [==========================] 100.00% 0.43 MiB/s (1/1)
+Done!
+</pre></div>
+
+You can also use multiple prefixes, separating them by a comma:
+<div class="highlight"><pre class="chromaManual">
+$ <kbd>dm s3 clone-subset --local-name new_data s3 test directory_1/,hello-</kbd>
+Pulling admin/new_data from s3:/test
+Calculating...
+finished 9.50 KB / 9.50 KB [==========================] 100.00% 0.43 MiB/s (2/2)
+Done!
+</pre></div>

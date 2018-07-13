@@ -78,6 +78,7 @@ Available Commands:
   push        Push new commits from the current dot and branch to a remote dot (creating it if necessary)
   remote      List remote clusters. Use dm remote -v to see remotes
   reset       Reset current HEAD to the specified state
+  s3          Commands that handle S3 connections
   switch      Change which dot is active
   version     Show the Dotmesh version information
 

@@ -1613,6 +1613,10 @@ the hostname of the S3 cluster; leave this blank if it is an AWS-hosted bucket.<
 
 <dd>The name of the bucket you wish to sync with.</dd>
 
+<dt><code>Prefixes</code>.</dt>
+
+<dd>You can specify a list of strings which S3 keys must begin with, in order to select a subset of files from S3. Leave blank to sync everything with S3.</dd>
+
 </dl>
 
 ##### Response.

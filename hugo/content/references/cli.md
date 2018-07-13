@@ -716,6 +716,7 @@ Invoking this command will check that Dotmesh is able to list buckets using the 
 
 You can then manage S3 buckets using `clone`, `push` and `pull` as if they were Dotmesh servers, but you will not be able to make an S3 remote your current default. You can also clone a subset of an S3 bucket using `dm s3 clone-subset`.
 
+It is recommended that you enable versioning on your S3 bucket in order for Dotmesh to be able to discern changes easily.
 
 ### Clone a section of an S3 bucket: `dm s3 clone-subset REMOTE BUCKET PREFIXES [--local-name LOCAL-DOT]`.
 This command will clone only a selection of files from an S3 bucket, as dictated by PREFIXES.

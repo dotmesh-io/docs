@@ -737,3 +737,5 @@ Calculating...
 finished 9.50 KB / 9.50 KB [==========================] 100.00% 0.43 MiB/s (2/2)
 Done!
 </pre></div>
+
+When pulling or pushing a volume cloned in this way, only files which begin with these prefixes will be updated.

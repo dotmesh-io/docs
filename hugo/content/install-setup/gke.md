@@ -89,8 +89,8 @@ It might just be that your Kubernetes cluster is warming up.
 Before we can install Dotmesh, we need to set our admin password and api key:
 
 ```plain
-export ADMIN_PASSWORD=apples
-export ADMIN_API_KEY=apples
+export ADMIN_PASSWORD=applesinsecurePassword123
+export ADMIN_API_KEY=applesinsecurePassword123
 ```
 
 Then we create the namespace before adding our credentials as secrets:

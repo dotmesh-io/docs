@@ -18,11 +18,11 @@ weight = "4"
 Before we can install Dotmesh, we need to set out admin password and api key:
 
 ```plain
-export ADMIN_PASSWORD=apples
-export ADMIN_API_KEY=apples
+export ADMIN_PASSWORD=applesinsecurePassword123
+export ADMIN_API_KEY=applesinsecurePassword123
 ```
 
-You may want to use stronger credentials than `apples`.
+You may want to use stronger credentials.
 
 ## Credentials
 

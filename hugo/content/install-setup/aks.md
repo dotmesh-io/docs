@@ -66,8 +66,8 @@ az aks create --resource-group $AZ_RESOURCE_GROUP --name myAKSCluster --node-cou
 Before we can install Dotmesh, we need to set our admin password and api key:
 
 ```plain
-export ADMIN_PASSWORD=apples
-export ADMIN_API_KEY=apples
+export ADMIN_PASSWORD=applesinsecurePassword123
+export ADMIN_API_KEY=applesinsecurePassword123
 ```
 
 Then we create the namespace before adding our credentials as secrets:

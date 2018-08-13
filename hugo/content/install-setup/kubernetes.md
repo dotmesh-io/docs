@@ -81,11 +81,14 @@ etcdcluster "dotmesh-etcd-cluster" configured
 Next, you must create the ConfigMap. If you want to customise it, please see the [Kubernetes YAML reference guide](/references/kubernetes/). 
 
 Dotmesh operates in two storage modes:
-- Local Storage
-By default, Dotmesh running under Kubernetes is configured to store data on the host filesystem. It's simple to get started with, but not ideal for production environemnts. For more information please refer to the [configuration options for Local Storage mode](/references/kubernetes/#local-storage-mode)
+
+- Local Storage mode
+
+By default, Dotmesh running under Kubernetes is configured to store data on the host filesystem. It's simple to get started with, but not ideal for production environments. For more information please refer to the [configuration options for Local Storage mode](/references/kubernetes/#local-storage-mode)
 
 - PVCPerNode mode
-In this mode, Dotmesh uses cloud-native storage for reliable persistent storage in cloud environments. Please see this blog post on [Dotmesh on cloud Kubernetes clusters: PV-per-Node Mode](https://dotmesh.com/blog/pv-per-node/) for more information about the motivation and technical implementation using Kubernetes PersistentVolumeClaims. Seriously consider using this mode for a production cluster, to enable this mode the ConfigMap with [configuration options for PVCPerNode mode](/references/kubernetes/#pvcpernode-storage-mode).
+
+In this mode, Dotmesh uses cloud-native storage for reliable persistent storage ideal for deployments in cloud environments. Please see this blog post on [Dotmesh on cloud Kubernetes clusters: PV-per-Node Mode](https://dotmesh.com/blog/pv-per-node/) for more information about the motivation and technical implementation using Kubernetes PersistentVolumeClaims. Seriously consider using this mode for a production cluster, to enable this mode the ConfigMap with [configuration options for PVCPerNode mode](/references/kubernetes/#pvcpernode-storage-mode).
 
 {{< copyable name="step-03" >}}
 kubectl apply -f https://get.dotmesh.io/yaml/configmap.yaml

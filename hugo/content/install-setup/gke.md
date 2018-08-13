@@ -129,6 +129,8 @@ etcdcluster "dotmesh-etcd-cluster" configured
 
 ## Dotmesh
 
+Dotmesh operates in two storage modes - `Local Storage` and `PVCPerNode mode`. By default, the ConfigMap is configured to use `Local Storage` mode. For customisation options please refer to the [generic Kubernetes installation guide](/install-setup/kubernetes/#dotmesh) and the [Kubernetes YAML reference guide](/references/kubernetes/)
+
 Use the following command to apply the YAML for the ConfigMap:
 
 {{< copyable name="step-06" >}}

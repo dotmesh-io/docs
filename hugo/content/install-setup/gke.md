@@ -89,8 +89,8 @@ It might just be that your Kubernetes cluster is warming up.
 Before we can install Dotmesh, we need to set our admin password and api key:
 
 ```plain
-export ADMIN_PASSWORD=apples
-export ADMIN_API_KEY=apples
+export ADMIN_PASSWORD=applesinsecurePassword123
+export ADMIN_API_KEY=applesinsecurePassword123
 ```
 
 Then we create the namespace before adding our credentials as secrets:
@@ -128,6 +128,8 @@ etcdcluster "dotmesh-etcd-cluster" configured
 ```
 
 ## Dotmesh
+
+Dotmesh operates in two storage modes - `Local Storage` and `PVCPerNode mode`. By default, the ConfigMap is configured to use `Local Storage` mode. For customisation options please refer to the [generic Kubernetes installation guide](/install-setup/kubernetes/#dotmesh) and the [Kubernetes YAML reference guide](/references/kubernetes/)
 
 Use the following command to apply the YAML for the ConfigMap:
 

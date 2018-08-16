@@ -18,11 +18,11 @@ weight = "4"
 Before we can install Dotmesh, we need to set out admin password and api key:
 
 ```plain
-export ADMIN_PASSWORD=apples
-export ADMIN_API_KEY=apples
+export ADMIN_PASSWORD=applesinsecurePassword123
+export ADMIN_API_KEY=applesinsecurePassword123
 ```
 
-You may want to use stronger credentials than `apples`.
+You may want to use stronger credentials.
 
 ## Credentials
 
@@ -78,7 +78,17 @@ etcdcluster "dotmesh-etcd-cluster" configured
 
 ## Dotmesh
 
-Next, you must create the ConfigMap (if you want to customise it, please see the [Kubernetes YAML reference guide](/references/kubernetes/); seriously consider using `pvcPerNode` mode for a production cluster):
+Next, you must create the ConfigMap. If you want to customise it, please see the [Kubernetes YAML reference guide](/references/kubernetes/). 
+
+Dotmesh operates in two storage modes:
+
+- Local Storage mode
+
+By default, Dotmesh running under Kubernetes is configured to store data on the host filesystem. It's simple to get started with, but not ideal for production environments. For more information please refer to the [configuration options for Local Storage mode](/references/kubernetes/#local-storage-mode)
+
+- PVCPerNode mode
+
+In this mode, Dotmesh uses cloud-native storage for reliable persistent storage ideal for deployments in cloud environments. Please see this blog post on [Dotmesh on cloud Kubernetes clusters: PV-per-Node Mode](https://dotmesh.com/blog/pv-per-node/) for more information about the motivation and technical implementation using Kubernetes PersistentVolumeClaims. Seriously consider using this mode for a production cluster, to enable this mode the ConfigMap with [configuration options for PVCPerNode mode](/references/kubernetes/#pvcpernode-storage-mode).
 
 {{< copyable name="step-03" >}}
 kubectl apply -f https://get.dotmesh.io/yaml/configmap.yaml

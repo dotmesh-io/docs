@@ -16,19 +16,19 @@ In addition to the RPC API we provide a limited S3-compatible API. This is avail
 Our version of the S3 api uses basic authentication, which should be your username and password and can be supplied to curl using `-u <username>:<password>`.
 
 ## Bucket naming convention
-The convention for dot names -> s3 bucket naming is `<namespace>-<name>-<branch>` - if using master branch, you can just use `<namespace>-<name>`. For example, the URL to Alice's dot `apples` would be `<host>:<port>/s3/alice-apples`.
+The convention for dot names -> s3 bucket naming is `<namespace>:<name>@<branch>` - if using master branch, you can just use `<namespace>:<name>`. For example, the URL to Alice's dot `apples` would be `<host>:<port>/s3/alice:apples`.
 
 ## Supported endpoints
 
 * [PutObject](#putobject)
 
 ### PutObject
-URL format: `<host>:<password>/s3/<namespace>-<name>/<object-key>`
+URL format: `<host>:<password>/s3/<namespace>:<name>/<object-key>`
 Putting objects is used for uploading or changing files. The following example creates a dot, creates a file then puts the file into the dot using s3:
 ```bash
 dm init alice/apples
 echo "hello, world" > hello-world.txt
-curl -T hello-world.txt -u alice:notmypassword 127.0.0.1:32607/s3/alice-apples/hello-world.txt
+curl -T hello-world.txt -u alice:notmypassword 127.0.0.1:32607/s3/alice:apples/hello-world.txt
 ```
 This will result in a commit indicating the filename created or updated:
 ```bash

@@ -718,15 +718,40 @@ You can then manage S3 buckets using `clone`, `push` and `pull` as if they were 
 
 It is recommended that you enable versioning on your S3 bucket in order for Dotmesh to be able to discern changes easily.
 
-The access key-secret pair you use will need the following actions to be allowed on AWS S3 in order to work effectively:
+We recommend you create a new user credential in AWS IAM (Aws console -> IAM -> Users -> Add User) in order to limit the security privaledges provided. The access type should be "programmatic". 
 
- * s3:PutObject
- * s3:DeleteObject
- * s3:HeadBucket
- * s3:GetBucketLocation
- * s3:GetObject
- * s3:GetObjectVersion
- * s3:ListBucketVersions
+You should then create a policy to apply to all credential pairs you wish to use (Policies -> Create Policy). The following policy should allow dotmesh to work:
+
+<div class="highlight"><pre class="chromaManual">
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:ListBucketVersions",
+                "s3:ListBucket",
+                "s3:DeleteObject",
+                "s3:GetBucketLocation",
+                "s3:GetObjectVersion"
+            ],
+            "Resource": [
+                "arn:aws:s3:::<bucket-name>",
+                "arn:aws:s3:::*/*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": "s3:HeadBucket",
+            "Resource": "*"
+        }
+    ]
+}
+</pre></div>
 
 ### Clone a section of an S3 bucket: `dm s3 clone-subset REMOTE BUCKET PREFIXES [--local-name LOCAL-DOT]`.
 This command will clone only a selection of files from an S3 bucket, as dictated by PREFIXES.

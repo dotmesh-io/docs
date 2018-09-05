@@ -719,6 +719,7 @@ You can then manage S3 buckets using `clone`, `push` and `pull` as if they were 
 It is recommended that you enable versioning on your S3 bucket in order for Dotmesh to be able to discern changes easily.
 
 The access key-secret pair you use will need the following actions to be allowed on AWS S3 in order to work effectively:
+
  * s3:PutObject
  * s3:DeleteObject
  * s3:HeadBucket

@@ -740,7 +740,7 @@ You should then create a policy to apply to all credential pairs you wish to use
             ],
             "Resource": [
                 "arn:aws:s3:::your bucket name here",
-                "arn:aws:s3:::*/*"
+                "arn:aws:s3:::your bucket name here/*"
             ]
         },
         {

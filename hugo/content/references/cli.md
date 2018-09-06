@@ -739,7 +739,7 @@ You should then create a policy to apply to all credential pairs you wish to use
                 "s3:GetObjectVersion"
             ],
             "Resource": [
-                "arn:aws:s3:::<bucket-name>",
+                "arn:aws:s3:::your bucket name here",
                 "arn:aws:s3:::*/*"
             ]
         },

@@ -128,7 +128,7 @@ Let's check the version of our local Dotmesh cluster from the shell:
 $ <kbd>curl --user \
       admin:`jq -r .Remotes.local.ApiKey &lt; ~/.dotmesh/config` \
     -H 'Content-Type: application/json' \
-    http://localhost:6969/rpc \
+    http://localhost:32607/rpc \
     --data-binary \
     '{"jsonrpc": "2.0",
       "method": "DotmeshRPC.Version",

@@ -388,7 +388,7 @@ remote switch` that is the "target" of your commands; that's the
 line for transfer commands always names a second remote, which is the
 "remote cluster" we are transferring dots to and from.
 
-### Clone: `dm clone [--local-name LOCAL-DOT] REMOTE DOT BRANCH`
+### Clone: `dm clone [--local-name LOCAL-DOT] [--stash-on-divergence] REMOTE DOT BRANCH`
 
 In this example, we'll clone the dot `alice/testing_data` from the
 Hub, and call it `new_data` locally.
@@ -417,9 +417,16 @@ Branches:
 If you omit the `--local-name LOCAL-DOT` part, then the dot will just
 have the same name as the remote one - in this case, `testing_data`.
 
+If you use `--stash-on-divergence` and:
+1. Your local history contains all of the remote cluster's commits plus extra, no error will occur but nothing will change.
+OR
+1. Both clusters contain additional commits, the additional commits locally will be put on a branch and the remote commits will be pulled down
+OR
+1. You have dirty data, but the same history on both ends apart from that, a commit will be generated locally.
+
 If you are cloning an S3 bucket and only want to select a subset of the files, please see [`dm s3 clone-subset`](#clone-a-section-of-an-s3-bucket-dm-s3-clone-subset-remote-bucket-prefixes-local-name-local-dot)
 
-### Pull: `dm pull REMOTE [DOT [BRANCH]] [--remote-name REMOTE-DOT]`
+### Pull: `dm pull REMOTE [DOT [BRANCH]] [--remote-name REMOTE-DOT] [--stash-on-divergence]`
 
 This command pulls new commits and branches from a remote dot into
 your local cluster.
@@ -449,7 +456,14 @@ finished 9.50 KB / 9.50 KB [==========================] 100.00% 0.43 MiB/s (1/1)
 Done!
 </pre></div>
 
-### Push: `dm push REMOTE [--remote-name DOT]`
+If you use `--stash-on-divergence` and:
+1. The local cluster contains all of the remote cluster's commits plus additional commits, no error will occur but nothing will change.
+OR
+1. Both clusters contain additional commits, the additional commits on the local cluster will be put on a branch and the additional remote commits will be pulled down
+OR
+1. You have dirty data, but the same history on both ends apart from that, a commit will be generated locally.
+
+### Push: `dm push REMOTE [--remote-name DOT] [--stash-on-divergence]`
 
 This command pushes the current branch of the current dot to the
 specified `REMOTE`. If the destination dot already exists, local
@@ -471,6 +485,13 @@ Calculating...
 finished 9.50 KB / 9.50 KB [==========================] 100.00% 0.38 MiB/s (1/1)
 Done!
 </pre></div>
+
+If you use `--stash-on-divergence` and:
+1. The remote cluster contains all of the local cluster's commits plus extra, no error will occur but nothing will change.
+OR
+1. Both clusters contain additional commits, the additional commits on the remote cluster will be put on a branch and the local commits will be pushed
+OR
+1. You have dirty data, but the same history on both ends apart from that, a commit will be generated locally.
 
 ### Set the upstream dot: `dm dot set-upstream [DOT] REMOTE REMOTE-DOT`
 

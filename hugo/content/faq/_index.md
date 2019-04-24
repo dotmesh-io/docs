@@ -48,8 +48,7 @@ DotOps is complementary with [GitOps](https://www.weave.works/blog/gitops-operat
 
 ## What do you encrypt?
 
-We encrypt your password (but not your API keys) in the Dothub using [scrypt](https://godoc.org/golang.org/x/crypto/scrypt).
-We encrypt data pushed to and pulled from the Dothub using TLS.
+We encrypt your password (but not your API keys) in dotmesh using [scrypt](https://godoc.org/golang.org/x/crypto/scrypt).
 
 Currently, we do not encrypt pushes and pulls between OSS clusters, but it's on the roadmap.
 
@@ -86,12 +85,7 @@ StorageClass in Kubernetes, or the `dm` volume driver in Docker.
 See the [setup and install guides](/install-setup/) for details on
 dotmesh's platform requirements in different configurations.
 
-## Do I have to use dothub or can I use another back end?
-
-You don't need to use dothub. You might not want to pay us money, or
-the bandwidth costs of transferring data into and out of your network
-might be excessive, or you might have regulatory requirements about
-handing your data to third parties. We understand.
+## Do I need to use multiple clusters?
 
 If you configure all your dotmesh nodes into a cluster, then your dots
 will be available uniformly across that cluster. You don't need any
@@ -102,18 +96,9 @@ You can also run multiple clusters and push/pull dots between them, by
 adding other clusters as a "remote". Read the [command line
 reference](/references/cli/) for instructions on how to do that.
 
-Also, you can run your own instance of dothub. If you would like to
-use dothub for your enterprise, please [contact
-us](https://dotmesh.com/pricing/register-interest/).
-
 ## What databases and data sources can dotmesh capture?
 
 Anything that can run in Docker or Kubernetes and store its state in a
 volume mounted into the container filesystem! Dotmesh provides a
 filesystem interface to datadots, so anything that stores its state in
 a filesystem can store its state in a datadot.
-
-##  Can I host my own instance of dothub?
-
-If you would like to use dothub for your enterprise, please [contact
-us](https://dotmesh.com/pricing/register-interest/).

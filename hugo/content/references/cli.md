@@ -189,7 +189,7 @@ For S3 remotes please see [`dm s3 remote add`](#add-a-new-s3-remote-dm-s3-remote
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>dm remote -v</kbd>
-  hub	alaric@dothub.com
+  hub	alaric@otherserver
   test  alaric@test-cluster.local
 <em>* local	admin@127.0.0.1</em>
 </pre></div>
@@ -205,12 +205,12 @@ line.
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>dm remote -v</kbd>
-  hub	alaric@dothub.com
+  hub	alaric@otherserver
   test  alaric@test-cluster.local
 * local	admin@127.0.0.1
 $ <kbd>dm remote rm test</kbd>
 $ <kbd>dm remote -v</kbd>
-  hub	alaric@dothub.com
+  hub	alaric@otherserver
 * local	admin@127.0.0.1
 </pre></div>
 
@@ -218,11 +218,11 @@ $ <kbd>dm remote -v</kbd>
 
 <div class="highlight"><pre class="chromaManual">
 $ <kbd>dm remote -v</kbd>
-  hub	alaric@dothub.com
+  hub	alaric@otherserver
 <em>* local</em>	admin@127.0.0.1
 $ <kbd>dm remote switch hub</kbd>
 $ <kbd>dm remote -v</kbd>
-<em>* hub</em>	alaric@dothub.com
+<em>* hub</em>	alaric@otherserver
   local	admin@127.0.0.1
 </pre></div>
 

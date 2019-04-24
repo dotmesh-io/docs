@@ -237,12 +237,12 @@ When multiple data stores are captured in a commit, the commit is atomic across 
 You can get more out of dotmesh by sharing your dots with others -- either other users, or systems like a CI system.
 In order to facilitate this sharing, you can push the commits on a branch to a hub.
 
-You can either use [our hub](https://dothub.com) or you can just install dotmesh on a server and use that.
+To achieve this we suggest you install dotmesh on a server which is accessible by all who need to use it and use that.
 
 If your username is `alice` and you want to make commit `E` on `newbranch` from the example above available to others, first log into the hub:
 
 ```bash
-dm remote add hub alice@dothub.com
+dm remote add hub alice@<server-hostname>
 ```
 
 Then push the branch to the hub:

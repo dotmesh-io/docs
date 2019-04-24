@@ -143,8 +143,7 @@ system functionality.
 Communication between your local cluster and the Hub is via HTTPS on
 port 443. This includes both API traffic as documented in the [API
 manual](../../references/api/), and the transfer of Dot filesystem
-data. Please make sure all your Dotmesh nodes are able to connect to
-`dothub.com` on port 32607 for the Hub to work correctly.
+data. 
 
 ## Docker and Kubernetes.
 

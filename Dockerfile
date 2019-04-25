@@ -1,5 +1,4 @@
-FROM ubuntu:16.04
-MAINTAINER kai@dotmesh.io
+FROM ubuntu:16.04 AS build-env
 
 # versions
 ENV HUGO_VERSION=0.33
@@ -20,3 +19,9 @@ ADD ./design/package.json /app/design/package.json
 ADD ./design/package-lock.json /app/design/package-lock.json
 RUN cd design && npm install
 ADD . /app
+
+RUN (cd /app/hugo && hugo -v)
+
+FROM nginx:alpine
+COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY --from=build-env /app/hugo/public /www

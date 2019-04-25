@@ -1,0 +1,28 @@
+kind: pipeline
+name: default
+
+# workspace:
+#   base: /go
+#   path: src/github.com/dotmesh-io/model-proxy
+
+steps:
+- name: publish-image  
+  image: plugins/docker
+  settings:
+    registry: quay.io
+    repo: quay.io/dotmesh/docs
+    auto_tag: true
+    username:
+      from_secret: quay_username
+    password:
+      from_secret: quay_password
+
+- name: slack
+  image: plugins/slack
+  when:
+    status: [ success, failure ]
+  settings:
+    webhook: https://hooks.slack.com/services/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
+    channel: ci
+    username: drone
+    icon_url: https://i.pinimg.com/originals/51/29/a4/5129a48ddad9e8408d2757dd10eb836f.jpg

@@ -4,8 +4,7 @@ BUILDER_IMAGE=$(IMAGE)-builder
 
 .PHONY: images
 images:
-	docker build -t $(BUILDER_IMAGE):$(VERSION) .
-	docker tag $(BUILDER_IMAGE):$(VERSION) $(BUILDER_IMAGE):latest
+	docker build -t $(BUILDER_IMAGE):latest --target build-env .
 
 .PHONY: design.build
 design.build:

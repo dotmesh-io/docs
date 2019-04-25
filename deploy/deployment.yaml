@@ -1,8 +1,10 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: docs
-  namespace: ${NAMESPACE}
+  name: dotmesh-docs
+  namespace: docs
+  annotations:
+    keel.sh/policy: force
 spec:
   replicas: 2
   strategy:
@@ -14,19 +16,19 @@ spec:
         app: docs
     spec:
       containers:
-        - name: docs
-          image: ${IMAGE}:${VERSION}
-          ports:
-            - containerPort: 80
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 5
-            periodSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 5
-            periodSeconds: 5
+      - name: dotmesh-docs
+        image: quay.io/dotmesh/docs:latest 
+        ports:
+          - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5

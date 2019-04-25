@@ -4,13 +4,8 @@ metadata:
   name: ingress
   namespace: docs
   annotations:
-    kubernetes.io/tls-acme: "true"
     kubernetes.io/ingress.class: "nginx"
 spec:
-  tls:
-  - hosts:
-    - docs.dotmesh.com
-    secretName: docs-ingress
   rules:
   - host: docs.dotmesh.com
     http:

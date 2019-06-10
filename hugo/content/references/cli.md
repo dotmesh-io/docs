@@ -739,7 +739,7 @@ You can then manage S3 buckets using `clone`, `push` and `pull` as if they were 
 
 It is recommended that you enable versioning on your S3 bucket in order for Dotmesh to be able to discern changes easily.
 
-We recommend you create a new user credential in AWS IAM (Aws console -> IAM -> Users -> Add User) in order to limit the security privaledges provided. The access type should be "programmatic". 
+We recommend you create a new user credential in AWS IAM (Aws console -> IAM -> Users -> Add User) in order to limit the security privileges provided. The access type should be "programmatic". 
 
 You should then create a policy to apply to all credential pairs you wish to use (Policies -> Create Policy). The following policy should allow dotmesh to work:
 

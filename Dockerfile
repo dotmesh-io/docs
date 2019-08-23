@@ -1,4 +1,4 @@
-FROM ubuntu:16.04 AS build-env
+FROM ubuntu:16.10 AS build-env
 
 # versions
 ENV HUGO_VERSION=0.33
